@@ -1,0 +1,7 @@
+_target_: src.datamodules.PieDataModule
+
+# some defaults
+batch_size: 32
+num_workers: 0
+pin_memory: False
+show_progress_for_encode: true

@@ -1,0 +1,14 @@
+# https://aimstack.readthedocs.io/en/latest/
+#
+# This logger requires Aim to be installed: `pip install aim`
+#
+# To start the frontend, just call `aim up` from the directory that contains the repo,
+# e.g. from logs/logger/aim.
+
+aim:
+  _target_: aim.pytorch_lightning.AimLogger
+  repo: ${paths.log_dir}/logger/aim/.aim
+  experiment: ${replace:${name},/,-}-${pipeline_type}
+  train_metric_prefix: train/
+  val_metric_prefix: val/
+  test_metric_prefix: test/
