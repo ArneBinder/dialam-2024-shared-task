@@ -30,18 +30,26 @@ def create_visualization(args):
                 node_text_splitted += " ".join(chunk_tokens)
             node_text = "<" + n["nodeID"] + ": " + n["type"] + "<br/>" + node_text_splitted + ">"
         else:
-            node_text = "<" + n["nodeID"] + ": " + n["type"] + "<br/>" + n["scheme"] + ">"
+            node_text = (
+                "<"
+                + n["nodeID"]
+                + ": "
+                + n["type"]
+                + "<br/>"
+                + (n["scheme"] if "scheme" in n else "")
+                + ">"
+            )
         node_id2text[n["nodeID"]] = node_text
         node2type[n["nodeID"]] = n["type"]
 
     # Collect all edges
     ta_edges = []  # default transitions for L-nodes
-    ya_edges = []  # transitions between L and I-nodes, sometimes also between two L nodes!
+    ya_edges = []  # transitions between L and I-nodes, S and TA nodes or I and TA nodes
+    # sometimes YA nodes also mean transitions between two L nodes!
     # E.g., see nodeset18291.json nodes 540800-540805 for L-L transition
     s_edges = []  # transitions between I-nodes
 
     ta_edge_node_types = ["L", "TA"]
-    ya_edge_node_types = ["L", "I", "YA"]
     s_edge_node_types = ["MA", "RA", "CA", "I"]
     for e in data["edges"]:
         node_from = e["fromID"]
@@ -55,6 +63,9 @@ def create_visualization(args):
             (node_type_from == "L" and node_type_to == "YA")
             or (node_type_from == "YA" and node_type_to == "I")
             or (node_type_from == "YA" and node_type_to == "L")
+            or (node_type_from == "YA" and node_type_to == "TA")
+            or (node_type_from in s_edge_node_types and node_type_to == "YA")
+            or (node_type_from == "I" and node_type_to == "YA")
         ):
             ya_edges.append(node_tuple)
         elif (node_type_from in s_edge_node_types) and (node_type_to in s_edge_node_types):
