@@ -28,13 +28,23 @@ def create_visualization(args):
                     chunk_tokens = []
             if len(chunk_tokens) > 0:
                 node_text_splitted += " ".join(chunk_tokens)
-            node_text = "<" + n["nodeID"] + ": " + n["type"] + "<br/>" + node_text_splitted + ">"
+            node_text = (
+                "<<b>"
+                + n["type"]
+                + "</b> "
+                + n["nodeID"]
+                + (" " + n["timestamp"].split()[1] if "timestamp" in n else "")
+                + "<br/>"
+                + node_text_splitted
+                + ">"
+            )
         else:
             node_text = (
-                "<"
-                + n["nodeID"]
-                + ": "
+                "<<b>"
                 + n["type"]
+                + "</b> "
+                + n["nodeID"]
+                + (" " + n["timestamp"].split()[1] if "timestamp" in n else "")
                 + "<br/>"
                 + (n["scheme"] if "scheme" in n else "")
                 + ">"
@@ -59,14 +69,7 @@ def create_visualization(args):
         node_type_to = node2type[node_to]
         if (node_type_from in ta_edge_node_types) and (node_type_to in ta_edge_node_types):
             ta_edges.append(node_tuple)
-        elif (
-            (node_type_from == "L" and node_type_to == "YA")
-            or (node_type_from == "YA" and node_type_to == "I")
-            or (node_type_from == "YA" and node_type_to == "L")
-            or (node_type_from == "YA" and node_type_to == "TA")
-            or (node_type_from in s_edge_node_types and node_type_to == "YA")
-            or (node_type_from == "I" and node_type_to == "YA")
-        ):
+        elif node_type_from == "YA" or node_type_to == "YA":
             ya_edges.append(node_tuple)
         elif (node_type_from in s_edge_node_types) and (node_type_to in s_edge_node_types):
             s_edges.append(node_tuple)
@@ -78,7 +81,7 @@ def create_visualization(args):
 
     # Create two clusters (subgraphs) for I-nodes and L-nodes
     g = Digraph("G", filename="cluster.gv", format="png")
-    g.attr(rankdir="LR")
+    g.attr(rankdir="RL")
     g.attr(splines="ortho")
     g.attr(overlap="false")
 
