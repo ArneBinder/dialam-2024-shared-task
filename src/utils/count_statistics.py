@@ -59,10 +59,9 @@ def generate_stats_table(dir_name):
             html_table += "<td>" + to_node_stats + "</td>"
         html_table += "</tr>"
     html_table += "</table>"
-    # Conversion to pandas DataFrame is not necessary here but it makes the formatting a bit nicer
     df = pd.read_html(io.StringIO(html_table))[0]
-    html_table = df.to_html(index=False)
-    return html_table
+    markdown_table = df.to_markdown(index=False)
+    return markdown_table
 
 
 if __name__ == "__main__":
@@ -71,5 +70,5 @@ if __name__ == "__main__":
         "nodeset_dir", type=str, help="path to the directory with nodesets in JSON format"
     )
     args = parser.parse_args()
-    html_table = generate_stats_table(args.nodeset_dir)
-    print(html_table)
+    markdown_table = generate_stats_table(args.nodeset_dir)
+    print(markdown_table)
