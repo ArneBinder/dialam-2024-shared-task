@@ -23,14 +23,21 @@ def count_transitions(
         to_node = node_id2node[to_node_id]
         to_node_type = to_node["type"]
 
-        node_transition_types = ["YA", "MA", "RA", "CA", "TA"]
+        node_transition_types = ["YA", "MA", "RA", "CA", "TA", "S"]
+        s_nodes = ["MA", "RA", "CA"]
 
-        if from_node_type == from_input_node_type:
+        if from_node_type == from_input_node_type or (
+            from_input_node_type == "S" and from_node_type in s_nodes
+        ):
             for e2 in edges:
                 if e["edgeID"] == e2["edgeID"]:
                     continue
                 from_e2_node_type = node_id2node[e2["fromID"]]["type"]
                 to_e2_node_type = node_id2node[e2["toID"]]["type"]
+                if from_e2_node_type in s_nodes:
+                    from_e2_node_type = "S"
+                if to_e2_node_type in s_nodes:
+                    to_e2_node_type = "S"
                 if (
                     e["toID"] == e2["fromID"]
                     and to_e2_node_type == to_input_node_type
@@ -53,7 +60,7 @@ def count_transitions(
 
 def generate_transitions_per_input_table(dir_name):
     transitions_dict = dict()
-    input_node_types = ["L", "I", "TA"]
+    input_node_types = ["L", "I", "S", "TA"]
     input_pairs = [(i, j) for i in input_node_types for j in input_node_types]
 
     for filename in os.listdir(dir_name):
