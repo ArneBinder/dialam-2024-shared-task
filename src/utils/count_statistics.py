@@ -1,11 +1,16 @@
+from __future__ import annotations
+
 import argparse
 import io
 import json
+import logging
 import os
-from collections import Counter
+from collections import Counter, defaultdict
 
 import pandas as pd
 from tqdm import tqdm
+
+logger = logging.getLogger(__name__)
 
 
 def count_transitions(
@@ -190,6 +195,127 @@ def generate_stats_table(dir_name):
     return markdown_table
 
 
+def get_relation_and_node_dicts(file_name: str) -> tuple[dict, dict]:
+
+    # load the nodes and edges from the json file
+    with open(file_name) as f:
+        data = json.load(f)
+
+    # collect all incoming and outgoing edges for each node
+    src2trg = defaultdict(list)
+    trg2src = defaultdict(list)
+    for edge in data["edges"]:
+        src = edge["fromID"]
+        trg = edge["toID"]
+        src2trg[src].append(trg)
+        trg2src[trg].append(src)
+
+    # collect the node-id-mapping and relation ids
+    node2id = dict()
+    relation_node_ids = list()
+    for node in data["nodes"]:
+        node_id = node.pop("nodeID")
+        node2id[node_id] = node
+        # relation nodes
+        if node["type"] in ["TA", "YA", "RA", "CA", "MA"]:
+            relation_node_ids.append(node_id)
+        # non-relation nodes
+        elif node["type"] in ["L", "I"]:
+            pass
+        else:
+            raise ValueError(f"Unknown node type: {node['type']}")
+
+    # assemble relations
+    relations = defaultdict(list)
+    for rel_id in relation_node_ids:
+        rel_node = node2id[rel_id]
+        for src in trg2src.get(rel_id, []):
+            for trg in src2trg.get(rel_id, []):
+                relations[(src, trg)].append(rel_node)
+
+    # check for multiple relations between the same nodes
+    for (src, trg), rels in relations.items():
+        if len(rels) > 1:
+            src_node = node2id[src]
+            trg_node = node2id[trg]
+            relation_types = set(rel["type"] for rel in rels)
+            logger.warning(
+                f"{file_name}: Multiple relation nodes (types: {relation_types}) between {src} "
+                f"(type: {src_node['type']}) and {trg} (type: {trg_node['type']})"
+            )
+
+    return relations, node2id
+
+
+def relation_dict_to_df(relation_dict) -> pd.DataFrame:
+    """Converts a dict that maps pairs of argument types to anything into a pivot table, e.g.
+    {
+        ("A", "B"): x,
+        ("A", "C"): y,
+        ("B", "C"): z,
+    }
+    will be converted to
+    |       | A    | B    | C    |
+    |-------|------|------|------|
+    | A     |      | x    | y    |
+    | B     |      |      | z    |
+    | C     |      |      |      |
+    """
+    s = pd.Series(relation_dict)
+    df = pd.DataFrame(s).unstack()
+    df.columns = df.columns.droplevel()
+    return df
+
+
+def relation_types_to_count_string(relation_types: list | float) -> str:
+    """Converts a list of relation types to a string with counts. Also handles the case where the
+    input is a float, which is the case when the input is NaN.
+
+    Example: ["A", "B", "A"] -> "A: 2<br>B: 1"
+    """
+    if not isinstance(relation_types, list):
+        return "-"
+    relation_types_wo_white_space = [rt.replace(" ", "") for rt in relation_types]
+    counter = Counter(relation_types_wo_white_space)
+    return "<br>".join([f"{k}: {v}" for k, v in counter.items()])
+
+
+def maybe_convert_node_class_to_type(class_name: str) -> str:
+    if class_name in ["RA", "CA", "MA"]:
+        return "S"
+    return class_name
+
+
+def generate_relation_stats_table(dir_name) -> str:
+    """Generates a markdown table with the counts of relation types between different argument
+    types. The table has the following format:
+
+    .. code-block:: markdown
+
+        |       | A    | B    | C    |
+        |-------|------|------|------|
+        | A     |      | a: 3 | c: 5 |
+        |       |      | b: 2 |      |
+        | B     |      |      | d: 10|
+        | C     |      |      |      |
+    """
+    argument_types_to_relation_type = defaultdict(list)
+    for filename in os.listdir(dir_name):
+        relations, all_nodes = get_relation_and_node_dicts(os.path.join(dir_name, filename))
+        for (source_id, target_id), relation_nodes in relations.items():
+            source_node = all_nodes[source_id]
+            target_node = all_nodes[target_id]
+            arg_types = (
+                maybe_convert_node_class_to_type(source_node["type"]),
+                maybe_convert_node_class_to_type(target_node["type"]),
+            )
+            for relation_node in relation_nodes:
+                argument_types_to_relation_type[arg_types].append(relation_node["text"])
+    df = relation_dict_to_df(argument_types_to_relation_type)
+    df_count_strings = df.map(relation_types_to_count_string)
+    return df_count_strings.to_markdown()
+
+
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument(
@@ -197,5 +323,11 @@ if __name__ == "__main__":
     )
     args = parser.parse_args()
     # markdown_table = generate_stats_table(args.nodeset_dir)
-    transitions_per_input_table = generate_transitions_per_input_table(args.nodeset_dir)
-    print(transitions_per_input_table)
+
+    # tatiana's statistics
+    # transitions_per_input_table = generate_transitions_per_input_table(args.nodeset_dir)
+    # print(transitions_per_input_table)
+
+    # arne's statistics
+    result = generate_relation_stats_table(args.nodeset_dir)
+    print(result)
