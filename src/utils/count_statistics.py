@@ -30,11 +30,14 @@ def count_transitions(
         to_node_type = to_node["type"]
 
         node_transition_types = ["YA", "MA", "RA", "CA", "TA", "S"]
-        s_nodes = ["MA", "RA", "CA"]
+        s_nodes = ["MA", "RA", "CA", "S"]
 
-        if from_node_type == from_input_node_type or (
-            from_input_node_type == "S" and from_node_type in s_nodes
-        ):
+        if from_node_type in s_nodes:
+            from_node_type = "S"
+        if to_node_type in s_nodes:
+            to_node_type = "S"
+
+        if from_node_type == from_input_node_type:
             for e2 in edges:
                 if e["edgeID"] == e2["edgeID"]:
                     continue
