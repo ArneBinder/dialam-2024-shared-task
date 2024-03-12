@@ -56,7 +56,7 @@ def count_transitions(
                         + " &rarr; "
                         + to_input_node_type
                     )
-                    transition_label = to_node["scheme"] if "scheme" in to_node else "No Label"
+                    transition_label = to_node["text"] if "text" in to_node else "No Label"
                     if not (transition_type in transitions_dict):
                         transitions_dict[transition_type] = dict()
                     if not (transition_label in transitions_dict[transition_type]):
@@ -66,7 +66,7 @@ def count_transitions(
 
 def generate_transitions_per_input_table(dir_name):
     transitions_dict = dict()
-    input_node_types = ["L", "I", "S", "TA"]
+    input_node_types = ["I", "L", "S", "TA", "YA"]
     input_pairs = [(i, j) for i in input_node_types for j in input_node_types]
 
     for filename in tqdm(os.listdir(dir_name)):
@@ -99,13 +99,8 @@ def generate_transitions_per_input_table(dir_name):
         for to_node in input_node_types:
             transitions_counts = ""
             for transition in transitions:
-                # Check that transition starts and ends with the correct nodes
-                # and appears more than once in the training set
-                # if it appears only once we consider it an annotation error/artefact
-                if (
-                    transition.startswith(from_node + " &rarr; ")
-                    and transition.endswith(" &rarr; " + to_node)
-                    and sum(transitions_dict[transition].values()) > 1
+                if transition.startswith(from_node + " &rarr; ") and transition.endswith(
+                    " &rarr; " + to_node
                 ):
                     if len(transitions_counts) > 0:
                         transitions_counts += "###"
@@ -325,8 +320,8 @@ if __name__ == "__main__":
     # markdown_table = generate_stats_table(args.nodeset_dir)
 
     # tatiana's statistics
-    # transitions_per_input_table = generate_transitions_per_input_table(args.nodeset_dir)
-    # print(transitions_per_input_table)
+    transitions_per_input_table = generate_transitions_per_input_table(args.nodeset_dir)
+    print(transitions_per_input_table)
 
     # arne's statistics
     result = generate_relation_stats_table(args.nodeset_dir)
