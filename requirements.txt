@@ -34,3 +34,4 @@ pudb            # debugger
 tabulate        # show statistics as markdown
 plotext         # show statistics as plots
 # huggingface-hub>=0.13  # interaction with HF hub
+lxml            # for count_statistics.py
