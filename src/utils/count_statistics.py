@@ -5,6 +5,7 @@ import os
 from collections import Counter
 
 import pandas as pd
+from tqdm import tqdm
 
 
 def count_transitions(
@@ -63,7 +64,7 @@ def generate_transitions_per_input_table(dir_name):
     input_node_types = ["L", "I", "S", "TA"]
     input_pairs = [(i, j) for i in input_node_types for j in input_node_types]
 
-    for filename in os.listdir(dir_name):
+    for filename in tqdm(os.listdir(dir_name)):
         with open(os.path.join(dir_name, filename)) as f:
             data = json.load(f)
         # Store the node mapping
