@@ -1,3 +1,22 @@
+"""How to use the visualization script:
+
+(1) Make sure that graphviz is installed on your system.
+E.g., on Linux you can install it with `apt-get install graphviz`.
+If you are getting "RuntimeError: Make sure the Graphviz executables are on your system's path" please check the following discussion: https://stackoverflow.com/questions/35064304/runtimeerror-make-sure-the-graphviz-executables-are-on-your-systems-path-aft
+
+(2) If you created the environment based on requirements.txt you should already have the correct version installed with pip. Otherwise, you should execute `pip install graphviz`
+
+(3) Run the script as follows:
+
+$ python3 src/visualization/visualize_arg_map.py path_to_nodesets path_to_store_visualizations nodeset_id
+
+For example:
+$ python3 src/visualization/visualize_arg_map.py data/dialam-2024-dataset visualizations 21388
+`data/dialam-2024-dataset` is the path to the dataset with the nodesets in JSON format
+`visualizations` is the path to the directory for storing visualizations
+`21388` is the nodeset id (in this example for `nodeset21388.json`).
+"""
+
 import argparse
 import json
 import os
