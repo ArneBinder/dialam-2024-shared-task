@@ -275,7 +275,8 @@ def relation_types_to_count_string(relation_types: list | float) -> str:
         return "-"
     relation_types_wo_white_space = [rt.replace(" ", "") for rt in relation_types]
     counter = Counter(relation_types_wo_white_space)
-    return "<br>".join([f"{k}: {v}" for k, v in counter.items()])
+    # sort by key and create a string with counts
+    return "<br>".join([f"{k}: {counter[k]}" for k in sorted(counter)])
 
 
 def maybe_convert_node_class_to_type(class_name: str) -> str:
@@ -308,7 +309,8 @@ def generate_relation_stats_table(dir_name) -> str:
                 maybe_convert_node_class_to_type(target_node["type"]),
             )
             for relation_node in relation_nodes:
-                argument_types_to_relation_type[arg_types].append(relation_node["text"])
+                relation_node_type = maybe_convert_node_class_to_type(relation_node["type"])
+                argument_types_to_relation_type[arg_types].append(f"{relation_node_type}/{relation_node['text']}")
     df = relation_dict_to_df(argument_types_to_relation_type)
     df_count_strings = df.map(relation_types_to_count_string)
     return df_count_strings.to_markdown()
