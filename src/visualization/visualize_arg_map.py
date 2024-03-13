@@ -24,6 +24,37 @@ import os
 from graphviz import Digraph
 
 
+def chunk_text(text: str, tokens_per_chunk: int = 10) -> str:
+    node_text_split = ""
+    chunk_tokens = []
+    for token in text.split():
+        chunk_tokens.append(token)
+        if len(chunk_tokens) > tokens_per_chunk:
+            node_text_split += " ".join(chunk_tokens) + "<br/>"
+            chunk_tokens = []
+    if len(chunk_tokens) > 0:
+        node_text_split += " ".join(chunk_tokens)
+    return node_text_split
+
+
+def assemble_node_text(node: dict) -> str:
+    if node["type"] in ["L", "I"]:
+        text = chunk_text(node["text"])
+    else:
+        text = node["scheme"] if "scheme" in node else ""
+    timestamp = node["timestamp"].split()[1] if "timestamp" in node else ""
+    node_text = f"<<b>{node['type']}</b> {node['nodeID']} {timestamp}<br/>{text}>"
+    return node_text
+
+
+def add_node(node: dict, graph) -> None:
+    if node["type"] in ["L", "I"]:
+        shape = "box"
+    else:
+        shape = "oval"
+    graph.node(node["nodeID"], label=assemble_node_text(node), shape=shape)
+
+
 def create_visualization(args):
     # Read the JSON data
     nodeset_dir = args.nodeset_dir
@@ -34,42 +65,7 @@ def create_visualization(args):
         data = json.load(f)
 
     # Collect all nodes and store the corresponding text & node type in a dictionary
-    node_id2text = dict()
-    node2type = dict()
-    for n in data["nodes"]:
-        if n["type"] in ["L", "I"]:
-            node_text_splitted = ""
-            chunk_tokens = []
-            for token in n["text"].split():
-                chunk_tokens.append(token)
-                if len(chunk_tokens) > 10:
-                    node_text_splitted += " ".join(chunk_tokens) + "<br/>"
-                    chunk_tokens = []
-            if len(chunk_tokens) > 0:
-                node_text_splitted += " ".join(chunk_tokens)
-            node_text = (
-                "<<b>"
-                + n["type"]
-                + "</b> "
-                + n["nodeID"]
-                + (" " + n["timestamp"].split()[1] if "timestamp" in n else "")
-                + "<br/>"
-                + node_text_splitted
-                + ">"
-            )
-        else:
-            node_text = (
-                "<<b>"
-                + n["type"]
-                + "</b> "
-                + n["nodeID"]
-                + (" " + n["timestamp"].split()[1] if "timestamp" in n else "")
-                + "<br/>"
-                + (n["scheme"] if "scheme" in n else "")
-                + ">"
-            )
-        node_id2text[n["nodeID"]] = node_text
-        node2type[n["nodeID"]] = n["type"]
+    node_id2node = {n["nodeID"]: n for n in data["nodes"]}
 
     # Collect all edges
     ta_edges = []  # default transitions for L-nodes
@@ -84,8 +80,8 @@ def create_visualization(args):
         node_from = e["fromID"]
         node_to = e["toID"]
         node_tuple = (node_from, node_to)
-        node_type_from = node2type[node_from]
-        node_type_to = node2type[node_to]
+        node_type_from = node_id2node[node_from]["type"]
+        node_type_to = node_id2node[node_to]["type"]
         if (node_type_from in ta_edge_node_types) and (node_type_to in ta_edge_node_types):
             ta_edges.append(node_tuple)
         elif node_type_from == "YA" or node_type_to == "YA":
@@ -114,18 +110,16 @@ def create_visualization(args):
         c.attr(splines="ortho")
         c.attr(overlap="false")
         # Add TA and YA edges that connect to L-nodes
-        for e in ta_edges:
-            c.node(
-                e[0], label=node_id2text[e[0]], shape="box" if node2type[e[0]] == "L" else "oval"
-            )
-            c.node(
-                e[1], label=node_id2text[e[1]], shape="box" if node2type[e[1]] == "L" else "oval"
-            )
-        for e in ya_edges:
-            if node2type[e[0]] == "L":
-                c.node(e[0], label=node_id2text[e[0]], shape="box")
-            elif node2type[e[1]] == "L":
-                c.node(e[1], label=node_id2text[e[1]], shape="box")
+        for from_id, to_id in ta_edges:
+            add_node(node=node_id2node[from_id], graph=c)
+            add_node(node=node_id2node[to_id], graph=c)
+        for from_id, to_id in ya_edges:
+            from_node = node_id2node[from_id]
+            if from_node["type"] == "L":
+                add_node(node=from_node, graph=c)
+            to_node = node_id2node[to_id]
+            if to_node["type"] == "L":
+                add_node(node=to_node, graph=c)
         c.edge_attr["constraint"] = "false"
         c.edges(ta_edges)
 
@@ -139,23 +133,23 @@ def create_visualization(args):
         c.attr(splines="ortho")
         c.attr(overlap="false")
         # Add S and YA edges that connect to I-nodes
-        for e in s_edges:
-            c.node(
-                e[0], label=node_id2text[e[0]], shape="box" if node2type[e[0]] == "I" else "oval"
-            )
-            c.node(
-                e[1], label=node_id2text[e[1]], shape="box" if node2type[e[1]] == "I" else "oval"
-            )
-        for e in ya_edges:
-            if node2type[e[1]] == "I":
-                c.node(e[1], label=node_id2text[e[1]], shape="box")
+        for from_id, to_id in s_edges:
+            add_node(node=node_id2node[from_id], graph=c)
+            add_node(node=node_id2node[to_id], graph=c)
+        for from_id, to_id in ya_edges:
+            from_node = node_id2node[from_id]
+            if from_node["type"] == "I":
+                add_node(node=from_node, graph=c)
+            to_node = node_id2node[to_id]
+            if to_node["type"] == "I":
+                add_node(node=to_node, graph=c)
         c.edge_attr["constraint"] = "false"
         c.edges(s_edges)
 
     # Add the rest of edges that connect L- and I-nodes
-    for e in ya_edges:
-        g.node(e[0], label=node_id2text[e[0]])
-        g.node(e[1], label=node_id2text[e[1]])
+    for from_id, to_id in ya_edges:
+        add_node(node=node_id2node[from_id], graph=g)
+        add_node(node=node_id2node[to_id], graph=g)
     g.edges(ya_edges)
 
     # Render the final graph
