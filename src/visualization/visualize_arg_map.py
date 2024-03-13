@@ -15,13 +15,21 @@ $ python3 src/visualization/visualize_arg_map.py data/dialam-2024-dataset visual
 `data/dialam-2024-dataset` is the path to the dataset with the nodesets in JSON format
 `visualizations` is the path to the directory for storing visualizations
 `21388` is the nodeset id (in this example for `nodeset21388.json`).
+
+Note: If no nodeset id is provided, the script will visualize all nodesets in the directory.
 """
 
 import argparse
+import datetime
 import json
+import logging
 import os
+from collections import defaultdict
+from typing import Optional
 
 from graphviz import Digraph
+
+logger = logging.getLogger(__name__)
 
 
 def chunk_text(text: str, tokens_per_chunk: int = 10) -> str:
@@ -55,46 +63,62 @@ def add_node(node: dict, graph) -> None:
     graph.node(node["nodeID"], label=assemble_node_text(node), shape=shape)
 
 
-def create_visualization(args):
+def filter_edges(
+    edges: set[tuple[str, str]], allowed_source_ids: list[str], allowed_target_ids: list[str]
+) -> set[tuple[str, str]]:
+    return set(
+        (src, trg)
+        for (src, trg) in edges
+        if src in allowed_source_ids and trg in allowed_target_ids and trg != src
+    )
+
+
+def create_visualization(
+    nodeset_dir: str, output_dir: str, nodeset: Optional[str] = None, view: bool = True
+):
+    # if no nodeset id is provided, visualize all nodesets in the directory
+    if nodeset is None:
+        nodeset_ids = [
+            f.split("nodeset")[1].split(".json")[0]
+            for f in os.listdir(nodeset_dir)
+            if f.endswith(".json")
+        ]
+        for nodeset in nodeset_ids:
+            try:
+                create_visualization(
+                    nodeset_dir=nodeset_dir, output_dir=output_dir, nodeset=nodeset, view=False
+                )
+            except Exception as e:
+                logger.error(f"nodeset={nodeset}: Failed to visualize: {e}")
+        return
+
     # Read the JSON data
-    nodeset_dir = args.nodeset_dir
-    output_dir = args.output_dir
-    nodeset = args.nodeset
-    filename = os.path.join(nodeset_dir, "nodeset" + str(nodeset) + ".json")
+    filename = os.path.join(nodeset_dir, f"nodeset{nodeset}.json")
     with open(filename) as f:
         data = json.load(f)
 
-    # Collect all nodes and store the corresponding text & node type in a dictionary
+    # edge related helper data structures
+    src2targets = defaultdict(list)
+    trg2sources = defaultdict(list)
+    edges = set()
+    for edge_dict in data["edges"]:
+        src2targets[edge_dict["fromID"]].append(edge_dict["toID"])
+        trg2sources[edge_dict["toID"]].append(edge_dict["fromID"])
+        edges.add((edge_dict["fromID"], edge_dict["toID"]))
+
+    # node related helper data structures
     node_id2node = {n["nodeID"]: n for n in data["nodes"]}
+    node_types2node_ids = defaultdict(list)
+    disconnected_node_ids = set()
+    for n in data["nodes"]:
+        node_type = n["type"]
+        if node_type in ["RA", "CA", "MA"]:
+            node_type = "S"
+        node_types2node_ids[node_type].append(n["nodeID"])
+        if n["nodeID"] not in src2targets and n["nodeID"] not in trg2sources:
+            disconnected_node_ids.add(n["nodeID"])
 
-    # Collect all edges
-    ta_edges = []  # default transitions for L-nodes
-    ya_edges = []  # transitions between L and I-nodes, S and TA nodes or I and TA nodes
-    # sometimes YA nodes also mean transitions between two L nodes!
-    # E.g., see nodeset18291.json nodes 540800-540805 for L-L transition
-    s_edges = []  # transitions between I-nodes
-
-    ta_edge_node_types = ["L", "TA"]
-    s_edge_node_types = ["MA", "RA", "CA", "I"]
-    for e in data["edges"]:
-        node_from = e["fromID"]
-        node_to = e["toID"]
-        node_tuple = (node_from, node_to)
-        node_type_from = node_id2node[node_from]["type"]
-        node_type_to = node_id2node[node_to]["type"]
-        if (node_type_from in ta_edge_node_types) and (node_type_to in ta_edge_node_types):
-            ta_edges.append(node_tuple)
-        elif node_type_from == "YA" or node_type_to == "YA":
-            ya_edges.append(node_tuple)
-        elif (node_type_from in s_edge_node_types) and (node_type_to in s_edge_node_types):
-            s_edges.append(node_tuple)
-
-    # Sort by the first node ids
-    ya_edges = sorted(ya_edges, key=lambda x: x[0])
-    s_edges = sorted(s_edges, key=lambda x: x[0])
-    ta_edges = sorted(ta_edges, key=lambda x: x[0])
-
-    # Create two clusters (subgraphs) for I-nodes and L-nodes
+    # Create two clusters (subgraphs) for I related nodes and L related nodes
     g = Digraph("G", filename="cluster.gv", format="png")
     g.attr(rankdir="RL")
     g.attr(splines="ortho")
@@ -109,19 +133,37 @@ def create_visualization(args):
         c.node_attr["fillcolor"] = "lightcyan"
         c.attr(splines="ortho")
         c.attr(overlap="false")
-        # Add TA and YA edges that connect to L-nodes
-        for from_id, to_id in ta_edges:
-            add_node(node=node_id2node[from_id], graph=c)
-            add_node(node=node_id2node[to_id], graph=c)
-        for from_id, to_id in ya_edges:
-            from_node = node_id2node[from_id]
-            if from_node["type"] == "L":
-                add_node(node=from_node, graph=c)
-            to_node = node_id2node[to_id]
-            if to_node["type"] == "L":
-                add_node(node=to_node, graph=c)
+
+        # sort L-nodes by timestamp
+        l_node_ids_sorted = sorted(
+            node_types2node_ids["L"],
+            key=lambda x: datetime.datetime.fromisoformat(node_id2node[x]["timestamp"]),
+        )
+
+        # add L-nodes and all connected TA-nodes
+        l_site_node_ids = []
+        for l_site_node_id in l_node_ids_sorted:
+            # do not visualize disconnected nodes
+            if l_site_node_id in disconnected_node_ids:
+                continue
+            add_node(node=node_id2node[l_site_node_id], graph=c)
+            l_site_node_ids.append(l_site_node_id)
+            for ya_trg_node_id in src2targets[l_site_node_id]:
+                ya_trg_node = node_id2node[ya_trg_node_id]
+                if ya_trg_node["type"] == "TA":
+                    add_node(node=ya_trg_node, graph=c)
+                    l_site_node_ids.append(ya_trg_node_id)
         c.edge_attr["constraint"] = "false"
-        c.edges(ta_edges)
+        l_site_edges = filter_edges(edges, l_site_node_ids, l_site_node_ids)
+        c.edges(l_site_edges)
+
+    # collect YA nodes in the order of L-site-nodes (L- and TA-nodes), i.e. they need to be connected to L-site-nodes
+    ya_node_ids = []
+    for l_site_node_id in l_site_node_ids:
+        if l_site_node_id in src2targets:
+            for ya_trg_node_id in src2targets[l_site_node_id]:
+                if node_id2node[ya_trg_node_id]["type"] == "YA":
+                    ya_node_ids.append(ya_trg_node_id)
 
     with g.subgraph(name="cluster_I_nodes") as c:
         # Set cluster attributes for I-nodes
@@ -132,29 +174,57 @@ def create_visualization(args):
         c.node_attr["fillcolor"] = "mistyrose"
         c.attr(splines="ortho")
         c.attr(overlap="false")
-        # Add S and YA edges that connect to I-nodes
-        for from_id, to_id in s_edges:
-            add_node(node=node_id2node[from_id], graph=c)
-            add_node(node=node_id2node[to_id], graph=c)
-        for from_id, to_id in ya_edges:
-            from_node = node_id2node[from_id]
-            if from_node["type"] == "I":
-                add_node(node=from_node, graph=c)
-            to_node = node_id2node[to_id]
-            if to_node["type"] == "I":
-                add_node(node=to_node, graph=c)
+        # Add I- and S-nodes in the order of YA-nodes
+        i_site_node_ids = []
+        for ya_node_id in ya_node_ids:
+            for ya_trg_node_id in src2targets[ya_node_id]:
+                ya_trg_node = node_id2node[ya_trg_node_id]
+                if ya_trg_node["type"] in ["I", "RA", "CA", "MA"]:
+                    add_node(node=node_id2node[ya_trg_node_id], graph=c)
+                    i_site_node_ids.append(ya_trg_node_id)
         c.edge_attr["constraint"] = "false"
-        c.edges(s_edges)
+        i_site_edges = filter_edges(edges, i_site_node_ids, i_site_node_ids)
+        c.edges(i_site_edges)
 
-    # Add the rest of edges that connect L- and I-nodes
-    for from_id, to_id in ya_edges:
-        add_node(node=node_id2node[from_id], graph=g)
-        add_node(node=node_id2node[to_id], graph=g)
+    # Add the YA-nodes
+    ya_edges = set()
+    for node_id in ya_node_ids:
+        add_node(node=node_id2node[node_id], graph=g)
+        for src_node_id in trg2sources[node_id]:
+            ya_edges.add((src_node_id, node_id))
+        for trg_node_id in src2targets[node_id]:
+            ya_edges.add((node_id, trg_node_id))
     g.edges(ya_edges)
+
+    # warn about missed nodes
+    if len(disconnected_node_ids) > 0:
+        logger.warning(f"nodeset={nodeset}: Disconnected nodes: {disconnected_node_ids}")
+    missed_l_site_node_ids = (
+        (set(node_types2node_ids["L"]) | set(node_types2node_ids["TA"]))
+        - set(l_site_node_ids)
+        - disconnected_node_ids
+    )
+    if len(missed_l_site_node_ids) > 0:
+        logger.warning(f"nodeset={nodeset}: Missed L-site nodes: {missed_l_site_node_ids}")
+    missed_i_nodes_ids = (
+        (set(node_types2node_ids["I"]) | set(node_types2node_ids["S"]))
+        - set(i_site_node_ids)
+        - disconnected_node_ids
+    )
+    if len(missed_i_nodes_ids) > 0:
+        logger.warning(f"nodeset={nodeset}: Missed I-site nodes: {missed_i_nodes_ids}")
+    missed_ya_node_ids = set(node_types2node_ids["YA"]) - set(ya_node_ids) - disconnected_node_ids
+    if len(missed_ya_node_ids) > 0:
+        logger.warning(f"nodeset={nodeset}: Missed YA nodes: {missed_ya_node_ids}")
+
+    # warn about missed edges
+    missed_edges = edges - l_site_edges - i_site_edges - ya_edges
+    if len(missed_edges) > 0:
+        logger.warning(f"nodeset={nodeset}: Missed edges: {missed_edges}")
 
     # Render the final graph
     filename_visualized = os.path.join(output_dir, "nodeset" + str(nodeset) + ".gv")
-    g.render(filename_visualized, view=True)
+    g.render(filename_visualized, view=view)
 
 
 if __name__ == "__main__":
@@ -165,6 +235,13 @@ if __name__ == "__main__":
     parser.add_argument(
         "output_dir", type=str, help="path to the directory where to store the visualized results"
     )
-    parser.add_argument("nodeset", type=int, help="nodeset (argument map) id")
-    args = parser.parse_args()
-    create_visualization(args)
+    parser.add_argument(
+        "nodeset",
+        nargs="?",
+        type=str,
+        help="nodeset (argument map) id. This is optional, if not provided, all nodesets of in the "
+        "nodeset_dir are visualized",
+        default=None,
+    )
+    args = vars(parser.parse_args())
+    create_visualization(**args)
