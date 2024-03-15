@@ -335,7 +335,7 @@ def generate_relation_stats_table(dir_name) -> str:
                     f"{relation_node_type}/{relation_node['text']}"
                 )
         for src, trg in unused_edges:
-            unused_edge_args[(all_nodes[src]["type"], all_nodes[trg]["type"])].append(
+            unused_edge_args[f'{all_nodes[src]["type"]} -> {all_nodes[trg]["type"]}'].append(
                 (filename, src, trg)
             )
 
