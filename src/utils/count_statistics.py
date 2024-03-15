@@ -193,56 +193,74 @@ def generate_stats_table(dir_name):
     return markdown_table
 
 
-def get_relation_and_node_dicts(file_name: str) -> tuple[dict, dict]:
+def get_relation_and_node_dicts(file_name: str) -> tuple[dict, dict, set]:
 
     # load the nodes and edges from the json file
     with open(file_name) as f:
         data = json.load(f)
 
     # collect all incoming and outgoing edges for each node
-    src2trg = defaultdict(list)
-    trg2src = defaultdict(list)
+    src2trg = defaultdict(set)
+    trg2src = defaultdict(set)
+    edge_set = set()
     for edge in data["edges"]:
         src = edge["fromID"]
         trg = edge["toID"]
-        src2trg[src].append(trg)
-        trg2src[trg].append(src)
+        src2trg[src].add(trg)
+        trg2src[trg].add(src)
+        edge_set.add((src, trg))
 
     # collect the node-id-mapping and relation ids
-    node2id = dict()
-    relation_node_ids = list()
+    node_id2node = dict()
+    type2ids = defaultdict(set)
     for node in data["nodes"]:
         node_id = node.pop("nodeID")
-        node2id[node_id] = node
-        # relation nodes
-        if node["type"] in ["TA", "YA", "RA", "CA", "MA"]:
-            relation_node_ids.append(node_id)
-        # non-relation nodes
-        elif node["type"] in ["L", "I"]:
-            pass
-        else:
-            raise ValueError(f"Unknown node type: {node['type']}")
+        node_id2node[node_id] = node
+        node_type = node["type"]
+        if node_type in ["RA", "CA", "MA"]:
+            node_type = "S"
+        type2ids[node_type].add(node_id)
+
+    relation_type2arg_types = {
+        "TA": [("L", "L")],
+        "S": [("I", "I")],
+        "YA": [("L", "I"), ("TA", "S")],
+    }
 
     # assemble relations
-    relations = defaultdict(list)
-    for rel_id in relation_node_ids:
-        rel_node = node2id[rel_id]
-        for src in trg2src.get(rel_id, []):
-            for trg in src2trg.get(rel_id, []):
-                relations[(src, trg)].append(rel_node)
+    filtered_used_edges = set()
+    filtered_relations = defaultdict(list)
+    all_relations = defaultdict(list)
+    all_used_edges = set()
+    for rel_type, arg_types in relation_type2arg_types.items():
+        for rel_id in type2ids[rel_type]:
+            for src_id in trg2src[rel_id]:
+                for trg_id in src2trg[rel_id]:
+                    all_relations[(src_id, trg_id)].append(node_id2node[rel_id])
+                    all_used_edges.add((src_id, rel_id))
+                    all_used_edges.add((rel_id, trg_id))
+                    for src_type, trg_type in arg_types:
+                        if src_id in type2ids[src_type] and trg_id in type2ids[trg_type]:
+                            filtered_relations[(src_id, trg_id)].append(node_id2node[rel_id])
+                            filtered_used_edges.add((src_id, rel_id))
+                            filtered_used_edges.add((rel_id, trg_id))
 
     # check for multiple relations between the same nodes
-    for (src, trg), rels in relations.items():
+    for (src, trg), rels in filtered_relations.items():
         if len(rels) > 1:
-            src_node = node2id[src]
-            trg_node = node2id[trg]
+            src_node = node_id2node[src]
+            trg_node = node_id2node[trg]
             relation_types = set(rel["type"] for rel in rels)
-            logger.warning(
-                f"{file_name}: Multiple relation nodes (types: {relation_types}) between {src} "
-                f"(type: {src_node['type']}) and {trg} (type: {trg_node['type']})"
-            )
+            if relation_types != {"TA"}:
+                logger.warning(
+                    f"{file_name}: Multiple relation nodes (types: {relation_types}) between {src} "
+                    f"(type: {src_node['type']}) and {trg} (type: {trg_node['type']})"
+                )
 
-    return relations, node2id
+    # unused_edges = edge_set - filtered_used_edges
+    # return filtered_relations, node_id2node, unused_edges
+    unused_edges = edge_set - all_used_edges
+    return all_relations, node_id2node, unused_edges
 
 
 def relation_dict_to_df(relation_dict) -> pd.DataFrame:
@@ -299,8 +317,11 @@ def generate_relation_stats_table(dir_name) -> str:
         | C     |      |      |      |
     """
     argument_types_to_relation_type = defaultdict(list)
+    unused_edge_args = defaultdict(list)
     for filename in os.listdir(dir_name):
-        relations, all_nodes = get_relation_and_node_dicts(os.path.join(dir_name, filename))
+        relations, all_nodes, unused_edges = get_relation_and_node_dicts(
+            os.path.join(dir_name, filename)
+        )
         for (source_id, target_id), relation_nodes in relations.items():
             source_node = all_nodes[source_id]
             target_node = all_nodes[target_id]
@@ -313,6 +334,15 @@ def generate_relation_stats_table(dir_name) -> str:
                 argument_types_to_relation_type[arg_types].append(
                     f"{relation_node_type}/{relation_node['text']}"
                 )
+        for src, trg in unused_edges:
+            unused_edge_args[(all_nodes[src]["type"], all_nodes[trg]["type"])].append(
+                (filename, src, trg)
+            )
+
+    if len(unused_edge_args) > 0:
+        unused_edge_arg_counter = Counter({k: len(v) for k, v in unused_edge_args.items()})
+        logger.warning(f"Unused edges: {unused_edge_arg_counter}")
+
     df = relation_dict_to_df(argument_types_to_relation_type)
     df_count_strings = df.map(relation_types_to_count_string)
     return df_count_strings.to_markdown()
@@ -327,8 +357,8 @@ if __name__ == "__main__":
     # markdown_table = generate_stats_table(args.nodeset_dir)
 
     # tatiana's statistics
-    transitions_per_input_table = generate_transitions_per_input_table(args.nodeset_dir)
-    print(transitions_per_input_table)
+    # transitions_per_input_table = generate_transitions_per_input_table(args.nodeset_dir)
+    # print(transitions_per_input_table)
 
     # arne's statistics
     result = generate_relation_stats_table(args.nodeset_dir)
