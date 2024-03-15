@@ -25,7 +25,7 @@ import json
 import logging
 import os
 from collections import defaultdict
-from typing import Optional
+from typing import Dict, List, Optional, Set, Tuple
 
 from graphviz import Digraph
 
@@ -64,8 +64,8 @@ def add_node(node: dict, graph) -> None:
 
 
 def filter_edges(
-    edges: set[tuple[str, str]], allowed_source_ids: list[str], allowed_target_ids: list[str]
-) -> set[tuple[str, str]]:
+    edges: Set[Tuple[str, str]], allowed_source_ids: List[str], allowed_target_ids: List[str]
+) -> Set[Tuple[str, str]]:
     return set(
         (src, trg)
         for (src, trg) in edges
@@ -108,7 +108,7 @@ def create_visualization(
 
     # node related helper data structures
     node_id2node = {n["nodeID"]: n for n in data["nodes"]}
-    node_types2node_ids: dict[str, list[str]] = defaultdict(list)
+    node_types2node_ids: Dict[str, Set[str]] = defaultdict(set)
     disconnected_node_ids = set()
     duplicate_node_ids = set()
     for n in data["nodes"]:
@@ -117,9 +117,9 @@ def create_visualization(
             node_type = "S"
 
         # only collect connected nodes
-        if n["nodeID"] in src2targets and n["nodeID"] in trg2sources:
+        if n["nodeID"] in src2targets or n["nodeID"] in trg2sources:
             if n["nodeID"] not in node_types2node_ids[node_type]:
-                node_types2node_ids[node_type].append(n["nodeID"])
+                node_types2node_ids[node_type].add(n["nodeID"])
             else:
                 duplicate_node_ids.add(n["nodeID"])
         else:
