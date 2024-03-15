@@ -108,15 +108,25 @@ def create_visualization(
 
     # node related helper data structures
     node_id2node = {n["nodeID"]: n for n in data["nodes"]}
-    node_types2node_ids = defaultdict(list)
+    node_types2node_ids: dict[str, list[str]] = defaultdict(list)
     disconnected_node_ids = set()
+    duplicate_node_ids = set()
     for n in data["nodes"]:
         node_type = n["type"]
         if node_type in ["RA", "CA", "MA"]:
             node_type = "S"
-        node_types2node_ids[node_type].append(n["nodeID"])
-        if n["nodeID"] not in src2targets and n["nodeID"] not in trg2sources:
+
+        # only collect connected nodes
+        if n["nodeID"] in src2targets and n["nodeID"] in trg2sources:
+            if n["nodeID"] not in node_types2node_ids[node_type]:
+                node_types2node_ids[node_type].append(n["nodeID"])
+            else:
+                duplicate_node_ids.add(n["nodeID"])
+        else:
             disconnected_node_ids.add(n["nodeID"])
+
+    if len(duplicate_node_ids) > 0:
+        logger.warning(f"nodeset={nodeset}: Duplicate nodes: {duplicate_node_ids}")
 
     # Create two clusters (subgraphs) for I related nodes and L related nodes
     g = Digraph("G", filename="cluster.gv", format="png")
@@ -174,14 +184,37 @@ def create_visualization(
         c.node_attr["fillcolor"] = "mistyrose"
         c.attr(splines="ortho")
         c.attr(overlap="false")
+
+        # sort L-nodes by timestamp
+        i_node_ids_sorted = sorted(
+            node_types2node_ids["I"],
+            key=lambda x: datetime.datetime.fromisoformat(node_id2node[x]["timestamp"]),
+        )
+
         # Add I- and S-nodes in the order of YA-nodes
+        i_node_ids_added = []
         i_site_node_ids = []
         for ya_node_id in ya_node_ids:
             for ya_trg_node_id in src2targets[ya_node_id]:
                 ya_trg_node = node_id2node[ya_trg_node_id]
-                if ya_trg_node["type"] in ["I", "RA", "CA", "MA"]:
+                if (
+                    ya_trg_node["type"] in ["I", "RA", "CA", "MA"]
+                    and ya_trg_node_id not in i_site_node_ids
+                ):
                     add_node(node=node_id2node[ya_trg_node_id], graph=c)
                     i_site_node_ids.append(ya_trg_node_id)
+                    if ya_trg_node["type"] == "I":
+                        i_node_ids_added.append(ya_trg_node_id)
+
+        if len(i_node_ids_sorted) != len(i_node_ids_added):
+            logger.warning(
+                f"nodeset={nodeset}: Missed I-nodes: {set(i_node_ids_sorted) - set(i_node_ids_added)}"
+            )
+        elif i_node_ids_sorted != i_node_ids_added:
+            logger.warning(
+                f"nodeset={nodeset}: I-nodes order mismatch: {i_node_ids_sorted} != {i_node_ids_added}"
+            )
+
         c.edge_attr["constraint"] = "false"
         i_site_edges = filter_edges(edges, i_site_node_ids, i_site_node_ids)
         c.edges(i_site_edges)
