@@ -224,7 +224,7 @@ def get_relation_and_node_dicts(file_name: str) -> tuple[dict, dict, set]:
     relation_type2arg_types = {
         "TA": [("L", "L")],
         "S": [("I", "I")],
-        "YA": [("L", "I"), ("TA", "S")],
+        "YA": [("L", "I"), ("L", "S"), ("TA", "S"), ("TA", "I")],
     }
 
     # assemble relations
@@ -257,10 +257,10 @@ def get_relation_and_node_dicts(file_name: str) -> tuple[dict, dict, set]:
                     f"(type: {src_node['type']}) and {trg} (type: {trg_node['type']})"
                 )
 
-    # unused_edges = edge_set - filtered_used_edges
-    # return filtered_relations, node_id2node, unused_edges
-    unused_edges = edge_set - all_used_edges
-    return all_relations, node_id2node, unused_edges
+    unused_edges = edge_set - filtered_used_edges
+    return filtered_relations, node_id2node, unused_edges
+    # unused_edges = edge_set - all_used_edges
+    # return all_relations, node_id2node, unused_edges
 
 
 def relation_dict_to_df(relation_dict) -> pd.DataFrame:
