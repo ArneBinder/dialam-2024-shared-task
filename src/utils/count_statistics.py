@@ -224,7 +224,7 @@ def get_relation_and_node_dicts(file_name: str) -> tuple[dict, dict, set]:
     relation_type2arg_types = {
         "TA": [("L", "L")],
         "S": [("I", "I")],
-        "YA": [("L", "I"), ("L", "S"), ("TA", "S"), ("TA", "I")],
+        "YA": [("L", "I"), ("TA", "S"), ("TA", "I")],
     }
 
     # assemble relations
