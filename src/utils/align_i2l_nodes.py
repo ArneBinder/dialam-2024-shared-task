@@ -68,8 +68,13 @@ def align_nodes(
 ):
     # if no nodeset id is provided, check all nodesets in the directory
     if nodeset is None:
-        total_matched = 0
-        total_mismatched = 0
+        alignments = {
+            "aligned_il_nodes": [],
+            "total_matched": 0,
+            "total_mismatched": 0,
+            "l2i_gold_multiple_alignments": 0,
+            "l2i_assigned_multiple_alignments": 0,
+        }
         nodeset_ids = [
             f.split("nodeset")[1].split(".json")[0]
             for f in os.listdir(nodeset_dir)
@@ -77,17 +82,17 @@ def align_nodes(
         ]
         for nodeset in nodeset_ids:
             try:
-                nodeset_matched, nodeset_mismatched = align_nodes(
+                nodeset_alignments = align_nodes(
                     nodeset_dir=nodeset_dir,
                     similarity_measure=similarity_measure,
                     nodeset=nodeset,
                     smodel=smodel,
                 )
-                total_matched += nodeset_matched
-                total_mismatched += nodeset_mismatched
+                for k in alignments:
+                    alignments[k] += nodeset_alignments[k]
             except Exception as e:
                 logger.error(f"nodeset={nodeset}: Failed to process: {e}")
-        return total_matched, total_mismatched
+        return alignments
 
     # read the JSON data
     filename = os.path.join(nodeset_dir, f"nodeset{nodeset}.json")
@@ -107,6 +112,7 @@ def align_nodes(
     node_id2node = {n["nodeID"]: n for n in data["nodes"]}
     node_id2locution = {n["nodeID"]: n for n in data["locutions"]}
     node_types2node_ids: Dict[str, Set[str]] = defaultdict(set)
+    node_ids2node_type: Dict[str, str] = defaultdict(str)
     disconnected_node_ids = set()
     duplicate_node_ids = set()
     for n in data["nodes"]:
@@ -118,6 +124,7 @@ def align_nodes(
         if n["nodeID"] in src2targets or n["nodeID"] in trg2sources:
             if n["nodeID"] not in node_types2node_ids[node_type]:
                 node_types2node_ids[node_type].add(n["nodeID"])
+                node_ids2node_type[n["nodeID"]] = node_type
             else:
                 duplicate_node_ids.add(n["nodeID"])
         else:
@@ -217,8 +224,48 @@ def align_nodes(
         else:
             total_mismatched += 1
 
+    # check whether L-node can be aligned to multiple I-nodes in the gold data
+    l2i_gold_nodes = defaultdict(list)
+    for l_node in node_types2node_ids["L"]:
+        # L and I-nodes must be connected via YA-node
+        for ya_node in src2targets[l_node]:
+            for ya_target in src2targets[ya_node]:
+                if node_ids2node_type[ya_target] == "I":
+                    l2i_gold_nodes[l_node].append(ya_target)
+    l2i_gold_multiple_alignments = sum(
+        [len(l2i_gold_nodes[l_node]) - 1 for l_node in l2i_gold_nodes]
+    )
+
+    # check whether our alignments have the same L-node aligned to multiple I-nodes
+    l2i_assigned_nodes = defaultdict(list)
+    for i_node, l_node in aligned_il_nodes:
+        l2i_assigned_nodes[l_node].append(i_node)
+    l2i_assigned_multiple_alignments = sum(
+        [len(l2i_assigned_nodes[l_node]) - 1 for l_node in l2i_assigned_nodes]
+    )
+
+    if l2i_gold_multiple_alignments > 0:
+        # warn about multiple alignments
+        gold_multiple_alignments = [
+            "L-Node: " + l_node + " I-Nodes: " + " ".join(l2i_gold_nodes[l_node])
+            for l_node in l2i_gold_nodes
+            if len(l2i_gold_nodes[l_node]) > 1
+        ]
+        logger.warning(
+            f"nodeset={nodeset}: multiple alignments between L-node and I-nodes {gold_multiple_alignments}"
+        )
+
     assert total_matched + total_mismatched == len(aligned_il_nodes)
-    return total_matched, total_mismatched
+
+    alignments = {
+        "aligned_il_nodes": aligned_il_nodes,
+        "total_matched": total_matched,
+        "total_mismatched": total_mismatched,
+        "l2i_gold_multiple_alignments": l2i_gold_multiple_alignments,
+        "l2i_assigned_multiple_alignments": l2i_assigned_multiple_alignments,
+    }
+
+    return alignments
 
 
 if __name__ == "__main__":
@@ -247,18 +294,28 @@ if __name__ == "__main__":
     else:
         smodel = None
 
-    total_matched, total_mismatched = align_nodes(
+    alignments = align_nodes(
         nodeset_dir=args["nodeset_dir"],
         similarity_measure=args["similarity_measure"],
         nodeset=args["nodeset"],
         smodel=smodel,
     )
+
+    total_matched = alignments["total_matched"]
+    total_mismatched = alignments["total_mismatched"]
+    l2i_gold_multiple_alignments = alignments["l2i_gold_multiple_alignments"]
+    l2i_assigned_multiple_alignments = alignments["l2i_assigned_multiple_alignments"]
+
     print(
         "Result:",
-        "matched:",
+        "\nmatched I-L pairs:",
         total_matched,
-        "mismatched:",
+        "\nmismatched I-L pairs:",
         total_mismatched,
-        "aligned I-L nodes:",
+        "\naligned I-L pairs:",
         total_matched + total_mismatched,
+        "\nL-I multiple alignments (gold)",
+        l2i_gold_multiple_alignments,
+        "\nL-I multiple alignments (automatically assigned)",
+        l2i_assigned_multiple_alignments,
     )
