@@ -23,6 +23,7 @@ $ python3 src/utils/align_i2l_nodes.py data cossim 17940
  - overlap: Overlap coefficient (token-based)
  - bag: Bag distance (token-based)
  - lcsstr: Longest common substring similarity (sequence-based)
+ - ratcliff_obershelp: Ratcliff-Obershelp similarity (sequence-based)
 For more details on textdistance metrics see: https://pypi.org/project/textdistance/
 For more details on SentenceTransformers models see: https://www.sbert.net/docs/pretrained_models.html
 
@@ -35,7 +36,6 @@ import argparse
 import datetime
 import json
 import logging
-import math
 import os
 from collections import defaultdict
 from typing import Any, Dict, List, Optional, Set, Tuple
