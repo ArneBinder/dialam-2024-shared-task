@@ -14,7 +14,7 @@ $ python3 src/utils/align_i2l_nodes.py data cossim 17940
 
 `data` is the path to the dataset with the nodesets in JSON format
 
-`cossim` is the similarity measure to use, it can have the following values:
+`cossim` is the similarity measure to use, similarity measure can have the following values:
  - cossim: cosine similarity with SentenceTransformers (embedding-based)
  - jaccard: Jaccard index (token-based)
  - tversky: Tversky index (token-based)
@@ -35,17 +35,29 @@ import argparse
 import datetime
 import json
 import logging
+import math
 import os
 from collections import defaultdict
 from typing import Any, Dict, List, Optional, Set, Tuple
 
 import textdistance
+from scipy.optimize import linear_sum_assignment
 from sentence_transformers import SentenceTransformer, util
 
 logger = logging.getLogger(__name__)
 
 DISTANCE_BASED_SIMILARITY = ["bag"]
-SIMILARITY_METRICS = ["jaccard", "tversky", "sorensen", "tanimoto", "overlap", "bag", "lcsstr"]
+SEQUENCE_BASED_SIMILARITY = ["lcsstr", "ratcliff_obershelp"]
+SIMILARITY_METRICS = [
+    "jaccard",
+    "tversky",
+    "sorensen",
+    "tanimoto",
+    "overlap",
+    "bag",
+    "lcsstr",
+    "ratcliff_obershelp",
+]
 
 # text distance metrics based on https://pypi.org/project/textdistance/
 metric_mapping = {
@@ -56,6 +68,7 @@ metric_mapping = {
     "overlap": textdistance.overlap,
     "bag": textdistance.bag,
     "lcsstr": textdistance.lcsstr,
+    "ratcliff_obershelp": textdistance.ratcliff_obershelp,
 }
 
 
@@ -130,13 +143,24 @@ def align_nodes(
         else:
             disconnected_node_ids.add(n["nodeID"])
 
+    # warn about duplicates
     if len(duplicate_node_ids) > 0:
         logger.warning(f"nodeset={nodeset}: Duplicate nodes: {duplicate_node_ids}")
 
-    # sort L-nodes by timestamp that comes from locutions because other timestamps can be arbitrary
+    # warn about missing L-nodes in locutions
+    missing_l_nodes_in_locutions = []
+    for n in node_types2node_ids["L"]:
+        if not (n in node_id2locution):
+            missing_l_nodes_in_locutions.append(n)
+    if len(missing_l_nodes_in_locutions) > 0:
+        logger.warning(
+            f"nodeset={nodeset}: Missing L-nodes in locutions: {missing_l_nodes_in_locutions}"
+        )
+
+    # do not align by "locution" timestamps since those are missing for some L-nodes (e.g., L-node 70682 in nodeset 21303)!
     l_node_ids_sorted = sorted(
-        [n for n in node_types2node_ids["L"] if n in node_id2locution],
-        key=lambda x: datetime.datetime.fromisoformat(node_id2locution[x]["timestamp"]),
+        node_types2node_ids["L"],
+        key=lambda x: datetime.datetime.fromisoformat(node_id2node[x]["timestamp"]),
     )
 
     # sort I-nodes by timestamp
@@ -162,7 +186,7 @@ def align_nodes(
         # use SentenceEmbeddings to align the nodes (text-based)
         l_node_embeds = smodel.encode(l_node_texts_sorted)
         i_node_embeds = smodel.encode(i_node_texts_sorted)
-        similarity_matrix = util.cos_sim(i_node_embeds, l_node_embeds)
+        similarity_matrix = util.cos_sim(i_node_embeds, l_node_embeds).tolist()
     else:
         if similarity_measure in SIMILARITY_METRICS:
             # use textdistance to align the nodes (text-based)
@@ -177,8 +201,11 @@ def align_nodes(
                     l_node_text = l_node_texts_sorted[j]
                     l_node_text_str = "".join(l_node_text)
                     # longest common substring similarity
-                    if similarity_measure == "lcsstr":
-                        similarity = 1.0 * len(metric(i_node_text_str, l_node_text_str))
+                    if similarity_measure in SEQUENCE_BASED_SIMILARITY:
+                        if similarity_measure == "lcsstr":
+                            similarity = 1.0 * len(metric(i_node_text_str, l_node_text_str))
+                        else:
+                            similarity = metric(i_node_text_str, l_node_text_str)
                         similarity /= max(len(i_node_text_str), len(l_node_text_str))
                     else:
                         similarity = metric(i_node_text, l_node_text)
@@ -186,40 +213,54 @@ def align_nodes(
                 similarity_matrix.append(new_row)
         else:
             raise NotImplementedError(f"Unknown similarity measure: {similarity_measure}")
-    aligned_il_nodes = []
+
+    max_value = max([max(row) for row in similarity_matrix])
+    if similarity_measure in DISTANCE_BASED_SIMILARITY:
+        maximize = False
+        dummy_value = max_value + 1
+    else:
+        maximize = True
+        dummy_value = -1
+
+    # make sure that we have a square similarity matrix
+    # if we have more I-nodes than L-nodes
+    if len(similarity_matrix) > len(similarity_matrix[0]):
+        modified_matrix = True
+        for row in range(len(similarity_matrix)):
+            while len(similarity_matrix[row]) < len(similarity_matrix):
+                similarity_matrix[row].append(dummy_value)
+    # if we have more-L nodes than I-nodes
+    elif len(similarity_matrix) < len(similarity_matrix[0]):
+        modified_matrix = True
+        while len(similarity_matrix) < len(similarity_matrix[0]):
+            dummy_row = [dummy_value for el in range(len(similarity_matrix[0]))]
+            similarity_matrix.append(dummy_row)
+
+    assignments = linear_sum_assignment(similarity_matrix, maximize=maximize)
     # align each I-node with L-node
     # Q: why I -> L and not L -> I alignment?
     # A: there can be L-nodes that are not aligned to any I-nodes but each I-node must be aligned to some L-node
-    for i in range(len(i_node_texts_sorted)):
-        l_candidates = []
-        for l_candidate in range(len(l_node_texts_sorted)):
-            l_candidates.append([similarity_matrix[i][l_candidate], l_candidate])
-        if similarity_measure in DISTANCE_BASED_SIMILARITY:
-            reverse = False
+    aligned_il_nodes = []
+    for i in range(len(i_node_ids_sorted)):
+        best_l_candidate = assignments[1][i]
+        if best_l_candidate < len(l_node_ids_sorted):
+            aligned_il_nodes.append((i_node_ids_sorted[i], l_node_ids_sorted[best_l_candidate]))
         else:
-            reverse = True
-        l_candidates = sorted(l_candidates, key=lambda x: x[0], reverse=reverse)
-        best_l_candidate = l_candidates[0][-1]
-        aligned_il_nodes.append((i_node_ids_sorted[i], l_node_ids_sorted[best_l_candidate]))
+            # warn about failed I-to-L alignment ("dummy" L-node was selected)
+            logger.warning(f"nodeset={nodeset}: Could not align I-node: {i_node_ids_sorted[i]}")
 
     total_matched = 0
     total_mismatched = 0
-    for i_node, l_node in aligned_il_nodes:
-        # find the gold alignment between the I-node and L-node
-        matched = False
-        gold_l_node = None
-        for ya_node in node_types2node_ids["YA"]:
-            if ya_node in trg2sources[i_node]:
-                ya_sources = trg2sources[ya_node]
-                for ya_source in ya_sources:
-                    if node_id2node[ya_source]["type"] == "L":
-                        gold_l_node = ya_source
-                        break
-            # check whether aligned L-node is the same as gold L-node
-            if str(gold_l_node) == l_node:
-                matched = True
-                break
-        if matched:
+    aligned_i2l_nodes = {i_node: l_node for i_node, l_node in aligned_il_nodes}
+    i2l_gold_nodes = defaultdict(list)
+    for i_node in node_types2node_ids["I"]:
+        # L and I-nodes must be connected via YA-node
+        for ya_node in trg2sources[i_node]:
+            for ya_source in trg2sources[ya_node]:
+                if node_ids2node_type[ya_source] == "L":
+                    i2l_gold_nodes[i_node].append(ya_source)
+    for i_node in i2l_gold_nodes:
+        if i_node in aligned_i2l_nodes and aligned_i2l_nodes[i_node] in i2l_gold_nodes[i_node]:
             total_matched += 1
         else:
             total_mismatched += 1
@@ -237,6 +278,7 @@ def align_nodes(
     )
 
     # check whether our alignments have the same L-node aligned to multiple I-nodes
+    # this should NOT happen if we use linear_sum_assignment
     l2i_assigned_nodes = defaultdict(list)
     for i_node, l_node in aligned_il_nodes:
         l2i_assigned_nodes[l_node].append(i_node)
@@ -252,10 +294,10 @@ def align_nodes(
             if len(l2i_gold_nodes[l_node]) > 1
         ]
         logger.warning(
-            f"nodeset={nodeset}: multiple alignments between L-node and I-nodes {gold_multiple_alignments}"
+            f"nodeset={nodeset}: Multiple alignments between L-node and I-nodes {gold_multiple_alignments}"
         )
 
-    assert total_matched + total_mismatched == len(aligned_il_nodes)
+    assert total_matched + total_mismatched == len(i2l_gold_nodes)
 
     alignments = {
         "aligned_il_nodes": aligned_il_nodes,
@@ -276,7 +318,8 @@ if __name__ == "__main__":
     parser.add_argument(
         "similarity_measure",
         type=str,
-        help="similarity measure for comparing I and L-nodes. Available options: cossim, jaccard, tversky, sorensen, tanimoto, overlap, bag, lcsstr",
+        help="similarity measure for comparing I and L-nodes. Available options: "
+        + " ".join(SIMILARITY_METRICS),
     )
     parser.add_argument(
         "nodeset",
