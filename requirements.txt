@@ -34,6 +34,12 @@ pudb            # debugger
 tabulate        # show statistics as markdown
 plotext         # show statistics as plots
 graphviz        # visualize argument maps
+cython          # for evaluation script
+networkx        # graphs, evaluation script
+git+https://github.com/Jacobe2169/GMatch4py.git # graph matching, evaluation script
+pycm            # confusion matrix, evaluation script
+segeval         # segmentation, evaluation script
+fuzzywuzzy      # fuzzy string matching, evaluation script
 # huggingface-hub>=0.13  # interaction with HF hub
 lxml            # for count_statistics.py
 sentence-transformers    # sentence embeddings
