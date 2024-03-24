@@ -6,6 +6,7 @@
   - pycm # confusion matrix
   - segeval # segmentation
   - fuzzywuzzy # fuzzy string matching
+  - numpy # used in matching.py
 
 (2) Run the script as follows:
 
