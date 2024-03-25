@@ -35,3 +35,4 @@ tabulate        # show statistics as markdown
 plotext         # show statistics as plots
 graphviz        # visualize argument maps
 # huggingface-hub>=0.13  # interaction with HF hub
+lxml            # for count_statistics.py
