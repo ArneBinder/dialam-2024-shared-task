@@ -29,7 +29,8 @@ For more details on SentenceTransformers models see: https://www.sbert.net/docs/
 
 `21388` is the nodeset id (in this example for `nodeset21388.json`).
 
-Note: If no nodeset id is provided, the script will compute the matches and mismatches between the I and L-ndoes for all nodesets in the directory.
+Note: If no nodeset id is provided, the script will compute the matches and mismatches between
+the I- and L-nodes for all nodesets in the directory.
 """
 
 import argparse
