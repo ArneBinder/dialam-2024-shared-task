@@ -11,6 +11,8 @@ T = TypeVar("T")
 
 
 def get_nodeset_ids_from_directory(nodeset_dir: str) -> List[str]:
+    """Get the IDs of all nodesets in a directory."""
+
     return [
         f.split("nodeset")[1].split(".json")[0]
         for f in os.listdir(nodeset_dir)
@@ -19,12 +21,16 @@ def get_nodeset_ids_from_directory(nodeset_dir: str) -> List[str]:
 
 
 def read_nodeset(nodeset_dir: str, nodeset_id: str) -> Dict[str, Any]:
+    """Read a nodeset with a given ID from a directory."""
+
     filename = os.path.join(nodeset_dir, f"nodeset{nodeset_id}.json")
     with open(filename) as f:
         return json.load(f)
 
 
 def write_nodeset(nodeset_dir: str, nodeset_id: str, data: Dict[str, Any]) -> None:
+    """Write a nodeset with a given ID to a directory."""
+
     filename = os.path.join(nodeset_dir, f"nodeset{nodeset_id}.json")
     with open(filename, "w") as f:
         json.dump(data, f, indent=2)
@@ -33,6 +39,19 @@ def write_nodeset(nodeset_dir: str, nodeset_id: str, data: Dict[str, Any]) -> No
 def process_all_nodesets(
     nodeset_dir: str, func: Callable[..., T], show_progress: bool = True, **kwargs
 ) -> Iterator[Tuple[str, Union[T, Exception]]]:
+    """Process all nodesets in a directory.
+
+    Args:
+        nodeset_dir: The directory containing the nodesets.
+        func: The function to apply to each nodeset.
+        show_progress: Whether to show a progress bar.
+        **kwargs: Additional keyword arguments to pass to the function.
+
+    Yields:
+        A tuple containing the nodeset ID and the result of applying the function.
+        If an exception occurs, the result will be the exception.
+    """
+
     nodeset_ids = get_nodeset_ids_from_directory(nodeset_dir=nodeset_dir)
     for nodeset_id in tqdm.tqdm(
         nodeset_ids, desc="Processing nodesets", disable=not show_progress
