@@ -6,6 +6,7 @@
   - segeval # segmentation
   - fuzzywuzzy # fuzzy string matching
   - numpy # used in matching.py
+  - bs4 # used in matching.py
 
 (2) Install GMatch4py (needed for graph matching) either directly with pip:
   pip install git+https://github.com/Jacobe2169/GMatch4py.git

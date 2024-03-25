@@ -40,6 +40,7 @@ networkx        # graphs, evaluation script
 pycm            # confusion matrix, evaluation script
 segeval         # segmentation, evaluation script
 fuzzywuzzy      # fuzzy string matching, evaluation script
+bs4             # web scraping, evaluation script
 # huggingface-hub>=0.13  # interaction with HF hub
 lxml            # for count_statistics.py
 sentence-transformers    # sentence embeddings
