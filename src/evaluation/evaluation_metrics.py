@@ -2,13 +2,21 @@
 
 (1) Make sure that you have installed the following libraries (also specified in requirements.txt):
   - networkx # graphs
-  - git+https://github.com/Jacobe2169/GMatch4py.git # graph matching
   - pycm # confusion matrix
   - segeval # segmentation
   - fuzzywuzzy # fuzzy string matching
   - numpy # used in matching.py
 
-(2) Run the script as follows:
+(2) Install GMatch4py (needed for graph matching) either directly with pip:
+  pip install git+https://github.com/Jacobe2169/GMatch4py.git
+
+  Or by cloning the repository first:
+  git clone https://github.com/Jacobe2169/GMatch4py
+  cd GMatch4py
+  pip install .
+
+
+(3) Run the script as follows:
 
 $ python3 src/evaluation/evaluation_metrics.py predicted_nodeset_path gold_nodeset_path
 
