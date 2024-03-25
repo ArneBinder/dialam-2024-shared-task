@@ -36,3 +36,6 @@ plotext         # show statistics as plots
 graphviz        # visualize argument maps
 # huggingface-hub>=0.13  # interaction with HF hub
 lxml            # for count_statistics.py
+sentence-transformers    # sentence embeddings
+textdistance             # text similarity metrics
+scipy                    # node alignment with linear_sum_assignment
