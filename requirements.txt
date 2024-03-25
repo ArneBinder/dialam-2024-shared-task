@@ -33,4 +33,5 @@ sh              # for running bash commands in some tests
 pudb            # debugger
 tabulate        # show statistics as markdown
 plotext         # show statistics as plots
+graphviz        # visualize argument maps
 # huggingface-hub>=0.13  # interaction with HF hub
