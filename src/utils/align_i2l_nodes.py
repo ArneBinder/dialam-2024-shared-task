@@ -43,7 +43,7 @@ import textdistance
 from scipy.optimize import linear_sum_assignment
 from sentence_transformers import SentenceTransformer, util
 
-from src.utils.nodeset_utils import process_all_nodesets, read_nodeset
+from src.utils.nodeset_utils import Node, Nodeset, process_all_nodesets, read_nodeset
 
 logger = logging.getLogger(__name__)
 
@@ -74,11 +74,11 @@ metric_mapping = {
 
 
 def align_i_and_l_nodes(
-    node_id2node: Dict[str, Dict],
+    node_id2node: Dict[str, Node],
     l_node_ids: List[str],
     i_node_ids: List[str],
     similarity_measure: str,
-    nodeset_id: str,
+    nodeset_id: Optional[str] = None,
     smodel=None,
 ) -> List[Tuple[str, str]]:
     # extract text for sorted L-nodes and I-nodes
@@ -166,32 +166,29 @@ def align_i_and_l_nodes(
 
 # returns number of matched and mismatched I-L alignments (through YA-nodes)
 def evaluate_align_nodes(
-    nodeset_dir: str,
+    nodeset: Nodeset,
     similarity_measure: str,
-    nodeset_id: str,
+    nodeset_id: Optional[str] = None,
     smodel: Optional[Any] = None,
-):
-
-    # read the JSON data
-    data = read_nodeset(nodeset_dir=nodeset_dir, nodeset_id=nodeset_id)
+) -> Dict[str, Any]:
 
     # edge related helper data structures
     src2targets = defaultdict(list)
     trg2sources = defaultdict(list)
     edges = set()
-    for edge_dict in data["edges"]:
+    for edge_dict in nodeset["edges"]:
         src2targets[edge_dict["fromID"]].append(edge_dict["toID"])
         trg2sources[edge_dict["toID"]].append(edge_dict["fromID"])
         edges.add((edge_dict["fromID"], edge_dict["toID"]))
 
     # node related helper data structures
-    node_id2node = {n["nodeID"]: n for n in data["nodes"]}
-    node_id2locution = {n["nodeID"]: n for n in data["locutions"]}
+    node_id2node = {n["nodeID"]: n for n in nodeset["nodes"]}
+    node_id2locution = {n["nodeID"]: n for n in nodeset["locutions"]}
     node_types2node_ids: Dict[str, Set[str]] = defaultdict(set)
     node_ids2node_type: Dict[str, str] = defaultdict(str)
     disconnected_node_ids = set()
     duplicate_node_ids = set()
-    for n in data["nodes"]:
+    for n in nodeset["nodes"]:
         node_type = n["type"]
         if node_type in ["RA", "CA", "MA"]:
             node_type = "S"
@@ -212,31 +209,19 @@ def evaluate_align_nodes(
 
     # warn about missing L-nodes in locutions
     missing_l_nodes_in_locutions = []
-    for n in node_types2node_ids["L"]:
-        if not (n in node_id2locution):
-            missing_l_nodes_in_locutions.append(n)
+    for node_id in node_types2node_ids["L"]:
+        if not (node_id in node_id2locution):
+            missing_l_nodes_in_locutions.append(node_id)
     if len(missing_l_nodes_in_locutions) > 0:
         logger.warning(
             f"nodeset={nodeset_id}: Missing L-nodes in locutions: {missing_l_nodes_in_locutions}"
         )
 
-    # do not align by "locution" timestamps since those are missing for some L-nodes (e.g., L-node 70682 in nodeset 21303)!
-    l_node_ids_sorted = sorted(
-        node_types2node_ids["L"],
-        key=lambda x: datetime.datetime.fromisoformat(node_id2node[x]["timestamp"]),
-    )
-
-    # sort I-nodes by timestamp
-    i_node_ids_sorted = sorted(
-        node_types2node_ids["I"],
-        key=lambda x: datetime.datetime.fromisoformat(node_id2node[x]["timestamp"]),
-    )
-
     # align I and L-nodes
     aligned_il_nodes = align_i_and_l_nodes(
         node_id2node=node_id2node,
-        l_node_ids=l_node_ids_sorted,
-        i_node_ids=i_node_ids_sorted,
+        l_node_ids=list(node_types2node_ids["L"]),
+        i_node_ids=list(node_types2node_ids["I"]),
         similarity_measure=similarity_measure,
         nodeset_id=nodeset_id,
         smodel=smodel,
@@ -331,24 +316,26 @@ if __name__ == "__main__":
         smodel = None
 
     kwargs = {
-        "nodeset_dir": args["nodeset_dir"],
         "similarity_measure": args["similarity_measure"],
         "smodel": smodel,
     }
 
     if args["nodeset"] is not None:
-        alignments = evaluate_align_nodes(nodeset_id=args["nodeset"], **kwargs)
+        nodeset = read_nodeset(nodeset_dir=args["nodeset_dir"], nodeset_id=args["nodeset"])
+        alignments = evaluate_align_nodes(nodeset=nodeset, nodeset_id=args["nodeset"], **kwargs)
     else:
         alignments = dict()
-        for nodeset, result in process_all_nodesets(func=evaluate_align_nodes, **kwargs):
-            if isinstance(result, Exception):
-                logger.error(f"nodeset={nodeset}: Failed to process: {result}")
+        for nodeset_id, nodeset_or_error in process_all_nodesets(
+            func=evaluate_align_nodes, nodeset_dir=args["nodeset_dir"], **kwargs
+        ):
+            if isinstance(nodeset_or_error, Exception):
+                logger.error(f"nodeset={nodeset_id}: Failed to process: {nodeset_or_error}")
             else:
-                for key in result:
+                for key in nodeset_or_error:
                     if key in alignments:
-                        alignments[key] += result[key]
+                        alignments[key] += nodeset_or_error[key]
                     else:
-                        alignments[key] = result[key]
+                        alignments[key] = nodeset_or_error[key]
 
     total_matched = alignments["total_matched"]
     total_mismatched = alignments["total_mismatched"]
