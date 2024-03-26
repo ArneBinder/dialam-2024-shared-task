@@ -280,6 +280,18 @@ if __name__ == "__main__":
         default="lcsstr",
         help="The similarity measure to use for creating YA nodes.",
     )
+    parser.add_argument(
+        "--nodeset_id",
+        type=str,
+        default=None,
+        help="The ID of the nodeset to process. If not provided, all nodesets in the input directory will be processed.",
+    )
+    parser.add_argument(
+        "--dont_show_progress",
+        dest="show_progress",
+        action="store_false",
+        help="Whether to show a progress bar when processing multiple nodesets.",
+    )
 
     args = vars(parser.parse_args())
     logging.basicConfig(level=logging.INFO)
