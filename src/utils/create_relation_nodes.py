@@ -97,6 +97,9 @@ def create_s_relations_and_nodes_from_ta_nodes_and_il_alignment(
     sat_node_alignment = []
     new_node_id2node = dict()
     for src_id, trg_id, ta_node_id in ta_relations:
+        if src_id not in l2i_node_id or trg_id not in l2i_node_id:
+            # skip TA relations where the source or target L nodes are not aligned with I nodes
+            continue
         # we may have already created an S node for the TA node
         s_node_id = ta2s_id.get(ta_node_id, None)
         # if not, create a new S node
