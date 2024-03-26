@@ -212,9 +212,9 @@ def evaluate_align_nodes(
 
     # warn about missing L-nodes in locutions
     missing_l_nodes_in_locutions = []
-    for n in node_types2node_ids["L"]:
-        if not (n in node_id2locution):
-            missing_l_nodes_in_locutions.append(n)
+    for node_id in node_types2node_ids["L"]:
+        if not (node_id in node_id2locution):
+            missing_l_nodes_in_locutions.append(node_id)
     if len(missing_l_nodes_in_locutions) > 0:
         logger.warning(
             f"nodeset={nodeset_id}: Missing L-nodes in locutions: {missing_l_nodes_in_locutions}"

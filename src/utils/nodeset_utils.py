@@ -2,13 +2,22 @@ import json
 import logging
 import os
 from collections import defaultdict
-from typing import Any, Callable, Dict, Iterator, List, Optional, Tuple, TypeVar, Union
+from typing import Any, Callable, Dict, Iterator, List, Optional, Tuple, TypedDict, TypeVar, Union
 
 import tqdm
 
-logger = logging.getLogger(__name__)
+FuncResult = TypeVar("FuncResult")
+Nodeset = TypedDict(
+    "Nodeset",
+    {
+        "nodes": List[Dict[str, str]],
+        "edges": List[Dict[str, str]],
+        "locutions": List[Dict[str, str]],
+    },
+)
 
-T = TypeVar("T")
+
+logger = logging.getLogger(__name__)
 
 
 def get_nodeset_ids_from_directory(nodeset_dir: str) -> List[str]:
@@ -21,7 +30,7 @@ def get_nodeset_ids_from_directory(nodeset_dir: str) -> List[str]:
     ]
 
 
-def read_nodeset(nodeset_dir: str, nodeset_id: str) -> Dict[str, Any]:
+def read_nodeset(nodeset_dir: str, nodeset_id: str) -> Nodeset:
     """Read a nodeset with a given ID from a directory."""
 
     filename = os.path.join(nodeset_dir, f"nodeset{nodeset_id}.json")
@@ -29,7 +38,7 @@ def read_nodeset(nodeset_dir: str, nodeset_id: str) -> Dict[str, Any]:
         return json.load(f)
 
 
-def write_nodeset(nodeset_dir: str, nodeset_id: str, data: Dict[str, Any]) -> None:
+def write_nodeset(nodeset_dir: str, nodeset_id: str, data: Nodeset) -> None:
     """Write a nodeset with a given ID to a directory."""
 
     filename = os.path.join(nodeset_dir, f"nodeset{nodeset_id}.json")
@@ -38,8 +47,8 @@ def write_nodeset(nodeset_dir: str, nodeset_id: str, data: Dict[str, Any]) -> No
 
 
 def process_all_nodesets(
-    nodeset_dir: str, func: Callable[..., T], show_progress: bool = True, **kwargs
-) -> Iterator[Tuple[str, Union[T, Exception]]]:
+    nodeset_dir: str, func: Callable[..., FuncResult], show_progress: bool = True, **kwargs
+) -> Iterator[Tuple[str, Union[FuncResult, Exception]]]:
     """Process all nodesets in a directory.
 
     Args:

@@ -5,6 +5,7 @@ from typing import Any, Dict, List, Optional, Tuple
 
 from src.utils.align_i2l_nodes import align_i_and_l_nodes
 from src.utils.nodeset_utils import (
+    Nodeset,
     create_edges_from_relations,
     create_relation_nodes_from_alignment,
     get_binary_relations,
@@ -99,13 +100,13 @@ def create_s_relations_and_nodes_from_ta_nodes_and_il_alignment(
 
 
 def add_s_and_ya_nodes_with_edges(
-    nodeset: Dict[str, List[Dict[str, str]]],
+    nodeset: Nodeset,
     s_node_text: str,
     ya_node_text: str,
     s_node_type: str = "S",
     similarity_measure: str = "lcsstr",
     nodeset_id: Optional[str] = None,
-) -> Dict[str, List[Dict[str, str]]]:
+) -> Nodeset:
     """Create S and YA relations from L- and I-nodes and TA relations. The algorithm works as follows:
     1. Align I and L nodes based on the similarity of their texts.
     2. Create S nodes and align them with TA nodes by mirroring TA relations between L nodes to
