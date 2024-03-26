@@ -69,11 +69,8 @@ def process_all_nodesets(
         nodeset_ids, desc="Processing nodesets", disable=not show_progress
     ):
         try:
-            result = func(
-                nodeset_dir=nodeset_dir,
-                nodeset_id=nodeset_id,
-                **kwargs,
-            )
+            nodeset = read_nodeset(nodeset_dir=nodeset_dir, nodeset_id=nodeset_id)
+            result = func(nodeset=nodeset, nodeset_id=nodeset_id, **kwargs)
             yield nodeset_id, result
         except Exception as e:
             yield nodeset_id, e
