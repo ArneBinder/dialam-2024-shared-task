@@ -65,6 +65,7 @@ def process_all_nodesets(
     """
 
     nodeset_ids = get_nodeset_ids_from_directory(nodeset_dir=nodeset_dir)
+    failed_nodesets = []
     for nodeset_id in tqdm.tqdm(
         nodeset_ids, desc="Processing nodesets", disable=not show_progress
     ):
@@ -73,7 +74,13 @@ def process_all_nodesets(
             result = func(nodeset=nodeset, nodeset_id=nodeset_id, **kwargs)
             yield nodeset_id, result
         except Exception as e:
+            failed_nodesets.append((nodeset_id, e))
             yield nodeset_id, e
+
+    logger.info(
+        f"Successfully processed {len(nodeset_ids) - len(failed_nodesets)} nodesets. "
+        f"Failed to process the following nodesets: {failed_nodesets}"
+    )
 
 
 def get_node_ids(node_id2node: Dict[str, Any], allowed_node_types: List[str]) -> List[str]:
