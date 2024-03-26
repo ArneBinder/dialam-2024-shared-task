@@ -21,6 +21,15 @@ from src.utils.nodeset_utils import (
 
 logger = logging.getLogger(__name__)
 
+HELP_TEXT = """
+Create S and YA relations from L- and I-nodes and TA relations. The algorithm works as follows:
+0. Remove existing S and YA nodes and their edges if they exist.
+1. Align I and L nodes based on the similarity of their texts.
+2. Create S nodes and align them with TA nodes by mirroring TA relations between L nodes to
+    the aligned I nodes (see step 1).
+3. Create YA nodes and relations from I-L and S-TA alignments.
+"""
+
 
 def get_binary_ta_relations(
     node_id2node: Dict[str, Node],
@@ -53,7 +62,7 @@ def create_s_relations_and_nodes_from_ta_nodes_and_il_alignment(
     s_node_type: str,
     s_node_text: str,
 ) -> Tuple[List[Tuple[str, str, str]], Dict[str, Any], List[Tuple[str, str]]]:
-    """Create S nodes from TA nodes by mirroring TA relations to S relations.
+    f"""{HELP_TEXT}
 
     Args:
         node_id2node: A dictionary mapping node IDs to node objects.
@@ -271,10 +280,7 @@ def main(
 
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(
-        description="Create S and YA nodes from I, L and TA nodes. See add_s_and_ya_nodes_with_edges() "
-        "for more details."
-    )
+    parser = argparse.ArgumentParser(description=HELP_TEXT)
     parser.add_argument(
         "--input_dir", type=str, required=True, help="The input directory containing the nodesets."
     )
