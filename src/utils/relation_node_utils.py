@@ -2,7 +2,7 @@ from collections import defaultdict
 from typing import Any, Dict, List, Optional, Tuple
 
 
-def create_relation_nodes_from_alignments(
+def create_relation_nodes_from_alignment(
     node_id2node: Dict[str, Any],
     node_alignments: List[Tuple[str, str]],
     node_type: str,
@@ -114,7 +114,7 @@ def get_binary_ta_relations(
     )
 
 
-def create_s_nodes_from_ta_nodes(
+def create_s_relations_and_nodes_from_ta_nodes_and_il_alignment(
     node_id2node: Dict[str, Any],
     ta_relations: List[Tuple[str, str, str]],
     il_node_alignment: List[Tuple[str, str]],
