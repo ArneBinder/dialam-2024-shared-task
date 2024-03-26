@@ -298,7 +298,10 @@ if __name__ == "__main__":
         help="The output directory for the modified nodesets.",
     )
     parser.add_argument(
-        "--s_node_type", type=str, default="S", help="The type of the new S nodes. Default is 'S'."
+        "--s_node_type",
+        type=str,
+        default="RA",
+        help="The type of the new S nodes. Default is 'RA'.",
     )
     parser.add_argument(
         "--s_node_text",
