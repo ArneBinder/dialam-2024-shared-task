@@ -14,6 +14,7 @@ from src.utils.nodeset_utils import (
     get_node_ids,
     process_all_nodesets,
     read_nodeset,
+    remove_isolated_nodes,
     remove_relation_nodes_and_edges,
     write_nodeset,
 )
@@ -178,9 +179,17 @@ def add_s_and_ya_nodes_with_edges(
 
     # node helper dictionary
     node_id2node = {node["nodeID"]: node for node in nodes}
-    # get I and L node IDs
+    # get L and I node IDs
+    l_node_ids_with_isolates = get_node_ids(node_id2node=node_id2node, allowed_node_types=["L"])
+    # remove isolated L nodes
+    l_node_ids = remove_isolated_nodes(node_ids=l_node_ids_with_isolates, edges=edges)
     i_node_ids = get_node_ids(node_id2node=node_id2node, allowed_node_types=["I"])
-    l_node_ids = get_node_ids(node_id2node=node_id2node, allowed_node_types=["L"])
+    # sanity check: all I nodes should be isolated
+    i_nodes_without_isolates = remove_isolated_nodes(node_ids=i_node_ids, edges=edges)
+    if i_nodes_without_isolates:
+        logger.warning(
+            f"nodeset={nodeset_id}: Input has still connected I nodes: {i_nodes_without_isolates}"
+        )
     # align I and L nodes
     il_node_alignment = align_i_and_l_nodes(
         node_id2node=node_id2node,
