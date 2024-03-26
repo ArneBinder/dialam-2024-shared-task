@@ -141,6 +141,7 @@ def add_s_and_ya_nodes_with_edges(
     similarity_measure: str = "lcsstr",
     nodeset_id: Optional[str] = None,
     remove_existing_s_and_ya_nodes: bool = True,
+    verbose: bool = True,
 ) -> Nodeset:
     """Create S and YA relations from L- and I-nodes and TA relations. The algorithm works as follows:
     0. Remove existing S and YA nodes and their edges if they exist.
@@ -179,6 +180,15 @@ def add_s_and_ya_nodes_with_edges(
 
     # node helper dictionary
     node_id2node = {node["nodeID"]: node for node in nodes}
+
+    # sanity check: there should be no S or YA nodes in the input nodeset
+    s_node_ids = get_node_ids(node_id2node=node_id2node, allowed_node_types=["MA", "RA", "CA"])
+    if verbose and s_node_ids:
+        logger.warning(f"nodeset={nodeset_id}: Input has still S nodes: {s_node_ids}")
+    ya_node_ids = get_node_ids(node_id2node=node_id2node, allowed_node_types=["YA"])
+    if verbose and ya_node_ids:
+        logger.warning(f"nodeset={nodeset_id}: Input has still YA nodes: {ya_node_ids}")
+
     # get L and I node IDs
     l_node_ids_with_isolates = get_node_ids(node_id2node=node_id2node, allowed_node_types=["L"])
     # remove isolated L nodes
@@ -186,7 +196,7 @@ def add_s_and_ya_nodes_with_edges(
     i_node_ids = get_node_ids(node_id2node=node_id2node, allowed_node_types=["I"])
     # sanity check: all I nodes should be isolated
     i_nodes_without_isolates = remove_isolated_nodes(node_ids=i_node_ids, edges=edges)
-    if i_nodes_without_isolates:
+    if verbose and i_nodes_without_isolates:
         logger.warning(
             f"nodeset={nodeset_id}: Input has still connected I nodes: {i_nodes_without_isolates}"
         )
@@ -296,10 +306,16 @@ if __name__ == "__main__":
         help="The ID of the nodeset to process. If not provided, all nodesets in the input directory will be processed.",
     )
     parser.add_argument(
-        "--dont_show_progress",
+        "--dont-show-progress",
         dest="show_progress",
         action="store_false",
         help="Whether to show a progress bar when processing multiple nodesets.",
+    )
+    parser.add_argument(
+        "--silent",
+        dest="verbose",
+        action="store_false",
+        help="Whether to show warnings for nodesets with remaining S or YA nodes.",
     )
 
     args = vars(parser.parse_args())
