@@ -65,3 +65,11 @@ def process_all_nodesets(
             yield nodeset_id, result
         except Exception as e:
             yield nodeset_id, e
+
+
+def get_node_ids(node_id2node: Dict[str, Any], allowed_node_types: List[str]) -> List[str]:
+    """Get the IDs of nodes with a given type."""
+
+    return [
+        node_id for node_id, node in node_id2node.items() if node["type"] in allowed_node_types
+    ]

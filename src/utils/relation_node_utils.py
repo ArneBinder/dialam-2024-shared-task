@@ -1,6 +1,32 @@
 from collections import defaultdict
 from typing import Any, Dict, List, Optional, Tuple
 
+from src.utils.align_i2l_nodes import align_i_and_l_nodes
+from src.utils.nodeset_utils import get_node_ids
+
+
+def create_edges_from_relations(
+    relations: List[Tuple[str, str, str]],
+    edges: List[Dict[str, str]],
+) -> List[Dict[str, str]]:
+    """Create edge objects from relations.
+
+    Args:
+        relations: A list of binary relations: tuples containing the source node ID, target node ID, and relation node ID.
+        edges: A list of edge objects where each object contains the keys "fromID" and "toID".
+
+    Returns:
+        A list of edge objects where each object contains the keys "fromID" and "toID".
+    """
+    biggest_edge_id = max([int(edge["fromID"]) for edge in edges])
+    new_edges = []
+    for src_id, trg_id, rel_id in relations:
+        biggest_edge_id += 1
+        new_edges.append({"fromID": src_id, "toID": rel_id, "edgeID": str(biggest_edge_id)})
+        biggest_edge_id += 1
+        new_edges.append({"fromID": rel_id, "toID": trg_id, "edgeID": str(biggest_edge_id)})
+    return new_edges
+
 
 def create_relation_nodes_from_alignment(
     node_id2node: Dict[str, Any],
@@ -169,3 +195,80 @@ def create_s_relations_and_nodes_from_ta_nodes_and_il_alignment(
         sat_node_alignment.append((s_node_id, ta_node_id))
 
     return s_relations, new_node_id2node, sat_node_alignment
+
+
+def add_s_and_ya_nodes_with_edges(
+    nodes: List[Dict[str, str]],
+    edges: List[Dict[str, str]],
+    s_node_text: str,
+    ya_node_text: str,
+    s_node_type: str = "S",
+    similarity_measure: str = "lcsstr",
+) -> Tuple[List[Dict[str, str]], List[Dict[str, str]]]:
+    """Create S and YA relations from L- and I-nodes and TA relations. The algorithm works as follows:
+    1. Align I and L nodes based on the similarity of their texts.
+    2. Create S nodes and align them with TA nodes by mirroring TA relations between L nodes to
+        the aligned I nodes (see step 1).
+    3. Create YA nodes and relations from I-L- and S-TA-alignments.
+
+    Disclaimer:
+    - This creates relation nodes with a generic text (and type) per S-/YA-node.
+    - The direction of the new S nodes may not be correct and need to be adjusted later on.
+
+    Args:
+        nodes: A list of node objects.
+        edges: A list of edge objects where each object contains the keys "fromID" and "toID".
+        s_node_text: The text of the S nodes.
+        ya_node_text: The text of the YA nodes.
+        s_node_type: The type of the S nodes. Defaults to "S".
+        similarity_measure: The similarity measure to use for creating YA nodes. Defaults to
+            "lcsstr" (Longest common substring).
+
+    Returns:
+        A tuple containing:
+        - a list of node objects containing the newly created S and YA nodes, and
+        - a list of edge objects containing the newly created edges.
+    """
+
+    # node helper dictionary
+    node_id2node = {node["id"]: node for node in nodes}
+    # get I and L node IDs
+    i_node_ids = get_node_ids(node_id2node=node_id2node, allowed_node_types=["I"])
+    l_node_ids = get_node_ids(node_id2node=node_id2node, allowed_node_types=["L"])
+    # align I and L nodes
+    il_node_alignment = align_i_and_l_nodes(
+        node_id2node=node_id2node,
+        i_node_ids=i_node_ids,
+        l_node_ids=l_node_ids,
+        similarity_measure=similarity_measure,
+    )
+    # collect TA relations: (src_id, trg_id, ta_node_id) where src_id and trg_id are L nodes
+    ta_relations = get_binary_ta_relations(node_id2node=node_id2node, edges=edges)
+    # copy the node_id2node dictionary to avoid modifying the original dictionary
+    node_id2node = node_id2node.copy()
+    # create S nodes and relations from TA nodes
+    (
+        s_relations,
+        s_node_id2node,
+        sat_node_alignment,
+    ) = create_s_relations_and_nodes_from_ta_nodes_and_il_alignment(
+        node_id2node=node_id2node,
+        ta_relations=ta_relations,
+        il_node_alignment=il_node_alignment,
+        s_node_type=s_node_type,
+        s_node_text=s_node_text,
+    )
+    node_id2node.update(s_node_id2node)
+    # create YA nodes and relations I-L- and S-TA-alignments
+    ya_relations, ya_node_id2node = create_relation_nodes_from_alignment(
+        node_id2node=node_id2node,
+        node_alignments=il_node_alignment + sat_node_alignment,
+        node_type="YA",
+        node_text=ya_node_text,
+        # swap direction of the alignment to create the relations
+        swap_direction=True,
+    )
+    node_id2node.update(ya_node_id2node)
+    # create edges from S and YA relations
+    new_edges = create_edges_from_relations(relations=s_relations + ya_relations, edges=edges)
+    return list(node_id2node.values()), edges + new_edges

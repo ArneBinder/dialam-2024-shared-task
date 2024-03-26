@@ -78,7 +78,7 @@ def align_i_and_l_nodes(
     l_node_ids: List[str],
     i_node_ids: List[str],
     similarity_measure: str,
-    nodeset_id: str,
+    nodeset_id: Optional[str] = None,
     smodel=None,
 ) -> List[Tuple[str, str]]:
     # extract text for sorted L-nodes and I-nodes
