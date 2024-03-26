@@ -227,3 +227,19 @@ def remove_relation_nodes_and_edges(
     ]
 
     return result
+
+
+def remove_isolated_nodes(node_ids: List[str], edges: List[Edge]) -> List[str]:
+    """Remove isolated nodes from a list of node IDs.
+
+    Args:
+        node_ids: A list of node IDs.
+        edges: A list of edge objects where each object contains the keys "fromID" and "toID".
+
+    Returns:
+        A list of node IDs that are not isolated.
+    """
+    # create a set of all node IDs that are connected to at least one edge
+    connected_node_ids = {edge["fromID"] for edge in edges} | {edge["toID"] for edge in edges}
+    # filter out all node IDs that are not connected to any edge
+    return [node_id for node_id in node_ids if node_id in connected_node_ids]
