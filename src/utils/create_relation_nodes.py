@@ -291,19 +291,25 @@ if __name__ == "__main__":
         help="The output directory for the modified nodesets.",
     )
     parser.add_argument(
-        "--s_node_type", type=str, default="S", help="The type of the new S nodes."
+        "--s_node_type", type=str, default="S", help="The type of the new S nodes. Default is 'S'."
     )
     parser.add_argument(
-        "--s_node_text", type=str, default="DUMMY", help="The text of the new S nodes."
+        "--s_node_text",
+        type=str,
+        default="DUMMY",
+        help="The text of the new S nodes. Default is 'DUMMY'.",
     )
     parser.add_argument(
-        "--ya_node_text", type=str, default="DUMMY", help="The text of the new YA nodes."
+        "--ya_node_text",
+        type=str,
+        default="DUMMY",
+        help="The text of the new YA nodes. Default is 'DUMMY'.",
     )
     parser.add_argument(
         "--similarity_measure",
         type=str,
         default="lcsstr",
-        help="The similarity measure to use for creating YA nodes.",
+        help="The similarity measure to use for creating YA nodes. Default is 'lcsstr' (Longest common substring).",
     )
     parser.add_argument(
         "--nodeset_id",
