@@ -220,23 +220,11 @@ def evaluate_align_nodes(
             f"nodeset={nodeset_id}: Missing L-nodes in locutions: {missing_l_nodes_in_locutions}"
         )
 
-    # do not align by "locution" timestamps since those are missing for some L-nodes (e.g., L-node 70682 in nodeset 21303)!
-    l_node_ids_sorted = sorted(
-        node_types2node_ids["L"],
-        key=lambda x: datetime.datetime.fromisoformat(node_id2node[x]["timestamp"]),
-    )
-
-    # sort I-nodes by timestamp
-    i_node_ids_sorted = sorted(
-        node_types2node_ids["I"],
-        key=lambda x: datetime.datetime.fromisoformat(node_id2node[x]["timestamp"]),
-    )
-
     # align I and L-nodes
     aligned_il_nodes = align_i_and_l_nodes(
         node_id2node=node_id2node,
-        l_node_ids=l_node_ids_sorted,
-        i_node_ids=i_node_ids_sorted,
+        l_node_ids=list(node_types2node_ids["L"]),
+        i_node_ids=list(node_types2node_ids["I"]),
         similarity_measure=similarity_measure,
         nodeset_id=nodeset_id,
         smodel=smodel,

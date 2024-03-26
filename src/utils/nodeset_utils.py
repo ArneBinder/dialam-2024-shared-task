@@ -7,8 +7,8 @@ from typing import Any, Callable, Dict, Iterator, List, Optional, Tuple, TypedDi
 import tqdm
 
 FuncResult = TypeVar("FuncResult")
-# add "scheme" and "schemeID"? both seem to be optional
-Node = TypedDict("Node", {"nodeID": str, "type": str, "text": str, "timestamp": str})
+# add "scheme" and "schemeID"? both seem to be optional. add "timestamp"?
+Node = TypedDict("Node", {"nodeID": str, "type": str, "text": str})
 # add "formEdgeID"? it is mostly (always?) None
 Edge = TypedDict("Edge", {"fromID": str, "toID": str, "edgeID": str})
 # add "start", "end", and "source"? "end" and "source" are mostly (always?) None
@@ -94,7 +94,8 @@ def create_edges_from_relations(
     """Create edge objects from relations.
 
     Args:
-        relations: A list of binary relations: tuples containing the source node ID, target node ID, and relation node ID.
+        relations: A list of binary relations: tuples containing the source node ID, target node ID,
+            and relation node ID.
         edges: A list of edge objects where each object contains the keys "fromID" and "toID".
 
     Returns:
@@ -111,17 +112,17 @@ def create_edges_from_relations(
 
 
 def create_relation_nodes_from_alignment(
-    node_id2node: Dict[str, Any],
+    node_id2node: Dict[str, Node],
     node_alignments: List[Tuple[str, str]],
     node_type: str,
     node_text: str,
     swap_direction: bool = False,
-) -> Tuple[List[Tuple[str, str, str]], Dict[str, Any]]:
+) -> Tuple[List[Tuple[str, str, str]], Dict[str, Node]]:
 
     """Create relation nodes from alignments between two nodes.
 
     Args:
-        node_id2node: A dictionary mapping node IDs to node objects.
+        node_id2node: A dictionary mapping node IDs to Node objects.
         node_alignments: A list of tuples containing the alignment between two nodes.
         node_type: The type of the nodes.
         node_text: The text of the nodes.
@@ -131,10 +132,10 @@ def create_relation_nodes_from_alignment(
     Returns:
         A tuple containing:
          - a list of binary YA relations: tuples containing the source node ID, target node ID, and YA node ID, and
-         - a dictionary containing the newly created YA nodes as a mapping from IDs to node content.
+         - a dictionary containing the newly created YA nodes as a mapping from IDs to the respective Node objects.
     """
     biggest_node_id = max([int(node_id) for node_id in node_id2node.keys()])
-    new_node_id2node = dict()
+    new_node_id2node: Dict[str, Node] = dict()
     relations = []
     for src_id, trg_id in node_alignments:
         if swap_direction:
@@ -162,8 +163,8 @@ def get_binary_relations(
     ID, and relation node ID.
 
     Args:
-        node_id2node: A dictionary mapping node IDs to node objects.
-        edges: A list of edge objects where each object contains the keys "fromID" and "toID".
+        node_id2node: A dictionary mapping node IDs to Node objects.
+        edges: A list of Edge objects.
         allowed_node_types: A list of node types to consider.
         allowed_source_types: A list of source node types to consider.
         allowed_target_types: A list of target node types to consider.

@@ -120,9 +120,7 @@ def add_s_and_ya_nodes_with_edges(
     - The direction of the new S nodes may not be correct and need to be adjusted later on.
 
     Args:
-        nodeset: A dictionary containing the keys "nodes" and "edges" where "nodes" is a list of
-            node objects (each entry with "nodeID", "type", and "text") and "edges" is a list of
-            edge objects (each entry with "fromID" and "toID").
+        nodeset: A Nodeset
         s_node_text: The text of the S nodes.
         ya_node_text: The text of the YA nodes.
         s_node_type: The type of the S nodes. Defaults to "S".
@@ -131,9 +129,7 @@ def add_s_and_ya_nodes_with_edges(
         nodeset_id: The ID of the nodeset for better logging. Defaults to None.
 
     Returns:
-        A tuple containing:
-        - a list of node objects containing the newly created S and YA nodes, and
-        - a list of edge objects containing the newly created edges.
+        A Nodeset with S and YA nodes and their edges added.
     """
     nodes = nodeset["nodes"]
     edges = nodeset["edges"]
