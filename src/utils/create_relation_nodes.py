@@ -112,9 +112,11 @@ def create_s_relations_and_nodes_from_ta_nodes_and_il_alignment(
                 "type": s_node_type,
                 "text": s_node_text,
             }
-        # map L-source and L-target node IDs to their corresponding S node IDs
-        s_src_id = l2i_node_id[src_id]
-        s_trg_id = l2i_node_id[trg_id]
+        # map L-source and L-target node IDs to their corresponding S node IDs.
+        # note that we swap the direction because for most of the S nodes (MA and CA), they point
+        # in the opposite direction of the TA nodes
+        s_src_id = l2i_node_id[trg_id]
+        s_trg_id = l2i_node_id[src_id]
         s_relations.append((s_src_id, s_trg_id, s_node_id))
         # collect the alignment between the S and TA nodes
         sat_node_alignment.append((s_node_id, ta_node_id))
