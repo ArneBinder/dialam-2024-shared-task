@@ -7,13 +7,15 @@ from typing import Any, Callable, Dict, Iterator, List, Optional, Tuple, TypedDi
 import tqdm
 
 FuncResult = TypeVar("FuncResult")
+# add "scheme" and "schemeID"? both seem to be optional
+Node = TypedDict("Node", {"nodeID": str, "type": str, "text": str, "timestamp": str})
+# add "formEdgeID"? it is mostly (always?) None
+Edge = TypedDict("Edge", {"fromID": str, "toID": str, "edgeID": str})
+# add "start", "end", and "source"? "end" and "source" are mostly (always?) None
+Locution = TypedDict("Locution", {"nodeID": str, "personID": str, "timestamp": str})
 Nodeset = TypedDict(
     "Nodeset",
-    {
-        "nodes": List[Dict[str, str]],
-        "edges": List[Dict[str, str]],
-        "locutions": List[Dict[str, str]],
-    },
+    {"nodes": List[Node], "edges": List[Edge], "locutions": List[Locution]},
 )
 
 
@@ -87,8 +89,8 @@ def get_node_ids(node_id2node: Dict[str, Any], allowed_node_types: List[str]) ->
 
 def create_edges_from_relations(
     relations: List[Tuple[str, str, str]],
-    edges: List[Dict[str, str]],
-) -> List[Dict[str, str]]:
+    edges: List[Edge],
+) -> List[Edge]:
     """Create edge objects from relations.
 
     Args:
@@ -99,7 +101,7 @@ def create_edges_from_relations(
         A list of edge objects where each object contains the keys "fromID" and "toID".
     """
     biggest_edge_id = max([int(edge["fromID"]) for edge in edges])
-    new_edges = []
+    new_edges: List[Edge] = []
     for src_id, trg_id, rel_id in relations:
         biggest_edge_id += 1
         new_edges.append({"fromID": src_id, "toID": rel_id, "edgeID": str(biggest_edge_id)})
@@ -150,8 +152,8 @@ def create_relation_nodes_from_alignment(
 
 
 def get_binary_relations(
-    node_id2node: Dict[str, Any],
-    edges: List[Dict[str, str]],
+    node_id2node: Dict[str, Node],
+    edges: List[Edge],
     allowed_node_types: Optional[List[str]] = None,
     allowed_source_types: Optional[List[str]] = None,
     allowed_target_types: Optional[List[str]] = None,

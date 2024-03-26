@@ -43,7 +43,7 @@ import textdistance
 from scipy.optimize import linear_sum_assignment
 from sentence_transformers import SentenceTransformer, util
 
-from src.utils.nodeset_utils import process_all_nodesets, read_nodeset
+from src.utils.nodeset_utils import Node, process_all_nodesets, read_nodeset
 
 logger = logging.getLogger(__name__)
 
@@ -74,7 +74,7 @@ metric_mapping = {
 
 
 def align_i_and_l_nodes(
-    node_id2node: Dict[str, Dict],
+    node_id2node: Dict[str, Node],
     l_node_ids: List[str],
     i_node_ids: List[str],
     similarity_measure: str,

@@ -5,6 +5,8 @@ from typing import Any, Dict, List, Optional, Tuple
 
 from src.utils.align_i2l_nodes import align_i_and_l_nodes
 from src.utils.nodeset_utils import (
+    Edge,
+    Node,
     Nodeset,
     create_edges_from_relations,
     create_relation_nodes_from_alignment,
@@ -19,8 +21,8 @@ logger = logging.getLogger(__name__)
 
 
 def get_binary_ta_relations(
-    node_id2node: Dict[str, Any],
-    edges: List[Dict[str, str]],
+    node_id2node: Dict[str, Node],
+    edges: List[Edge],
 ) -> List[Tuple[str, str, str]]:
     """Get TA relations from nodes.
 
