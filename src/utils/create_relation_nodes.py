@@ -1,4 +1,7 @@
-from typing import Any, Dict, List, Tuple
+import argparse
+import logging
+import os
+from typing import Any, Dict, List, Optional, Tuple
 
 from src.utils.align_i2l_nodes import align_i_and_l_nodes
 from src.utils.nodeset_utils import (
@@ -6,7 +9,12 @@ from src.utils.nodeset_utils import (
     create_relation_nodes_from_alignment,
     get_binary_relations,
     get_node_ids,
+    process_all_nodesets,
+    read_nodeset,
+    write_nodeset,
 )
+
+logger = logging.getLogger(__name__)
 
 
 def get_binary_ta_relations(
@@ -76,7 +84,7 @@ def create_s_relations_and_nodes_from_ta_nodes_and_il_alignment(
             s_node_id = str(biggest_node_id)
             ta2s_id[ta_node_id] = s_node_id
             new_node_id2node[s_node_id] = {
-                "id": s_node_id,
+                "nodeID": s_node_id,
                 "type": s_node_type,
                 "text": s_node_text,
             }
@@ -91,40 +99,44 @@ def create_s_relations_and_nodes_from_ta_nodes_and_il_alignment(
 
 
 def add_s_and_ya_nodes_with_edges(
-    nodes: List[Dict[str, str]],
-    edges: List[Dict[str, str]],
+    nodeset: Dict[str, List[Dict[str, str]]],
     s_node_text: str,
     ya_node_text: str,
     s_node_type: str = "S",
     similarity_measure: str = "lcsstr",
-) -> Tuple[List[Dict[str, str]], List[Dict[str, str]]]:
+    nodeset_id: Optional[str] = None,
+) -> Dict[str, List[Dict[str, str]]]:
     """Create S and YA relations from L- and I-nodes and TA relations. The algorithm works as follows:
     1. Align I and L nodes based on the similarity of their texts.
     2. Create S nodes and align them with TA nodes by mirroring TA relations between L nodes to
         the aligned I nodes (see step 1).
-    3. Create YA nodes and relations from I-L- and S-TA-alignments.
+    3. Create YA nodes and relations from I-L- and S-TA-add_s_and_ya_nodes_with_edgesalignments.
 
     Disclaimer:
     - This creates relation nodes with a generic text (and type) per S-/YA-node.
     - The direction of the new S nodes may not be correct and need to be adjusted later on.
 
     Args:
-        nodes: A list of node objects.
-        edges: A list of edge objects where each object contains the keys "fromID" and "toID".
+        nodeset: A dictionary containing the keys "nodes" and "edges" where "nodes" is a list of
+            node objects (each entry with "nodeID", "type", and "text") and "edges" is a list of
+            edge objects (each entry with "fromID" and "toID").
         s_node_text: The text of the S nodes.
         ya_node_text: The text of the YA nodes.
         s_node_type: The type of the S nodes. Defaults to "S".
         similarity_measure: The similarity measure to use for creating YA nodes. Defaults to
             "lcsstr" (Longest common substring).
+        nodeset_id: The ID of the nodeset for better logging. Defaults to None.
 
     Returns:
         A tuple containing:
         - a list of node objects containing the newly created S and YA nodes, and
         - a list of edge objects containing the newly created edges.
     """
+    nodes = nodeset["nodes"]
+    edges = nodeset["edges"]
 
     # node helper dictionary
-    node_id2node = {node["id"]: node for node in nodes}
+    node_id2node = {node["nodeID"]: node for node in nodes}
     # get I and L node IDs
     i_node_ids = get_node_ids(node_id2node=node_id2node, allowed_node_types=["I"])
     l_node_ids = get_node_ids(node_id2node=node_id2node, allowed_node_types=["L"])
@@ -134,6 +146,7 @@ def add_s_and_ya_nodes_with_edges(
         i_node_ids=i_node_ids,
         l_node_ids=l_node_ids,
         similarity_measure=similarity_measure,
+        nodeset_id=nodeset_id,
     )
     # collect TA relations: (src_id, trg_id, ta_node_id) where src_id and trg_id are L nodes
     ta_relations = get_binary_ta_relations(node_id2node=node_id2node, edges=edges)
@@ -164,4 +177,70 @@ def add_s_and_ya_nodes_with_edges(
     node_id2node.update(ya_node_id2node)
     # create edges from S and YA relations
     new_edges = create_edges_from_relations(relations=s_relations + ya_relations, edges=edges)
-    return list(node_id2node.values()), edges + new_edges
+
+    new_nodeset = nodeset.copy()
+    new_nodeset["nodes"] = list(node_id2node.values())
+    new_nodeset["edges"] = edges + new_edges
+    return new_nodeset
+
+
+def main(
+    input_dir: str,
+    output_dir: str,
+    show_progress: bool = True,
+    nodeset_id: Optional[str] = None,
+    **kwargs,
+):
+    # create the output directory if it does not exist
+    os.makedirs(output_dir, exist_ok=True)
+    if nodeset_id is not None:
+        nodeset = read_nodeset(nodeset_dir=input_dir, nodeset_id=nodeset_id)
+        result = add_s_and_ya_nodes_with_edges(nodeset=nodeset, nodeset_id=nodeset_id, **kwargs)
+        write_nodeset(nodeset_dir=output_dir, nodeset_id=nodeset_id, data=result)
+    else:
+        # if no nodeset ID is provided, process all nodesets in the input directory
+        for nodeset_id, result_or_error in process_all_nodesets(
+            func=add_s_and_ya_nodes_with_edges,
+            nodeset_dir=input_dir,
+            show_progress=show_progress,
+            **kwargs,
+        ):
+            if isinstance(result_or_error, Exception):
+                logger.error(f"nodeset={nodeset_id}: Failed to process: {result_or_error}")
+            else:
+                write_nodeset(nodeset_dir=output_dir, nodeset_id=nodeset_id, data=result_or_error)
+
+
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(
+        description="Create S and YA nodes from I, L and TA nodes. See add_s_and_ya_nodes_with_edges() "
+        "for more details."
+    )
+    parser.add_argument(
+        "--input_dir", type=str, required=True, help="The input directory containing the nodesets."
+    )
+    parser.add_argument(
+        "--output_dir",
+        type=str,
+        required=True,
+        help="The output directory for the modified nodesets.",
+    )
+    parser.add_argument(
+        "--s_node_type", type=str, default="S", help="The type of the new S nodes."
+    )
+    parser.add_argument(
+        "--s_node_text", type=str, default="DUMMY", help="The text of the new S nodes."
+    )
+    parser.add_argument(
+        "--ya_node_text", type=str, default="DUMMY", help="The text of the new YA nodes."
+    )
+    parser.add_argument(
+        "--similarity_measure",
+        type=str,
+        default="lcsstr",
+        help="The similarity measure to use for creating YA nodes.",
+    )
+
+    args = vars(parser.parse_args())
+    logging.basicConfig(level=logging.INFO)
+    main(**args)

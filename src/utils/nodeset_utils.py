@@ -131,7 +131,7 @@ def create_relation_nodes_from_alignment(
         biggest_node_id += 1
         node_id = str(biggest_node_id)
         new_node_id2node[node_id] = {
-            "id": node_id,
+            "nodeID": node_id,
             "type": node_type,
             "text": node_text,
         }
