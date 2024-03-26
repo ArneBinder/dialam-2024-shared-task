@@ -14,6 +14,7 @@ from src.utils.nodeset_utils import (
     get_node_ids,
     process_all_nodesets,
     read_nodeset,
+    remove_relation_nodes_and_edges,
     write_nodeset,
 )
 
@@ -99,6 +100,36 @@ def create_s_relations_and_nodes_from_ta_nodes_and_il_alignment(
         sat_node_alignment.append((s_node_id, ta_node_id))
 
     return s_relations, new_node_id2node, sat_node_alignment
+
+
+def remove_s_and_ya_nodes_with_edges(nodeset: Nodeset) -> Nodeset:
+    """Remove S and YA nodes and their edges from the nodeset.
+
+    Args:
+        nodeset: A Nodeset.
+
+    Returns:
+        Nodeset with S and YA nodes and their edges removed.
+    """
+    node_id2node = {node["nodeID"]: node for node in nodeset["nodes"]}
+    # collect S and YA relations
+    s_relations = get_binary_relations(
+        node_id2node=node_id2node,
+        edges=nodeset["edges"],
+        allowed_node_types=["S"],
+        allowed_source_types=["I"],
+        allowed_target_types=["I"],
+    )
+    ya_relations = get_binary_relations(
+        node_id2node=node_id2node,
+        edges=nodeset["edges"],
+        allowed_node_types=["YA"],
+        allowed_source_types=["L", "TA"],
+        allowed_target_types=["I", "S"],
+    )
+    # remove S and YA nodes and their edges
+    result = remove_relation_nodes_and_edges(nodeset=nodeset, relations=s_relations + ya_relations)
+    return result
 
 
 def add_s_and_ya_nodes_with_edges(

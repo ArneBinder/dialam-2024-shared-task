@@ -197,3 +197,33 @@ def get_binary_relations(
                     if allowed_target_types is None or trg_node["type"] in allowed_target_types:
                         relations.append((src_id, trg_id, node_id))
     return relations
+
+
+def remove_relation_nodes_and_edges(
+    nodeset: Nodeset, relations: List[Tuple[str, str, str]]
+) -> Nodeset:
+    """Remove relation nodes and the respective edges from a nodeset.
+
+    Args:
+        nodeset: A nodeset.
+        relations: A list of binary relations: tuples containing the source node ID, target node ID,
+            and relation node ID.
+    """
+    # create a copy of the nodeset to avoid modifying the original
+    result = nodeset.copy()
+    # helper sets
+    relation_node_ids = {rel[2] for rel in relations}
+    relation_edges = {(rel[0], rel[2]) for rel in relations} | {
+        (rel[2], rel[1]) for rel in relations
+    }
+
+    # filter out all nodes that are not relation nodes
+    result["nodes"] = [
+        node for node in nodeset["nodes"] if node["nodeID"] not in relation_node_ids
+    ]
+    # filter out all edges that are not connected to relation nodes
+    result["edges"] = [
+        edge for edge in nodeset["edges"] if (edge["fromID"], edge["toID"]) not in relation_edges
+    ]
+
+    return result
