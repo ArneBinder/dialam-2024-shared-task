@@ -192,7 +192,7 @@ def get_binary_relations(
             src_node = node_id2node[src_id]
             if allowed_source_types is None or src_node["type"] in allowed_source_types:
                 # ... and all target nodes
-                for trg_id in src2targets[src_id]:
+                for trg_id in src2targets[node_id]:
                     trg_node = node_id2node[trg_id]
                     if allowed_target_types is None or trg_node["type"] in allowed_target_types:
                         relations.append((src_id, trg_id, node_id))
