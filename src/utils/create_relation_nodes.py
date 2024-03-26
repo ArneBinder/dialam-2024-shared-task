@@ -139,12 +139,14 @@ def add_s_and_ya_nodes_with_edges(
     s_node_type: str = "S",
     similarity_measure: str = "lcsstr",
     nodeset_id: Optional[str] = None,
+    remove_existing_s_and_ya_nodes: bool = True,
 ) -> Nodeset:
     """Create S and YA relations from L- and I-nodes and TA relations. The algorithm works as follows:
+    0. Remove existing S and YA nodes and their edges if they exist.
     1. Align I and L nodes based on the similarity of their texts.
     2. Create S nodes and align them with TA nodes by mirroring TA relations between L nodes to
         the aligned I nodes (see step 1).
-    3. Create YA nodes and relations from I-L- and S-TA-add_s_and_ya_nodes_with_edgesalignments.
+    3. Create YA nodes and relations from I-L and S-TA alignments.
 
     Disclaimer:
     - This creates relation nodes with a generic text (and type) per S-/YA-node.
@@ -158,10 +160,19 @@ def add_s_and_ya_nodes_with_edges(
         similarity_measure: The similarity measure to use for creating YA nodes. Defaults to
             "lcsstr" (Longest common substring).
         nodeset_id: The ID of the nodeset for better logging. Defaults to None.
+        remove_existing_s_and_ya_nodes: A boolean indicating whether to remove existing S and YA
+            nodes and their edges before adding new S and YA nodes. Defaults to True.
 
     Returns:
         A Nodeset with S and YA nodes and their edges added.
     """
+    if remove_existing_s_and_ya_nodes:
+        # remove existing S and YA nodes and their edges
+        nodeset = remove_s_and_ya_nodes_with_edges(nodeset=nodeset)
+    else:
+        # create a copy of the nodeset to avoid modifying the original nodeset
+        nodeset = nodeset.copy()
+
     nodes = nodeset["nodes"]
     edges = nodeset["edges"]
 
@@ -208,10 +219,9 @@ def add_s_and_ya_nodes_with_edges(
     # create edges from S and YA relations
     new_edges = create_edges_from_relations(relations=s_relations + ya_relations, edges=edges)
 
-    new_nodeset = nodeset.copy()
-    new_nodeset["nodes"] = list(node_id2node.values())
-    new_nodeset["edges"] = edges + new_edges
-    return new_nodeset
+    nodeset["nodes"] = list(node_id2node.values())
+    nodeset["edges"] = edges + new_edges
+    return nodeset
 
 
 def main(
