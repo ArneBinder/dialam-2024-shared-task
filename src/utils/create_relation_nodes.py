@@ -306,7 +306,13 @@ if __name__ == "__main__":
         help="The ID of the nodeset to process. If not provided, all nodesets in the input directory will be processed.",
     )
     parser.add_argument(
-        "--dont-show-progress",
+        "--dont_remove_existing_s_and_ya_nodes",
+        dest="remove_existing_s_and_ya_nodes",
+        action="store_false",
+        help="Whether to remove existing S and YA nodes and their edges before adding new S and YA nodes.",
+    )
+    parser.add_argument(
+        "--dont_show_progress",
         dest="show_progress",
         action="store_false",
         help="Whether to show a progress bar when processing multiple nodesets.",
