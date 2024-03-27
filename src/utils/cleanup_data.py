@@ -1,3 +1,7 @@
+import pyrootutils
+
+pyrootutils.setup_root(search_from=__file__, indicator=[".project-root"], pythonpath=True)
+
 import argparse
 import logging
 import os
@@ -5,8 +9,6 @@ from collections import defaultdict
 from typing import Any, Dict, List, Optional, Tuple
 
 from src.utils.nodeset_utils import (
-    Edge,
-    Node,
     Nodeset,
     get_binary_relations,
     get_node_ids,
@@ -178,7 +180,9 @@ def check_if_ra_points_down(ra_node_id: str, nodeset: Nodeset, nodeset_id: str):
 def find_first_match_source_node(
     target_node: str, node_type: str, node2type: Dict[str, str], trg2sources: Dict[str, List[str]]
 ):
-    """Find first match source node of a specific type given the target node ID. We assume that we can take the first match because the target node can be anchored only in a single node of the given type (e.g., I in YA, YA in L, RA in YA or YA in TA).
+    """Find (first match) source node of a specific type given the target node ID. We assume that
+    we can take the first match because the target node can be anchored only in a single node of
+    the given type (e.g., I in YA, YA in L, RA in YA or YA in TA).
 
     Args:
         target_node: Target node ID.
