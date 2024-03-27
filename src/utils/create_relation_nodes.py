@@ -1,3 +1,7 @@
+import pyrootutils
+
+pyrootutils.setup_root(search_from=__file__, indicator=[".project-root"], pythonpath=True)
+
 import argparse
 import logging
 import os
