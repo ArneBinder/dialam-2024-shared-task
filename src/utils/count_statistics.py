@@ -1,5 +1,9 @@
 from __future__ import annotations
 
+import pyrootutils
+
+pyrootutils.setup_root(search_from=__file__, indicator=[".project-root"], pythonpath=True)
+
 import argparse
 import io
 import json

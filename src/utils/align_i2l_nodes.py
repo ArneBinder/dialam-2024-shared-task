@@ -32,9 +32,11 @@ For more details on SentenceTransformers models see: https://www.sbert.net/docs/
 Note: If no nodeset id is provided, the script will compute the matches and mismatches between
 the I- and L-nodes for all nodesets in the directory.
 """
+import pyrootutils
+
+pyrootutils.setup_root(search_from=__file__, indicator=[".project-root"], pythonpath=True)
 
 import argparse
-import datetime
 import logging
 from collections import defaultdict
 from typing import Any, Dict, List, Optional, Set, Tuple
