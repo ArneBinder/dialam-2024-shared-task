@@ -115,7 +115,7 @@ def create_visualization(
     duplicate_node_ids = set()
     for n in data["nodes"]:
         node_type = n["type"]
-        if node_type in ["RA", "CA", "MA"]:
+        if node_type in ["RA", "RA-rev", "CA", "MA"]:
             node_type = "S"
 
         # only collect connected nodes
@@ -211,7 +211,7 @@ def create_visualization(
             for ya_trg_node_id in src2targets[ya_node_id]:
                 ya_trg_node = node_id2node[ya_trg_node_id]
                 if (
-                    ya_trg_node["type"] in ["I", "RA", "CA", "MA"]
+                    ya_trg_node["type"] in ["I", "RA", "RA-rev", "CA", "MA"]
                     and ya_trg_node_id not in i_site_node_ids
                 ):
                     add_node(node=node_id2node[ya_trg_node_id], graph=c)
