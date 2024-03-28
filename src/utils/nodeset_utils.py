@@ -65,7 +65,11 @@ def write_nodeset(nodeset_dir: str, nodeset_id: str, data: Nodeset) -> None:
 
 
 def process_all_nodesets(
-    nodeset_dir: str, func: Callable[..., FuncResult], show_progress: bool = True, **kwargs
+    nodeset_dir: str,
+    func: Callable[..., FuncResult],
+    show_progress: bool = True,
+    nodeset_blacklist: Optional[List[str]] = None,
+    **kwargs,
 ) -> Iterator[Tuple[str, Union[FuncResult, Exception]]]:
     """Process all nodesets in a directory.
 
@@ -73,6 +77,7 @@ def process_all_nodesets(
         nodeset_dir: The directory containing the nodesets.
         func: The function to apply to each nodeset.
         show_progress: Whether to show a progress bar.
+        nodeset_blacklist: Whether to ignore some nodeset IDs.
         **kwargs: Additional keyword arguments to pass to the function.
 
     Yields:
@@ -85,6 +90,9 @@ def process_all_nodesets(
     for nodeset_id in tqdm.tqdm(
         nodeset_ids, desc="Processing nodesets", disable=not show_progress
     ):
+        if nodeset_blacklist and nodeset_id in nodeset_blacklist:
+            logger.info(f"Skipping nodeset {nodeset_id} from the blacklist.")
+            continue
         try:
             nodeset = read_nodeset(nodeset_dir=nodeset_dir, nodeset_id=nodeset_id)
             result = func(nodeset=nodeset, nodeset_id=nodeset_id, **kwargs)

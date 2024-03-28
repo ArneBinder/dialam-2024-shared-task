@@ -295,6 +295,7 @@ def main(
     show_progress: bool = True,
     normalize_relation_direction: bool = False,
     nodeset_id: Optional[str] = None,
+    nodeset_blacklist: Optional[List[str]] = None,
     **kwargs,
 ):
     # create the output directory if it does not exist
@@ -315,6 +316,7 @@ def main(
             nodeset_dir=input_dir,
             normalize_relation_direction=normalize_relation_direction,
             show_progress=show_progress,
+            nodeset_blacklist=nodeset_blacklist,
             **kwargs,
         ):
             if isinstance(result_or_error, Exception):
@@ -341,6 +343,13 @@ if __name__ == "__main__":
         type=str,
         default=None,
         help="The ID of the nodeset to process. If not provided, all nodesets in the input directory will be processed.",
+    )
+    parser.add_argument(
+        "--nodeset_blacklist",
+        "--list",
+        type=str,
+        default=None,
+        help="List of nodeset IDs that should be ignored.",
     )
     parser.add_argument(
         "--normalize_relation_direction",
