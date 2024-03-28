@@ -211,6 +211,43 @@ def reverse_relations_nodes(
     return result
 
 
+def find_i_anchor_nodes(node_id: str, binary_relations: List[Tuple[str, str, str]]):
+    """Find anchors (L-nodes) for the given I-node.
+
+    Args:
+        node_id: Node ID.
+        binary_relations: List of (L, I, YA) tuples.
+        nodeset_id: Nodeset ID.
+
+    Returns:
+        List of anchor L-nodes.
+    """
+    anchors = []
+    for src_id, trg_id, rel_id in binary_relations:
+        if node_id == trg_id:
+            anchors.append(src_id)
+    return anchors
+
+
+def is_in_reversed_ta_relation(
+    i_source_anchor: str, i_target_anchor: str, ta_relations: List[Tuple[str, str, str]]
+):
+    """Find anchors (L-nodes) for the given I-node.
+
+    Args:
+        i_source_anchor: Anchor node for I-source node.
+        i_target_anchor: Anchor node for I-target node.
+        ta_relations: List of (L, I, YA) tuples.
+
+    Returns:
+        Whether source and target L-nodes have a reversed direction (defined via TA relation).
+    """
+    for src_id, trg_id, rel_id in ta_relations:
+        if src_id == i_source_anchor and trg_id == i_target_anchor:
+            return True
+    return False
+
+
 def get_reversed_s_relations(
     i_s_i_relations: List[Tuple[str, str, str]],
     l_ta_l_relations: List[Tuple[str, str, str]],
@@ -230,57 +267,26 @@ def get_reversed_s_relations(
     Returns:
         Iterator over the S-node relations that need to be reversed.
     """
-    anchor_mapping = defaultdict(list)
-    # collect all possible source-nodes for each target-node in L > YA > I and TA > YA > S transitions
-    for src_id, trg_id, rel_id in l_ya_i_relations + ta_ya_s_relations:
-        anchor_mapping[trg_id].append(src_id)
-    # collect all possible sources and targets for each TA-node
-    ta_id2src_and_trg: Dict[str, Dict[str, Set[str]]] = dict()
-    for src_id, trg_id, rel_id in l_ta_l_relations:
-        if not (rel_id) in ta_id2src_and_trg:
-            ta_id2src_and_trg[rel_id] = {"sources": set(), "targets": set()}
-        ta_id2src_and_trg[rel_id]["sources"].add(src_id)
-        ta_id2src_and_trg[rel_id]["targets"].add(trg_id)
-    s_node2sources = defaultdict(list)
-    s_node2targets = defaultdict(list)
-    # collect all possible sources and targets for each S-relation node
+    # collect for each S-node all source-anchor and target-anchor pairs
     for src_id, trg_id, rel_id in i_s_i_relations:
-        s_node2sources[rel_id].append(src_id)
-        s_node2targets[rel_id].append(trg_id)
-
-    for src_id, trg_id, rel_id in i_s_i_relations:
-        if not (src_id in anchor_mapping):
-            logger.warning(f"nodeset={nodeset_id}: Source ID {src_id} does not have an anchor.")
-            continue
-        elif not (trg_id in anchor_mapping):
-            logger.warning(f"nodeset={nodeset_id}: Target ID {trg_id} does not have an anchor.")
-            continue
-        elif not (rel_id in anchor_mapping):
-            logger.warning(f"nodeset={nodeset_id}: Relation ID {rel_id} does not have an anchor.")
-            continue
-        anchor_src_ids = set(anchor_mapping[src_id])
-        anchor_trg_ids = set(anchor_mapping[trg_id])
-        anchor_rel_ids = anchor_mapping[rel_id]
-
-        for anchor_rel_id in anchor_rel_ids:
-            ta_src_ids = ta_id2src_and_trg[anchor_rel_id]["sources"]
-            ta_trg_ids = ta_id2src_and_trg[anchor_rel_id]["targets"]
-
-            # a relation is reversed, if the direction is *the same* as the anchoring relation
-            overlap_ta_src_anc_src_ids = len(ta_src_ids.intersection(anchor_src_ids)) > 0
-            overlap_ta_trg_anc_trg_ids = len(ta_trg_ids.intersection(anchor_trg_ids)) > 0
-            overlap_ta_src_anc_trg_ids = len(ta_src_ids.intersection(anchor_trg_ids)) > 0
-            overlap_ta_trg_anc_src_ids = len(ta_trg_ids.intersection(anchor_src_ids)) > 0
-            if overlap_ta_src_anc_src_ids and overlap_ta_trg_anc_trg_ids:
-                yield src_id, trg_id, rel_id
-            # we skip the relations that are not reversed
-            elif overlap_ta_src_anc_trg_ids and overlap_ta_trg_anc_src_ids:
-                pass
-            # warn only if we have a single choice for each source and target
-            elif len(s_node2sources[rel_id]) == 1 and len(s_node2targets[rel_id]) == 1:
-                logger.warning(
-                    f"nodeset={nodeset_id}: Invalid relation: {src_id} > {rel_id} > {trg_id}"
-                )
+        # find anchors (L-nodes) for I-source node
+        i_source_anchor_nodes = find_i_anchor_nodes(src_id, l_ya_i_relations)
+        if len(i_source_anchor_nodes) > 1:
+            logger.warning(
+                f"nodeset={nodeset_id}: Multiple source anchor nodes (type L) {i_source_anchor_nodes} for source node {src_id} (type I)."
+            )
+        # find anchors (L-nodes) for I-target node
+        i_target_anchor_nodes = find_i_anchor_nodes(trg_id, l_ya_i_relations)
+        if len(i_source_anchor_nodes) > 1:
+            logger.warning(
+                f"nodeset={nodeset_id}: Multiple target anchor nodes (type L) {i_target_anchor_nodes} for target node {trg_id} (type I)."
+            )
+        # collect all potential candidates (these should be L-nodes that are anchors for the I-nodes that are connected via current rel_id S-node)
+        for i_source_anchor in i_source_anchor_nodes:
+            for i_target_anchor in i_target_anchor_nodes:
+                # keep only pairs in s_node2source_target_pairs that appear in binary TA-relations
+                if is_in_reversed_ta_relation(i_source_anchor, i_target_anchor, l_ta_l_relations):
+                    yield src_id, trg_id, rel_id
 
 
 def main(
