@@ -230,11 +230,23 @@ def get_reversed_s_relations(
     Returns:
         Iterator over the S-node relations that need to be reversed.
     """
-
-    anchor_mapping = {
-        trg_id: src_id for src_id, trg_id, rel_id in l_ya_i_relations + ta_ya_s_relations
-    }
-    ta_id2src_and_trg = {rel_id: (src_id, trg_id) for src_id, trg_id, rel_id in l_ta_l_relations}
+    anchor_mapping = defaultdict(list)
+    # collect all possible source-nodes for each target-node in L > YA > I and TA > YA > S transitions
+    for src_id, trg_id, rel_id in l_ya_i_relations + ta_ya_s_relations:
+        anchor_mapping[trg_id].append(src_id)
+    # collect all possible sources and targets for each TA-node
+    ta_id2src_and_trg: Dict[str, Dict[str, Set[str]]] = dict()
+    for src_id, trg_id, rel_id in l_ta_l_relations:
+        if not (rel_id) in ta_id2src_and_trg:
+            ta_id2src_and_trg[rel_id] = {"sources": set(), "targets": set()}
+        ta_id2src_and_trg[rel_id]["sources"].add(src_id)
+        ta_id2src_and_trg[rel_id]["targets"].add(trg_id)
+    s_node2sources = defaultdict(list)
+    s_node2targets = defaultdict(list)
+    # collect all possible sources and targets for each S-relation node
+    for src_id, trg_id, rel_id in i_s_i_relations:
+        s_node2sources[rel_id].append(src_id)
+        s_node2targets[rel_id].append(trg_id)
 
     for src_id, trg_id, rel_id in i_s_i_relations:
         if not (src_id in anchor_mapping):
@@ -246,22 +258,29 @@ def get_reversed_s_relations(
         elif not (rel_id in anchor_mapping):
             logger.warning(f"nodeset={nodeset_id}: Relation ID {rel_id} does not have an anchor.")
             continue
+        anchor_src_ids = set(anchor_mapping[src_id])
+        anchor_trg_ids = set(anchor_mapping[trg_id])
+        anchor_rel_ids = anchor_mapping[rel_id]
 
-        anchor_src_id = anchor_mapping[src_id]
-        anchor_trg_id = anchor_mapping[trg_id]
-        anchor_rel_id = anchor_mapping[rel_id]
-        ta_src_id, ta_trg_id = ta_id2src_and_trg[anchor_rel_id]
+        for anchor_rel_id in anchor_rel_ids:
+            ta_src_ids = ta_id2src_and_trg[anchor_rel_id]["sources"]
+            ta_trg_ids = ta_id2src_and_trg[anchor_rel_id]["targets"]
 
-        # a relation is reversed, if the direction is *the same* as the anchoring relation
-        if ta_src_id == anchor_src_id and ta_trg_id == anchor_trg_id:
-            yield src_id, trg_id, rel_id
-        # we skip the relations that are not reversed
-        elif ta_src_id == anchor_trg_id and ta_trg_id == anchor_src_id:
-            pass
-        else:
-            logger.warning(
-                f"nodeset={nodeset_id}: Invalid relation: {src_id} > {rel_id} > {trg_id}"
-            )
+            # a relation is reversed, if the direction is *the same* as the anchoring relation
+            overlap_ta_src_anc_src_ids = len(ta_src_ids.intersection(anchor_src_ids)) > 0
+            overlap_ta_trg_anc_trg_ids = len(ta_trg_ids.intersection(anchor_trg_ids)) > 0
+            overlap_ta_src_anc_trg_ids = len(ta_src_ids.intersection(anchor_trg_ids)) > 0
+            overlap_ta_trg_anc_src_ids = len(ta_trg_ids.intersection(anchor_src_ids)) > 0
+            if overlap_ta_src_anc_src_ids and overlap_ta_trg_anc_trg_ids:
+                yield src_id, trg_id, rel_id
+            # we skip the relations that are not reversed
+            elif overlap_ta_src_anc_trg_ids and overlap_ta_trg_anc_src_ids:
+                pass
+            # warn only if we have a single choice for each source and target
+            elif len(s_node2sources[rel_id]) == 1 and len(s_node2targets[rel_id]) == 1:
+                logger.warning(
+                    f"nodeset={nodeset_id}: Invalid relation: {src_id} > {rel_id} > {trg_id}"
+                )
 
 
 def main(
