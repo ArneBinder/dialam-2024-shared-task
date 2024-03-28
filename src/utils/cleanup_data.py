@@ -191,6 +191,12 @@ def reverse_relations_nodes(
                 if not node_type.endswith(reversed_type_suffix):
                     raise ValueError(f"nodeset={nodeset_id}: Node {rel_id} is not reversed!")
                 node_id2nodes[rel_id]["type"] = node_type[: -len(reversed_type_suffix)]
+            reversed_rel_node_type = node_id2nodes[rel_id]["type"]
+            # warn if the reversed S-node type is not RA (should not happen!)
+            if reversed_rel_node_type != "RA-rev":
+                logger.warning(
+                    f"nodeset={nodeset_id}: Relation node {rel_id} of type {reversed_rel_node_type} was reversed."
+                )
             reversed_rel_types.add(rel_id)
         # swap the incoming edge
         if (src_id, rel_id) not in reversed_edges:
