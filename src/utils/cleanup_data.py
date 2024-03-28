@@ -35,7 +35,7 @@ Clean-up the data as follows:
 
 
 def cleanup_nodeset(
-    nodeset: Nodeset, nodeset_id: str, normalize_relation_direction: bool
+    nodeset: Nodeset, nodeset_id: str, normalize_relation_direction: bool, verbose: bool = True
 ) -> Nodeset:
     """Remove all edges from the nodeset that are not in valid transitions and remove isolated
     nodes. Optionally, normalize the relation direction.
@@ -44,6 +44,7 @@ def cleanup_nodeset(
         nodeset: A Nodeset.
         nodeset_id: A Nodeset ID.
         normalize_relation_direction: Whether to set all relations in the same direction (this affects RA-nodes).
+        verbose: Whether to show verbose output.
 
     Returns:
         Nodeset without isolated nodes and invalid transitions.
@@ -115,7 +116,12 @@ def cleanup_nodeset(
     if normalize_relation_direction:
         # reverse S-node relations
         reversed_s_relations = get_reversed_s_relations(
-            i_s_i_relations, l_ta_l_relations, l_ya_i_relations, ta_ya_s_relations, nodeset_id
+            i_s_i_relations=i_s_i_relations,
+            l_ta_l_relations=l_ta_l_relations,
+            ta_ya_s_relations=ta_ya_s_relations,
+            nodeset_id=nodeset_id,
+            verbose=verbose,
+            node_id2node=node_id2node,
         )
         result = reverse_relations_nodes(
             binary_relations=reversed_s_relations,
@@ -211,82 +217,64 @@ def reverse_relations_nodes(
     return result
 
 
-def find_i_anchor_nodes(node_id: str, binary_relations: List[Tuple[str, str, str]]):
-    """Find anchors (L-nodes) for the given I-node.
-
-    Args:
-        node_id: Node ID.
-        binary_relations: List of (L, I, YA) tuples.
-        nodeset_id: Nodeset ID.
-
-    Returns:
-        List of anchor L-nodes.
-    """
-    anchors = []
-    for src_id, trg_id, rel_id in binary_relations:
-        if node_id == trg_id:
-            anchors.append(src_id)
-    return anchors
-
-
-def is_in_reversed_ta_relation(
-    i_source_anchor: str, i_target_anchor: str, ta_relations: List[Tuple[str, str, str]]
-):
-    """Find anchors (L-nodes) for the given I-node.
-
-    Args:
-        i_source_anchor: Anchor node for I-source node.
-        i_target_anchor: Anchor node for I-target node.
-        ta_relations: List of (L, I, YA) tuples.
-
-    Returns:
-        Whether source and target L-nodes have a reversed direction (defined via TA relation).
-    """
-    for src_id, trg_id, rel_id in ta_relations:
-        if src_id == i_source_anchor and trg_id == i_target_anchor:
-            return True
-    return False
-
-
 def get_reversed_s_relations(
     i_s_i_relations: List[Tuple[str, str, str]],
     l_ta_l_relations: List[Tuple[str, str, str]],
-    l_ya_i_relations: List[Tuple[str, str, str]],
     ta_ya_s_relations: List[Tuple[str, str, str]],
     nodeset_id: str,
+    node_id2node: Dict[str, Any],
+    verbose: bool = True,
 ) -> Iterator[Tuple[str, str, str]]:
     """Collect all S-node relations that need to be reversed (this affects RA-nodes).
 
     Args:
         i_s_i_relations: List of (I, I, S) tuples.
         l_ta_l_relations: List of (L, L, TA) tuples.
-        l_ya_i_relations: List of (L, I, YA) tuples.
         ta_ya_s_relations: List of (TA, S, YA) tuples.
         nodeset_id: Nodeset ID.
+        node_id2node: A dictionary mapping node IDs to Node objects.
+        verbose: Whether to show verbose output.
 
     Returns:
         Iterator over the S-node relations that need to be reversed.
     """
+    # helper structures
+    ya_trg2sources = defaultdict(list)
+    for src_id, trg_id, rel_id in ta_ya_s_relations:
+        ya_trg2sources[trg_id].append(src_id)
+    ta_src_trg = {(src_id, trg_id) for src_id, trg_id, _ in l_ta_l_relations}
+
     # collect for each S-node all source-anchor and target-anchor pairs
+    already_checked: Dict[str, bool] = dict()
     for src_id, trg_id, rel_id in i_s_i_relations:
-        # find anchors (L-nodes) for I-source node
-        i_source_anchor_nodes = find_i_anchor_nodes(src_id, l_ya_i_relations)
-        if len(i_source_anchor_nodes) > 1:
-            logger.warning(
-                f"nodeset={nodeset_id}: Multiple source anchor nodes (type L) {i_source_anchor_nodes} for source node {src_id} (type I)."
-            )
-        # find anchors (L-nodes) for I-target node
-        i_target_anchor_nodes = find_i_anchor_nodes(trg_id, l_ya_i_relations)
-        if len(i_source_anchor_nodes) > 1:
-            logger.warning(
-                f"nodeset={nodeset_id}: Multiple target anchor nodes (type L) {i_target_anchor_nodes} for target node {trg_id} (type I)."
-            )
-        # collect all potential candidates (these should be L-nodes that are anchors for the I-nodes that are connected via current rel_id S-node)
+        # get all anchors (L-nodes) for I-source node
+        i_source_anchor_nodes = ya_trg2sources.get(src_id, [])
+        # get all anchors (L-nodes) for I-target node
+        i_target_anchor_nodes = ya_trg2sources.get(trg_id, [])
         for i_source_anchor in i_source_anchor_nodes:
             for i_target_anchor in i_target_anchor_nodes:
                 # keep only pairs in s_node2source_target_pairs that appear in binary TA-relations
-                if is_in_reversed_ta_relation(i_source_anchor, i_target_anchor, l_ta_l_relations):
+                if (i_source_anchor, i_target_anchor) in ta_src_trg:
+                    if rel_id in already_checked and not already_checked[rel_id]:
+                        raise ValueError(f"direction of S-node {rel_id} is ambiguous!")
+                    already_checked[rel_id] = True
                     yield src_id, trg_id, rel_id
+                elif (i_target_anchor, i_source_anchor) in ta_src_trg:
+                    if rel_id in already_checked and already_checked[rel_id]:
+                        raise ValueError(f"direction of S-node {rel_id} is ambiguous!")
+                    already_checked[rel_id] = False
+                else:
+                    raise ValueError(
+                        f"nodeset={nodeset_id}: Could not find TA-relation for S-node {rel_id}!"
+                    )
+
+    for src_id, trg_id, rel_id in i_s_i_relations:
+        if verbose and rel_id not in already_checked:
+            rel_node = node_id2node[rel_id]
+            logger.warning(
+                f"nodeset={nodeset_id}: could not determine direction of S-node {rel_id} "
+                f"(type: {rel_node['type']}) because of missing source/target anchor node(s)!"
+            )
 
 
 def main(
@@ -362,6 +350,12 @@ if __name__ == "__main__":
         dest="show_progress",
         action="store_false",
         help="Whether to show a progress bar when processing multiple nodesets.",
+    )
+    parser.add_argument(
+        "--silent",
+        dest="verbose",
+        action="store_false",
+        help="Whether to show verbose output.",
     )
 
     args = vars(parser.parse_args())
