@@ -1,75 +1,53 @@
 import json
+import logging
 from datetime import datetime
 from pathlib import Path
+from typing import Any, Dict, List, Optional, Tuple, Union
 
 import networkx as nx
+from networkx.classes.digraph import DiGraph
+
+logger = logging.getLogger(__name__)
 
 
 class CorpusLoader:
     @staticmethod
-    def parse_timestamp(timestamp):
+    def parse_timestamp(timestamp: str) -> Union[datetime, str]:
         try:
-            cast_timestamp = datetime.strptime(timestamp, "%Y-%m-%d %H:%M:%S")
+            return datetime.strptime(timestamp, "%Y-%m-%d %H:%M:%S")
         except (ValueError, TypeError):
-            # print('Failed datetime(timestamp) casting:')
-            # print(timestamp)
-            cast_timestamp = timestamp
-        return cast_timestamp
+            logger.error(f"Failed datetime(timestamp) casting: {timestamp}")
+        return timestamp
 
     @staticmethod
-    def parse_scheme_id(scheme_id):
+    def parse_scheme_id(scheme_id: str) -> Union[int, str]:
         try:
-            cast_scheme_id = int(scheme_id)
+            return int(scheme_id)
         except (ValueError, TypeError):
-            print("Failed int(schemeID) casting:")
-            print(scheme_id)
-            cast_scheme_id = scheme_id
-        return cast_scheme_id
+            logger.error(f"Failed int(schemeID) casting: {scheme_id}")
+        return scheme_id
 
     @staticmethod
-    def parse_node_id(node_id):
+    def parse_node_id(node_id: str) -> Union[int, str]:
         try:
-            cast_node_id = int(node_id)
+            return int(node_id)
         except (ValueError, TypeError):
-            print("Failed int(nodeID) casting:")
-            print(node_id)
-            cast_node_id = node_id
-        return cast_node_id
+            logger.error(f"Failed int(nodeID) casting: {node_id}")
+        return node_id
 
     @staticmethod
-    def parse_edge_id(edge_id):
+    def parse_edge_id(edge_id: str) -> Union[int, str]:
         try:
-            case_edge_id = int(edge_id)
+            return int(edge_id)
         except (ValueError, TypeError):
-            print("Failed int(edgeID) casting:")
-            print(edge_id)
-            case_edge_id = edge_id
-        return case_edge_id
+            logger.error(f"Failed int(edgeID) casting: {edge_id}")
+        return edge_id
 
-    def load_corpus(self, directory_path):
-        directory_path = Path(directory_path)
-        json_files = directory_path.rglob("*.json")
-        node_sets = {}
-
-        for file in json_files:
-
-            node_set_id = file.stem
-            try:
-                node_set_id = int(file.stem.replace("nodeset", ""))
-            except (ValueError, TypeError):
-                print("Failed int(nodesetID) casting:")
-                print(file.stem)
-
-            with open(str(file)) as json_data:
-                node_sets[node_set_id] = self.parse_json(json.load(json_data))
-
-        return node_sets
-
-    def parse_json(self, node_set):
-
+    def parse_json(self, node_set: Dict[str, List[Dict[str, Any]]]) -> DiGraph:
+        """Parse JSON file with annotations for nodes, edges and locutions and create a DiGraph."""
         G = nx.DiGraph()
         locution_dict = {}
-
+        # Process nodes.
         for node in node_set["nodes"]:
             if "scheme" in node:
                 G.add_node(
@@ -87,12 +65,12 @@ class CorpusLoader:
                     type=node.get("type", None),
                     timestamp=self.parse_timestamp(node.get("timestamp", None)),
                 )
-
+        # Process edges.
         for edge in node_set["edges"]:
             from_id = self.parse_edge_id(edge["fromID"])
             to_id = self.parse_edge_id(edge["toID"])
             G.add_edge(from_id, to_id)
-
+        # Process locutions. Currently not being used anywhere.
         for locution in node_set["locutions"]:
             node_id = self.parse_node_id(locution["nodeID"])
             locution_dict[node_id] = locution
