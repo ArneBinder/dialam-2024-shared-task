@@ -396,7 +396,8 @@ def get_relation_statistics(
 
 def main(
     nodeset_id: Optional[str] = None, input_dir: str = "data", show_progress: bool = True, **kwargs
-):
+) -> None:
+    result: Dict[str, Any]
     if nodeset_id is not None:
         nodeset = read_nodeset(nodeset_dir=input_dir, nodeset_id=nodeset_id)
         result = get_relation_statistics(nodeset=nodeset, nodeset_id=nodeset_id, **kwargs)
@@ -416,17 +417,16 @@ def main(
                     if stat_name not in result:
                         result[stat_name] = stat_value
                     else:
-                        prev_value = result[stat_name]
-                        if isinstance(stat_value, int) and isinstance(prev_value, int):
-                            prev_value += stat_value
-                        elif isinstance(stat_value, list) and isinstance(prev_value, list):
-                            prev_value.extend(stat_value)
-                        elif isinstance(stat_value, dict) and isinstance(prev_value, dict):
+                        if isinstance(stat_value, int) and isinstance(result[stat_name], int):
+                            result[stat_name] += stat_value
+                        elif isinstance(stat_value, list) and isinstance(result[stat_name], list):
+                            result[stat_name].extend(stat_value)
+                        elif isinstance(stat_value, dict) and isinstance(result[stat_name], dict):
                             for key, value in stat_value.items():
-                                if key not in prev_value:
-                                    prev_value[key] = value
+                                if key not in result[stat_name]:
+                                    result[stat_name][key] = value
                                 else:
-                                    prev_value[key] += value
+                                    result[stat_name][key] += value
                         else:
                             raise ValueError(f"Unexpected result type: {type(stat_value)}")
     print(json.dumps(result, indent=2, sort_keys=True))
