@@ -261,12 +261,17 @@ def get_two_hop_connections(
     return result
 
 
-def get_relations(nodeset: Nodeset, relation_type: str) -> Iterator[Relation]:
+def get_relations(
+    nodeset: Nodeset, relation_type: str, enforce_cardinality: bool = False
+) -> Iterator[Relation]:
     """Get all relations of a given type from a nodeset.
 
     Args:
         nodeset: A nodeset.
         relation_type: The type of the relations to extract.
+        enforce_cardinality: Whether to enforce the cardinality constraints of the relation type.
+            All relations need to have exactly one source and one target node, except for the "S"
+            relation type which can have multiple source nodes.
 
     Returns:
         A list of binary relations: tuples containing the source node ID, target node ID, and relation node ID.
@@ -275,15 +280,21 @@ def get_relations(nodeset: Nodeset, relation_type: str) -> Iterator[Relation]:
         allowed_node_types = ["TA"]
         allowed_source_types = ["L"]
         allowed_target_types = ["L"]
+        allowed_max_sources = 1
+        allowed_max_targets = 1
     elif relation_type == "S":
         allowed_node_types = ["RA", "CA", "MA"]
         allowed_source_types = ["I"]
         allowed_target_types = ["I"]
+        allowed_max_sources = None
+        allowed_max_targets = 1
     elif relation_type == "YA":
         allowed_node_types = ["YA"]
         allowed_source_types = ["L", "TA"]
         # Note: YA-relations L -> YA -> L encode (in-)direct speech
         allowed_target_types = ["I", "L", "RA", "CA", "MA"]
+        allowed_max_sources = 1
+        allowed_max_targets = 1
     else:
         raise ValueError(f"Unknown relation type: {relation_type}")
 
@@ -311,6 +322,13 @@ def get_relations(nodeset: Nodeset, relation_type: str) -> Iterator[Relation]:
             for trg_id in src2targets[relation_node_id]
             if node_id2node[trg_id]["type"] in allowed_target_types
         ]
+        if enforce_cardinality:
+            if len(sources) == 0 or len(targets) == 0:
+                continue
+            if allowed_max_sources is not None and len(sources) > allowed_max_sources:
+                continue
+            if allowed_max_targets is not None and len(targets) > allowed_max_targets:
+                continue
         yield {
             "sources": sources,
             "targets": targets,
