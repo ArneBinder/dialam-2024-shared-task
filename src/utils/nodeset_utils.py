@@ -318,3 +318,131 @@ def remove_isolated_nodes(node_ids: List[str], edges: List[Edge]) -> List[str]:
     connected_node_ids = {edge["fromID"] for edge in edges} | {edge["toID"] for edge in edges}
     # filter out all node IDs that are not connected to any edge
     return [node_id for node_id in node_ids if node_id in connected_node_ids]
+
+
+def get_relation_statistics(
+    nodeset: Nodeset, nodeset_id: str
+) -> Dict[str, Union[int, List[str], Dict[str, int]]]:
+    """Get statistics about the relations in a nodeset.
+
+    Args:
+        nodeset: A nodeset.
+        nodeset_id: The ID of the nodeset.
+
+    Returns:
+        A dictionary containing the following keys:
+        - "missed_edges": A list of missed edges.
+        - "covered_edges": The number of covered edges.
+        - "empty_sources": A list of relations with empty sources.
+        - "empty_targets": A list of relations with empty targets.
+        - "more_than_one_target": A list of relations with more than one target.
+        - "type_combinations": A dictionary containing the number of occurrences for each type combination.
+    """
+    node_id2node = {node["nodeID"]: node for node in nodeset["nodes"]}
+
+    all_relations = {
+        rel_type: list(get_relations(nodeset, relation_type=rel_type))
+        for rel_type in ["TA", "S", "YA"]
+    }
+    covered_edges = set()
+    empty_sources = set()
+    empty_targets = set()
+    more_than_one_target = set()
+    type_combinations = list()
+    for relation_type, relations in all_relations.items():
+        for relation in relations:
+            for src_id in relation["sources"]:
+                covered_edges.add((src_id, relation["relation"]))
+            for trg_id in relation["targets"]:
+                covered_edges.add((relation["relation"], trg_id))
+            if not relation["sources"]:
+                empty_sources.add(relation["relation"])
+            if not relation["targets"]:
+                empty_targets.add(relation["relation"])
+            if len(relation["targets"]) > 1:
+                more_than_one_target.add(relation["relation"])
+            source_types = sorted(node_id2node[src_id]["type"] for src_id in relation["sources"])
+            target_types = sorted(node_id2node[trg_id]["type"] for trg_id in relation["targets"])
+            type_combinations.append(f"{relation_type}: {source_types} -> {target_types}")
+
+    missed_edges = set((edge["fromID"], edge["toID"]) for edge in nodeset["edges"]) - covered_edges
+    missed_edges_with_types = [
+        f"{src_id}:{trg_id} {node_id2node[src_id]['type']}:{node_id2node[trg_id]['type']}"
+        for src_id, trg_id in missed_edges
+    ]
+    empty_sources_with_types = [
+        f"{node_id} {node_id2node[node_id]['type']}" for node_id in empty_sources
+    ]
+    empty_targets_with_types = [
+        f"{node_id} {node_id2node[node_id]['type']}" for node_id in empty_targets
+    ]
+    more_than_one_target_with_types = [
+        f"{node_id} {node_id2node[node_id]['type']}" for node_id in more_than_one_target
+    ]
+
+    def prepend(items: Iterable[str], prefix: str) -> List[str]:
+        """Prepend a prefix to all items in a list."""
+        return [f"{prefix} {item}" for item in sorted(items)]
+
+    return {
+        "missed_edges": missed_edges_with_types,
+        "covered_edges": len(covered_edges),
+        "empty_sources": prepend(empty_sources_with_types, prefix=nodeset_id),
+        "empty_targets": prepend(empty_targets_with_types, prefix=nodeset_id),
+        "more_than_one_target": prepend(more_than_one_target_with_types, prefix=nodeset_id),
+        "type_combinations": dict(Counter(type_combinations)),
+    }
+
+
+def main(
+    nodeset_id: Optional[str] = None, input_dir: str = "data", show_progress: bool = True, **kwargs
+):
+    if nodeset_id is not None:
+        nodeset = read_nodeset(nodeset_dir=input_dir, nodeset_id=nodeset_id)
+        result = get_relation_statistics(nodeset=nodeset, nodeset_id=nodeset_id, **kwargs)
+    else:
+        # if no nodeset ID is provided, process all nodesets in the input directory
+        result = dict()
+        for nodeset_id, result_or_error in process_all_nodesets(
+            func=get_relation_statistics,
+            nodeset_dir=input_dir,
+            show_progress=show_progress,
+            **kwargs,
+        ):
+            if isinstance(result_or_error, Exception):
+                logger.error(f"nodeset={nodeset_id}: Failed to process: {result_or_error}")
+            else:
+                for stat_name, stat_value in result_or_error.items():
+                    if stat_name not in result:
+                        result[stat_name] = stat_value
+                    else:
+                        prev_value = result[stat_name]
+                        if isinstance(stat_value, int) and isinstance(prev_value, int):
+                            prev_value += stat_value
+                        elif isinstance(stat_value, list) and isinstance(prev_value, list):
+                            prev_value.extend(stat_value)
+                        elif isinstance(stat_value, dict) and isinstance(prev_value, dict):
+                            for key, value in stat_value.items():
+                                if key not in prev_value:
+                                    prev_value[key] = value
+                                else:
+                                    prev_value[key] += value
+                        else:
+                            raise ValueError(f"Unexpected result type: {type(stat_value)}")
+    print(json.dumps(result, indent=2, sort_keys=True))
+
+
+if __name__ == "__main__":
+
+    parser = argparse.ArgumentParser(description="Process nodesets.")
+    parser.add_argument(
+        "--input_dir", type=str, required=True, help="The directory containing the nodesets."
+    )
+    parser.add_argument("--nodeset_id", type=str, help="The ID of the nodeset to process.")
+    parser.add_argument(
+        "--silent", action="store_false", dest="show_progress", help="Disable progress bar."
+    )
+
+    args = vars(parser.parse_args())
+    logging.basicConfig(level=logging.INFO)
+    main(**args)
