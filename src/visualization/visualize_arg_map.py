@@ -115,7 +115,7 @@ def create_visualization(
     duplicate_node_ids = set()
     for n in data["nodes"]:
         node_type = n["type"]
-        if node_type in ["RA", "RA-rev", "CA", "CA-rev", "MA", "MA-rev"]:
+        if node_type in ["RA", "CA", "MA"]:
             node_type = "S"
 
         # only collect connected nodes
