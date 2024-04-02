@@ -275,21 +275,21 @@ def get_relations(nodeset: Nodeset, relation_type: str) -> Iterator[Relation]:
 
 
 def remove_relation_nodes_and_edges(
-    nodeset: Nodeset, relations: List[Tuple[str, str, str]]
+    nodeset: Nodeset, binary_relations: List[Tuple[str, str, str]]
 ) -> Nodeset:
     """Remove relation nodes and the respective edges from a nodeset.
 
     Args:
         nodeset: A nodeset.
-        relations: A list of binary relations: tuples containing the source node ID, target node ID,
+        binary_relations: A list of binary relations: tuples containing the source node ID, target node ID,
             and relation node ID.
     """
     # create a copy of the nodeset to avoid modifying the original
     result = nodeset.copy()
     # helper sets
-    relation_node_ids = {rel[2] for rel in relations}
-    relation_edges = {(rel[0], rel[2]) for rel in relations} | {
-        (rel[2], rel[1]) for rel in relations
+    relation_node_ids = {rel[2] for rel in binary_relations}
+    relation_edges = {(rel[0], rel[2]) for rel in binary_relations} | {
+        (rel[2], rel[1]) for rel in binary_relations
     }
 
     # filter out all nodes that are not relation nodes

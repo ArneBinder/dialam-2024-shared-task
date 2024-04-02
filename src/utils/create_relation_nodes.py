@@ -154,7 +154,9 @@ def remove_s_and_ya_nodes_with_edges(nodeset: Nodeset) -> Nodeset:
         allowed_target_types=["I", "MA", "RA", "CA"],  # S nodes can be of type MA, RA, or CA
     )
     # remove S and YA nodes and their edges
-    result = remove_relation_nodes_and_edges(nodeset=nodeset, relations=s_relations + ya_relations)
+    result = remove_relation_nodes_and_edges(
+        nodeset=nodeset, binary_relations=s_relations + ya_relations
+    )
     return result
 
 
