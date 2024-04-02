@@ -22,7 +22,6 @@ def get_graph(node_path: str) -> DiGraph:
 
 def remove_redundant_nodes(graph: DiGraph) -> DiGraph:
     """Remove TA, L, YA nodes from the graph."""
-    node_types = nx.get_node_attributes(graph, "type")
 
     nodes_to_remove = [
         x
@@ -46,26 +45,25 @@ def remove_iso_analyst_nodes(graph: DiGraph) -> DiGraph:
     return graph
 
 
+def get_type_node_list(graph: DiGraph, node_types: List[str]) -> List[Tuple[int, str]]:
+    """Filter out and return nodes of a given type."""
+    nodes = [(x, y["text"]) for x, y in graph.nodes(data=True) if y["type"] in node_types]
+    return nodes
+
+
 def get_s_node_list(graph: DiGraph) -> List[Tuple[int, str]]:
     """Filter out and return S-type nodes (MA, RA, CA)."""
-    s_nodes = [
-        x
-        for x, y in graph.nodes(data=True)
-        if y["type"] == "MA" or y["type"] == "RA" or y["type"] == "CA" or y["type"] == "PA"
-    ]
-    return s_nodes
+    return get_type_node_list(graph, ["MA", "RA", "CA", "PA"])
 
 
 def get_l_node_list(graph: DiGraph) -> List[Tuple[int, str]]:
     """Filter out and return L-type nodes (locutions)."""
-    l_nodes = [(x, y["text"]) for x, y in graph.nodes(data=True) if y["type"] == "L"]
-    return l_nodes
+    return get_type_node_list(graph, ["L"])
 
 
 def get_i_node_list(graph: DiGraph) -> List[Tuple[int, str]]:
     """Filter out and return I-type nodes (propositions)."""
-    i_nodes = [(x, y["text"]) for x, y in graph.nodes(data=True) if y["type"] == "I"]
-    return i_nodes
+    return get_type_node_list(graph, ["I"])
 
 
 def get_rels(rel_type: str, graph: DiGraph) -> List[int]:
