@@ -256,7 +256,9 @@ def add_s_and_ya_nodes_with_edges(
     )
     node_id2node.update(ya_node_id2node)
     # create edges from S and YA relations
-    new_edges = create_edges_from_relations(relations=s_relations + ya_relations, edges=edges)
+    new_edges = create_edges_from_relations(
+        binary_relations=s_relations + ya_relations, edges=edges
+    )
 
     nodeset["nodes"] = list(node_id2node.values())
     nodeset["edges"] = edges + new_edges

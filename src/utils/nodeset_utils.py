@@ -106,13 +106,13 @@ def get_node_ids(node_id2node: Dict[str, Any], allowed_node_types: List[str]) ->
 
 
 def create_edges_from_relations(
-    relations: List[Tuple[str, str, str]],
+    binary_relations: List[Tuple[str, str, str]],
     edges: List[Edge],
 ) -> List[Edge]:
-    """Create edge objects from relations.
+    """Create edge objects from binary_relations.
 
     Args:
-        relations: A list of binary relations: tuples containing the source node ID, target node ID,
+        binary_relations: A list of binary relations: tuples containing the source node ID, target node ID,
             and relation node ID.
         edges: A list of edge objects where each object contains the keys "fromID" and "toID".
 
@@ -121,7 +121,7 @@ def create_edges_from_relations(
     """
     biggest_edge_id = max([int(edge["fromID"]) for edge in edges])
     new_edges: List[Edge] = []
-    for src_id, trg_id, rel_id in relations:
+    for src_id, trg_id, rel_id in binary_relations:
         biggest_edge_id += 1
         new_edges.append({"fromID": src_id, "toID": rel_id, "edgeID": str(biggest_edge_id)})
         biggest_edge_id += 1
@@ -154,7 +154,7 @@ def create_relation_nodes_from_alignment(
     """
     biggest_node_id = max([int(node_id) for node_id in node_id2node.keys()])
     new_node_id2node: Dict[str, Node] = dict()
-    relations = []
+    binary_relations = []
     for src_id, trg_id in node_alignments:
         if swap_direction:
             src_id, trg_id = trg_id, src_id
@@ -165,9 +165,9 @@ def create_relation_nodes_from_alignment(
             "type": node_type,
             "text": node_text,
         }
-        relations.append((src_id, trg_id, node_id))
+        binary_relations.append((src_id, trg_id, node_id))
 
-    return relations, new_node_id2node
+    return binary_relations, new_node_id2node
 
 
 def get_binary_relations(
@@ -200,7 +200,7 @@ def get_binary_relations(
         src2targets[src_id].append(trg_id)
         trg2sources[trg_id].append(src_id)
 
-    relations = []
+    binary_relations = []
     for node_id, node in node_id2node.items():
         # filter nodes based on allowed types
         if allowed_node_types is not None and node["type"] not in allowed_node_types:
@@ -213,8 +213,8 @@ def get_binary_relations(
                 for trg_id in src2targets[node_id]:
                     trg_node = node_id2node[trg_id]
                     if allowed_target_types is None or trg_node["type"] in allowed_target_types:
-                        relations.append((src_id, trg_id, node_id))
-    return relations
+                        binary_relations.append((src_id, trg_id, node_id))
+    return binary_relations
 
 
 def get_relations(nodeset: Nodeset, relation_type: str) -> Iterator[Relation]:
