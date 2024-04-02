@@ -312,13 +312,13 @@ if __name__ == "__main__":
     parser.add_argument(
         "--s_node_text",
         type=str,
-        default="DUMMY",
+        default="NONE",
         help="The text of the new S nodes. Default is 'DUMMY'.",
     )
     parser.add_argument(
         "--ya_node_text",
         type=str,
-        default="DUMMY",
+        default="NONE",
         help="The text of the new YA nodes. Default is 'DUMMY'.",
     )
     parser.add_argument(
