@@ -41,30 +41,6 @@ Important Disclaimer:
 """
 
 
-def get_binary_ta_relations(
-    node_id2node: Dict[str, Node],
-    edges: List[Edge],
-) -> List[Tuple[str, str, str]]:
-    """Get TA relations from nodes.
-
-    Args:
-        node_id2node: A dictionary mapping node IDs to node objects.
-        edges: A list of edge objects where each object contains the keys "fromID" and "toID".
-
-    Returns:
-        A list of binary TA relations: tuples containing the source node ID, target node ID, and TA node ID.
-    """
-    # collect TA relations: (src_id, trg_id, ta_node_id) where src_id and trg_id are L nodes
-    return get_binary_relations(
-        node_id2node=node_id2node,
-        edges=edges,
-        allowed_node_types=["TA"],
-        # TA relations are always between L nodes
-        allowed_source_types=["L"],
-        allowed_target_types=["L"],
-    )
-
-
 def create_s_binary_relations_and_nodes_from_ta_nodes_and_il_alignment(
     node_id2node: Dict[str, Any],
     ta_binary_relations: List[Tuple[str, str, str]],
@@ -231,7 +207,14 @@ def add_s_and_ya_nodes_with_edges(
         nodeset_id=nodeset_id,
     )
     # collect TA relations: (src_id, trg_id, ta_node_id) where src_id and trg_id are L nodes
-    ta_relations = get_binary_ta_relations(node_id2node=node_id2node, edges=edges)
+    ta_relations = get_binary_relations(
+        node_id2node=node_id2node,
+        edges=edges,
+        allowed_node_types=["TA"],
+        # TA relations are always between L nodes
+        allowed_source_types=["L"],
+        allowed_target_types=["L"],
+    )
     # copy the node_id2node dictionary to avoid modifying the original dictionary
     node_id2node = node_id2node.copy()
     # create S nodes and relations from TA nodes
