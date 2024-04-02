@@ -1,8 +1,21 @@
+import argparse
 import json
 import logging
 import os
-from collections import defaultdict
-from typing import Any, Callable, Dict, Iterator, List, Optional, Tuple, TypedDict, TypeVar, Union
+from collections import Counter, defaultdict
+from typing import (
+    Any,
+    Callable,
+    Dict,
+    Iterable,
+    Iterator,
+    List,
+    Optional,
+    Tuple,
+    TypedDict,
+    TypeVar,
+    Union,
+)
 
 import tqdm
 
@@ -17,6 +30,7 @@ Nodeset = TypedDict(
     "Nodeset",
     {"nodes": List[Node], "edges": List[Edge], "locutions": List[Locution]},
 )
+Relation = TypedDict("Relation", {"sources": List[str], "targets": List[str], "relation": str})
 
 
 logger = logging.getLogger(__name__)
@@ -201,6 +215,63 @@ def get_binary_relations(
                     if allowed_target_types is None or trg_node["type"] in allowed_target_types:
                         relations.append((src_id, trg_id, node_id))
     return relations
+
+
+def get_relations(nodeset: Nodeset, relation_type: str) -> Iterator[Relation]:
+    """Get all relations of a given type from a nodeset.
+
+    Args:
+        nodeset: A nodeset.
+        relation_type: The type of the relations to extract.
+
+    Returns:
+        A list of binary relations: tuples containing the source node ID, target node ID, and relation node ID.
+    """
+    if relation_type == "TA":
+        allowed_node_types = ["TA"]
+        allowed_source_types = ["L"]
+        allowed_target_types = ["L"]
+    elif relation_type == "S":
+        allowed_node_types = ["RA", "CA", "MA"]
+        allowed_source_types = ["I"]
+        allowed_target_types = ["I"]
+    elif relation_type == "YA":
+        allowed_node_types = ["YA"]
+        allowed_source_types = ["L", "TA"]
+        # Note: YA-relations L -> YA -> L encode (in-)direct speech
+        allowed_target_types = ["I", "L", "RA", "CA", "MA"]
+    else:
+        raise ValueError(f"Unknown relation type: {relation_type}")
+
+    # helper constructs
+    node_id2node = {node["nodeID"]: node for node in nodeset["nodes"]}
+    src2targets = defaultdict(list)
+    trg2sources = defaultdict(list)
+    for edge in nodeset["edges"]:
+        src_id = edge["fromID"]
+        trg_id = edge["toID"]
+        src2targets[src_id].append(trg_id)
+        trg2sources[trg_id].append(src_id)
+
+    # get all relation nodes
+    relation_node_ids = get_node_ids(node_id2node, allowed_node_types)
+    for relation_node_id in relation_node_ids:
+        # get all source and target nodes
+        sources = [
+            src_id
+            for src_id in trg2sources[relation_node_id]
+            if node_id2node[src_id]["type"] in allowed_source_types
+        ]
+        targets = [
+            trg_id
+            for trg_id in src2targets[relation_node_id]
+            if node_id2node[trg_id]["type"] in allowed_target_types
+        ]
+        yield {
+            "sources": sources,
+            "targets": targets,
+            "relation": relation_node_id,
+        }
 
 
 def remove_relation_nodes_and_edges(
