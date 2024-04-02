@@ -12,8 +12,8 @@ from src.utils.nodeset_utils import (
     Edge,
     Node,
     Nodeset,
+    create_binary_relation_nodes_from_alignment,
     create_edges_from_relations,
-    create_relation_nodes_from_alignment,
     get_binary_relations,
     get_node_ids,
     process_all_nodesets,
@@ -65,9 +65,9 @@ def get_binary_ta_relations(
     )
 
 
-def create_s_relations_and_nodes_from_ta_nodes_and_il_alignment(
+def create_s_binary_relations_and_nodes_from_ta_nodes_and_il_alignment(
     node_id2node: Dict[str, Any],
-    ta_relations: List[Tuple[str, str, str]],
+    ta_binary_relations: List[Tuple[str, str, str]],
     il_node_alignment: List[Tuple[str, str]],
     s_node_type: str,
     s_node_text: str,
@@ -76,7 +76,7 @@ def create_s_relations_and_nodes_from_ta_nodes_and_il_alignment(
 
     Args:
         node_id2node: A dictionary mapping node IDs to node objects.
-        ta_relations: A list of binary TA relations, i.e. tuples containing the source node ID,
+        ta_binary_relations: A list of binary TA relations, i.e. tuples containing the source node ID,
             target node ID, and TA node ID.
         il_node_alignment: A list of tuples containing the alignment between L and I nodes.
         s_node_type: The type of the S nodes.
@@ -100,7 +100,7 @@ def create_s_relations_and_nodes_from_ta_nodes_and_il_alignment(
     s_relations = []
     sat_node_alignment = []
     new_node_id2node = dict()
-    for src_id, trg_id, ta_node_id in ta_relations:
+    for src_id, trg_id, ta_node_id in ta_binary_relations:
         if src_id not in l2i_node_id or trg_id not in l2i_node_id:
             # skip TA relations where the source or target L nodes are not aligned with I nodes
             continue
@@ -237,16 +237,16 @@ def add_s_and_ya_nodes_with_edges(
         s_relations,
         s_node_id2node,
         sat_node_alignment,
-    ) = create_s_relations_and_nodes_from_ta_nodes_and_il_alignment(
+    ) = create_s_binary_relations_and_nodes_from_ta_nodes_and_il_alignment(
         node_id2node=node_id2node,
-        ta_relations=ta_relations,
+        ta_binary_relations=ta_relations,
         il_node_alignment=il_node_alignment,
         s_node_type=s_node_type,
         s_node_text=s_node_text,
     )
     node_id2node.update(s_node_id2node)
     # create YA nodes and relations I-L- and S-TA-alignments
-    ya_relations, ya_node_id2node = create_relation_nodes_from_alignment(
+    ya_relations, ya_node_id2node = create_binary_relation_nodes_from_alignment(
         node_id2node=node_id2node,
         node_alignments=il_node_alignment + sat_node_alignment,
         node_type="YA",

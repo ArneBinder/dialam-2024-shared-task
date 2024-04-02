@@ -129,7 +129,7 @@ def create_edges_from_relations(
     return new_edges
 
 
-def create_relation_nodes_from_alignment(
+def create_binary_relation_nodes_from_alignment(
     node_id2node: Dict[str, Node],
     node_alignments: List[Tuple[str, str]],
     node_type: str,
