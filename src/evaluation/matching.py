@@ -1,11 +1,9 @@
 import copy
 import logging
-from typing import Any, Dict, List, Optional, Set, Tuple
+from typing import Any, Dict, List, Tuple
 
 import centrality
-import gmatch4py as gm
 import load_map
-import networkx as nx
 import numpy as np
 import segeval
 from bs4 import BeautifulSoup
@@ -280,7 +278,7 @@ def select_max_vals(
     return lev_rels, lev_vals
 
 
-def convert_to_dict(conf_matrix: List[List[int]]):
+def convert_to_dict(conf_matrix: List[List[int]]) -> Dict[int, Dict[int, int]]:
     """Convert confusion matrix to a dictionary."""
     dicts: Dict[int, Dict[int, int]] = dict()
     for i, col in enumerate(conf_matrix):
@@ -862,3 +860,72 @@ def get_node_anchor(node_id: int, graph: DiGraph) -> str:
     except Exception as e:
         logger.error(f"Failed to get predecessors for node with ID {node_id}")
         return ""
+
+
+def calculate_matching(
+    predicted_data: Dict[str, List[Dict[str, Any]]], gold_data: Dict[str, List[Dict[str, Any]]]
+) -> List[Dict[int, Dict[int, int]]]:
+    """Build confusion matrices for different types of relations.
+    Args:
+        predicted_data: A dictionary with nodes, edges and locutions for the predicted nodeset.
+        gold_data: A dictionary with nodes, edges and locutions for the gold nodeset.
+
+    Returns:
+        Confusion matrices for the following transitions:
+            all_s_a_cm: YA > S (S-nodes: MA, RA, CA)
+            prop_rels_comp_cm: I > S (S-nodes: MA, RA, CA)
+            loc_ya_rels_comp_cm: L > YA
+            prop_ya_comp_cm: YA > I
+            loc_ta_cm: L > TA
+            prop_ya_cm: L > (YA) > I
+
+    """
+    # Graph construction.
+    graph1, graph2 = get_graphs(predicted_data, gold_data)
+    # Creating similarity matrix for propositional relations.
+    prop_rels = get_sim_matrix(graph1, graph2, "propositions")
+    # Creating similarity matrix for locutional relations.
+    loc_rels = get_sim_matrix(graph1, graph2, "locutions")
+    # (1) Do we have the same YA > S transitions? Do their annotations coincide?
+    # Anchoring on S-nodes (RA/CA/MA) and combining them (checking how many YA-anchors,
+    # predecessors of S-nodes, have the same/different text field annotations).
+    ra_a = s_rel_anchor("RA", graph1, graph2)
+    ma_a = s_rel_anchor("MA", graph1, graph2)
+    ca_a = s_rel_anchor("CA", graph1, graph2)
+    all_s = combine_s_node_matrix(ra_a, ca_a, ma_a)
+
+    # (2) Do we have the same S-nodes?
+    # Comparing propositional relations, building a confusion matrix for S-node (RA, MA, CA)
+    # matches between the two graphs.
+    prop_rels_comp_conf = prop_rels_comp(prop_rels, graph1, graph2)
+
+    # (3) Do we have the same L > YA transitions? Do their annotations coincide?
+    # Getting all YAs anchored in locutions, comparing the text field annotations of YA-nodes,
+    # successors of L-nodes, anchored in locutions.
+    loc_ya_rels_comp_conf = loc_ya_rels_comp(loc_rels, graph1, graph2)
+
+    # (4) Do we have the same YA > I transitions? Do their annotations coincide?
+    # Getting all YAs in propositions, comparing the text field annotations of YA-nodes,
+    # predecessors of I-nodes, anchored in propositions.
+    prop_ya_comp_conf = prop_ya_comp(prop_rels, graph1, graph2)
+
+    # (5) Do we have the same (TA-node) transitions between the L-nodes (L > TA > L transitions)?
+    # Getting all TAs anchored in locutions, checking whether each L-node pair (from graph1 and graph2)
+    # has the same amount of outgoing TA-nodes.
+    loc_ta_conf = loc_ta_rels_comp(loc_rels, graph1, graph2)
+
+    # (6) Do we have I-nodes anchored in the same L-nodes (L > YA > I transitions)? Do their annotations coincide?
+    # Getting all YAs anchored in propositions, comparing the text field annotations of L-/TA-nodes
+    # that are predecessors of YA-nodes anchored in propositions (I-nodes).
+    prop_ya_conf = prop_ya_anchor_comp(prop_rels, graph1, graph2)
+
+    conf_matrices = [
+        all_s,
+        prop_rels_comp_conf,
+        loc_ya_rels_comp_conf,
+        prop_ya_comp_conf,
+        loc_ta_conf,
+        prop_ya_conf,
+    ]
+    as_dicts = [convert_to_dict(cm) for cm in conf_matrices]
+    return as_dicts
