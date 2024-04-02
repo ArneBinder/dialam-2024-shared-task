@@ -9,13 +9,12 @@ from typing import Any, Dict, List, Optional, Tuple
 
 from src.utils.align_i2l_nodes import align_i_and_l_nodes
 from src.utils.nodeset_utils import (
-    Edge,
-    Node,
     Nodeset,
-    create_binary_relation_nodes_from_alignment,
+    Relation,
     create_edges_from_relations,
-    get_binary_relations,
+    create_relation_nodes_from_alignment,
     get_node_ids,
+    get_relations,
     process_all_nodesets,
     read_nodeset,
     remove_isolated_nodes,
@@ -41,26 +40,25 @@ Important Disclaimer:
 """
 
 
-def create_s_binary_relations_and_nodes_from_ta_nodes_and_il_alignment(
+def create_s_relations_and_nodes_from_ta_nodes_and_il_alignment(
     node_id2node: Dict[str, Any],
-    ta_binary_relations: List[Tuple[str, str, str]],
+    ta_relations: List[Relation],
     il_node_alignment: List[Tuple[str, str]],
     s_node_type: str,
     s_node_text: str,
-) -> Tuple[List[Tuple[str, str, str]], Dict[str, Any], List[Tuple[str, str]]]:
+) -> Tuple[List[Relation], Dict[str, Any], List[Tuple[str, str]]]:
     """Create S nodes from TA nodes by mirroring TA relations to S relations.
 
     Args:
         node_id2node: A dictionary mapping node IDs to node objects.
-        ta_binary_relations: A list of binary TA relations, i.e. tuples containing the source node ID,
-            target node ID, and TA node ID.
+        ta_relations: A list of TA relations.
         il_node_alignment: A list of tuples containing the alignment between L and I nodes.
         s_node_type: The type of the S nodes.
         s_node_text: The text of the S nodes.
 
     Returns:
         A tuple containing:
-         - a list of binary S relations: tuples containing the source node ID, target node ID, and S node ID,
+         - a list of new S relations,
          - a dictionary containing the newly created S nodes as a mapping from IDs to node content, and
          - a list of tuples containing the alignment between S and TA nodes.
     """
@@ -69,37 +67,33 @@ def create_s_binary_relations_and_nodes_from_ta_nodes_and_il_alignment(
     #  can there be multiple I nodes for a single L node?
     # helper dictionary to map L node IDs to aligned I node IDs
     l2i_node_id = {l_id: i_id for i_id, l_id in il_node_alignment}
-    ta2s_id: Dict[str, str] = dict()
     # we need to keep track of the biggest node ID to create new S nodes
     biggest_node_id = max([int(node_id) for node_id in node_id2node.keys()])
     # mirror TA relations to S relations
-    s_relations = []
+    s_relations: List[Relation] = []
     sat_node_alignment = []
     new_node_id2node = dict()
-    for src_id, trg_id, ta_node_id in ta_binary_relations:
-        if src_id not in l2i_node_id or trg_id not in l2i_node_id:
-            # skip TA relations where the source or target L nodes are not aligned with I nodes
-            continue
-        # we may have already created an S node for the TA node
-        s_node_id = ta2s_id.get(ta_node_id, None)
-        # if not, create a new S node
-        if s_node_id is None:
-            biggest_node_id += 1
-            s_node_id = str(biggest_node_id)
-            ta2s_id[ta_node_id] = s_node_id
-            new_node_id2node[s_node_id] = {
-                "nodeID": s_node_id,
-                "type": s_node_type,
-                "text": s_node_text,
-            }
+    for ta_relation in ta_relations:
+        for src_or_trg_id in ta_relation["sources"] + ta_relation["targets"]:
+            if src_or_trg_id not in l2i_node_id:
+                # skip TA relations where the source or target L nodes are not aligned with I nodes
+                continue
+        # create a new S node
+        biggest_node_id += 1
+        s_node_id = str(biggest_node_id)
+        new_node_id2node[s_node_id] = {
+            "nodeID": s_node_id,
+            "type": s_node_type,
+            "text": s_node_text,
+        }
         # map L-source and L-target node IDs to their corresponding S node IDs.
         # note that we swap the direction because for most of the S nodes (MA and CA), they point
         # in the opposite direction of the TA nodes
-        s_src_id = l2i_node_id[trg_id]
-        s_trg_id = l2i_node_id[src_id]
-        s_relations.append((s_src_id, s_trg_id, s_node_id))
+        s_src_ids = [l2i_node_id[node_id] for node_id in ta_relation["targets"]]
+        s_trg_ids = [l2i_node_id[node_id] for node_id in ta_relation["sources"]]
+        s_relations.append({"sources": s_src_ids, "targets": s_trg_ids, "relation": s_node_id})
         # collect the alignment between the S and TA nodes
-        sat_node_alignment.append((s_node_id, ta_node_id))
+        sat_node_alignment.append((s_node_id, ta_relation["relation"]))
 
     return s_relations, new_node_id2node, sat_node_alignment
 
@@ -113,26 +107,11 @@ def remove_s_and_ya_nodes_with_edges(nodeset: Nodeset) -> Nodeset:
     Returns:
         Nodeset with S and YA nodes and their edges removed.
     """
-    node_id2node = {node["nodeID"]: node for node in nodeset["nodes"]}
     # collect S and YA relations
-    s_relations = get_binary_relations(
-        node_id2node=node_id2node,
-        edges=nodeset["edges"],
-        allowed_node_types=["MA", "RA", "CA"],  # S nodes can be of type MA, RA, or CA
-        allowed_source_types=["I"],
-        allowed_target_types=["I"],
-    )
-    ya_relations = get_binary_relations(
-        node_id2node=node_id2node,
-        edges=nodeset["edges"],
-        allowed_node_types=["YA"],
-        allowed_source_types=["L", "TA"],
-        allowed_target_types=["I", "MA", "RA", "CA"],  # S nodes can be of type MA, RA, or CA
-    )
+    s_relations = list(get_relations(nodeset=nodeset, relation_type="S"))
+    ya_relations = list(get_relations(nodeset=nodeset, relation_type="YA"))
     # remove S and YA nodes and their edges
-    result = remove_relation_nodes_and_edges(
-        nodeset=nodeset, binary_relations=s_relations + ya_relations
-    )
+    result = remove_relation_nodes_and_edges(nodeset=nodeset, relations=s_relations + ya_relations)
     return result
 
 
@@ -207,14 +186,7 @@ def add_s_and_ya_nodes_with_edges(
         nodeset_id=nodeset_id,
     )
     # collect TA relations: (src_id, trg_id, ta_node_id) where src_id and trg_id are L nodes
-    ta_relations = get_binary_relations(
-        node_id2node=node_id2node,
-        edges=edges,
-        allowed_node_types=["TA"],
-        # TA relations are always between L nodes
-        allowed_source_types=["L"],
-        allowed_target_types=["L"],
-    )
+    ta_relations = list(get_relations(nodeset=nodeset, relation_type="TA"))
     # copy the node_id2node dictionary to avoid modifying the original dictionary
     node_id2node = node_id2node.copy()
     # create S nodes and relations from TA nodes
@@ -222,16 +194,16 @@ def add_s_and_ya_nodes_with_edges(
         s_relations,
         s_node_id2node,
         sat_node_alignment,
-    ) = create_s_binary_relations_and_nodes_from_ta_nodes_and_il_alignment(
+    ) = create_s_relations_and_nodes_from_ta_nodes_and_il_alignment(
         node_id2node=node_id2node,
-        ta_binary_relations=ta_relations,
+        ta_relations=ta_relations,
         il_node_alignment=il_node_alignment,
         s_node_type=s_node_type,
         s_node_text=s_node_text,
     )
     node_id2node.update(s_node_id2node)
     # create YA nodes and relations I-L- and S-TA-alignments
-    ya_relations, ya_node_id2node = create_binary_relation_nodes_from_alignment(
+    ya_relations, ya_node_id2node = create_relation_nodes_from_alignment(
         node_id2node=node_id2node,
         node_alignments=il_node_alignment + sat_node_alignment,
         node_type="YA",
@@ -241,9 +213,7 @@ def add_s_and_ya_nodes_with_edges(
     )
     node_id2node.update(ya_node_id2node)
     # create edges from S and YA relations
-    new_edges = create_edges_from_relations(
-        binary_relations=s_relations + ya_relations, edges=edges
-    )
+    new_edges = create_edges_from_relations(relations=s_relations + ya_relations, edges=edges)
 
     nodeset["nodes"] = list(node_id2node.values())
     nodeset["edges"] = edges + new_edges

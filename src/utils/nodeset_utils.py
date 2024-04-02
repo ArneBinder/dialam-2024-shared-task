@@ -106,14 +106,13 @@ def get_node_ids(node_id2node: Dict[str, Any], allowed_node_types: List[str]) ->
 
 
 def create_edges_from_relations(
-    binary_relations: List[Tuple[str, str, str]],
+    relations: List[Relation],
     edges: List[Edge],
 ) -> List[Edge]:
     """Create edge objects from binary_relations.
 
     Args:
-        binary_relations: A list of binary relations: tuples containing the source node ID, target node ID,
-            and relation node ID.
+        relations: A list of relations.
         edges: A list of edge objects where each object contains the keys "fromID" and "toID".
 
     Returns:
@@ -121,21 +120,27 @@ def create_edges_from_relations(
     """
     biggest_edge_id = max([int(edge["fromID"]) for edge in edges])
     new_edges: List[Edge] = []
-    for src_id, trg_id, rel_id in binary_relations:
-        biggest_edge_id += 1
-        new_edges.append({"fromID": src_id, "toID": rel_id, "edgeID": str(biggest_edge_id)})
-        biggest_edge_id += 1
-        new_edges.append({"fromID": rel_id, "toID": trg_id, "edgeID": str(biggest_edge_id)})
+    for rel in relations:
+        for src_id in rel["sources"]:
+            biggest_edge_id += 1
+            new_edges.append(
+                {"fromID": src_id, "toID": rel["relation"], "edgeID": str(biggest_edge_id)}
+            )
+        for trg_id in rel["targets"]:
+            biggest_edge_id += 1
+            new_edges.append(
+                {"fromID": rel["relation"], "toID": trg_id, "edgeID": str(biggest_edge_id)}
+            )
     return new_edges
 
 
-def create_binary_relation_nodes_from_alignment(
+def create_relation_nodes_from_alignment(
     node_id2node: Dict[str, Node],
     node_alignments: List[Tuple[str, str]],
     node_type: str,
     node_text: str,
     swap_direction: bool = False,
-) -> Tuple[List[Tuple[str, str, str]], Dict[str, Node]]:
+) -> Tuple[List[Relation], Dict[str, Node]]:
 
     """Create relation nodes from alignments between two nodes.
 
@@ -154,7 +159,7 @@ def create_binary_relation_nodes_from_alignment(
     """
     biggest_node_id = max([int(node_id) for node_id in node_id2node.keys()])
     new_node_id2node: Dict[str, Node] = dict()
-    binary_relations = []
+    relations: List[Relation] = []
     for src_id, trg_id in node_alignments:
         if swap_direction:
             src_id, trg_id = trg_id, src_id
@@ -165,11 +170,12 @@ def create_binary_relation_nodes_from_alignment(
             "type": node_type,
             "text": node_text,
         }
-        binary_relations.append((src_id, trg_id, node_id))
+        relations.append({"sources": [src_id], "targets": [trg_id], "relation": node_id})
 
-    return binary_relations, new_node_id2node
+    return relations, new_node_id2node
 
 
+# TODO: remove when everything is converted to the non-binary version
 def get_binary_relations(
     node_id2node: Dict[str, Node],
     edges: List[Edge],
@@ -274,23 +280,24 @@ def get_relations(nodeset: Nodeset, relation_type: str) -> Iterator[Relation]:
         }
 
 
-def remove_relation_nodes_and_edges(
-    nodeset: Nodeset, binary_relations: List[Tuple[str, str, str]]
-) -> Nodeset:
+def remove_relation_nodes_and_edges(nodeset: Nodeset, relations: List[Relation]) -> Nodeset:
     """Remove relation nodes and the respective edges from a nodeset.
 
     Args:
         nodeset: A nodeset.
-        binary_relations: A list of binary relations: tuples containing the source node ID, target node ID,
+        relations: A list of binary relations: tuples containing the source node ID, target node ID,
             and relation node ID.
     """
     # create a copy of the nodeset to avoid modifying the original
     result = nodeset.copy()
     # helper sets
-    relation_node_ids = {rel[2] for rel in binary_relations}
-    relation_edges = {(rel[0], rel[2]) for rel in binary_relations} | {
-        (rel[2], rel[1]) for rel in binary_relations
-    }
+    relation_node_ids = {rel["relation"] for rel in relations}
+    relation_edges = set()
+    for rel in relations:
+        for src_id in rel["sources"]:
+            relation_edges.add((src_id, rel["relation"]))
+        for trg_id in rel["targets"]:
+            relation_edges.add((rel["relation"], trg_id))
 
     # filter out all nodes that are not relation nodes
     result["nodes"] = [
