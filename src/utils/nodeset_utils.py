@@ -338,6 +338,7 @@ def get_relation_statistics(
         - "more_than_one_target": A list of relations with more than one target.
         - "type_combinations": A dictionary containing the number of occurrences for each type combination.
         - "edges_covered_multi_times": A list of edges that are covered by multiple relations.
+        - "covered_relations": A dictionary containing the number of covered relations for each type.
     """
     node_id2node = {node["nodeID"]: node for node in nodeset["nodes"]}
 
@@ -399,6 +400,9 @@ def get_relation_statistics(
         "more_than_one_target": prepend(more_than_one_target_with_types, prefix=nodeset_id),
         "type_combinations": dict(Counter(type_combinations)),
         "edges_covered_multi_times": prepend(edges_covered_multi_times, prefix=nodeset_id),
+        "covered_relations": {
+            rel_type: len(relations) for rel_type, relations in all_relations.items()
+        },
     }
 
 
