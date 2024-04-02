@@ -127,7 +127,7 @@ def cleanup_nodeset(
             binary_relations=reversed_s_relations,
             nodeset=result,
             nodeset_id=nodeset_id,
-            reversed_type_suffix="-rev",
+            reversed_text_suffix="-rev",
             redo=False,
         )
     return result
@@ -163,7 +163,7 @@ def reverse_relations_nodes(
     binary_relations: Iterator[Tuple[str, str, str]],
     nodeset: Nodeset,
     nodeset_id: str,
-    reversed_type_suffix: str = "-rev",
+    reversed_text_suffix: str = "-rev",
     redo: bool = False,
 ) -> Nodeset:
     """Reverse the direction of the relations in the nodeset.
@@ -172,7 +172,7 @@ def reverse_relations_nodes(
         binary_relations: Iterator over binary relations.
         nodeset: Nodeset.
         nodeset_id: Nodeset ID.
-        reversed_type_suffix: Suffix to append to the type of the reversed relation node.
+        reversed_text_suffix: Suffix to append to the type of the reversed relation node.
         redo: If True, the function will reverse the reversed relations back to the original state.
 
     Returns:
@@ -188,18 +188,18 @@ def reverse_relations_nodes(
     # we want to reverse each relation node type only once
     reversed_rel_types: Set[str] = set()
     for src_id, trg_id, rel_id in binary_relations:
-        # append (or remove) -rev to the type of the relation node
+        # append (or remove) -rev to the text of the relation node
         if rel_id not in reversed_rel_types:
-            node_type = node_id2nodes[rel_id]["type"]
+            node_text = node_id2nodes[rel_id]["text"]
             if not redo:
-                node_id2nodes[rel_id]["type"] = f"{node_type}{reversed_type_suffix}"
+                node_id2nodes[rel_id]["text"] = f"{node_text}{reversed_text_suffix}"
             else:
-                if not node_type.endswith(reversed_type_suffix):
+                if not node_text.endswith(reversed_text_suffix):
                     raise ValueError(f"nodeset={nodeset_id}: Node {rel_id} is not reversed!")
-                node_id2nodes[rel_id]["type"] = node_type[: -len(reversed_type_suffix)]
+                node_id2nodes[rel_id]["text"] = node_text[: -len(reversed_text_suffix)]
             reversed_rel_node_type = node_id2nodes[rel_id]["type"]
             # warn if the reversed S-node type is not RA (should not happen!)
-            if reversed_rel_node_type != "RA-rev":
+            if reversed_rel_node_type != "RA":
                 logger.warning(
                     f"nodeset={nodeset_id}: Relation node {rel_id} of type {reversed_rel_node_type} was reversed."
                 )
