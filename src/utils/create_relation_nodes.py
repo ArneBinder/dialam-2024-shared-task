@@ -184,23 +184,17 @@ def add_s_and_ya_nodes_with_edges(
         nodeset_id: The ID of the nodeset for better logging. Defaults to None.
         remove_existing_s_and_ya_nodes: A boolean indicating whether to remove existing S and YA
             nodes and their edges before adding new S and YA nodes. Defaults to True.
+        verbose: A boolean indicating whether to show warnings
 
     Returns:
         A Nodeset with S and YA nodes and their edges added.
     """
-    if remove_existing_s_and_ya_nodes:
-        # remove existing S and YA nodes and their edges
-        nodeset = remove_s_and_ya_nodes_with_edges(nodeset=nodeset)
-    else:
-        # create a copy of the nodeset to avoid modifying the original nodeset
-        nodeset = nodeset.copy()
+    # used below to re-add the original S and YA nodes if they exist
+    original_nodeset = nodeset
 
-    nodes = nodeset["nodes"]
-    edges = nodeset["edges"]
-
-    # node helper dictionary
-    node_id2node = {node["nodeID"]: node for node in nodes}
-
+    node_id2node = {node["nodeID"]: node for node in nodeset["nodes"]}
+    # remove existing S and YA nodes and their edges
+    nodeset = remove_s_and_ya_nodes_with_edges(nodeset=nodeset)
     # sanity check: there should be no S or YA nodes in the input nodeset
     s_node_ids = get_node_ids(node_id2node=node_id2node, allowed_node_types=["MA", "RA", "CA"])
     if verbose and s_node_ids:
@@ -209,17 +203,23 @@ def add_s_and_ya_nodes_with_edges(
     if verbose and ya_node_ids:
         logger.warning(f"nodeset={nodeset_id}: Input has still YA nodes: {ya_node_ids}")
 
+    # helper constructs
+    nodes = nodeset["nodes"]
+    edges = nodeset["edges"]
+    node_id2node = {node["nodeID"]: node for node in nodes}
+
     # get L and I node IDs
     l_node_ids_with_isolates = get_node_ids(node_id2node=node_id2node, allowed_node_types=["L"])
     # remove isolated L nodes
     l_node_ids = remove_isolated_nodes(node_ids=l_node_ids_with_isolates, edges=edges)
     i_node_ids = get_node_ids(node_id2node=node_id2node, allowed_node_types=["I"])
-    # sanity check: all I nodes should be isolated
-    i_nodes_without_isolates = remove_isolated_nodes(node_ids=i_node_ids, edges=edges)
-    if verbose and i_nodes_without_isolates:
-        logger.warning(
-            f"nodeset={nodeset_id}: Input has still connected I nodes: {i_nodes_without_isolates}"
-        )
+    if remove_existing_s_and_ya_nodes:
+        # sanity check: all I nodes should be isolated
+        i_nodes_without_isolates = remove_isolated_nodes(node_ids=i_node_ids, edges=edges)
+        if verbose and i_nodes_without_isolates:
+            logger.warning(
+                f"nodeset={nodeset_id}: Input has still connected I nodes: {i_nodes_without_isolates}"
+            )
     # align I and L nodes
     il_node_alignment = align_i_and_l_nodes(
         node_id2node=node_id2node,
@@ -260,6 +260,19 @@ def add_s_and_ya_nodes_with_edges(
 
     nodeset["nodes"] = list(node_id2node.values())
     nodeset["edges"] = edges + new_edges
+
+    # TODO: should that be outside the function? or directly integrated into
+    #   create_s_relations_and_nodes_from_ta_nodes_and_il_alignment, create_relation_nodes_from_alignment,
+    #   and create_edges_from_relations?
+    if not remove_existing_s_and_ya_nodes:
+        # for any existing S or YA nodes: try to find the corresponding node in the new nodeset
+        # by following the alignment.
+        pass  # TODO
+        # if found, overwrite the new node with the existing node (type and text!)
+        pass  # TODO
+        # otherwise, add the existing S or YA node to the new nodeset
+        pass  # TODO
+
     return nodeset
 
 
