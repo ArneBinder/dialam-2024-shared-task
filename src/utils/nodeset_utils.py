@@ -337,6 +337,7 @@ def get_relation_statistics(
         - "empty_targets": A list of relations with empty targets.
         - "more_than_one_target": A list of relations with more than one target.
         - "type_combinations": A dictionary containing the number of occurrences for each type combination.
+        - "edges_covered_multi_times": A list of edges that are covered by multiple relations.
     """
     node_id2node = {node["nodeID"]: node for node in nodeset["nodes"]}
 
@@ -344,7 +345,7 @@ def get_relation_statistics(
         rel_type: list(get_relations(nodeset, relation_type=rel_type))
         for rel_type in ["TA", "S", "YA"]
     }
-    covered_edges = set()
+    covered_edges: Dict[Tuple[str, str], int] = Counter()
     empty_sources = set()
     empty_targets = set()
     more_than_one_target = set()
@@ -352,9 +353,9 @@ def get_relation_statistics(
     for relation_type, relations in all_relations.items():
         for relation in relations:
             for src_id in relation["sources"]:
-                covered_edges.add((src_id, relation["relation"]))
+                covered_edges.update({(src_id, relation["relation"]): 1})
             for trg_id in relation["targets"]:
-                covered_edges.add((relation["relation"], trg_id))
+                covered_edges.update({(relation["relation"], trg_id): 1})
             if not relation["sources"]:
                 empty_sources.add(relation["relation"])
             if not relation["targets"]:
@@ -365,7 +366,9 @@ def get_relation_statistics(
             target_types = sorted(node_id2node[trg_id]["type"] for trg_id in relation["targets"])
             type_combinations.append(f"{relation_type}: {source_types} -> {target_types}")
 
-    missed_edges = set((edge["fromID"], edge["toID"]) for edge in nodeset["edges"]) - covered_edges
+    missed_edges = set((edge["fromID"], edge["toID"]) for edge in nodeset["edges"]) - set(
+        covered_edges
+    )
     missed_edges_with_types = [
         f"{src_id}:{trg_id} {node_id2node[src_id]['type']}:{node_id2node[trg_id]['type']}"
         for src_id, trg_id in missed_edges
@@ -380,6 +383,10 @@ def get_relation_statistics(
         f"{node_id} {node_id2node[node_id]['type']}" for node_id in more_than_one_target
     ]
 
+    edges_covered_multi_times = (
+        f"{src}:{trg}" for (src, trg), count in covered_edges.items() if count > 1
+    )
+
     def prepend(items: Iterable[str], prefix: str) -> List[str]:
         """Prepend a prefix to all items in a list."""
         return [f"{prefix} {item}" for item in sorted(items)]
@@ -391,6 +398,7 @@ def get_relation_statistics(
         "empty_targets": prepend(empty_targets_with_types, prefix=nodeset_id),
         "more_than_one_target": prepend(more_than_one_target_with_types, prefix=nodeset_id),
         "type_combinations": dict(Counter(type_combinations)),
+        "edges_covered_multi_times": prepend(edges_covered_multi_times, prefix=nodeset_id),
     }
 
 
