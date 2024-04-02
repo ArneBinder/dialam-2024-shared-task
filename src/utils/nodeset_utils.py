@@ -393,7 +393,7 @@ def get_relation_statistics(
         return [f"{prefix} {item}" for item in sorted(items)]
 
     return {
-        "missed_edges": missed_edges_with_types,
+        "missed_edges": prepend(missed_edges_with_types, prefix=nodeset_id),
         "covered_edges": len(covered_edges),
         "empty_sources": prepend(empty_sources_with_types, prefix=nodeset_id),
         "empty_targets": prepend(empty_targets_with_types, prefix=nodeset_id),
