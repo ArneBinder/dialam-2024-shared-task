@@ -1,5 +1,10 @@
 import pyrootutils
 
+from src.utils.create_relation_nodes import (
+    add_s_and_ya_nodes_with_edges,
+    remove_s_and_ya_nodes_with_edges,
+)
+
 pyrootutils.setup_root(search_from=__file__, indicator=[".project-root"], pythonpath=True)
 
 import argparse
@@ -12,7 +17,10 @@ from typing import Dict, Iterator, List, Optional, Set, Tuple
 from src.utils.nodeset_utils import (
     Nodeset,
     Relation,
+    get_id2node,
+    get_node_ids_by_type,
     get_relations,
+    merge_other_into_nodeset,
     process_all_nodesets,
     read_nodeset,
     write_nodeset,
@@ -47,16 +55,188 @@ def get_valid_relations(nodeset: Nodeset) -> List[Relation]:
     return s_relations + ya_relations + ta_relations
 
 
-def cleanup_nodeset(
-    nodeset: Nodeset, nodeset_id: str, normalize_relation_direction: bool, verbose: bool = True
-) -> Nodeset:
+def normalize_ra_relation_direction(nodeset: Nodeset, nodeset_id: str) -> Nodeset:
+    """Normalize the direction of the relations in the nodeset to point in the opposite direction
+    as their anchoring TA-relation.
+
+    Args:
+        nodeset: Nodeset.
+        nodeset_id: Nodeset ID.
+
+    Returns:
+        Nodeset with normalized relations.
+    """
+    reversed_ra_relations = get_reversed_ra_relations(
+        nodeset=nodeset,
+        nodeset_id=nodeset_id,
+        verbose=True,
+    )
+    result = reverse_relations_nodes(
+        relations=reversed_ra_relations,
+        nodeset=nodeset,
+        nodeset_id=nodeset_id,
+        reversed_text_suffix="-rev",
+        redo=False,
+    )
+    return result
+
+
+def get_arguments(relation: Relation) -> Tuple[Tuple[str, ...], Tuple[str, ...]]:
+    """Get the source and target node ids from the relation as hashable tuples.
+
+    Args:
+        relation: A relation.
+
+    Returns:
+        Tuple of source and target nodes.
+    """
+    return tuple(sorted(set(relation["sources"]))), tuple(sorted(set(relation["targets"])))
+
+
+def match_relation_nodes_by_arguments(
+    nodeset: Nodeset,
+    other: Nodeset,
+    relation_type: str,
+    node_matching: List[Tuple[str, str]],
+    nodeset_id: Optional[str] = None,
+) -> List[Tuple[str, str]]:
+    """Match relation nodes from the nodeset to relation nodes from the other nodeset based on
+    their arguments. This assumes that all relations in nodeset and other have unique argument
+    sets.
+
+    Args:
+        nodeset: Nodeset.
+        other: Other Nodeset.
+        relation_type: Relation type.
+        node_matching: Node matching pairs (node_id_in_nodeset, node_id_in_other).
+        nodeset_id: Nodeset ID for better error messages.
+
+    Returns:
+        List of relation node matching pairs (node_id_in_nodeset, node_id_in_other).
+    """
+    this2other = {
+        node_id_in_nodeset: node_id_in_other
+        for node_id_in_nodeset, node_id_in_other in node_matching
+    }
+    result = []
+    nodeset_relations = list(get_relations(nodeset, relation_type))
+    other_relations = list(get_relations(other, relation_type))
+    nodeset_arguments2node_id = {get_arguments(rel): rel["relation"] for rel in nodeset_relations}
+    # sanity check if arguments are unique
+    if len(nodeset_arguments2node_id) != len(nodeset_relations):
+        nodeset_arguments2node_id_values = set(nodeset_arguments2node_id.values())
+        missing_relations = [
+            rel
+            for rel in nodeset_relations
+            if rel["relation"] not in nodeset_arguments2node_id_values
+        ]
+        raise ValueError(
+            f"nodeset={nodeset_id}: S-node arguments are not unique! missing relations: {missing_relations}"
+        )
+    other_arguments2node_id = {get_arguments(rel): rel["relation"] for rel in other_relations}
+    for (sources, targets), node_id in nodeset_arguments2node_id.items():
+        mapped_sources = tuple(this2other.get(src, src) for src in sources)
+        mapped_targets = tuple(this2other.get(trg, trg) for trg in targets)
+        if (mapped_sources, mapped_targets) in other_arguments2node_id:
+            other_node_id = other_arguments2node_id[(mapped_sources, mapped_targets)]
+            result.append((node_id, other_node_id))
+    return result
+
+
+def get_node_matching(
+    nodeset: Nodeset,
+    other: Nodeset,
+    nodeset_id: Optional[str] = None,
+    verbose: bool = True,
+) -> List[Tuple[str, str]]:
+    """Match nodes from the nodeset to nodes from the other nodeset. The workflow is as follows:
+    1. We assume that L-nodes, and TA-nodes are identical, i.e. they can be matched by their ids.
+    2. We assume that I-nodes can be matched by exact string matching.
+    3. Then, S-nodes can be matched by their (already matched) source and target nodes.
+    4. Finally, YA-nodes can be matched by their (already matched) source and target nodes.
+
+    Args:
+        nodeset: Nodeset.
+        other: Other Nodeset.
+        nodeset_id: Nodeset ID.
+        verbose: Whether to show verbose output.
+
+    Returns:
+        List of node matching pairs (node_id_in_nodeset, node_id_in_other).
+    """
+    result: List[Tuple[str, str]] = []
+
+    nodeset_id2node = get_id2node(nodeset)
+    other_id2node = get_id2node(other)
+
+    # 1. match L-nodes and TA-nodes by their ids
+    l_node_ids = get_node_ids_by_type(nodeset, ["L"])
+    other_l_node_ids = get_node_ids_by_type(other, ["L"])
+    # sanity check
+    if not set(l_node_ids) == set(other_l_node_ids):
+        raise ValueError(
+            f"nodeset={nodeset_id}: L-nodes do not match: {l_node_ids} vs. {other_l_node_ids}"
+        )
+    result.extend((node_id, node_id) for node_id in l_node_ids)
+    ta_node_ids = get_node_ids_by_type(nodeset, ["TA"])
+    other_ta_node_ids = get_node_ids_by_type(other, ["TA"])
+    # sanity check
+    if not set(ta_node_ids) == set(other_ta_node_ids):
+        raise ValueError(
+            f"nodeset={nodeset_id}: TA-nodes do not match: {ta_node_ids} vs. {other_ta_node_ids}"
+        )
+    result.extend((node_id, node_id) for node_id in ta_node_ids)
+
+    # 2. match I-nodes by exact string matching
+    i_node_ids = get_node_ids_by_type(nodeset, ["I"])
+    other_i_node_ids = get_node_ids_by_type(other, ["I"])
+    i_text2node_id = {nodeset_id2node[node_id]["text"]: node_id for node_id in i_node_ids}
+    other_i_text2node_id = {
+        other_id2node[node_id]["text"]: node_id for node_id in other_i_node_ids
+    }
+    # sanity check: check if texts are the same
+    if not set(i_text2node_id) == set(other_i_text2node_id):
+        raise ValueError(
+            f"nodeset={nodeset_id}: I-nodes do not match: {i_text2node_id} vs. {other_i_text2node_id}"
+        )
+    # sanity check: check if texts are unique
+    if len(i_text2node_id) != len(i_node_ids):
+        raise ValueError(f"nodeset={nodeset_id}: I-node texts are not unique!")
+    # match I-nodes by their text
+    for i_text, node_id in i_text2node_id.items():
+        other_node_id = other_i_text2node_id[i_text]
+        result.append((node_id, other_node_id))
+
+    # 3. match S-nodes by their (already matched) source and target nodes
+    s_node_mapping = match_relation_nodes_by_arguments(
+        nodeset=nodeset,
+        other=other,
+        relation_type="S",
+        node_matching=result,
+        nodeset_id=nodeset_id,
+    )
+    result.extend(s_node_mapping)
+
+    # 4. match YA-nodes by their (already matched) source and target nodes
+    ya_node_mapping = match_relation_nodes_by_arguments(
+        nodeset=nodeset,
+        other=other,
+        relation_type="YA",
+        node_matching=result,
+        nodeset_id=nodeset_id,
+    )
+    result.extend(ya_node_mapping)
+
+    return result
+
+
+def cleanup_nodeset(nodeset: Nodeset, nodeset_id: str, verbose: bool = True) -> Nodeset:
     """Remove all edges from the nodeset that are not in valid transitions and remove isolated
     nodes. Optionally, normalize the relation direction.
 
     Args:
         nodeset: A Nodeset.
         nodeset_id: A Nodeset ID.
-        normalize_relation_direction: Whether to set all relations in the same direction (this affects RA-nodes).
         verbose: Whether to show verbose output.
 
     Returns:
@@ -77,23 +257,6 @@ def cleanup_nodeset(
     result["edges"] = [
         edge for edge in nodeset["edges"] if (edge["fromID"], edge["toID"]) in valid_src_trg
     ]
-
-    # reverse reversed S-node relations
-    if normalize_relation_direction:
-        reversed_ra_relations = get_reversed_ra_relations(
-            nodeset=result,
-            nodeset_id=nodeset_id,
-            verbose=verbose,
-        )
-        result = reverse_relations_nodes(
-            relations=reversed_ra_relations,
-            nodeset=result,
-            nodeset_id=nodeset_id,
-            reversed_text_suffix="-rev",
-            redo=False,
-        )
-
-    # TODO: mirror TA-relations that do not yet have a corresponding S-relation
 
     return result
 
@@ -303,11 +466,81 @@ def get_reversed_ra_relations(
                 )
 
 
+def prepare_nodeset(
+    nodeset: Nodeset,
+    nodeset_id: str,
+    s_node_text: str,
+    ya_node_text: str,
+    s_node_type: str = "S",
+    l2i_similarity_measure: str = "lcsstr",
+    add_gold_data: bool = False,
+    verbose: bool = True,
+    debug: bool = False,
+) -> Nodeset:
+    """Prepare the nodeset for further processing:
+    1. Clean up the nodeset by removing isolated nodes and invalid transitions.
+    2. Remove S- and YA-nodes with edges.
+    3. Add dummy S- and YA-nodes with edges by matching L- and I-nodes based on the similarity measure.
+    4. Optionally, add cleaned gold data (from output of step 1):
+        a. Normalize the direction of the RA-relation nodes.
+        b. Update the text and type of the result relation nodes with matching gold data.
+        c. Add remaining nodes and edges from the gold data that were not matched.
+
+    Args:
+        nodeset: A Nodeset.
+        s_node_text: Text for the dummy S-node.
+        ya_node_text: Text for the dummy YA-node.
+        s_node_type: Type for the dummy S-node.
+        l2i_similarity_measure: Similarity measure to use for matching L- and I-nodes.
+        add_gold_data: Whether to add gold data to the dummy relation nodes.
+        nodeset_id: A Nodeset ID for better error messages.
+        verbose: Whether to show verbose output.
+        debug: Whether to execute in debug mode.
+
+    Returns:
+        Prepared nodeset.
+    """
+
+    nodeset_clean = cleanup_nodeset(nodeset=nodeset, nodeset_id=nodeset_id, verbose=verbose)
+    nodeset_without_relations = remove_s_and_ya_nodes_with_edges(nodeset_clean, nodeset_id)
+    nodeset_with_dummy_relations = add_s_and_ya_nodes_with_edges(
+        nodeset=nodeset_without_relations,
+        nodeset_id=nodeset_id,
+        s_node_text=s_node_text,
+        ya_node_text=ya_node_text,
+        s_node_type=s_node_type,
+        similarity_measure=l2i_similarity_measure,
+        verbose=verbose,
+    )
+
+    if add_gold_data:
+        # normalize the direction of the RA-relation nodes in the cleaned (gold) data
+        nodeset_normalized_relations = normalize_ra_relation_direction(nodeset_clean, nodeset_id)
+        # match the dummy relation nodes with the gold data
+        dummy2gold_node_matching = get_node_matching(
+            nodeset=nodeset_with_dummy_relations,
+            other=nodeset_normalized_relations,
+            nodeset_id=nodeset_id,
+            verbose=verbose,
+        )
+        # update the text and type of the dummy relation nodes with the gold data and
+        nodeset_with_dummy_relations = merge_other_into_nodeset(
+            nodeset=nodeset_with_dummy_relations,
+            other=nodeset_normalized_relations,
+            node_matching=dummy2gold_node_matching,
+            id_suffix_other="-gold",
+            nodeset_id=nodeset_id,
+            verbose=verbose,
+            debug=debug,
+            add_nodes_from_other=False,
+        )
+    return nodeset_with_dummy_relations
+
+
 def main(
     input_dir: str,
     output_dir: str,
     show_progress: bool = True,
-    normalize_relation_direction: bool = False,
     nodeset_id: Optional[str] = None,
     nodeset_blacklist: Optional[List[str]] = None,
     **kwargs,
@@ -316,19 +549,17 @@ def main(
     os.makedirs(output_dir, exist_ok=True)
     if nodeset_id is not None:
         nodeset = read_nodeset(nodeset_dir=input_dir, nodeset_id=nodeset_id)
-        result = cleanup_nodeset(
+        result = prepare_nodeset(
             nodeset=nodeset,
             nodeset_id=nodeset_id,
-            normalize_relation_direction=normalize_relation_direction,
             **kwargs,
         )
         write_nodeset(nodeset_dir=output_dir, nodeset_id=nodeset_id, data=result)
     else:
         # if no nodeset ID is provided, process all nodesets in the input directory
         for nodeset_id, result_or_error in process_all_nodesets(
-            func=cleanup_nodeset,
+            func=prepare_nodeset,
             nodeset_dir=input_dir,
-            normalize_relation_direction=normalize_relation_direction,
             show_progress=show_progress,
             nodeset_blacklist=nodeset_blacklist,
             **kwargs,
@@ -366,10 +597,32 @@ if __name__ == "__main__":
         help="List of nodeset IDs that should be ignored.",
     )
     parser.add_argument(
-        "--normalize_relation_direction",
-        dest="normalize_relation_direction",
+        "--s_node_type",
+        type=str,
+        default="RA",
+        help="The type of the new S nodes. Default is 'RA'.",
+    )
+    parser.add_argument(
+        "--s_node_text",
+        type=str,
+        default="NONE",
+        help="The text of the new S nodes. Default is 'DUMMY'.",
+    )
+    parser.add_argument(
+        "--ya_node_text",
+        type=str,
+        default="NONE",
+        help="The text of the new YA nodes. Default is 'DUMMY'.",
+    )
+    parser.add_argument(
+        "--add_gold_data",
         action="store_true",
-        help="Whether to normalize the direction of edges in the graph.",
+        help="Whether to add gold data to the dummy relation nodes and missing nodes and edges.",
+    )
+    parser.add_argument(
+        "--debug",
+        action="store_true",
+        help="Whether to execute in debug mode.",
     )
     parser.add_argument(
         "--dont_show_progress",

@@ -1,4 +1,5 @@
 import argparse
+import copy
 import json
 import logging
 import os
@@ -11,6 +12,7 @@ from typing import (
     Iterable,
     Iterator,
     List,
+    Mapping,
     Optional,
     Set,
     Tuple,
@@ -107,12 +109,22 @@ def process_all_nodesets(
     )
 
 
+def get_id2node(nodeset: Nodeset) -> Dict[str, Node]:
+    return {node["nodeID"]: node for node in nodeset["nodes"]}
+
+
 def get_node_ids(node_id2node: Dict[str, Any], allowed_node_types: List[str]) -> List[str]:
     """Get the IDs of nodes with a given type."""
 
     return [
         node_id for node_id, node in node_id2node.items() if node["type"] in allowed_node_types
     ]
+
+
+def get_node_ids_by_type(nodeset: Nodeset, node_types: Collection[str]) -> List[str]:
+    """Get the IDs of nodes with a given type."""
+
+    return [node["nodeID"] for node in nodeset["nodes"] if node["type"] in node_types]
 
 
 def create_edges_from_relations(
@@ -292,7 +304,9 @@ def get_relations(
         allowed_source_types = ["I"]
         allowed_target_types = ["I"]
         allowed_max_sources = None
-        allowed_max_targets = 1
+        # Note: this is not constrained because for reverted RA-relations the source and target are swapped
+        #  and, thus, we also need to allow multiple targets
+        allowed_max_targets = None
     elif relation_type == "CA":
         allowed_node_types = ["CA"]
         allowed_source_types = ["I"]
@@ -430,6 +444,108 @@ def remove_isolated_nodes(node_ids: List[str], edges: List[Edge]) -> List[str]:
     connected_node_ids = {edge["fromID"] for edge in edges} | {edge["toID"] for edge in edges}
     # filter out all node IDs that are not connected to any edge
     return [node_id for node_id in node_ids if node_id in connected_node_ids]
+
+
+def add_suffix_to_ids(nodeset: Nodeset, suffix: str) -> Nodeset:
+    """Add a suffix to all node IDs in the nodeset.
+
+    Args:
+        nodeset: A Nodeset.
+        suffix: Suffix to add to the node IDs.
+
+    Returns:
+        Nodeset with the suffix added to all node IDs.
+    """
+    # create a copy of the nodeset to avoid modifying the original
+    result = copy.deepcopy(nodeset)
+    # add the suffix to all node IDs
+    for node in result["nodes"]:
+        node["nodeID"] = f"{node['nodeID']}{suffix}"
+    for edge in result["edges"]:
+        edge["fromID"] = f"{edge['fromID']}{suffix}"
+        edge["toID"] = f"{edge['toID']}{suffix}"
+    return result
+
+
+def merge_other_into_nodeset(
+    nodeset: Nodeset,
+    other: Nodeset,
+    node_matching: List[Tuple[str, str]],
+    id_suffix_other: str = "-other",
+    add_nodes_from_other: bool = True,
+    verbose: bool = True,
+    nodeset_id: Optional[str] = None,
+    debug: bool = False,
+) -> Nodeset:
+    """Merge the other nodeset into the nodeset. Entries in the node_matching list are used to
+    update the text and type of the nodes in the nodeset. The remaining nodes and edges from the
+    other nodeset are added to the nodeset.
+
+    Args:
+        nodeset: A Nodeset.
+        other: Another Nodeset to merge into the nodeset.
+        node_matching: List of tuples (node_id_in_nodeset, node_id_in_other) that match nodes in the
+            nodeset with nodes in the other nodeset.
+        id_suffix_other: Suffix to add to the node IDs in the other nodeset to avoid conflicts.
+        add_nodes_from_other: Whether to add remaining nodes from the other nodeset to the nodeset.
+        verbose: Whether to show verbose output.
+        nodeset_id: The ID of the nodeset for better logging.
+        debug: Whether to add a "MATCHED" suffix to the text of the nodes that are matched.
+
+    Returns:
+        Merged nodeset.
+    """
+
+    # add suffix to the IDs of the nodes in the other nodeset to avoid conflicts
+    other = add_suffix_to_ids(other, id_suffix_other)
+
+    # create a copy of the nodeset to avoid modifying the original
+    result: Nodeset = copy.deepcopy(nodeset)
+
+    # helper constructs
+    node_id2nodes = get_id2node(result)
+    other_node_id2nodes = get_id2node(other)
+    edges_dict = {(edge["fromID"], edge["toID"]): edge for edge in result["edges"]}
+    other2this = dict()
+    this2other = dict()
+    for node_id_in_nodeset, node_id_in_other in node_matching:
+        # we suffixed the IDs of the nodes in the other nodeset, so we need to add the suffix here
+        node_id_in_other_with_suffix = f"{node_id_in_other}{id_suffix_other}"
+        # construct helper mappings
+        other2this[node_id_in_other_with_suffix] = node_id_in_nodeset
+        this2other[node_id_in_nodeset] = node_id_in_other_with_suffix
+        # update the text and type of the nodes in the nodeset
+        node = node_id2nodes[node_id_in_nodeset]
+        other_node = other_node_id2nodes[node_id_in_other_with_suffix]
+        node["text"] = other_node["text"]
+        if debug:
+            node["text"] += " MATCHED"
+        node["type"] = other_node["type"]
+
+    if add_nodes_from_other:
+        # add remaining nodes and edges from the other nodeset
+        for other_node in other["nodes"]:
+            if other_node["nodeID"] not in other2this:
+                result["nodes"].append(other_node)
+        # update
+        node_id2nodes = get_id2node(result)
+
+    for edge in other["edges"]:
+        source_mapped = other2this.get(edge["fromID"], edge["fromID"])
+        target_mapped = other2this.get(edge["toID"], edge["toID"])
+        if (
+            (source_mapped, target_mapped) not in edges_dict
+            and source_mapped in node_id2nodes
+            and target_mapped in node_id2nodes
+        ):
+            new_edge: Edge = {
+                "fromID": source_mapped,
+                "toID": target_mapped,
+                "edgeID": edge["edgeID"],
+            }
+            result["edges"].append(new_edge)
+
+    return result
 
 
 def sort_nodes_by_hierarchy(node_ids: Collection[str], edges: Collection[Edge]) -> List[str]:
