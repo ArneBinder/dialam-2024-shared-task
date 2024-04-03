@@ -98,11 +98,15 @@ def create_s_relations_and_nodes_from_ta_nodes_and_il_alignment(
     return s_relations, new_node_id2node, sat_node_alignment
 
 
-def remove_s_and_ya_nodes_with_edges(nodeset: Nodeset) -> Nodeset:
+def remove_s_and_ya_nodes_with_edges(
+    nodeset: Nodeset, nodeset_id: Optional[str] = None, verbose: bool = True
+) -> Nodeset:
     """Remove S and YA nodes and their edges from the nodeset.
 
     Args:
         nodeset: A Nodeset.
+        nodeset_id: The ID of the nodeset for better logging. Defaults to None.
+        verbose: A boolean indicating whether to show warnings for nodesets with remaining S or YA
 
     Returns:
         Nodeset with S and YA nodes and their edges removed.
@@ -141,6 +145,7 @@ def add_s_and_ya_nodes_with_edges(
         nodeset_id: The ID of the nodeset for better logging. Defaults to None.
         remove_existing_s_and_ya_nodes: A boolean indicating whether to remove existing S and YA
             nodes and their edges before adding new S and YA nodes. Defaults to True.
+        verbose: A boolean indicating whether to show warnings. Defaults to True.
 
     Returns:
         A Nodeset with S and YA nodes and their edges added.
