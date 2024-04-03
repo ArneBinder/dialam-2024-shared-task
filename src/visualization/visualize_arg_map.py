@@ -212,7 +212,7 @@ def create_visualization(
             for ya_trg_node_id in src2targets[ya_node_id]:
                 ya_trg_node = node_id2node[ya_trg_node_id]
                 if (
-                    ya_trg_node["type"] in ["I", "RA", "RA-rev", "CA", "CA-rev", "MA", "MA-rev"]
+                    ya_trg_node["type"] in ["I", "RA", "CA", "MA"]
                     and ya_trg_node_id not in i_site_node_ids
                 ):
                     add_node(node=node_id2node[ya_trg_node_id], graph=c)
