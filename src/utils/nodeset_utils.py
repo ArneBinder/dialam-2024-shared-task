@@ -283,16 +283,65 @@ def get_relations(
         allowed_max_sources = 1
         allowed_max_targets = 1
     elif relation_type == "S":
-        allowed_node_types = ["RA", "CA", "MA"]
+        yield from get_relations(nodeset, "RA", enforce_cardinality)
+        yield from get_relations(nodeset, "CA", enforce_cardinality)
+        yield from get_relations(nodeset, "MA", enforce_cardinality)
+        return  # "S" relations are composed of "RA", "CA", and "MA" relations
+    elif relation_type == "RA":
+        allowed_node_types = ["RA"]
         allowed_source_types = ["I"]
         allowed_target_types = ["I"]
         allowed_max_sources = None
+        allowed_max_targets = 1
+    elif relation_type == "CA":
+        allowed_node_types = ["CA"]
+        allowed_source_types = ["I"]
+        allowed_target_types = ["I"]
+        allowed_max_sources = 1
+        allowed_max_targets = 1
+    elif relation_type == "MA":
+        allowed_node_types = ["MA"]
+        allowed_source_types = ["I"]
+        allowed_target_types = ["I"]
+        allowed_max_sources = 1
         allowed_max_targets = 1
     elif relation_type == "YA":
         allowed_node_types = ["YA"]
         allowed_source_types = ["L", "TA"]
         # Note: YA-relations L -> YA -> L encode (in-)direct speech
         allowed_target_types = ["I", "L", "RA", "CA", "MA"]
+        allowed_max_sources = 1
+        allowed_max_targets = 1
+        # TODO: why does this not work??
+        # yield from get_relations(nodeset, "YA1", enforce_cardinality)
+        # yield from get_relations(nodeset, "YA2", enforce_cardinality)
+        # yield from get_relations(nodeset, "YA3", enforce_cardinality)
+        # yield from get_relations(nodeset, "YA4", enforce_cardinality)
+        # return  # "YA" relations are composed of "YA1", "YA2", "YA3", and "YA4" relations
+    elif relation_type == "YA1":
+        allowed_node_types = ["YA"]
+        allowed_source_types = ["L"]
+        allowed_target_types = ["I"]
+        allowed_max_sources = 1
+        allowed_max_targets = 1
+    elif relation_type == "YA2":
+        allowed_node_types = ["YA"]
+        allowed_source_types = ["TA"]
+        allowed_target_types = ["RA", "CA", "MA"]
+        allowed_max_sources = 1
+        allowed_max_targets = 1
+    elif relation_type == "YA3":
+        # TODO: what case is this?
+        allowed_node_types = ["YA"]
+        allowed_source_types = ["TA"]
+        allowed_target_types = ["I"]
+        allowed_max_sources = 1
+        allowed_max_targets = 1
+    elif relation_type == "YA4":
+        # Note: YA-relations L -> YA -> L encode (in-)direct speech
+        allowed_node_types = ["YA"]
+        allowed_source_types = ["L"]
+        allowed_target_types = ["L"]
         allowed_max_sources = 1
         allowed_max_targets = 1
     else:
