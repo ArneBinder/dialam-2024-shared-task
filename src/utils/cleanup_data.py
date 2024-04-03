@@ -7,7 +7,7 @@ import copy
 import logging
 import os
 from collections import defaultdict
-from typing import Any, Dict, Iterator, List, Optional, Set, Tuple
+from typing import Dict, Iterator, List, Optional, Set, Tuple
 
 from src.utils.nodeset_utils import (
     Nodeset,
@@ -15,7 +15,6 @@ from src.utils.nodeset_utils import (
     get_relations,
     process_all_nodesets,
     read_nodeset,
-    remove_isolated_nodes,
     write_nodeset,
 )
 
@@ -26,12 +25,26 @@ Clean-up the data as follows:
 
 0. Remove isolated nodes disconnected from the graph.
 1. Remove invalid relation edges. We only allow the following transitions:
-   I > S > I
-   L > TA > L
-   L > YA > I
-   TA > YA > S
+   - I > {MA, RA, CA} > I
+   - L > TA > L
+   - {L, TA} > YA > {I, L, MA, RA, CA}
+   and also, we allow just one source and target node for each relation,
+   except for S-relations where we allow multiple sources.
 2. Swap the edges for S-nodes that point downwards.
 """
+
+
+def get_valid_relations(nodeset: Nodeset) -> List[Relation]:
+    # collect L > TA > L relations
+    ta_relations = list(get_relations(nodeset, "TA", enforce_cardinality=True))
+
+    # collect valid I > {MA, RA, CA} > I relations
+    s_relations = list(get_relations(nodeset, "S", enforce_cardinality=True))
+
+    # collect {L, TA} > YA > {I, L, MA, RA, CA} relations
+    ya_relations = list(get_relations(nodeset, "YA", enforce_cardinality=True))
+
+    return s_relations + ya_relations + ta_relations
 
 
 def cleanup_nodeset(
@@ -49,34 +62,11 @@ def cleanup_nodeset(
     Returns:
         Nodeset without isolated nodes and invalid transitions.
     """
-    # node helper dictionary
-    node_id2node = {node["nodeID"]: node for node in nodeset["nodes"]}
 
-    # collect valid I > S > I relations
-    s_relations = list(get_relations(nodeset, "S", enforce_cardinality=True))
-
-    # collect valid L > TA > L relations
-    # collect valid L > YA > I relations
-    ya_relations = list(get_relations(nodeset, "YA", enforce_cardinality=True))
-
-    # collect valid TA > YA > S relations
-    ta_relations = list(get_relations(nodeset, "TA", enforce_cardinality=True))
-
-    relations_to_keep = s_relations + ya_relations + ta_relations
-
-    # helper sets
-    src_tgt_rel_nodes = set()
-    for rel in relations_to_keep:
-        for node_id in rel["sources"] + rel["targets"] + [rel["relation"]]:
-            src_tgt_rel_nodes.add(node_id)
-
-    # remove isolated nodes
-    valid_node_ids = remove_isolated_nodes(
-        node_ids=list(src_tgt_rel_nodes), edges=nodeset["edges"]
-    )
+    valid_relations = get_valid_relations(nodeset)
 
     # remove invalid relations
-    valid_edges = get_invalid_edges(relations_to_keep, valid_node_ids=valid_node_ids)
+    valid_src_trg, valid_node_ids = get_valid_src_trg_and_node_ids_from_relations(valid_relations)
 
     # create a copy of the nodeset to avoid modifying the original
     result = nodeset.copy()
@@ -85,17 +75,15 @@ def cleanup_nodeset(
     result["nodes"] = [node for node in nodeset["nodes"] if (node["nodeID"] in valid_node_ids)]
     # edges in valid relations
     result["edges"] = [
-        edge for edge in nodeset["edges"] if (edge["fromID"], edge["toID"]) in valid_edges
+        edge for edge in nodeset["edges"] if (edge["fromID"], edge["toID"]) in valid_src_trg
     ]
 
+    # reverse reversed S-node relations
     if normalize_relation_direction:
-        # reverse S-node relations
-
         reversed_s_relations = get_reversed_s_relations(
             nodeset=result,
             nodeset_id=nodeset_id,
             verbose=verbose,
-            node_id2node=node_id2node,
         )
         result = reverse_relations_nodes(
             relations=reversed_s_relations,
@@ -104,12 +92,15 @@ def cleanup_nodeset(
             reversed_text_suffix="-rev",
             redo=False,
         )
+
+    # TODO: mirror TA-relations that do not yet have a corresponding S-relation
+
     return result
 
 
-def get_invalid_edges(
-    relations_to_keep: List[Relation], valid_node_ids: List[str]
-) -> List[Tuple[str, str]]:
+def get_valid_src_trg_and_node_ids_from_relations(
+    relations_to_keep: List[Relation], valid_node_ids: Optional[List[str]] = None
+) -> Tuple[Set[Tuple[str, str]], Set[str]]:
     """Remove all relations that do not correspond to the patterns specified in relations_to_keep.
 
     Args:
@@ -120,18 +111,23 @@ def get_invalid_edges(
         Set of allowed relation edges.
     """
     # relation edges to keep
-    valid_edges = []
+    valid_src_trg = []
     for rel in relations_to_keep:
-        if all(
+        if valid_node_ids is None or all(
             node_id in valid_node_ids
             for node_id in rel["sources"] + rel["targets"] + [rel["relation"]]
         ):
             for src_id in rel["sources"]:
-                valid_edges.append((src_id, rel["relation"]))
+                valid_src_trg.append((src_id, rel["relation"]))
             for trg_id in rel["targets"]:
-                valid_edges.append((rel["relation"], trg_id))
+                valid_src_trg.append((rel["relation"], trg_id))
 
-    return valid_edges
+    valid_node_ids = []
+    for src_id, trg_id in valid_src_trg:
+        valid_node_ids.append(src_id)
+        valid_node_ids.append(trg_id)
+
+    return set(valid_src_trg), set(valid_node_ids)
 
 
 def reverse_relations_nodes(
@@ -216,7 +212,6 @@ def get_l_anchor_nodes(
 def get_reversed_s_relations(
     nodeset: Nodeset,
     nodeset_id: str,
-    node_id2node: Dict[str, Any],
     verbose: bool = True,
 ) -> Iterator[Relation]:
     """Collect all S-node relations that need to be reversed (this affects RA-nodes).
@@ -224,7 +219,6 @@ def get_reversed_s_relations(
     Args:
         nodeset: Nodeset.
         nodeset_id: Nodeset ID.
-        node_id2node: A dictionary mapping node IDs to Node objects.
         verbose: Whether to show verbose output.
 
     Returns:
@@ -286,14 +280,16 @@ def get_reversed_s_relations(
                 #        f"nodeset={nodeset_id}: Could not find TA-relation for S-node {rel_id}!"
                 #    )
 
-    for s_rel in s_relations:
-        rel_id = s_rel["relation"]
-        if verbose and rel_id not in already_checked:
-            rel_node = node_id2node[rel_id]
-            logger.warning(
-                f"nodeset={nodeset_id}: could not determine direction of S-node {rel_id} "
-                f"(type: {rel_node['type']}) because of missing source/target anchor node(s)!"
-            )
+    if verbose:
+        node_id2node = {node["nodeID"]: node for node in nodeset["nodes"]}
+        for s_rel in s_relations:
+            rel_id = s_rel["relation"]
+            if rel_id not in already_checked:
+                rel_node = node_id2node[rel_id]
+                logger.warning(
+                    f"nodeset={nodeset_id}: could not determine direction of S-node {rel_id} "
+                    f"(type: {rel_node['type']}) because of missing source/target anchor node(s)!"
+                )
 
 
 def main(
