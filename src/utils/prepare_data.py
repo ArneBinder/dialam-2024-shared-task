@@ -1,10 +1,5 @@
 import pyrootutils
 
-from src.utils.create_relation_nodes import (
-    add_s_and_ya_nodes_with_edges,
-    remove_s_and_ya_nodes_with_edges,
-)
-
 pyrootutils.setup_root(search_from=__file__, indicator=[".project-root"], pythonpath=True)
 
 import argparse
@@ -14,6 +9,10 @@ import os
 from collections import defaultdict
 from typing import Dict, Iterator, List, Optional, Set, Tuple
 
+from src.utils.create_relation_nodes import (
+    add_s_and_ya_nodes_with_edges,
+    remove_s_and_ya_nodes_with_edges,
+)
 from src.utils.nodeset_utils import (
     Nodeset,
     Relation,

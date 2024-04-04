@@ -63,8 +63,7 @@ def create_s_relations_and_nodes_from_ta_nodes_and_il_alignment(
          - a list of tuples containing the alignment between S and TA nodes.
     """
 
-    # TODO: is it fine to create a dictionary mapping L node IDs to I node IDs like that? or
-    #  can there be multiple I nodes for a single L node?
+    # there are only 13 nodesets in the DialAM data that can have multiple I-nodes (no more than 2) for a single L-node, hence we can just revert the dictionary
     # helper dictionary to map L node IDs to aligned I node IDs
     l2i_node_id = {l_id: i_id for i_id, l_id in il_node_alignment}
     # we need to keep track of the biggest node ID to create new S nodes
@@ -89,8 +88,13 @@ def create_s_relations_and_nodes_from_ta_nodes_and_il_alignment(
         # map L-source and L-target node IDs to their corresponding S node IDs.
         # note that we swap the direction because for most of the S nodes (MA and CA), they point
         # in the opposite direction of the TA nodes
-        s_src_ids = [l2i_node_id[node_id] for node_id in ta_relation["targets"]]
-        s_trg_ids = [l2i_node_id[node_id] for node_id in ta_relation["sources"]]
+        # we also have to check whether node_id appears in l2i_node_id dictionary because not all L-nodes have a corresponding I-node (e.g., L-node 713369 in nodeset 21388)
+        s_src_ids = [
+            l2i_node_id[node_id] for node_id in ta_relation["targets"] if node_id in l2i_node_id
+        ]
+        s_trg_ids = [
+            l2i_node_id[node_id] for node_id in ta_relation["sources"] if node_id in l2i_node_id
+        ]
         s_relations.append({"sources": s_src_ids, "targets": s_trg_ids, "relation": s_node_id})
         # collect the alignment between the S and TA nodes
         sat_node_alignment.append((s_node_id, ta_relation["relation"]))
