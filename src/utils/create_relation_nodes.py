@@ -63,7 +63,7 @@ def create_s_relations_and_nodes_from_ta_nodes_and_il_alignment(
          - a list of tuples containing the alignment between S and TA nodes.
     """
 
-    # there are only 13 nodesets in the DialAM data that can have multiple I-nodes (no more than 2) for a single L-node, hence we can just revert the dictionary
+    # each I-node is aligned to a single L-node and each L-node is either aligned to a single I-node or does not have any alignment at all, this is guaranteed because we use linear_sum_assignment and, according to its documentation, "each row is assigned to exactly one column, and each column to exactly one row"
     # helper dictionary to map L node IDs to aligned I node IDs
     l2i_node_id = {l_id: i_id for i_id, l_id in il_node_alignment}
     # we need to keep track of the biggest node ID to create new S nodes
