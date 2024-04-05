@@ -530,39 +530,51 @@ def prepare_nodeset(
             add_nodes_from_other=False,
         )
 
-    if re_revert_ra_relations:
-
-        node_id2node = get_id2node(nodeset_with_dummy_relations)
-        normalized_re_relations = [
-            ra_relation
-            for ra_relation in get_relations(
-                nodeset_with_dummy_relations, "RA", enforce_cardinality=True
+        if re_revert_ra_relations:
+            node_id2node = get_id2node(nodeset_with_dummy_relations)
+            normalized_re_relations = [
+                ra_relation
+                for ra_relation in get_relations(
+                    nodeset_with_dummy_relations, "RA", enforce_cardinality=True
+                )
+                if node_id2node[ra_relation["relation"]]["text"].endswith("-rev")
+            ]
+            nodeset_with_dummy_relations = reverse_relations_nodes(
+                relations=normalized_re_relations,
+                nodeset=nodeset_with_dummy_relations,
+                nodeset_id=nodeset_id,
+                reversed_text_suffix="-rev",
+                redo=True,
             )
-            if node_id2node[ra_relation["relation"]]["text"].endswith("-rev")
-        ]
-        nodeset_with_dummy_relations = reverse_relations_nodes(
-            relations=normalized_re_relations,
-            nodeset=nodeset_with_dummy_relations,
-            nodeset_id=nodeset_id,
-            reversed_text_suffix="-rev",
-            redo=True,
-        )
-    if re_remove_none_relations:
-        node_id2node = get_id2node(nodeset_with_dummy_relations)
-        # collect S and YA relations
-        s_relations = list(get_relations(nodeset=nodeset_with_dummy_relations, relation_type="S"))
-        new_s_relations = [
-            rel for rel in s_relations if node_id2node[rel["relation"]]["text"] == s_node_text
-        ]
-        ya_relations = list(
-            get_relations(nodeset=nodeset_with_dummy_relations, relation_type="YA")
-        )
-        new_ya_relations = [
-            rel for rel in ya_relations if node_id2node[rel["relation"]]["text"] == ya_node_text
-        ]
-        nodeset_with_dummy_relations = remove_relation_nodes_and_edges(
-            nodeset=nodeset_with_dummy_relations, relations=new_s_relations + new_ya_relations
-        )
+        if re_remove_none_relations:
+            node_id2node = get_id2node(nodeset_with_dummy_relations)
+            # collect S and YA relations
+            s_relations = list(
+                get_relations(nodeset=nodeset_with_dummy_relations, relation_type="S")
+            )
+            new_s_relations = [
+                rel for rel in s_relations if node_id2node[rel["relation"]]["text"] == s_node_text
+            ]
+            ya_relations = list(
+                get_relations(nodeset=nodeset_with_dummy_relations, relation_type="YA")
+            )
+            new_ya_relations = [
+                rel
+                for rel in ya_relations
+                if node_id2node[rel["relation"]]["text"] == ya_node_text
+            ]
+            nodeset_with_dummy_relations = remove_relation_nodes_and_edges(
+                nodeset=nodeset_with_dummy_relations, relations=new_s_relations + new_ya_relations
+            )
+    else:
+        if re_revert_ra_relations:
+            logger.warning(
+                "re_revert_ra_relations=True is only supported in combination with add_gold_data=True."
+            )
+        if re_remove_none_relations:
+            logger.warning(
+                "re_remove_none_relations=True is only supported in combination with add_gold_data=True."
+            )
     return nodeset_with_dummy_relations
 
 
