@@ -7,7 +7,7 @@ import copy
 import logging
 import os
 from collections import defaultdict
-from typing import Dict, Iterator, List, Optional, Set, Tuple
+from typing import Dict, Iterable, Iterator, List, Optional, Set, Tuple
 
 from src.utils.create_relation_nodes import (
     add_s_and_ya_nodes_with_edges,
@@ -22,6 +22,7 @@ from src.utils.nodeset_utils import (
     merge_other_into_nodeset,
     process_all_nodesets,
     read_nodeset,
+    remove_relation_nodes_and_edges,
     write_nodeset,
 )
 
@@ -293,7 +294,7 @@ def get_valid_src_trg_and_node_ids_from_relations(
 
 
 def reverse_relations_nodes(
-    relations: Iterator[Relation],
+    relations: Iterable[Relation],
     nodeset: Nodeset,
     nodeset_id: str,
     reversed_text_suffix: str = "-rev",
@@ -464,6 +465,8 @@ def prepare_nodeset(
     s_node_type: str = "S",
     l2i_similarity_measure: str = "lcsstr",
     add_gold_data: bool = False,
+    re_revert_ra_relations: bool = False,
+    re_remove_none_relations: bool = False,
     verbose: bool = True,
     debug: bool = False,
 ) -> Nodeset:
@@ -483,6 +486,8 @@ def prepare_nodeset(
         s_node_type: Type for the dummy S-node.
         l2i_similarity_measure: Similarity measure to use for matching L- and I-nodes.
         add_gold_data: Whether to add gold data to the dummy relation nodes.
+        re_revert_ra_relations: Whether to revert the normalized RA-relation nodes back to the original state.
+        re_remove_none_relations: Whether to re-remove the new S and YA relations.
         nodeset_id: A Nodeset ID for better error messages.
         verbose: Whether to show verbose output.
         debug: Whether to execute in debug mode.
@@ -523,6 +528,40 @@ def prepare_nodeset(
             verbose=verbose,
             debug=debug,
             add_nodes_from_other=False,
+        )
+
+    if re_revert_ra_relations:
+
+        node_id2node = get_id2node(nodeset_with_dummy_relations)
+        normalized_re_relations = [
+            ra_relation
+            for ra_relation in get_relations(
+                nodeset_with_dummy_relations, "RA", enforce_cardinality=True
+            )
+            if node_id2node[ra_relation["relation"]]["text"].endswith("-rev")
+        ]
+        nodeset_with_dummy_relations = reverse_relations_nodes(
+            relations=normalized_re_relations,
+            nodeset=nodeset_with_dummy_relations,
+            nodeset_id=nodeset_id,
+            reversed_text_suffix="-rev",
+            redo=True,
+        )
+    if re_remove_none_relations:
+        node_id2node = get_id2node(nodeset_with_dummy_relations)
+        # collect S and YA relations
+        s_relations = list(get_relations(nodeset=nodeset_with_dummy_relations, relation_type="S"))
+        new_s_relations = [
+            rel for rel in s_relations if node_id2node[rel["relation"]]["text"] == s_node_text
+        ]
+        ya_relations = list(
+            get_relations(nodeset=nodeset_with_dummy_relations, relation_type="YA")
+        )
+        new_ya_relations = [
+            rel for rel in ya_relations if node_id2node[rel["relation"]]["text"] == ya_node_text
+        ]
+        nodeset_with_dummy_relations = remove_relation_nodes_and_edges(
+            nodeset=nodeset_with_dummy_relations, relations=new_s_relations + new_ya_relations
         )
     return nodeset_with_dummy_relations
 
@@ -608,6 +647,16 @@ if __name__ == "__main__":
         "--add_gold_data",
         action="store_true",
         help="Whether to add gold data to the dummy relation nodes and missing nodes and edges.",
+    )
+    parser.add_argument(
+        "--re_revert_ra_relations",
+        action="store_true",
+        help="Whether to revert the normalized RA-relation nodes back to the original state.",
+    )
+    parser.add_argument(
+        "--re_remove_none_relations",
+        action="store_true",
+        help="Whether to re-remove the new S and YA relations.",
     )
     parser.add_argument(
         "--debug",

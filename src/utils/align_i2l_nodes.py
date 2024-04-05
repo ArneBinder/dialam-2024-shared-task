@@ -161,7 +161,9 @@ def align_i_and_l_nodes(
             aligned_il_nodes.append((i_node_ids[i], l_node_ids[best_l_candidate]))
         else:
             # warn about failed I-to-L alignment ("dummy" L-node was selected)
-            logger.warning(f"nodeset={nodeset_id}: Could not align I-node (dummy-L-node was selected): {i_node_ids[i]}")
+            logger.warning(
+                f"nodeset={nodeset_id}: Could not align I-node (dummy-L-node was selected): {i_node_ids[i]}"
+            )
 
     return aligned_il_nodes
 
