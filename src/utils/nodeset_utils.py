@@ -293,7 +293,7 @@ def get_relations(
         allowed_source_types = ["L"]
         allowed_target_types = ["L"]
         allowed_max_sources = 1
-        allowed_max_targets = 1
+        allowed_max_targets = None
     elif relation_type == "S":
         yield from get_relations(nodeset, "RA", enforce_cardinality)
         yield from get_relations(nodeset, "CA", enforce_cardinality)
