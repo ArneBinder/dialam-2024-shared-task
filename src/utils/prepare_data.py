@@ -401,8 +401,6 @@ def get_reversed_ra_relations(
         for src_id in rel["sources"]:
             for trg_id in rel["targets"]:
                 ta_src_trg.add((src_id, trg_id))
-    # TODO: or use the following?
-    #  ta_src_trg = {(tuple(sorted(rel["sources"])), tuple(sorted(rel["targets"]))) for rel in ta_relations}
 
     # collect for each S-node all source-anchor and target-anchor pairs
     already_checked: Dict[str, bool] = dict()
@@ -417,54 +415,44 @@ def get_reversed_ra_relations(
             get_l_anchor_nodes(trg_id, ya_trg2sources) for trg_id in rel["targets"]
         ]
         if any(
-            len(anchors) != 1
+            len(anchors) == 0
             for anchors in i_source_multi_anchor_nodes + i_target_multi_anchor_nodes
         ):
-            # notes regarding the *S*-relation (not RA!) arguments in the (cleaned) data:
-            #  - 22408 have one anchor node
-            #  - 3236 do not have any anchor node
-            #  - 469 have two anchor nodes
-            #  - 14 have three anchor nodes
-            # TODO: we will ignore these cases for now
+            logger.warning(
+                f"nodeset={nodeset_id}: Could not find anchor node for any argument of the RA-node {rel_id}!"
+            )
             continue
-        # just use the first anchor node for each source/target
-        i_source_anchor_nodes = tuple(
-            sorted(anchors[0] for anchors in i_source_multi_anchor_nodes)
-        )
-        i_target_anchor_nodes = tuple(
-            sorted(anchors[0] for anchors in i_target_multi_anchor_nodes)
-        )
 
-        # TODO: correctly un-binarize? i.e. check (i_source_anchor_nodes, i_target_anchor_nodes) with ta_src_trg?
-        for i_source_anchor in i_source_anchor_nodes:
-            for i_target_anchor in i_target_anchor_nodes:
-                # keep only pairs in s_node2source_target_pairs that appear in binary TA-relations
-                if (i_source_anchor, i_target_anchor) in ta_src_trg:
-                    if rel_id in already_checked and not already_checked[rel_id]:
-                        raise ValueError(f"direction of RA-node {rel_id} is ambiguous!")
-                    already_checked[rel_id] = True
-                    yield rel
-                elif (i_target_anchor, i_source_anchor) in ta_src_trg:
-                    if rel_id in already_checked and already_checked[rel_id]:
-                        raise ValueError(f"direction of RA-node {rel_id} is ambiguous!")
-                    already_checked[rel_id] = False
-                # else:
-                #    raise ValueError(
-                #        f"nodeset={nodeset_id}: Could not find TA-relation for RA-node {rel_id}!"
-                #    )
+        # we check all combinations of source and target anchors for all anchors per argument
+        for i_source_multi_anchor in i_source_multi_anchor_nodes:
+            for i_source_anchor in i_source_multi_anchor:
+                for i_target_multi_anchor in i_target_multi_anchor_nodes:
+                    for i_target_anchor in i_target_multi_anchor:
+                        # keep only pairs in s_node2source_target_pairs that appear in binary TA-relations
+                        if (i_source_anchor, i_target_anchor) in ta_src_trg:
+                            if rel_id in already_checked and not already_checked[rel_id]:
+                                raise ValueError(f"direction of RA-node {rel_id} is ambiguous!")
+                            already_checked[rel_id] = True
+                            yield rel
+                        elif (i_target_anchor, i_source_anchor) in ta_src_trg:
+                            if rel_id in already_checked and already_checked[rel_id]:
+                                raise ValueError(f"direction of RA-node {rel_id} is ambiguous!")
+                            already_checked[rel_id] = False
+                        # else:
+                        #    raise ValueError(
+                        #        f"nodeset={nodeset_id}: Could not find TA-relation for RA-node {rel_id}!"
+                        #    )
 
     if verbose:
         missing = []
-        # node_id2node = {node["nodeID"]: node for node in nodeset["nodes"]}
         for rel in ra_relations:
             rel_id = rel["relation"]
             if rel_id not in already_checked:
-                # rel_node = node_id2node[rel_id]
                 missing.append(rel_id)
         if len(missing) > 0:
             logger.warning(
                 f"nodeset={nodeset_id}: could not determine direction of RA-nodes {missing} "
-                f"because of missing source/target anchor node(s)!"
+                f"because there is no TA relation between any combination of anchoring I-nodes!"
             )
 
 
