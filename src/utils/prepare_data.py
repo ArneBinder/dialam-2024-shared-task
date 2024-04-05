@@ -454,15 +454,18 @@ def get_reversed_ra_relations(
                 #    )
 
     if verbose:
+        missing = []
         # node_id2node = {node["nodeID"]: node for node in nodeset["nodes"]}
         for rel in ra_relations:
             rel_id = rel["relation"]
             if rel_id not in already_checked:
                 # rel_node = node_id2node[rel_id]
-                logger.warning(
-                    f"nodeset={nodeset_id}: could not determine direction of RA-node {rel_id} "
-                    f"because of missing source/target anchor node(s)!"
-                )
+                missing.append(rel_id)
+        if len(missing) > 0:
+            logger.warning(
+                f"nodeset={nodeset_id}: could not determine direction of RA-nodes {missing} "
+                f"because of missing source/target anchor node(s)!"
+            )
 
 
 def prepare_nodeset(
