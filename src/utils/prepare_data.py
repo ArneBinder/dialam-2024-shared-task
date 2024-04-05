@@ -450,7 +450,7 @@ def get_reversed_ra_relations(
             if rel_id not in already_checked:
                 missing.append(rel_id)
         if len(missing) > 0:
-            logger.warning(
+            raise ValueError(
                 f"nodeset={nodeset_id}: could not determine direction of RA-nodes {missing} "
                 f"because there is no TA relation between any combination of anchoring I-nodes!"
             )
