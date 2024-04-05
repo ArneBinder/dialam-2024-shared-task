@@ -105,7 +105,7 @@ def process_all_nodesets(
 
     logger.info(
         f"Successfully processed {len(nodeset_ids) - len(failed_nodesets)} nodesets. "
-        f"Failed to process the following nodesets: {failed_nodesets}"
+        f"Failed to process the following nodesets ({len(failed_nodesets)}): {failed_nodesets}"
     )
 
 
