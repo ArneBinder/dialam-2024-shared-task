@@ -47,7 +47,11 @@ def remove_iso_analyst_nodes(graph: DiGraph) -> DiGraph:
 
 def get_type_node_list(graph: DiGraph, node_types: List[str]) -> List[Tuple[int, str]]:
     """Filter out and return nodes of a given type."""
-    nodes = [(x, y["text"]) for x, y in graph.nodes(data=True) if y["type"] in node_types]
+    nodes = [
+        (x, y["text"])
+        for x, y in graph.nodes(data=True)
+        if "type" in y and y["type"] in node_types
+    ]
     return nodes
 
 
@@ -68,5 +72,5 @@ def get_i_node_list(graph: DiGraph) -> List[Tuple[int, str]]:
 
 def get_rels(rel_type: str, graph: DiGraph) -> List[int]:
     """Collect all nodes in the graph that correspond to the given relation type."""
-    rel_nodes = [x for x, y in graph.nodes(data=True) if y["type"] == rel_type]
+    rel_nodes = [x for x, y in graph.nodes(data=True) if "type" in y and y["type"] == rel_type]
     return rel_nodes
