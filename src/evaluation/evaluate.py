@@ -236,6 +236,7 @@ def run_evaluation(
     gold_nodeset_path: str,
     ignore_text_annotations: bool,
     ignore_timestamp_casting: bool,
+    nodeset_blacklist: Optional[List[str]] = None,
     nodeset_id: Optional[str] = None,
 ):
     """Compute different scores to evaluate how similar given nodesets are to each other: Kappa,
@@ -247,6 +248,7 @@ def run_evaluation(
         gold_nodeset_path: Path to the gold nodeset(s) directory.
         ignore_text_annotations: Whether to ignore text field annotations (e.g., Asserting for TA-nodes).
         ignore_timestamp_casting: Whether to ignore timestamp casting errors.
+        nodeset_blacklist: List of nodeset IDs that should be ignored.
         nodeset_id: The ID of the nodeset to process. If not provided, all nodesets in the input directories will be processed (matched by their ids) and average metrics will be reported.
     """
     all_nodeset_metrics = defaultdict(list)
@@ -266,9 +268,13 @@ def run_evaluation(
             print(k, v)
     else:
         for nodeset_fname in os.listdir(predicted_nodeset_path):
+            nodeset_id = nodeset_fname.replace(".json", "").replace("nodeset", "")
+            if nodeset_blacklist and (nodeset_id in nodeset_blacklist):
+                logger.info(f"Skipping nodeset {nodeset_id} from the blacklist.")
+                continue
             predicted_data = os.path.join(predicted_nodeset_path, nodeset_fname)
             gold_data = os.path.join(gold_nodeset_path, nodeset_fname)
-            nodeset_id = nodeset_fname.replace(".json", "").replace("nodeset", "")
+
             nodeset_metrics = evaluate_nodeset(
                 predicted_data,
                 gold_data,
@@ -300,6 +306,13 @@ if __name__ == "__main__":
         type=str,
         default=None,
         help="The ID of the nodeset to process. If not provided, all nodesets in the input directory will be processed.",
+    )
+    parser.add_argument(
+        "--nodeset_blacklist",
+        "--list",
+        type=str,
+        default=None,
+        help="List of nodeset IDs that should be ignored.",
     )
     parser.add_argument(
         "--ignore_text_annotations",
