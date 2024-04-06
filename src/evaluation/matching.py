@@ -15,13 +15,15 @@ logger = logging.getLogger(__name__)
 
 
 def get_graphs(
-    dt1: Dict[str, List[Dict[str, str]]], dt2: Dict[str, List[Dict[str, str]]]
+    dt1: Dict[str, List[Dict[str, str]]],
+    dt2: Dict[str, List[Dict[str, str]]],
+    ignore_timestamp_casting: bool,
 ) -> Tuple[DiGraph, DiGraph]:
     """Load the graphs from the corpus, remove isolated nodes."""
 
     # load graphs
-    graph1 = load_map.parse_json(dt1)
-    graph2 = load_map.parse_json(dt2)
+    graph1 = load_map.parse_json(dt1, ignore_timestamp_casting)
+    graph2 = load_map.parse_json(dt2, ignore_timestamp_casting)
     # remove isolated nodes
     graph1 = centrality.remove_iso_analyst_nodes(graph1)
     graph2 = centrality.remove_iso_analyst_nodes(graph2)
@@ -288,7 +290,9 @@ def convert_to_dict(conf_matrix: List[List[int]]) -> Dict[int, Dict[int, int]]:
     return dicts
 
 
-def s_rel_anchor(rel_type: str, graph1: DiGraph, graph2: DiGraph) -> List[List[int]]:
+def s_rel_anchor(
+    rel_type: str, graph1: DiGraph, graph2: DiGraph, ignore_text_annotations: bool, nodeset_id: str
+) -> List[List[int]]:
     """Create a confusion matrix for S-nodes of type CA, MA or RA.
 
     Each S-node is anchored in the corresponding YA-node. Confusion matrix shows how many YA-
@@ -305,56 +309,56 @@ def s_rel_anchor(rel_type: str, graph1: DiGraph, graph2: DiGraph) -> List[List[i
         if rel1_len > rel2_len:
             for rel_i, rel in enumerate(rel1):
                 rel2_id = ""
-                yas1 = get_ya_node_text_from_prop(rel, graph1)
+                yas1 = get_ya_node_text_from_prop(rel, graph1, nodeset_id)
                 try:
                     rel2_id = rel2[rel_i]
                 except Exception as e:
                     rel2_id = ""
                     logger.error(
-                        f"Failed to find index {rel_i} in {rel2} (relation type {rel_type}): {e}"
+                        f"nodeset={nodeset_id}: Failed to find the predicted node for the gold node {rel} (relation type {rel_type}): {e}"
                     )
                 if rel2_id == "":
                     conf_matrix[1][0] += 1
                 else:
-                    yas2 = get_ya_node_text_from_id(int(rel2_id), graph2)
-                    if yas1 == yas2:
+                    yas2 = get_ya_node_text_from_id(int(rel2_id), graph2, nodeset_id)
+                    if ignore_text_annotations or yas1 == yas2:
                         conf_matrix[0][0] += 1
                     else:
                         conf_matrix[1][0] += 1
         elif rel2_len > rel1_len:
             for rel_i, rel in enumerate(rel2):
                 rel1_id = ""
-                yas2 = get_ya_node_text_from_prop(rel, graph2)
+                yas2 = get_ya_node_text_from_prop(rel, graph2, nodeset_id)
                 try:
                     rel1_id = rel1[rel_i]
                 except Exception as e:
                     rel1_id = ""
                     logger.error(
-                        f"Failed to find index {rel_i} in {rel1} (relation type {rel_type}): {e}"
+                        f"nodeset={nodeset_id}: Failed to find the predicted node for the gold node {rel} (relation type {rel_type}): {e}"
                     )
                 if rel1_id == "":
                     conf_matrix[0][1] = conf_matrix[0][1] + 1
                 else:
-                    yas1 = get_ya_node_text_from_id(int(rel1_id), graph1)
-                    if yas1 == yas2:
+                    yas1 = get_ya_node_text_from_id(int(rel1_id), graph1, nodeset_id)
+                    if ignore_text_annotations or yas1 == yas2:
                         conf_matrix[0][0] += 1
                     else:
                         conf_matrix[0][1] += 1
         else:
             for rel_i, rel in enumerate(rel1):
-                ya1 = get_ya_node_text_from_prop(rel, graph1)
+                ya1 = get_ya_node_text_from_prop(rel, graph1, nodeset_id)
                 try:
                     rel2_id = rel2[rel_i]
                 except Exception as e:
                     rel2_id = ""
                     logger.error(
-                        f"Failed to find index {rel_i} in {rel2} (relation type {rel_type}): {e}"
+                        f"nodeset={nodeset_id}: Failed to find the gold node for the predicted node {rel} (relation type {rel_type}): {e}"
                     )
                 if rel2_id == "":
                     conf_matrix[1][0] += 1
                 else:
-                    ya2 = get_ya_node_text_from_prop(int(rel2_id), graph2)
-                    if ya1 == ya2:
+                    ya2 = get_ya_node_text_from_prop(int(rel2_id), graph2, nodeset_id)
+                    if ignore_text_annotations or ya1 == ya2:
                         conf_matrix[0][0] += 1
                     else:
                         conf_matrix[1][0] += 1
@@ -380,7 +384,7 @@ def combine_s_node_matrix(
     return all_result
 
 
-def count_s_nodes(node_id: int, graph: DiGraph) -> Tuple[int, int, int]:
+def count_s_nodes(node_id: int, graph: DiGraph, nodeset_id: str) -> Tuple[int, int, int]:
     """Count how many S-nodes of each type (RA, CA, MA) we have in the graph."""
     RA_count = 0
     MA_count = 0
@@ -390,7 +394,9 @@ def count_s_nodes(node_id: int, graph: DiGraph) -> Tuple[int, int, int]:
             graph.predecessors(node_id)
         )  # TODO: Why do we consider *only* predecessors? In principle, RA-nodes can also point down, i.e., RA-node could be in successors of the node with the current node_id!
     except Exception as e:
-        logger.error(f"Failed to get predecessors for node with ID {node_id}")
+        logger.error(
+            f"nodeset={nodeset_id}: Failed to get predecessors for node with ID {node_id}"
+        )
         s_nodes = []
     for s in s_nodes:
         n_type = graph.nodes[s]["type"]
@@ -403,7 +409,7 @@ def count_s_nodes(node_id: int, graph: DiGraph) -> Tuple[int, int, int]:
     return RA_count, CA_count, MA_count
 
 
-def count_ta_nodes(node_id: int, graph: DiGraph) -> int:
+def count_ta_nodes(node_id: int, graph: DiGraph, nodeset_id: str) -> int:
     """Count how many successor TA-nodes we have in the graph."""
     TA_count = 0
     try:
@@ -413,12 +419,12 @@ def count_ta_nodes(node_id: int, graph: DiGraph) -> int:
             if n_type == "TA":
                 TA_count = TA_count + 1
     except Exception as e:
-        logger.error(f"Failed to get successors for node with ID {node_id}")
+        logger.error(f"nodeset={nodeset_id}: Failed to get successors for node with ID {node_id}")
     return TA_count
 
 
 def prop_rels_comp(
-    prop_matrix: List[Dict[str, Any]], graph1: DiGraph, graph2: DiGraph
+    prop_matrix: List[Dict[str, Any]], graph1: DiGraph, graph2: DiGraph, nodeset_id: str
 ) -> List[List[int]]:
     """Create a confusion matrix for propositional relations."""
     conf_matrix = [[0, 0], [0, 0]]
@@ -431,8 +437,8 @@ def prop_rels_comp(
         text2 = rel_dict["text2"]
 
         if ID1 != 0 and ID2 != 0:
-            ras1, cas1, mas1 = count_s_nodes(ID1, graph1)
-            ras2, cas2, mas2 = count_s_nodes(ID2, graph2)
+            ras1, cas1, mas1 = count_s_nodes(ID1, graph1, nodeset_id)
+            ras2, cas2, mas2 = count_s_nodes(ID2, graph2, nodeset_id)
             for s_rel1, s_rel2 in zip([ras1, cas1, mas1], [ras2, cas2, mas2]):
                 if s_rel1 == s_rel2:
                     conf_matrix[0][0] += 1
@@ -460,7 +466,11 @@ def prop_rels_comp(
 
 
 def loc_ya_rels_comp(
-    loc_matrix: List[Dict[str, Any]], graph1: DiGraph, graph2: DiGraph
+    loc_matrix: List[Dict[str, Any]],
+    graph1: DiGraph,
+    graph2: DiGraph,
+    ignore_text_annotations: bool,
+    nodeset_id: str,
 ) -> List[List[int]]:
     """Create a confusion matrix for locutional relations."""
     all_ya_text = get_ya_node_texts(graph1, graph2)
@@ -477,11 +487,14 @@ def loc_ya_rels_comp(
         # Check the YA-node annotations (e.g., "Asserting", "Questioning" etc.)
         # ID equals 0 when L-node from one graph could not be aligned to any L-node from the other graph.
         if ID1 != 0 and ID2 != 0:
-            yas1 = get_ya_node_text_from_id(ID1, graph1)
-            yas2 = get_ya_node_text_from_id(ID2, graph2)
-            assert yas1 in all_ya_text, f"YA-node {yas1} must be in all_ya_text: {all_ya_text}"
+            yas1 = get_ya_node_text_from_id(ID1, graph1, nodeset_id)
+            yas2 = get_ya_node_text_from_id(ID2, graph2, nodeset_id)
+            # for predicted nodes we may have no text field annotations
+            assert ignore_text_annotations or (
+                yas1 in all_ya_text
+            ), f"YA-node {yas1} must be in all_ya_text: {all_ya_text}"
             assert yas2 in all_ya_text, f"YA-node {yas2} must be in all_ya_text: {all_ya_text}"
-            if yas1 == yas2:
+            if ignore_text_annotations or yas1 == yas2:
                 index = all_ya_text.index(yas1)
                 conf_matrix[index][index] += 1
             else:
@@ -491,16 +504,18 @@ def loc_ya_rels_comp(
         elif ID1 == 0 and ID2 == 0:
             conf_matrix[len(all_ya_text) - 1][len(all_ya_text) - 1] += 1
         elif ID1 == 0:
-            yas2 = get_ya_node_text_from_id(ID2, graph2)
+            yas2 = get_ya_node_text_from_id(ID2, graph2, nodeset_id)
             index = all_ya_text.index(yas2)
             conf_matrix[len(all_ya_text) - 1][index] += 1
         elif ID2 == 0:
-            yas1 = get_ya_node_text_from_id(ID1, graph1)
+            yas1 = get_ya_node_text_from_id(ID1, graph1, nodeset_id)
             index = all_ya_text.index(yas1)
             conf_matrix[index][len(all_ya_text) - 1] += 1
 
         # Get all YA-nodes anchored in transitions (TA-nodes) via locutions (L-nodes) - we only want to loop the matrix once.
-        conf_matrix = get_ta_locs(ID1, ID2, graph1, graph2, conf_matrix, all_ya_text)
+        conf_matrix = get_ta_locs(
+            ID1, ID2, graph1, graph2, conf_matrix, all_ya_text, ignore_text_annotations, nodeset_id
+        )
     return conf_matrix
 
 
@@ -509,10 +524,11 @@ def update_conf_matrix_tas_in_one_graph(
     graph: DiGraph,
     conf_matrix: List[List[int]],
     all_ya_text_ext: List[str],
+    nodeset_id: str,
     reverse_idx: bool = False,
 ):
     for ta in tas:
-        yas = get_ya_node_text_from_id(ta, graph)
+        yas = get_ya_node_text_from_id(ta, graph, nodeset_id)
         if yas == "":
             conf_matrix[len(all_ya_text_ext) - 1][len(all_ya_text_ext) - 1] += 1
         elif yas in all_ya_text_ext:
@@ -530,16 +546,20 @@ def update_conf_matrix_tas_in_both_graphs(
     graph2: DiGraph,
     conf_matrix: List[List[int]],
     all_ya_text_ext: List[str],
+    ignore_text_annotations: bool,
+    nodeset_id: str,
     reverse_idx: bool = False,
 ):
     for tai, ta in enumerate(tas1):
         tas2_id = -1
-        yas1 = get_ya_node_text_from_id(ta, graph1)
+        yas1 = get_ya_node_text_from_id(ta, graph1, nodeset_id)
         try:
             tas2_id = tas2[tai]
         except Exception as e:
             tas2_id = -1
-            logger.error(f"Failed to find index tai {tai} in tas2 {tas2}: {e}")
+            logger.error(
+                f"nodeset={nodeset_id}: Failed to align the predicted TA-node {ta}, predicted TA-nodes: {tas1}, gold TA-nodes {tas2}: {e}"
+            )
 
         if tas2_id == -1 and yas1 in all_ya_text_ext:
             index = all_ya_text_ext.index(yas1)
@@ -549,8 +569,13 @@ def update_conf_matrix_tas_in_both_graphs(
                 conf_matrix[index][len(all_ya_text_ext) - 1] += 1
         elif tas2_id != -1:
             # Check YA-node text (annotation): "Arguing" etc.
-            yas2 = get_ya_node_text_from_id(tas2_id, graph2)
-            if yas1 == yas2 and yas1 in all_ya_text_ext:
+            yas2 = get_ya_node_text_from_id(tas2_id, graph2, nodeset_id)
+            # if we ignore text field annotations we assume that we always have a match
+            # but yas1 could be an empty string, hence we select the index based on yas2
+            if ignore_text_annotations:
+                index = all_ya_text_ext.index(yas2)
+                conf_matrix[index][index] += 1
+            elif yas1 == yas2 and yas1 in all_ya_text_ext:
                 index = all_ya_text_ext.index(yas1)
                 conf_matrix[index][index] += 1
             elif yas1 in all_ya_text_ext and yas2 in all_ya_text_ext:
@@ -569,12 +594,14 @@ def get_ta_locs(
     graph2: DiGraph,
     conf_matrix: List[List[int]],
     all_ya_text: List[str],
+    ignore_text_annotations: bool,
+    nodeset_id: str,
 ) -> List[List[int]]:
     """Create confusion matrix for transitions between the locutions (TA-nodes)."""
     all_ya_text_ext = copy.deepcopy(all_ya_text)
     if ID1 != 0 and ID2 != 0:
-        tas1 = get_ta_nodes_from_id(ID1, graph1)
-        tas2 = get_ta_nodes_from_id(ID2, graph2)
+        tas1 = get_ta_nodes_from_id(ID1, graph1, nodeset_id)
+        tas2 = get_ta_nodes_from_id(ID2, graph2, nodeset_id)
 
         if len(tas1) > 0 and len(tas2) > 0:
             if len(tas1) > len(tas2):
@@ -585,6 +612,8 @@ def get_ta_locs(
                     graph2,
                     conf_matrix,
                     all_ya_text_ext,
+                    ignore_text_annotations,
+                    nodeset_id,
                     reverse_idx=False,
                 )
             elif len(tas2) > len(tas1):
@@ -595,13 +624,18 @@ def get_ta_locs(
                     graph1,
                     conf_matrix,
                     all_ya_text_ext,
+                    ignore_text_annotations,
+                    nodeset_id,
                     reverse_idx=True,
                 )
             else:
                 for tai, ta in enumerate(tas1):
-                    yas1 = get_ya_node_text_from_id(ta, graph1)
-                    yas2 = get_ya_node_text_from_id(tas2[tai], graph2)
-                    if yas1 == yas2 and yas1 in all_ya_text_ext:
+                    yas1 = get_ya_node_text_from_id(ta, graph1, nodeset_id)
+                    yas2 = get_ya_node_text_from_id(tas2[tai], graph2, nodeset_id)
+                    if ignore_text_annotations:
+                        index = all_ya_text_ext.index(yas2)
+                        conf_matrix[index][index] += 1
+                    elif yas1 == yas2 and yas1 in all_ya_text_ext:
                         index = all_ya_text_ext.index(yas1)
                         conf_matrix[index][index] += 1
                     elif yas1 in all_ya_text_ext and yas2 in all_ya_text_ext:
@@ -611,38 +645,44 @@ def get_ta_locs(
 
         elif len(tas1) > 0 and len(tas2) < 1:
             update_conf_matrix_tas_in_one_graph(
-                tas1, graph1, conf_matrix, all_ya_text_ext, reverse_idx=True
+                tas1, graph1, conf_matrix, all_ya_text_ext, nodeset_id, reverse_idx=True
             )
 
         elif len(tas2) > 0 and len(tas1) < 1:
             update_conf_matrix_tas_in_one_graph(
-                tas2, graph2, conf_matrix, all_ya_text_ext, reverse_idx=False
+                tas2, graph2, conf_matrix, all_ya_text_ext, nodeset_id, reverse_idx=False
             )
 
         elif len(tas1) < 1 and len(tas2) < 1:
             conf_matrix[len(all_ya_text_ext) - 1][len(all_ya_text_ext) - 1] += 1
 
     elif ID1 == 0:
-        tas2 = get_ta_nodes_from_id(ID2, graph2)
+        tas2 = get_ta_nodes_from_id(ID2, graph2, nodeset_id)
         if len(tas2) > 0:
             update_conf_matrix_tas_in_one_graph(
-                tas2, graph2, conf_matrix, all_ya_text_ext, reverse_idx=False
+                tas2, graph2, conf_matrix, all_ya_text_ext, nodeset_id, reverse_idx=False
             )
         elif len(tas2) < 1:
             conf_matrix[len(all_ya_text_ext) - 1][len(all_ya_text_ext) - 1] += 1
 
     elif ID2 == 0:
-        tas1 = get_ta_nodes_from_id(ID1, graph1)
+        tas1 = get_ta_nodes_from_id(ID1, graph1, nodeset_id)
         if len(tas1) > 0:
             update_conf_matrix_tas_in_one_graph(
-                tas1, graph1, conf_matrix, all_ya_text_ext, reverse_idx=True
+                tas1, graph1, conf_matrix, all_ya_text_ext, nodeset_id, reverse_idx=True
             )
         elif len(tas1) < 1:
             conf_matrix[len(all_ya_text_ext) - 1][len(all_ya_text_ext) - 1] += 1
     return conf_matrix
 
 
-def prop_ya_comp(prop_matrix: List[Dict[str, Any]], graph1: DiGraph, graph2: DiGraph):
+def prop_ya_comp(
+    prop_matrix: List[Dict[str, Any]],
+    graph1: DiGraph,
+    graph2: DiGraph,
+    ignore_text_annotations: bool,
+    nodeset_id: str,
+):
     """Create confusion matrix for YA-nodes: check their text annotations that can be "Restating",
     "Asserting" etc."""
     all_ya_text = get_ya_node_texts(graph1, graph2)
@@ -655,10 +695,13 @@ def prop_ya_comp(prop_matrix: List[Dict[str, Any]], graph1: DiGraph, graph2: DiG
         text2 = rel_dict["text2"]
 
         if ID1 != 0 and ID2 != 0:
-            yas1 = get_ya_node_text_from_prop(ID1, graph1)
-            yas2 = get_ya_node_text_from_prop(ID2, graph2)
+            yas1 = get_ya_node_text_from_prop(ID1, graph1, nodeset_id)
+            yas2 = get_ya_node_text_from_prop(ID2, graph2, nodeset_id)
 
-            if yas1 == yas2:
+            if ignore_text_annotations:
+                index = all_ya_text.index(yas2)
+                conf_matrix[index][index] += 1
+            elif yas1 == yas2:
                 index = all_ya_text.index(yas1)
                 conf_matrix[index][index] += 1
             else:
@@ -671,12 +714,12 @@ def prop_ya_comp(prop_matrix: List[Dict[str, Any]], graph1: DiGraph, graph2: DiG
             conf_matrix[len(all_ya_text) - 1][len(all_ya_text) - 1] += 1
 
         elif ID1 == 0:
-            yas2 = get_ya_node_text_from_prop(ID2, graph2)
+            yas2 = get_ya_node_text_from_prop(ID2, graph2, nodeset_id)
             index = all_ya_text.index(yas2)
             conf_matrix[len(all_ya_text) - 1][index] += 1
 
         elif ID2 == 0:
-            yas2 = get_ya_node_text_from_prop(ID1, graph1)
+            yas2 = get_ya_node_text_from_prop(ID1, graph1, nodeset_id)
             index = all_ya_text.index(yas1)
             conf_matrix[index][len(all_ya_text) - 1] += 1
 
@@ -684,7 +727,7 @@ def prop_ya_comp(prop_matrix: List[Dict[str, Any]], graph1: DiGraph, graph2: DiG
 
 
 def loc_ta_rels_comp(
-    loc_matrix: List[Dict[str, Any]], graph1: DiGraph, graph2: DiGraph
+    loc_matrix: List[Dict[str, Any]], graph1: DiGraph, graph2: DiGraph, nodeset_id: str
 ) -> List[List[int]]:
     """Create confusion matrix for TA-nodes anchored in L-nodes.
 
@@ -699,8 +742,8 @@ def loc_ta_rels_comp(
         text2 = rel_dict["text2"]
 
         if ID1 != 0 and ID2 != 0:
-            tas1 = count_ta_nodes(ID1, graph1)
-            tas2 = count_ta_nodes(ID2, graph2)
+            tas1 = count_ta_nodes(ID1, graph1, nodeset_id)
+            tas2 = count_ta_nodes(ID2, graph2, nodeset_id)
 
             if tas1 == tas2:
                 conf_matrix[0][0] += 1
@@ -725,7 +768,13 @@ def loc_ta_rels_comp(
     return conf_matrix
 
 
-def prop_ya_anchor_comp(prop_matrix: List[Dict[str, Any]], graph1: DiGraph, graph2: DiGraph):
+def prop_ya_anchor_comp(
+    prop_matrix: List[Dict[str, Any]],
+    graph1: DiGraph,
+    graph2: DiGraph,
+    ignore_text_annotations: bool,
+    nodeset_id: str,
+):
     """Create confusion matrix for YA-nodes anchoring the propositions: check for matching text
     field annotations."""
     conf_matrix = [[0, 0], [0, 0]]
@@ -737,20 +786,20 @@ def prop_ya_anchor_comp(prop_matrix: List[Dict[str, Any]], graph1: DiGraph, grap
         text2 = rel_dict["text2"]
 
         if ID1 != 0 and ID2 != 0:
-            yas1 = get_ya_node_from_prop_id(ID1, graph1)
-            yas2 = get_ya_node_from_prop_id(ID2, graph2)
+            yas1 = get_ya_node_from_prop_id(ID1, graph1, nodeset_id)
+            yas2 = get_ya_node_from_prop_id(ID2, graph2, nodeset_id)
             n_anch_1 = None
             n_anch_2 = None
             if yas1 != -1:
-                n_anch_1 = get_node_anchor(yas1, graph1)
+                n_anch_1 = get_node_anchor_text(yas1, graph1, nodeset_id)
             if yas2 != -1:
-                n_anch_2 = get_node_anchor(yas2, graph2)
+                n_anch_2 = get_node_anchor_text(yas2, graph2, nodeset_id)
 
             if not (n_anch_1 is None):
-                if n_anch_1 == n_anch_2:
-                    conf_matrix[0][0] = conf_matrix[0][0] + 1
+                if ignore_text_annotations or n_anch_1 == n_anch_2:
+                    conf_matrix[0][0] += 1
                 else:
-                    conf_matrix[1][0] = conf_matrix[1][0] + 1
+                    conf_matrix[1][0] += 1
 
         elif ID1 == 0 and ID2 == 0:
             conf_matrix[1][1] += 1
@@ -762,7 +811,7 @@ def prop_ya_anchor_comp(prop_matrix: List[Dict[str, Any]], graph1: DiGraph, grap
     return conf_matrix
 
 
-def get_ta_nodes_from_id(node_id: int, graph: DiGraph) -> List[int]:
+def get_ta_nodes_from_id(node_id: int, graph: DiGraph, nodeset_id: str) -> List[int]:
     """Collect all TA-nodes that are successors of a given node."""
     try:
         successor_nodes = list(graph.successors(node_id))
@@ -775,22 +824,23 @@ def get_ta_nodes_from_id(node_id: int, graph: DiGraph) -> List[int]:
         return ta_list
 
     except Exception as e:
-        logger.error(f"Failed to get successors for node with ID {node_id}")
+        logger.error(f"nodeset={nodeset_id}: Failed to get successors for node with ID {node_id}")
         return []
 
 
-def get_ya_node_from_prop_id(node_id: int, graph: DiGraph) -> int:
+def get_ya_node_from_prop_id(node_id: int, graph: DiGraph, nodeset_id: str) -> int:
     """Get the predecessor YA-node (returns the first match or -1 if not found)."""
     try:
         predecessor_nodes = list(graph.predecessors(node_id))
         for n in predecessor_nodes:
             n_type = graph.nodes[n]["type"]
             if n_type == "YA":
-                n_text = graph.nodes[n]["text"]
                 return n
         return -1
     except Exception as e:
-        logger.error(f"Failed to get predecessors for node with ID {node_id}")
+        logger.error(
+            f"nodeset={nodeset_id}: Failed to get predecessors for node with ID {node_id}"
+        )
         return -1
 
 
@@ -814,7 +864,7 @@ def get_ya_node_texts(graph1: DiGraph, graph2: DiGraph) -> List[str]:
     return ya_text_list
 
 
-def get_ya_node_text_from_id(node_id: int, graph: DiGraph) -> str:
+def get_ya_node_text_from_id(node_id: int, graph: DiGraph, nodeset_id: str) -> str:
     """Get text field annotation for a YA-node that is a successor of the given node (returns the
     first match or empty string if not found)."""
     try:
@@ -826,11 +876,11 @@ def get_ya_node_text_from_id(node_id: int, graph: DiGraph) -> str:
                 return n_text
         return ""
     except Exception as e:
-        logger.error(f"Failed to get successors for node with ID {node_id}")
+        logger.error(f"nodeset={nodeset_id}: Failed to get successors for node with ID {node_id}")
         return ""
 
 
-def get_ya_node_text_from_prop(node_id: int, graph: DiGraph) -> str:
+def get_ya_node_text_from_prop(node_id: int, graph: DiGraph, nodeset_id: str) -> str:
     """Get text field annotation for a YA-node that is a predecessor of the given node (returns the
     first match or empty string if not found)."""
     try:
@@ -842,11 +892,13 @@ def get_ya_node_text_from_prop(node_id: int, graph: DiGraph) -> str:
                 return n_text
         return ""
     except Exception as e:
-        logger.error(f"Failed to get predecessors for node with ID {node_id}")
+        logger.error(
+            f"nodeset={nodeset_id}: Failed to get predecessors for node with ID {node_id}"
+        )
         return ""
 
 
-def get_node_anchor(node_id: int, graph: DiGraph) -> str:
+def get_node_anchor_text(node_id: int, graph: DiGraph, nodeset_id: str) -> str:
     """Get text field annotation for L-node or TA-node of the given node (returns the first match
     or empty string if not found)."""
     try:
@@ -858,17 +910,26 @@ def get_node_anchor(node_id: int, graph: DiGraph) -> str:
                 return n_text
         return ""
     except Exception as e:
-        logger.error(f"Failed to get predecessors for node with ID {node_id}")
+        logger.error(
+            f"nodeset={nodeset_id}: Failed to get predecessors for node with ID {node_id}"
+        )
         return ""
 
 
 def calculate_matching(
-    predicted_data: Dict[str, List[Dict[str, Any]]], gold_data: Dict[str, List[Dict[str, Any]]]
+    predicted_data: Dict[str, List[Dict[str, Any]]],
+    gold_data: Dict[str, List[Dict[str, Any]]],
+    ignore_text_annotations: bool,
+    ignore_timestamp_casting: bool,
+    nodeset_id: str,
 ) -> List[Dict[int, Dict[int, int]]]:
     """Build confusion matrices for different types of relations.
     Args:
         predicted_data: A dictionary with nodes, edges and locutions for the predicted nodeset.
         gold_data: A dictionary with nodes, edges and locutions for the gold nodeset.
+        ignore_text_annotations: Whether to ignore text annotations of nodes.
+        ignore_timestamp_casting: Whether to ignore timestamp casting errors.
+        nodeset_id: Nodeset ID.
 
     Returns:
         Confusion matrices for the following transitions:
@@ -881,7 +942,7 @@ def calculate_matching(
 
     """
     # Graph construction.
-    graph1, graph2 = get_graphs(predicted_data, gold_data)
+    graph1, graph2 = get_graphs(predicted_data, gold_data, ignore_timestamp_casting)
     # Creating similarity matrix for propositional relations.
     prop_rels = get_sim_matrix(graph1, graph2, "propositions")
     # Creating similarity matrix for locutional relations.
@@ -889,35 +950,41 @@ def calculate_matching(
     # (1) Do we have the same YA > S transitions? Do their annotations coincide?
     # Anchoring on S-nodes (RA/CA/MA) and combining them (checking how many YA-anchors,
     # predecessors of S-nodes, have the same/different text field annotations).
-    ra_a = s_rel_anchor("RA", graph1, graph2)
-    ma_a = s_rel_anchor("MA", graph1, graph2)
-    ca_a = s_rel_anchor("CA", graph1, graph2)
+    ra_a = s_rel_anchor("RA", graph1, graph2, ignore_text_annotations, nodeset_id)
+    ma_a = s_rel_anchor("MA", graph1, graph2, ignore_text_annotations, nodeset_id)
+    ca_a = s_rel_anchor("CA", graph1, graph2, ignore_text_annotations, nodeset_id)
     all_s = combine_s_node_matrix(ra_a, ca_a, ma_a)
 
     # (2) Do we have the same S-nodes?
     # Comparing propositional relations, building a confusion matrix for S-node (RA, MA, CA)
     # matches between the two graphs.
-    prop_rels_comp_conf = prop_rels_comp(prop_rels, graph1, graph2)
+    prop_rels_comp_conf = prop_rels_comp(prop_rels, graph1, graph2, nodeset_id)
 
     # (3) Do we have the same L > YA transitions? Do their annotations coincide?
     # Getting all YAs anchored in locutions, comparing the text field annotations of YA-nodes,
     # successors of L-nodes, anchored in locutions.
-    loc_ya_rels_comp_conf = loc_ya_rels_comp(loc_rels, graph1, graph2)
+    loc_ya_rels_comp_conf = loc_ya_rels_comp(
+        loc_rels, graph1, graph2, ignore_text_annotations, nodeset_id
+    )
 
     # (4) Do we have the same YA > I transitions? Do their annotations coincide?
     # Getting all YAs in propositions, comparing the text field annotations of YA-nodes,
     # predecessors of I-nodes, anchored in propositions.
-    prop_ya_comp_conf = prop_ya_comp(prop_rels, graph1, graph2)
+    prop_ya_comp_conf = prop_ya_comp(
+        prop_rels, graph1, graph2, ignore_text_annotations, nodeset_id
+    )
 
     # (5) Do we have the same (TA-node) transitions between the L-nodes (L > TA > L transitions)?
     # Getting all TAs anchored in locutions, checking whether each L-node pair (from graph1 and graph2)
     # has the same amount of outgoing TA-nodes.
-    loc_ta_conf = loc_ta_rels_comp(loc_rels, graph1, graph2)
+    loc_ta_conf = loc_ta_rels_comp(loc_rels, graph1, graph2, nodeset_id)
 
     # (6) Do we have I-nodes anchored in the same L-nodes (L > YA > I transitions)? Do their annotations coincide?
     # Getting all YAs anchored in propositions, comparing the text field annotations of L-/TA-nodes
     # that are predecessors of YA-nodes anchored in propositions (I-nodes).
-    prop_ya_conf = prop_ya_anchor_comp(prop_rels, graph1, graph2)
+    prop_ya_conf = prop_ya_anchor_comp(
+        prop_rels, graph1, graph2, ignore_text_annotations, nodeset_id
+    )
 
     conf_matrices = [
         all_s,

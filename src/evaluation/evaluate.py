@@ -34,12 +34,17 @@ with the DialAM data): https://github.com/arg-tech/AMF-Evaluation-Metrics
 
 import argparse
 import json
-from typing import Any, Callable, Dict, List, Sequence, TypeVar
+import logging
+import os
+from collections import defaultdict
+from typing import Any, Callable, Dict, List, Optional, Sequence, TypeVar
 
 import matching
 from pycm import ConfusionMatrix
 
 T = TypeVar("T")
+
+logger = logging.getLogger(__name__)
 
 
 def get_kappa(confusion_matrix: ConfusionMatrix) -> float:
@@ -158,62 +163,154 @@ def map_and_mean(func: Callable[[T], float], inputs: Sequence[T]) -> float:
     return result
 
 
-def run_evaluation(predicted_nodeset_path: str, gold_nodeset_path: str):
-    """Compute different scores to evaluate how similar given nodesets are to each other: Kappa,
-    CASS, Accuracy, F1, U-Alpha.
-
-    The scores are printed to the console.
+def evaluate_nodeset(
+    predicted_data: str,
+    gold_data: str,
+    ignore_text_annotations: bool,
+    ignore_timestamp_casting: bool,
+    nodeset_id: str,
+) -> Dict[str, float]:
+    """Evaluate a single nodeset in terms of CASS, Accuracy, F1 and U-Alpha.
     Args:
-        predicted_nodeset_path: Path to the predicted nodeset.
-        gold_nodeset_path: Path to the gold nodeset.
+        predicted_data: Path to the JSON file with the predicted nodeset.
+        gold_data: Path to the JSON file with the gold nodeset.
+        ignore_text_annotations: Whether to ignore text field annotations of nodes.
+        ignore_timestamp_casting: Whether to ignore timestamp casting errors.
+        nodeset_id: Nodeset ID.
+
+    Returns:
+        Dictionary that contains the mapping between the metrics and the calculated values for the nodeset.
+
     """
     # Read the JSON data
-    with open(predicted_nodeset_path) as f:
-        predicted_data = json.load(f)
-    with open(gold_nodeset_path) as f:
-        gold_data = json.load(f)
+    try:
+        with open(predicted_data) as f:
+            predicted_data = json.load(f)
+    except Exception as e:
+        logger.error(f"Could not open {predicted_data}: {e}")
+    try:
+        with open(gold_data) as f:
+            gold_data = json.load(f)
+    except Exception as e:
+        logger.error(f"Could not open {gold_data}: {e}")
+
+    nodeset_metrics = dict()
 
     # Evaluate graphs
-    confusion_matrix_dicts = matching.calculate_matching(predicted_data, gold_data)
+    confusion_matrix_dicts = matching.calculate_matching(
+        predicted_data, gold_data, ignore_text_annotations, ignore_timestamp_casting, nodeset_id
+    )
     confusion_matrices = [ConfusionMatrix(matrix=d) for d in confusion_matrix_dicts]
 
     # Kappa
     kappa = map_and_mean(get_kappa, confusion_matrices)
-    print("kappa", kappa)
+    nodeset_metrics["Kappa"] = kappa
 
     # CHANGE: This works only for AIF data structure, in DialAM we do not have "text" field.
     # Text Similarity and CASS
     # Text_similarity = eval.text_similarity(predicted_data, gold_data)
     # print("text similarity", Text_similarity)
 
-    # CHANGE: Set to 1 because we have pre-segmented text in DialAM.
-    # # cass = CASS_calculation(1, kappa)
-    # CASS = CASS_calculation(Text_similarity, kappa)
-    # print("CASS", cass)
+    # CHANGE: Set Text_similarity to 1 because we have pre-segmented text in DialAM.
+    # cass = CASS_calculation(Text_similarity, kappa)
+    cass = CASS_calculation(1, kappa)
+    nodeset_metrics["CASS"] = cass
 
     # F1
     f1 = map_and_mean(get_f1, confusion_matrices)
-    print("F1", f1)
+    nodeset_metrics["F1"] = f1
+
     # accuracy
     acc = map_and_mean(get_accuracy, confusion_matrices)
-    print("Accuracy", acc)
+    nodeset_metrics["Accuracy"] = acc
 
     # U-Alpha
     u_alpha = map_and_mean(get_u_alpha, confusion_matrices)
-    print("U-Alpha", u_alpha)
+    nodeset_metrics["U-Alpha"] = u_alpha
+
+    return nodeset_metrics
+
+
+def run_evaluation(
+    predicted_nodeset_path: str,
+    gold_nodeset_path: str,
+    ignore_text_annotations: bool,
+    ignore_timestamp_casting: bool,
+    nodeset_id: Optional[str] = None,
+):
+    """Compute different scores to evaluate how similar given nodesets are to each other: Kappa,
+    CASS, Accuracy, F1, U-Alpha.
+
+    The scores are printed to the console.
+    Args:
+        predicted_nodeset_path: Path to the predicted nodeset(s) directory.
+        gold_nodeset_path: Path to the gold nodeset(s) directory.
+        ignore_text_annotations: Whether to ignore text field annotations (e.g., Asserting for TA-nodes).
+        ignore_timestamp_casting: Whether to ignore timestamp casting errors.
+        nodeset_id: The ID of the nodeset to process. If not provided, all nodesets in the input directories will be processed (matched by their ids) and average metrics will be reported.
+    """
+    all_nodeset_metrics = defaultdict(list)
+    if nodeset_id is not None:
+        predicted_data = os.path.join(
+            predicted_nodeset_path, "nodeset" + str(nodeset_id) + ".json"
+        )
+        gold_data = os.path.join(gold_nodeset_path, "nodeset" + str(nodeset_id) + ".json")
+        nodeset_metrics = evaluate_nodeset(
+            predicted_data,
+            gold_data,
+            ignore_text_annotations,
+            ignore_timestamp_casting,
+            nodeset_id,
+        )
+        for k, v in nodeset_metrics.items():
+            print(k, v)
+    else:
+        for nodeset_fname in os.listdir(predicted_nodeset_path):
+            predicted_data = os.path.join(predicted_nodeset_path, nodeset_fname)
+            gold_data = os.path.join(gold_nodeset_path, nodeset_fname)
+            nodeset_id = nodeset_fname.replace(".json", "").replace("nodeset", "")
+            nodeset_metrics = evaluate_nodeset(
+                predicted_data,
+                gold_data,
+                ignore_text_annotations,
+                ignore_timestamp_casting,
+                nodeset_id,
+            )
+            for k, v in nodeset_metrics.items():
+                all_nodeset_metrics[k].append(v)
+
+    for metric, values in all_nodeset_metrics.items():
+        print(metric, sum(values) / len(values))
 
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument(
-        "predicted_nodeset_path",
+        "--predicted_nodeset_path",
         type=str,
-        help="path to the predicted nodeset (stored as a graph in JSON format)",
+        help="Path to the predicted nodeset (stored as a graph in JSON format)",
     )
     parser.add_argument(
-        "gold_nodeset_path",
+        "--gold_nodeset_path",
         type=str,
-        help="path to the gold nodeset (stored as a graph in JSON format)",
+        help="Path to the gold nodeset (stored as a graph in JSON format)",
     )
+    parser.add_argument(
+        "--nodeset_id",
+        type=str,
+        default=None,
+        help="The ID of the nodeset to process. If not provided, all nodesets in the input directory will be processed.",
+    )
+    parser.add_argument(
+        "--ignore_text_annotations",
+        action="store_true",
+        help="Whether to ignore text field annotations for nodes (e.g., Assering, Restating etc.)",
+    )
+    parser.add_argument(
+        "--ignore_timestamp_casting",
+        action="store_true",
+        help="Whether to ignore timestamp casting errors.",
+    )
+
     args = vars(parser.parse_args())
     run_evaluation(**args)

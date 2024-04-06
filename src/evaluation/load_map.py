@@ -8,11 +8,12 @@ from networkx.classes.digraph import DiGraph
 logger = logging.getLogger(__name__)
 
 
-def parse_timestamp(timestamp: str) -> Union[datetime, str]:
+def parse_timestamp(timestamp: str, ignore_timestamp_casting: bool) -> Union[datetime, str]:
     try:
         return datetime.strptime(timestamp, "%Y-%m-%d %H:%M:%S")
     except (ValueError, TypeError):
-        logger.error(f"Failed datetime(timestamp) casting: {timestamp}")
+        if not ignore_timestamp_casting:
+            logger.error(f"Failed datetime(timestamp) casting: {timestamp}")
     return timestamp
 
 
@@ -40,7 +41,9 @@ def parse_edge_id(edge_id: str) -> Union[int, str]:
     return edge_id
 
 
-def parse_json(node_set: Dict[str, List[Dict[str, Any]]]) -> DiGraph:
+def parse_json(
+    node_set: Dict[str, List[Dict[str, Any]]], ignore_timestamp_casting: bool
+) -> DiGraph:
     """Parse JSON file with annotations for nodes, edges and locutions and create a DiGraph."""
     G = nx.DiGraph()
     locution_dict = {}
@@ -51,7 +54,7 @@ def parse_json(node_set: Dict[str, List[Dict[str, Any]]]) -> DiGraph:
                 parse_node_id(node["nodeID"]),
                 text=node.get("text", None),
                 type=node.get("type", None),
-                timestamp=parse_timestamp(node.get("timestamp", None)),
+                timestamp=parse_timestamp(node.get("timestamp", None), ignore_timestamp_casting),
                 scheme=node.get("scheme", None),
                 scheme_id=parse_scheme_id(node.get("schemeID", None)),
             )
@@ -60,7 +63,7 @@ def parse_json(node_set: Dict[str, List[Dict[str, Any]]]) -> DiGraph:
                 parse_node_id(node["nodeID"]),
                 text=node.get("text", None),
                 type=node.get("type", None),
-                timestamp=parse_timestamp(node.get("timestamp", None)),
+                timestamp=parse_timestamp(node.get("timestamp", None), ignore_timestamp_casting),
             )
     # Process edges.
     for edge in node_set["edges"]:
