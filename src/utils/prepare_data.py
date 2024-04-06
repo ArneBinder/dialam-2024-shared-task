@@ -372,6 +372,39 @@ def get_l_anchor_nodes(
     return result
 
 
+def find_multihop_ta_relation(
+    i_source_anchor: str, i_target_anchor: str, l2l_nodes: Dict[str, List[str]]
+) -> bool:
+    """Check whether there is a multi-hop TA relation(s) between two L-nodes. This is needed
+    because sometimes there is no direct TA relation between L-anchors, instead they have a multi-
+    hop connection (e.g., L-source 765982, L-target 806054 for RA-node 855171 in nodeset 23594).
+
+    Args:
+        i_source_anchor: L-node that anchors I source node.
+        i_target_anchor:  L-node that anchors I target node.
+        l2l_nodes: Mapping from L-nodes to their successor L-nodes (via TA relations).
+
+    Returns:
+        Whether there is a multi-hop connection between the source and target L-nodes.
+    """
+    processed_successor_nodes = []
+    if i_source_anchor in l2l_nodes:
+        l_successors = l2l_nodes[i_source_anchor]
+        while len(l_successors) > 0:
+            if i_target_anchor in l_successors:
+                return True
+            l_successors_next = []
+            for l_successor in l_successors:
+                # avoid endless loops
+                if l_successor in processed_successor_nodes:
+                    continue
+                processed_successor_nodes.append(l_successor)
+                if l_successor in l2l_nodes:
+                    l_successors_next.extend(l2l_nodes[l_successor])
+            l_successors = l_successors_next
+    return False
+
+
 def get_reversed_ra_relations(
     nodeset: Nodeset,
     nodeset_id: str,
@@ -402,9 +435,20 @@ def get_reversed_ra_relations(
         for src_id in rel["sources"]:
             for trg_id in rel["targets"]:
                 ta_src_trg.add((src_id, trg_id))
+    # for multi-hop L -> TA -> ... -> TA -> L relations
+    node2type = {n["nodeID"]: n["type"] for n in nodeset["nodes"]}
+    l2l_nodes = defaultdict(list)
+    for rel in ta_relations:
+        targets = rel["targets"]
+        sources = rel["sources"]
+        for src in sources:
+            if node2type[src] == "L":
+                l2l_nodes[src].extend([trg for trg in targets if node2type[trg] == "L"])
 
     # collect for each S-node all source-anchor and target-anchor pairs
     already_checked: Dict[str, bool] = dict()
+    # collect source and target anchors that are not directly connected via a single TA-relation
+    disconnected_src_target_anchors = []
     for rel in ra_relations:
         rel_id = rel["relation"]
         # get all anchors (L-nodes) for S-source nodes
@@ -435,14 +479,31 @@ def get_reversed_ra_relations(
                                 raise ValueError(f"direction of RA-node {rel_id} is ambiguous!")
                             already_checked[rel_id] = True
                             yield rel
+                        # elif (i_target_anchor, i_source_anchor) in ta_src_trg:
                         elif (i_target_anchor, i_source_anchor) in ta_src_trg:
                             if rel_id in already_checked and already_checked[rel_id]:
                                 raise ValueError(f"direction of RA-node {rel_id} is ambiguous!")
                             already_checked[rel_id] = False
+                        else:
+                            disconnected_src_target_anchors.append(
+                                (rel_id, i_source_anchor, i_target_anchor)
+                            )
+
                         # else:
                         #    raise ValueError(
                         #        f"nodeset={nodeset_id}: Could not find TA-relation for RA-node {rel_id}!"
                         #    )
+
+    # check if there is a chain of multiple L -> TA -> L hopes to get from source to target anchor (or the other way around)
+    for rel_id, i_source_anchor, i_target_anchor in disconnected_src_target_anchors:
+        # we can skip this if a TA-relation connecting source and target nodes has already been found in ta_src_trg
+        if rel_id in already_checked:
+            continue
+        if find_multihop_ta_relation(i_source_anchor, i_target_anchor, l2l_nodes):
+            already_checked[rel_id] = True
+            yield rel
+        elif find_multihop_ta_relation(i_target_anchor, i_source_anchor, l2l_nodes):
+            already_checked[rel_id] = False
 
     if verbose:
         missing = []
