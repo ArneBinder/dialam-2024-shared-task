@@ -494,22 +494,27 @@ def get_reversed_ra_relations(
                         #        f"nodeset={nodeset_id}: Could not find TA-relation for RA-node {rel_id}!"
                         #    )
 
-    # check if there is a chain of multiple L -> TA -> L hopes to get from source to target anchor (or the other way around)
+    # check if there is a chain of multiple L -> TA -> L hops to get from source to target anchor (or the other way around)
+    already_checked_multihop: Dict[str, bool] = dict()
     for rel_id, i_source_anchor, i_target_anchor in disconnected_src_target_anchors:
         # we can skip this if a TA-relation connecting source and target nodes has already been found in ta_src_trg
         if rel_id in already_checked:
             continue
         if find_multihop_ta_relation(i_source_anchor, i_target_anchor, l2l_nodes):
-            already_checked[rel_id] = True
+            if rel_id in already_checked_multihop and not already_checked_multihop[rel_id]:
+                raise ValueError(f"direction of RA-node {rel_id} is ambiguous!")
+            already_checked_multihop[rel_id] = True
             yield rel
         elif find_multihop_ta_relation(i_target_anchor, i_source_anchor, l2l_nodes):
-            already_checked[rel_id] = False
+            if rel_id in already_checked_multihop and already_checked_multihop[rel_id]:
+                raise ValueError(f"direction of RA-node {rel_id} is ambiguous!")
+            already_checked_multihop[rel_id] = False
 
     if verbose:
         missing = []
         for rel in ra_relations:
             rel_id = rel["relation"]
-            if rel_id not in already_checked:
+            if not (rel_id in already_checked or rel_id in already_checked_multihop):
                 missing.append(rel_id)
         if len(missing) > 0:
             raise ValueError(
