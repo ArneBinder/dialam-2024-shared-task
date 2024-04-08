@@ -382,7 +382,8 @@ def sort_nodes_by_hierarchy(node_ids: Collection[str], edges: Collection[Edge]) 
 
     # do a reversed depth-first search starting from the leaves
     result_reverted = []
-    leaves = set(node_ids) - set([edge[0] for edge in valid_binary_relations])
+    # all nodes that are no source of a relation are leaves
+    leaves = set(node_ids) - set(src2targets)
     visited = set()
     stack = list(leaves)
     while stack:
