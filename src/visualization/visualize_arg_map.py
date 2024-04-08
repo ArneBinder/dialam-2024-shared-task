@@ -29,6 +29,8 @@ from typing import Dict, List, Optional, Set, Tuple
 
 from graphviz import Digraph
 
+from src.utils.nodeset_utils import sort_nodes_by_hierarchy
+
 logger = logging.getLogger(__name__)
 
 
@@ -144,10 +146,9 @@ def create_visualization(
         c.attr(splines="ortho")
         c.attr(overlap="false")
 
-        # sort L-nodes by timestamp
-        l_node_ids_sorted = sorted(
-            node_types2node_ids["L"],
-            key=lambda x: datetime.datetime.fromisoformat(node_id2node[x]["timestamp"]),
+        # sort L-nodes by hierarchy, i.e. that parents are always before children
+        l_node_ids_sorted = sort_nodes_by_hierarchy(
+            node_ids=node_types2node_ids["L"], edges=data["edges"]
         )
 
         # add L-nodes and all connected TA-nodes
