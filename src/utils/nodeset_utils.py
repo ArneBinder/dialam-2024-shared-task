@@ -345,7 +345,7 @@ def get_relations(
         allowed_max_sources = 1
         allowed_max_targets = 1
     elif relation_type == "YA3":
-        # TODO: what case is this?
+        # Note: this is a kind of rare case where the source is a TA-node and the target is an I-node
         allowed_node_types = ["YA"]
         allowed_source_types = ["TA"]
         allowed_target_types = ["I"]

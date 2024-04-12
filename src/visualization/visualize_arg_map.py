@@ -48,11 +48,9 @@ def chunk_text(text: str, tokens_per_chunk: int = 10) -> str:
 
 
 def assemble_node_text(node: dict) -> str:
-    # TODO: what was the purpose of this if statement?
-    # if node["type"] in ["L", "I"]:
-    text = chunk_text(node["text"])
-    # else:
-    #    text = node["scheme"] if "scheme" in node else ""
+    text = node["text"]
+    if node["type"] in ["L", "I"]:
+        text = chunk_text(text)
     timestamp = node["timestamp"].split()[1] if "timestamp" in node else ""
     node_text = f"<<b>{node['type']}</b> {node['nodeID']} {timestamp}<br/>{text}>"
     return node_text
