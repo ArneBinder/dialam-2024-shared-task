@@ -29,6 +29,8 @@ from typing import Dict, List, Optional, Set, Tuple
 
 from graphviz import Digraph
 
+from src.utils.nodeset_utils import sort_nodes_by_hierarchy
+
 logger = logging.getLogger(__name__)
 
 
@@ -144,10 +146,9 @@ def create_visualization(
         c.attr(splines="ortho")
         c.attr(overlap="false")
 
-        # sort L-nodes by timestamp
-        l_node_ids_sorted = sorted(
-            node_types2node_ids["L"],
-            key=lambda x: datetime.datetime.fromisoformat(node_id2node[x]["timestamp"]),
+        # sort L-nodes by hierarchy, i.e. that parents are always before children
+        l_node_ids_sorted = sort_nodes_by_hierarchy(
+            node_ids=node_types2node_ids["L"], edges=data["edges"]
         )
 
         # add L-nodes and all connected TA-nodes
@@ -169,11 +170,14 @@ def create_visualization(
 
     # collect YA nodes in the order of L-site-nodes (L- and TA-nodes), i.e. they need to be connected to L-site-nodes
     ya_node_ids = []
+    l_anchor_nodes = defaultdict(list)
     for l_site_node_id in l_site_node_ids:
         if l_site_node_id in src2targets:
             for ya_trg_node_id in src2targets[l_site_node_id]:
                 if node_id2node[ya_trg_node_id]["type"] == "YA":
                     ya_node_ids.append(ya_trg_node_id)
+                    if node_id2node[l_site_node_id]["type"] == "L":
+                        l_anchor_nodes[ya_trg_node_id].append(l_site_node_id)
 
     with g.subgraph(name="cluster_I_nodes") as c:
         # Set cluster attributes for I-nodes
@@ -185,10 +189,19 @@ def create_visualization(
         c.attr(splines="ortho")
         c.attr(overlap="false")
 
-        # sort L-nodes by timestamp
+        # sort L-nodes by order of anchor nodes
+        l_node_ids_to_idx = {node_id: idx for idx, node_id in enumerate(l_node_ids_sorted)}
+        max_idx = len(l_node_ids_sorted)
+        i_nodes_to_max_anchor_idx = {
+            i_node_id: max(
+                [l_node_ids_to_idx[anchor_node_id] for anchor_node_id in anchor_node_ids]
+            )
+            for i_node_id, anchor_node_ids in l_anchor_nodes.items()
+        }
+
         i_node_ids_sorted = sorted(
             node_types2node_ids["I"],
-            key=lambda x: datetime.datetime.fromisoformat(node_id2node[x]["timestamp"]),
+            key=lambda x: i_nodes_to_max_anchor_idx.get(x, max_idx),
         )
 
         # Add I- and S-nodes in the order of YA-nodes

@@ -6,11 +6,13 @@ from collections import Counter, defaultdict
 from typing import (
     Any,
     Callable,
+    Collection,
     Dict,
     Iterable,
     Iterator,
     List,
     Optional,
+    Set,
     Tuple,
     TypedDict,
     TypeVar,
@@ -223,6 +225,34 @@ def get_binary_relations(
     return binary_relations
 
 
+def get_two_hop_connections(
+    src_node_ids: Collection[str], trg_node_ids: Collection[str], edges: Iterable[Edge]
+) -> Set[Tuple[str, str, str]]:
+    """Get all two-hop edges (i.e. binary relations) between the given node ids.
+
+    Args:
+        src_node_ids: A collection of source node ids.
+        trg_node_ids: A collection of target node ids.
+        edges: A collection of edges.
+
+    Returns:
+        A set of tuples containing the source node id, target node id, and relation node id.
+    """
+
+    src2targets = defaultdict(list)
+    for edge in edges:
+        src2targets[edge["fromID"]].append(edge["toID"])
+
+    result = set()
+    for src_node_id in src_node_ids:
+        for rel_node_id in src2targets[src_node_id]:
+            for trg_node_id in src2targets[rel_node_id]:
+                if trg_node_id in trg_node_ids:
+                    result.add((src_node_id, trg_node_id, rel_node_id))
+
+    return result
+
+
 def get_relations(nodeset: Nodeset, relation_type: str) -> Iterator[Relation]:
     """Get all relations of a given type from a nodeset.
 
@@ -325,6 +355,52 @@ def remove_isolated_nodes(node_ids: List[str], edges: List[Edge]) -> List[str]:
     connected_node_ids = {edge["fromID"] for edge in edges} | {edge["toID"] for edge in edges}
     # filter out all node IDs that are not connected to any edge
     return [node_id for node_id in node_ids if node_id in connected_node_ids]
+
+
+def sort_nodes_by_hierarchy(node_ids: Collection[str], edges: Collection[Edge]) -> List[str]:
+    """Sort nodes in reversed depth-first order. The nodes are sorted in such a way that parents
+    are always before children.
+
+    Args:
+        node_ids (Collection[str]): List of ids of nodes to sort.
+        edges (Collection[Edge]): List of edges.
+
+    Returns:
+        List[str]: List of sorted node ids.
+    """
+
+    # first, get all two-hop edges between the given node ids (i.e. bridging relation nodes)
+    valid_binary_relations = get_two_hop_connections(
+        src_node_ids=node_ids, trg_node_ids=node_ids, edges=edges
+    )
+
+    src2targets = defaultdict(list)
+    trg2sources = defaultdict(list)
+    for src, trg, _ in valid_binary_relations:
+        src2targets[src].append(trg)
+        trg2sources[trg].append(src)
+
+    # do a reversed depth-first search starting from the leaves
+    result_reverted = []
+    # all nodes that are no source of a relation are leaves
+    leaves = set(node_ids) - set(src2targets)
+    visited = set()
+    stack = list(leaves)
+    while stack:
+        node_id = stack.pop()
+        if node_id in visited:
+            continue
+        visited.add(node_id)
+        result_reverted.append(node_id)
+
+        # add all parents to the stack where all children have been visited
+        parents = trg2sources.get(node_id, [])
+        for parent in parents:
+            if parent is not None and all(child in visited for child in src2targets[parent]):
+                stack.append(parent)
+
+    result = list(reversed(result_reverted))
+    return result
 
 
 def get_relation_statistics(
