@@ -5,7 +5,7 @@ import os
 import datasets
 from pie_datasets import GeneratorBasedBuilder
 
-from src.utils.prepare_data import SimplifiedQT30Document, convert_to_document
+from src.utils.nodeset2document import SimplifiedQT30Document, convert_to_document
 
 logger = logging.getLogger(__name__)
 
