@@ -656,7 +656,7 @@ def prepare_nodeset(
 
 
 @dataclasses.dataclass
-class ConvertedQT30Document(TextBasedDocument):
+class SimplifiedQT30Document(TextBasedDocument):
     l_nodes: AnnotationLayer[LabeledSpan] = annotation_field(target="text")
     ya_i2l_nodes: AnnotationLayer[NaryRelation] = annotation_field(target="l_nodes")
     ya_s2ta_nodes: AnnotationLayer[NaryRelation] = annotation_field(target="l_nodes")
@@ -665,7 +665,7 @@ class ConvertedQT30Document(TextBasedDocument):
 
 def convert_to_document(
     nodeset: Nodeset, nodeset_id: str, text_mode: str = "l-nodes", text_sep: str = " "
-) -> ConvertedQT30Document:
+) -> SimplifiedQT30Document:
 
     # 1. create document text and L-node-spans
     l_node_ids = get_node_ids_by_type(nodeset, node_types=["L"])
@@ -686,7 +686,7 @@ def convert_to_document(
             raise ValueError(f"Unsupported text mode: {text_mode}")
         text += node_text
 
-    doc = ConvertedQT30Document(text=text, id=nodeset_id)
+    doc = SimplifiedQT30Document(text=text, id=nodeset_id)
     doc.l_nodes.extend(l_node_spans.values())
 
     # 2. encode YA relations between I and L nodes
@@ -702,7 +702,6 @@ def convert_to_document(
         source_span = l_node_spans[source_id]
         i_ya_nary_relation = NaryRelation(
             arguments=(source_span,),
-            # TODO: encode relation type in the role?
             roles=("source",),
             label=ya_s2ta_relation_node["text"],
         )
