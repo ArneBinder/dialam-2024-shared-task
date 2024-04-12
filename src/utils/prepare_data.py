@@ -33,6 +33,7 @@ from src.utils.nodeset_utils import (
     process_all_nodesets,
     read_nodeset,
     remove_relation_nodes_and_edges,
+    sort_nodes_by_hierarchy,
     write_nodeset,
 )
 
@@ -667,7 +668,8 @@ def convert_to_document(
 ) -> ConvertedQT30Document:
 
     # 1. create document text and L-node-spans
-    sorted_l_nodes: List[str] = []  # TODO: sort L-nodes by hierarchy
+    l_node_ids = get_node_ids_by_type(nodeset, node_types=["L"])
+    sorted_l_nodes: List[str] = sort_nodes_by_hierarchy(l_node_ids, edges=nodeset["edges"])
     node_id2node = get_id2node(nodeset)
     text = ""
     l_node_spans = dict()
