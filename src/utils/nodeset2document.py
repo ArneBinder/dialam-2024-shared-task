@@ -1,15 +1,13 @@
-import dataclasses
-
 import argparse
+import dataclasses
 import logging
 import os
 from typing import List, Optional
+
 import pyrootutils
 from pytorch_ie import AnnotationLayer, annotation_field
 from pytorch_ie.annotations import LabeledSpan, NaryRelation
-from pytorch_ie.documents import (
-    TextBasedDocument,
-)
+from pytorch_ie.documents import TextBasedDocument
 
 pyrootutils.setup_root(search_from=__file__, indicator=[".project-root"], pythonpath=True)
 
@@ -40,11 +38,11 @@ def convert_to_document(
 
     # 1. create document text and L-node-spans
     l_node_ids = get_node_ids_by_type(nodeset, node_types=["L"])
-    sorted_l_nodes: List[str] = sort_nodes_by_hierarchy(l_node_ids, edges=nodeset["edges"])
+    sorted_l_node_ids: List[str] = sort_nodes_by_hierarchy(l_node_ids, edges=nodeset["edges"])
     node_id2node = get_id2node(nodeset)
     text = ""
     l_node_spans = dict()
-    for l_node_id in sorted_l_nodes:
+    for l_node_id in sorted_l_node_ids:
         if text != "":
             text += text_sep
         l_node = node_id2node[l_node_id]
@@ -58,10 +56,12 @@ def convert_to_document(
         text += node_text
 
     doc = SimplifiedQT30Document(text=text, id=nodeset_id)
-    doc.l_nodes.extend(l_node_spans.values())
+    doc.l_nodes.extend([l_node_spans[node_id] for node_id in sorted_l_node_ids])
+    doc.metadata["l_node_ids"] = sorted_l_node_ids
 
     # 2. encode YA relations between I and L nodes
     ya_i2l_relations = list(get_relations(nodeset, "YA1", enforce_cardinality=True))
+    doc.metadata["ya_i2l_relations"] = []
     for ya_12l_relation in ya_i2l_relations:
         ya_12l_relation_node = node_id2node[ya_12l_relation["relation"]]
         if len(ya_12l_relation["sources"]) != 1 or len(ya_12l_relation["targets"]) != 1:
@@ -77,6 +77,7 @@ def convert_to_document(
             label=f"YA-I2L:{ya_12l_relation_node['text']}",
         )
         doc.ya_i2l_nodes.append(i_ya_nary_relation)
+        doc.metadata["ya_i2l_relations"].append(ya_12l_relation)
 
     # 3. encode S relations (between I nodes)
     # get anchor mapping from ya_i2l_relations
@@ -95,6 +96,7 @@ def convert_to_document(
         i2l_ya_trg2sources[trg_id] = src_id
 
     s_relations = list(get_relations(nodeset, "S", enforce_cardinality=True))
+    doc.metadata["s_relations"] = []
     for s_relation in s_relations:
         s_relation_node = node_id2node[s_relation["relation"]]
         # get anchors
@@ -113,11 +115,13 @@ def convert_to_document(
             label=f"S:{s_relation_node['text']}",
         )
         doc.s_nodes.append(s_nary_relation)
+        doc.metadata["s_relations"].append(s_relation)
 
     # 4. encode YA relations between S and TA nodes
     ta_relations = list(get_relations(nodeset, "TA", enforce_cardinality=True))
     ta_id2relation = {rel["relation"]: rel for rel in ta_relations}
     s2ta_ya_relations = list(get_relations(nodeset, "YA2", enforce_cardinality=True))
+    doc.metadata["ya_s2ta_relations"] = []
     for ya_s2ta_relation in s2ta_ya_relations:
         ya_s2ta_relation_node = node_id2node[ya_s2ta_relation["relation"]]
         # there should be exactly one source which is the TA relation node
@@ -144,6 +148,12 @@ def convert_to_document(
             label=f"YA-S2TA:{ya_s2ta_relation_node['text']}",
         )
         doc.ya_s2ta_nodes.append(ya_s2ta_nary_relation)
+        doc.metadata["ya_s2ta_relations"].append(ya_s2ta_relation)
+
+    i_nodes = get_node_ids_by_type(nodeset, node_types=["I"])
+    doc.metadata["i_node_ids"] = i_nodes
+    ta_nodes = get_node_ids_by_type(nodeset, node_types=["TA"])
+    doc.metadata["ta_node_ids"] = ta_nodes
 
     return doc
 
@@ -165,7 +175,7 @@ def main(
             nodeset_id=nodeset_id,
             **kwargs,
         )
-        #write_nodeset(nodeset_dir=output_dir, nodeset_id=nodeset_id, data=result)
+        # write_nodeset(nodeset_dir=output_dir, nodeset_id=nodeset_id, data=result)
         # result.asdict()
     else:
         # if no nodeset ID is provided, process all nodesets in the input directory
@@ -179,14 +189,12 @@ def main(
             if isinstance(result_or_error, Exception):
                 logger.error(f"nodeset={nodeset_id}: Failed to process: {result_or_error}")
             else:
-                #write_nodeset(nodeset_dir=output_dir, nodeset_id=nodeset_id, data=result_or_error)
+                # write_nodeset(nodeset_dir=output_dir, nodeset_id=nodeset_id, data=result_or_error)
                 pass
 
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(
-        description="", formatter_class=argparse.RawTextHelpFormatter
-    )
+    parser = argparse.ArgumentParser(description="", formatter_class=argparse.RawTextHelpFormatter)
     parser.add_argument(
         "--input_dir", type=str, required=True, help="The input directory containing the nodesets."
     )
