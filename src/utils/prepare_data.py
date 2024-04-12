@@ -692,7 +692,7 @@ def convert_to_document(
     # 2. encode YA relations between I and L nodes
     ya_i2l_relations = list(get_relations(nodeset, "YA1", enforce_cardinality=True))
     for ya_12l_relation in ya_i2l_relations:
-        ya_s2ta_relation_node = node_id2node[ya_12l_relation["relation"]]
+        ya_12l_relation_node = node_id2node[ya_12l_relation["relation"]]
         if len(ya_12l_relation["sources"]) != 1 or len(ya_12l_relation["targets"]) != 1:
             logger.warning(
                 f"YA-relation {ya_12l_relation['relation']} has more than one source or target node!"
@@ -703,7 +703,7 @@ def convert_to_document(
         i_ya_nary_relation = NaryRelation(
             arguments=(source_span,),
             roles=("source",),
-            label=ya_s2ta_relation_node["text"],
+            label=f"YA-I2L:{ya_12l_relation_node['text']}",
         )
         doc.ya_i2l_nodes.append(i_ya_nary_relation)
 
@@ -725,7 +725,7 @@ def convert_to_document(
 
     s_relations = list(get_relations(nodeset, "S", enforce_cardinality=True))
     for s_relation in s_relations:
-        ya_s2ta_relation_node = node_id2node[s_relation["relation"]]
+        s_relation_node = node_id2node[s_relation["relation"]]
         # get anchors
         source_anchor_ids = [i2l_ya_trg2sources[src_id] for src_id in s_relation["sources"]]
         target_anchor_ids = [i2l_ya_trg2sources[trg_id] for trg_id in s_relation["targets"]]
@@ -739,7 +739,7 @@ def convert_to_document(
         s_nary_relation = NaryRelation(
             arguments=tuple(source_spans + target_spans),
             roles=tuple(source_roles + target_roles),
-            label=ya_s2ta_relation_node["text"],
+            label=f"S:{s_relation_node['text']}",
         )
         doc.s_nodes.append(s_nary_relation)
 
@@ -770,7 +770,7 @@ def convert_to_document(
         ya_s2ta_nary_relation = NaryRelation(
             arguments=tuple(source_spans + target_spans),
             roles=tuple(source_roles + target_roles),
-            label=ya_s2ta_relation_node["text"],
+            label=f"YA-S2TA:{ya_s2ta_relation_node['text']}",
         )
         doc.ya_s2ta_nodes.append(ya_s2ta_nary_relation)
 
