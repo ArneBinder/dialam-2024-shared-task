@@ -55,13 +55,13 @@ Clean-up the data as follows:
 
 def get_valid_relations(nodeset: Nodeset) -> List[Relation]:
     # collect L > TA > L relations
-    ta_relations = list(get_relations(nodeset, "TA", enforce_cardinality=True))
+    ta_relations = get_relations(nodeset, "TA", enforce_cardinality=True)
 
     # collect valid I > {MA, RA, CA} > I relations
-    s_relations = list(get_relations(nodeset, "S", enforce_cardinality=True))
+    s_relations = get_relations(nodeset, "S", enforce_cardinality=True)
 
     # collect {L, TA} > YA > {I, L, MA, RA, CA} relations
-    ya_relations = list(get_relations(nodeset, "YA", enforce_cardinality=True))
+    ya_relations = get_relations(nodeset, "YA", enforce_cardinality=True)
 
     return s_relations + ya_relations + ta_relations
 
@@ -130,8 +130,8 @@ def match_relation_nodes_by_arguments(
         for node_id_in_nodeset, node_id_in_other in node_matching
     }
     result = []
-    nodeset_relations = list(get_relations(nodeset, relation_type))
-    other_relations = list(get_relations(other, relation_type))
+    nodeset_relations = get_relations(nodeset, relation_type)
+    other_relations = get_relations(other, relation_type)
     nodeset_arguments2node_id = {get_arguments(rel): rel["relation"] for rel in nodeset_relations}
     # sanity check if arguments are unique
     if len(nodeset_arguments2node_id) != len(nodeset_relations):
@@ -431,9 +431,9 @@ def get_reversed_ra_relations(
     Returns:
         Iterator over the S-node relations that need to be reversed.
     """
-    ra_relations = list(get_relations(nodeset, "RA", enforce_cardinality=True))
-    ta_relations = list(get_relations(nodeset, "TA", enforce_cardinality=True))
-    ya_relations = list(get_relations(nodeset, "YA", enforce_cardinality=True))
+    ra_relations = get_relations(nodeset, "RA", enforce_cardinality=True)
+    ta_relations = get_relations(nodeset, "TA", enforce_cardinality=True)
+    ya_relations = get_relations(nodeset, "YA", enforce_cardinality=True)
 
     # helper structures
     ya_trg2sources = defaultdict(list)
@@ -690,7 +690,7 @@ def convert_to_document(
     doc.l_nodes.extend(l_node_spans.values())
 
     # 2. encode YA relations between I and L nodes
-    ya_i2l_relations = list(get_relations(nodeset, "YA1", enforce_cardinality=True))
+    ya_i2l_relations = get_relations(nodeset, "YA1", enforce_cardinality=True)
     for ya_12l_relation in ya_i2l_relations:
         ya_12l_relation_node = node_id2node[ya_12l_relation["relation"]]
         if len(ya_12l_relation["sources"]) != 1 or len(ya_12l_relation["targets"]) != 1:
@@ -723,7 +723,7 @@ def convert_to_document(
             continue
         i2l_ya_trg2sources[trg_id] = src_id
 
-    s_relations = list(get_relations(nodeset, "S", enforce_cardinality=True))
+    s_relations = get_relations(nodeset, "S", enforce_cardinality=True)
     for s_relation in s_relations:
         s_relation_node = node_id2node[s_relation["relation"]]
         # get anchors
@@ -744,9 +744,9 @@ def convert_to_document(
         doc.s_nodes.append(s_nary_relation)
 
     # 4. encode YA relations between S and TA nodes
-    ta_relations = list(get_relations(nodeset, "TA", enforce_cardinality=True))
+    ta_relations = get_relations(nodeset, "TA", enforce_cardinality=True)
     ta_id2relation = {rel["relation"]: rel for rel in ta_relations}
-    s2ta_ya_relations = list(get_relations(nodeset, "YA2", enforce_cardinality=True))
+    s2ta_ya_relations = get_relations(nodeset, "YA2", enforce_cardinality=True)
     for ya_s2ta_relation in s2ta_ya_relations:
         ya_s2ta_relation_node = node_id2node[ya_s2ta_relation["relation"]]
         # there should be exactly one source which is the TA relation node

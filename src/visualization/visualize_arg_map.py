@@ -19,6 +19,10 @@ $ python3 src/visualization/visualize_arg_map.py data/dialam-2024-dataset visual
 Note: If no nodeset id is provided, the script will visualize all nodesets in the directory.
 """
 
+import pyrootutils
+
+pyrootutils.setup_root(search_from=__file__, indicator=[".project-root"], pythonpath=True)
+
 import argparse
 import datetime
 import json

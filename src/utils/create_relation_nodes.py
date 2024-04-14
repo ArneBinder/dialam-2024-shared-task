@@ -116,8 +116,8 @@ def remove_s_and_ya_nodes_with_edges(
         Nodeset with S and YA nodes and their edges removed.
     """
     # collect S and YA relations
-    s_relations = list(get_relations(nodeset=nodeset, relation_type="S"))
-    ya_relations = list(get_relations(nodeset=nodeset, relation_type="YA"))
+    s_relations = get_relations(nodeset=nodeset, relation_type="S")
+    ya_relations = get_relations(nodeset=nodeset, relation_type="YA")
     # remove S and YA nodes and their edges
     result = remove_relation_nodes_and_edges(nodeset=nodeset, relations=s_relations + ya_relations)
     return result
@@ -195,7 +195,7 @@ def add_s_and_ya_nodes_with_edges(
         nodeset_id=nodeset_id,
     )
     # collect TA relations: (src_id, trg_id, ta_node_id) where src_id and trg_id are L nodes
-    ta_relations = list(get_relations(nodeset=nodeset, relation_type="TA"))
+    ta_relations = get_relations(nodeset=nodeset, relation_type="TA")
     # copy the node_id2node dictionary to avoid modifying the original dictionary
     node_id2node = node_id2node.copy()
     # create S nodes and relations from TA nodes

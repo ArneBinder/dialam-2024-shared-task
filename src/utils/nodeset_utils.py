@@ -275,7 +275,7 @@ def get_two_hop_connections(
 
 def get_relations(
     nodeset: Nodeset, relation_type: str, enforce_cardinality: bool = False
-) -> Iterator[Relation]:
+) -> List[Relation]:
     """Get all relations of a given type from a nodeset.
 
     Args:
@@ -288,6 +288,7 @@ def get_relations(
     Returns:
         A list of binary relations: tuples containing the source node ID, target node ID, and relation node ID.
     """
+    result = []
     if relation_type == "TA":
         allowed_node_types = ["TA"]
         allowed_source_types = ["L"]
@@ -295,10 +296,10 @@ def get_relations(
         allowed_max_sources = None  # see e.g. nodeset 21455 TA-node 718440
         allowed_max_targets = None
     elif relation_type == "S":
-        yield from get_relations(nodeset, "RA", enforce_cardinality)
-        yield from get_relations(nodeset, "CA", enforce_cardinality)
-        yield from get_relations(nodeset, "MA", enforce_cardinality)
-        return  # "S" relations are composed of "RA", "CA", and "MA" relations
+        result.extend(get_relations(nodeset, "RA", enforce_cardinality))
+        result.extend(get_relations(nodeset, "CA", enforce_cardinality))
+        result.extend(get_relations(nodeset, "MA", enforce_cardinality))
+        return result  # "S" relations are composed of "RA", "CA", and "MA" relations
     elif relation_type == "RA":
         allowed_node_types = ["RA"]
         allowed_source_types = ["I"]
@@ -320,18 +321,11 @@ def get_relations(
         allowed_max_sources = 1
         allowed_max_targets = 1
     elif relation_type == "YA":
-        allowed_node_types = ["YA"]
-        allowed_source_types = ["L", "TA"]
-        # Note: YA-relations L -> YA -> L encode (in-)direct speech
-        allowed_target_types = ["I", "L", "RA", "CA", "MA"]
-        allowed_max_sources = 1
-        allowed_max_targets = 1
-        # TODO: why does this not work??
-        # yield from get_relations(nodeset, "YA1", enforce_cardinality)
-        # yield from get_relations(nodeset, "YA2", enforce_cardinality)
-        # yield from get_relations(nodeset, "YA3", enforce_cardinality)
-        # yield from get_relations(nodeset, "YA4", enforce_cardinality)
-        # return  # "YA" relations are composed of "YA1", "YA2", "YA3", and "YA4" relations
+        result.extend(get_relations(nodeset, "YA1", enforce_cardinality))
+        result.extend(get_relations(nodeset, "YA2", enforce_cardinality))
+        result.extend(get_relations(nodeset, "YA3", enforce_cardinality))
+        result.extend(get_relations(nodeset, "YA4", enforce_cardinality))
+        return result  # "YA" relations are composed of "YA1", "YA2", "YA3", and "YA4" relations
     elif relation_type == "YA1":
         allowed_node_types = ["YA"]
         allowed_source_types = ["L"]
@@ -385,18 +379,22 @@ def get_relations(
             for trg_id in src2targets[relation_node_id]
             if node_id2node[trg_id]["type"] in allowed_target_types
         ]
+
         if enforce_cardinality:
-            if len(sources) == 0 or len(targets) == 0:
-                continue
             if allowed_max_sources is not None and len(sources) > allowed_max_sources:
                 continue
             if allowed_max_targets is not None and len(targets) > allowed_max_targets:
                 continue
-        yield {
-            "sources": sources,
-            "targets": targets,
-            "relation": relation_node_id,
-        }
+        # check whether we have non-empty sources and targets
+        if len(sources) > 0 and len(targets) > 0:
+            result.append(
+                {
+                    "sources": sources,
+                    "targets": targets,
+                    "relation": relation_node_id,
+                }
+            )
+    return result
 
 
 def remove_relation_nodes_and_edges(nodeset: Nodeset, relations: List[Relation]) -> Nodeset:
@@ -617,8 +615,7 @@ def get_relation_statistics(
     node_id2node = {node["nodeID"]: node for node in nodeset["nodes"]}
 
     all_relations = {
-        rel_type: list(get_relations(nodeset, relation_type=rel_type))
-        for rel_type in ["TA", "S", "YA"]
+        rel_type: get_relations(nodeset, relation_type=rel_type) for rel_type in ["TA", "S", "YA"]
     }
     covered_edges: Dict[Tuple[str, str], int] = Counter()
     empty_sources = set()
