@@ -831,8 +831,7 @@ if __name__ == "__main__":
     )
     parser.add_argument(
         "--nodeset_blacklist",
-        "--list",
-        type=str,
+        type=lambda x: x.split(", ") if x else None,
         default=None,
         help="List of nodeset IDs that should be ignored.",
     )
