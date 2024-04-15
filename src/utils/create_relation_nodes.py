@@ -186,23 +186,30 @@ def add_s_and_ya_nodes_with_edges(
 
     # get L and I node IDs
     l_node_ids_with_isolates = get_node_ids(node_id2node=node_id2node, allowed_node_types=["L"])
+    i_node_ids_with_isolates = get_node_ids(node_id2node=node_id2node, allowed_node_types=["I"])
+    # align I and L nodes
+    il_node_alignment_with_isolates = align_i_and_l_nodes(
+        node_id2node=node_id2node,
+        i_node_ids=i_node_ids_with_isolates,
+        l_node_ids=l_node_ids_with_isolates,
+        similarity_measure=similarity_measure,
+        nodeset_id=nodeset_id,
+    )
+
     # remove isolated L nodes
     l_node_ids = remove_isolated_nodes(node_ids=l_node_ids_with_isolates, edges=edges)
-    i_node_ids = get_node_ids(node_id2node=node_id2node, allowed_node_types=["I"])
     # sanity check: all I nodes should be isolated
-    i_nodes_without_isolates = remove_isolated_nodes(node_ids=i_node_ids, edges=edges)
+    i_nodes_without_isolates = remove_isolated_nodes(
+        node_ids=i_node_ids_with_isolates, edges=edges
+    )
     if verbose and i_nodes_without_isolates:
         logger.warning(
             f"nodeset={nodeset_id}: Input has still connected I nodes: {i_nodes_without_isolates}"
         )
-    # align I and L nodes
-    il_node_alignment = align_i_and_l_nodes(
-        node_id2node=node_id2node,
-        i_node_ids=i_node_ids,
-        l_node_ids=l_node_ids,
-        similarity_measure=similarity_measure,
-        nodeset_id=nodeset_id,
-    )
+    il_node_alignment = [
+        (i_id, l_id) for i_id, l_id in il_node_alignment_with_isolates if l_id in l_node_ids
+    ]
+
     # collect TA relations: (src_id, trg_id, ta_node_id) where src_id and trg_id are L nodes
     ta_relations = get_relations(nodeset=nodeset, relation_type="TA")
     # copy the node_id2node dictionary to avoid modifying the original dictionary
