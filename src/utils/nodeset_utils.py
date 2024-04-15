@@ -321,31 +321,31 @@ def get_relations(
         allowed_max_sources = 1
         allowed_max_targets = 1
     elif relation_type == "YA":
-        result.extend(get_relations(nodeset, "YA1", enforce_cardinality))
-        result.extend(get_relations(nodeset, "YA2", enforce_cardinality))
-        result.extend(get_relations(nodeset, "YA3", enforce_cardinality))
-        result.extend(get_relations(nodeset, "YA4", enforce_cardinality))
-        return result  # "YA" relations are composed of "YA1", "YA2", "YA3", and "YA4" relations
-    elif relation_type == "YA1":
+        result.extend(get_relations(nodeset, "YA-L2I", enforce_cardinality))
+        result.extend(get_relations(nodeset, "YA-TA2S", enforce_cardinality))
+        result.extend(get_relations(nodeset, "YA-TA2I", enforce_cardinality))
+        result.extend(get_relations(nodeset, "YA-L2L", enforce_cardinality))
+        return result  # "YA" relations are composed of "YA-L2I", "YA-TA2S", "YA-TA2I", and "YA-L2L" relations
+    elif relation_type == "YA-L2I":
         allowed_node_types = ["YA"]
         allowed_source_types = ["L"]
         allowed_target_types = ["I"]
         allowed_max_sources = 1
         allowed_max_targets = 1
-    elif relation_type == "YA2":
+    elif relation_type == "YA-TA2S":
         allowed_node_types = ["YA"]
         allowed_source_types = ["TA"]
         allowed_target_types = ["RA", "CA", "MA"]
         allowed_max_sources = 1
         allowed_max_targets = 1
-    elif relation_type == "YA3":
+    elif relation_type == "YA-TA2I":
         # Note: this is a kind of rare case where the source is a TA-node and the target is an I-node
         allowed_node_types = ["YA"]
         allowed_source_types = ["TA"]
         allowed_target_types = ["I"]
         allowed_max_sources = 1
         allowed_max_targets = 1
-    elif relation_type == "YA4":
+    elif relation_type == "YA-L2L":
         # Note: YA-relations L -> YA -> L encode (in-)direct speech
         allowed_node_types = ["YA"]
         allowed_source_types = ["L"]

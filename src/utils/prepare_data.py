@@ -690,7 +690,7 @@ def convert_to_document(
     doc.l_nodes.extend(l_node_spans.values())
 
     # 2. encode YA relations between I and L nodes
-    ya_i2l_relations = get_relations(nodeset, "YA1", enforce_cardinality=True)
+    ya_i2l_relations = get_relations(nodeset, "YA-L2I", enforce_cardinality=True)
     for ya_12l_relation in ya_i2l_relations:
         ya_12l_relation_node = node_id2node[ya_12l_relation["relation"]]
         if len(ya_12l_relation["sources"]) != 1 or len(ya_12l_relation["targets"]) != 1:
@@ -746,16 +746,16 @@ def convert_to_document(
     # 4. encode YA relations between S and TA nodes
     ta_relations = get_relations(nodeset, "TA", enforce_cardinality=True)
     ta_id2relation = {rel["relation"]: rel for rel in ta_relations}
-    s2ta_ya_relations = get_relations(nodeset, "YA2", enforce_cardinality=True)
-    for ya_s2ta_relation in s2ta_ya_relations:
-        ya_s2ta_relation_node = node_id2node[ya_s2ta_relation["relation"]]
+    ya_ta2s_relations = get_relations(nodeset, "YA-TA2S", enforce_cardinality=True)
+    for ya_ta2s_relation in ya_ta2s_relations:
+        ya_s2ta_relation_node = node_id2node[ya_ta2s_relation["relation"]]
         # there should be exactly one source which is the TA relation node
-        if len(ya_s2ta_relation["sources"]) != 1:
+        if len(ya_ta2s_relation["sources"]) != 1:
             logger.warning(
-                f"YA-relation {ya_s2ta_relation['relation']} has more than one source node!"
+                f"YA-relation {ya_ta2s_relation['relation']} has more than one source node!"
             )
             continue
-        src_id = ya_s2ta_relation["sources"][0]
+        src_id = ya_ta2s_relation["sources"][0]
         ta_relation = ta_id2relation.get(src_id)
         if ta_relation is None:
             # silent skip, because it is fine that an S-node is anchored in a none-TA node
