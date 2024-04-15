@@ -115,11 +115,20 @@ def remove_s_and_ya_nodes_with_edges(
     Returns:
         Nodeset with S and YA nodes and their edges removed.
     """
-    # collect S and YA relations
-    s_relations = get_relations(nodeset=nodeset, relation_type="S")
-    ya_relations = get_relations(nodeset=nodeset, relation_type="YA")
-    # remove S and YA nodes and their edges
-    result = remove_relation_nodes_and_edges(nodeset=nodeset, relations=s_relations + ya_relations)
+    result = nodeset.copy()
+    # node helper dictionary
+    node_id2node = {node["nodeID"]: node for node in nodeset["nodes"]}
+    s_node_ids = get_node_ids(node_id2node=node_id2node, allowed_node_types=["MA", "RA", "CA"])
+    ya_node_ids = get_node_ids(node_id2node=node_id2node, allowed_node_types=["YA"])
+
+    nodes_to_remove = s_node_ids + ya_node_ids
+    result["nodes"] = [node for node in result["nodes"] if node["nodeID"] not in nodes_to_remove]
+    result["edges"] = [
+        edge
+        for edge in result["edges"]
+        if edge["fromID"] not in nodes_to_remove and edge["toID"] not in nodes_to_remove
+    ]
+
     return result
 
 
