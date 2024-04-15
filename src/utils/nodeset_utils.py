@@ -90,11 +90,12 @@ def process_all_nodesets(
     nodeset_ids = get_nodeset_ids_from_directory(nodeset_dir=nodeset_dir)
     failed_nodesets = []
     n_success = 0
+    n_blacklisted = 0
     for nodeset_id in tqdm.tqdm(
         nodeset_ids, desc="Processing nodesets", disable=not show_progress
     ):
         if nodeset_blacklist and nodeset_id in nodeset_blacklist:
-            logger.info(f"Skipping nodeset {nodeset_id} from the blacklist.")
+            n_blacklisted += 1
             continue
         try:
             nodeset = read_nodeset(nodeset_dir=nodeset_dir, nodeset_id=nodeset_id)
@@ -106,7 +107,7 @@ def process_all_nodesets(
             yield nodeset_id, e
 
     logger.info(
-        f"Successfully processed {n_success} nodesets. "
+        f"Successfully processed {n_success} nodesets ({n_blacklisted} blacklisted). "
         f"Failed to process the following nodesets ({len(failed_nodesets)}): {failed_nodesets}"
     )
 
