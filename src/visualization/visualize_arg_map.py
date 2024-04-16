@@ -19,6 +19,10 @@ $ python3 src/visualization/visualize_arg_map.py data/dialam-2024-dataset visual
 Note: If no nodeset id is provided, the script will visualize all nodesets in the directory.
 """
 
+import pyrootutils
+
+pyrootutils.setup_root(search_from=__file__, indicator=[".project-root"], pythonpath=True)
+
 import argparse
 import datetime
 import json
@@ -48,10 +52,9 @@ def chunk_text(text: str, tokens_per_chunk: int = 10) -> str:
 
 
 def assemble_node_text(node: dict) -> str:
+    text = node["text"]
     if node["type"] in ["L", "I"]:
-        text = chunk_text(node["text"])
-    else:
-        text = node["scheme"] if "scheme" in node else ""
+        text = chunk_text(text)
     timestamp = node["timestamp"].split()[1] if "timestamp" in node else ""
     node_text = f"<<b>{node['type']}</b> {node['nodeID']} {timestamp}<br/>{text}>"
     return node_text

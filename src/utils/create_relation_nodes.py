@@ -63,8 +63,7 @@ def create_s_relations_and_nodes_from_ta_nodes_and_il_alignment(
          - a list of tuples containing the alignment between S and TA nodes.
     """
 
-    # TODO: is it fine to create a dictionary mapping L node IDs to I node IDs like that? or
-    #  can there be multiple I nodes for a single L node?
+    # each I-node is aligned to a single L-node and each L-node is either aligned to a single I-node or does not have any alignment at all, this is guaranteed because we use linear_sum_assignment and, according to its documentation, "each row is assigned to exactly one column, and each column to exactly one row"
     # helper dictionary to map L node IDs to aligned I node IDs
     l2i_node_id = {l_id: i_id for i_id, l_id in il_node_alignment}
     # we need to keep track of the biggest node ID to create new S nodes
@@ -89,8 +88,13 @@ def create_s_relations_and_nodes_from_ta_nodes_and_il_alignment(
         # map L-source and L-target node IDs to their corresponding S node IDs.
         # note that we swap the direction because for most of the S nodes (MA and CA), they point
         # in the opposite direction of the TA nodes
-        s_src_ids = [l2i_node_id[node_id] for node_id in ta_relation["targets"]]
-        s_trg_ids = [l2i_node_id[node_id] for node_id in ta_relation["sources"]]
+        # we also have to check whether node_id appears in l2i_node_id dictionary because not all L-nodes have a corresponding I-node (e.g., L-node 713369 in nodeset 21388)
+        s_src_ids = [
+            l2i_node_id[node_id] for node_id in ta_relation["targets"] if node_id in l2i_node_id
+        ]
+        s_trg_ids = [
+            l2i_node_id[node_id] for node_id in ta_relation["sources"] if node_id in l2i_node_id
+        ]
         s_relations.append({"sources": s_src_ids, "targets": s_trg_ids, "relation": s_node_id})
         # collect the alignment between the S and TA nodes
         sat_node_alignment.append((s_node_id, ta_relation["relation"]))
@@ -98,20 +102,33 @@ def create_s_relations_and_nodes_from_ta_nodes_and_il_alignment(
     return s_relations, new_node_id2node, sat_node_alignment
 
 
-def remove_s_and_ya_nodes_with_edges(nodeset: Nodeset) -> Nodeset:
+def remove_s_and_ya_nodes_with_edges(
+    nodeset: Nodeset, nodeset_id: Optional[str] = None, verbose: bool = True
+) -> Nodeset:
     """Remove S and YA nodes and their edges from the nodeset.
 
     Args:
         nodeset: A Nodeset.
+        nodeset_id: The ID of the nodeset for better logging. Defaults to None.
+        verbose: A boolean indicating whether to show warnings for nodesets with remaining S or YA
 
     Returns:
         Nodeset with S and YA nodes and their edges removed.
     """
-    # collect S and YA relations
-    s_relations = list(get_relations(nodeset=nodeset, relation_type="S"))
-    ya_relations = list(get_relations(nodeset=nodeset, relation_type="YA"))
-    # remove S and YA nodes and their edges
-    result = remove_relation_nodes_and_edges(nodeset=nodeset, relations=s_relations + ya_relations)
+    result = nodeset.copy()
+    # node helper dictionary
+    node_id2node = {node["nodeID"]: node for node in nodeset["nodes"]}
+    s_node_ids = get_node_ids(node_id2node=node_id2node, allowed_node_types=["MA", "RA", "CA"])
+    ya_node_ids = get_node_ids(node_id2node=node_id2node, allowed_node_types=["YA"])
+
+    nodes_to_remove = s_node_ids + ya_node_ids
+    result["nodes"] = [node for node in result["nodes"] if node["nodeID"] not in nodes_to_remove]
+    result["edges"] = [
+        edge
+        for edge in result["edges"]
+        if edge["fromID"] not in nodes_to_remove and edge["toID"] not in nodes_to_remove
+    ]
+
     return result
 
 
@@ -141,6 +158,7 @@ def add_s_and_ya_nodes_with_edges(
         nodeset_id: The ID of the nodeset for better logging. Defaults to None.
         remove_existing_s_and_ya_nodes: A boolean indicating whether to remove existing S and YA
             nodes and their edges before adding new S and YA nodes. Defaults to True.
+        verbose: A boolean indicating whether to show warnings. Defaults to True.
 
     Returns:
         A Nodeset with S and YA nodes and their edges added.
@@ -168,25 +186,32 @@ def add_s_and_ya_nodes_with_edges(
 
     # get L and I node IDs
     l_node_ids_with_isolates = get_node_ids(node_id2node=node_id2node, allowed_node_types=["L"])
+    i_node_ids_with_isolates = get_node_ids(node_id2node=node_id2node, allowed_node_types=["I"])
+    # align I and L nodes
+    il_node_alignment_with_isolates = align_i_and_l_nodes(
+        node_id2node=node_id2node,
+        i_node_ids=i_node_ids_with_isolates,
+        l_node_ids=l_node_ids_with_isolates,
+        similarity_measure=similarity_measure,
+        nodeset_id=nodeset_id,
+    )
+
     # remove isolated L nodes
     l_node_ids = remove_isolated_nodes(node_ids=l_node_ids_with_isolates, edges=edges)
-    i_node_ids = get_node_ids(node_id2node=node_id2node, allowed_node_types=["I"])
     # sanity check: all I nodes should be isolated
-    i_nodes_without_isolates = remove_isolated_nodes(node_ids=i_node_ids, edges=edges)
+    i_nodes_without_isolates = remove_isolated_nodes(
+        node_ids=i_node_ids_with_isolates, edges=edges
+    )
     if verbose and i_nodes_without_isolates:
         logger.warning(
             f"nodeset={nodeset_id}: Input has still connected I nodes: {i_nodes_without_isolates}"
         )
-    # align I and L nodes
-    il_node_alignment = align_i_and_l_nodes(
-        node_id2node=node_id2node,
-        i_node_ids=i_node_ids,
-        l_node_ids=l_node_ids,
-        similarity_measure=similarity_measure,
-        nodeset_id=nodeset_id,
-    )
+    il_node_alignment = [
+        (i_id, l_id) for i_id, l_id in il_node_alignment_with_isolates if l_id in l_node_ids
+    ]
+
     # collect TA relations: (src_id, trg_id, ta_node_id) where src_id and trg_id are L nodes
-    ta_relations = list(get_relations(nodeset=nodeset, relation_type="TA"))
+    ta_relations = get_relations(nodeset=nodeset, relation_type="TA")
     # copy the node_id2node dictionary to avoid modifying the original dictionary
     node_id2node = node_id2node.copy()
     # create S nodes and relations from TA nodes
