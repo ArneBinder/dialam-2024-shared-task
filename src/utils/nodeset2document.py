@@ -58,9 +58,10 @@ def convert_to_document(
     doc = SimplifiedQT30Document(text=text, id=nodeset_id)
     doc.l_nodes.extend([l_node_spans[node_id] for node_id in sorted_l_node_ids])
     doc.metadata["l_node_ids"] = sorted_l_node_ids
+    doc.metadata["l_node_spans"] = l_node_spans
 
     # 2. encode YA relations between I and L nodes
-    ya_i2l_relations = list(get_relations(nodeset, "YA1", enforce_cardinality=True))
+    ya_i2l_relations = list(get_relations(nodeset, "YA-L2I", enforce_cardinality=True))
     doc.metadata["ya_i2l_relations"] = []
     for ya_12l_relation in ya_i2l_relations:
         ya_12l_relation_node = node_id2node[ya_12l_relation["relation"]]
@@ -120,7 +121,7 @@ def convert_to_document(
     # 4. encode YA relations between S and TA nodes
     ta_relations = list(get_relations(nodeset, "TA", enforce_cardinality=True))
     ta_id2relation = {rel["relation"]: rel for rel in ta_relations}
-    s2ta_ya_relations = list(get_relations(nodeset, "YA2", enforce_cardinality=True))
+    s2ta_ya_relations = list(get_relations(nodeset, "YA-TA2S", enforce_cardinality=True))
     doc.metadata["ya_s2ta_relations"] = []
     for ya_s2ta_relation in s2ta_ya_relations:
         ya_s2ta_relation_node = node_id2node[ya_s2ta_relation["relation"]]
@@ -162,6 +163,7 @@ def main(
     input_dir: str,
     output_dir: str,
     show_progress: bool = True,
+    verbose: bool = True,
     nodeset_id: Optional[str] = None,
     nodeset_blacklist: Optional[List[str]] = None,
     **kwargs,
@@ -209,6 +211,13 @@ if __name__ == "__main__":
         type=str,
         default=None,
         help="The ID of the nodeset to process. If not provided, all nodesets in the input directory will be processed.",
+    )
+    parser.add_argument(
+        "--nodeset_blacklist",
+        # split by comma and remove leading/trailing whitespaces
+        type=lambda x: [nid.strip() for nid in x.split(",")] if x else None,
+        default=None,
+        help="List of nodeset IDs that should be ignored.",
     )
     parser.add_argument(
         "--dont_show_progress",
