@@ -55,8 +55,8 @@ def test_convert_document(builder, hf_example):
     assert (
         str(fist_l_node)
         == "Claire Cooper : Even if some children do get back to school before the end of the summer term, "
-           "their experience is more likely to be about social distancing and hygiene rather than anything "
-           "of any educational value"
+        "their experience is more likely to be about social distancing and hygiene rather than anything "
+        "of any educational value"
     )
 
 
