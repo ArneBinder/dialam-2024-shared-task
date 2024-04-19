@@ -174,8 +174,9 @@ def convert_to_document(
 class PieDialAM2024(GeneratorBasedBuilder):
     DOCUMENT_TYPE = SimplifiedDialAM2024Document
 
-    BASE_DATASET_PATH = "ArneBinder/dialam2024"
-    BASE_DATASET_REVISION = "e484998b3822746a232a4faa882cdb3e533ab9f4"
+    # BASE_DATASET_PATH = "ArneBinder/dialam2024"
+    # BASE_DATASET_REVISION = "e484998b3822746a232a4faa882cdb3e533ab9f4"
+    BASE_DATASET_PATH = "dataset_builders/hf/dialam2024"
 
     BUILDER_CONFIGS = [
         datasets.BuilderConfig(
