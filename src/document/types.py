@@ -1,7 +1,8 @@
 import dataclasses
 from typing import Optional
 
-from pytorch_ie.annotations import BinaryRelation, LabeledSpan
+from pytorch_ie import AnnotationLayer
+from pytorch_ie.annotations import BinaryRelation, LabeledSpan, NaryRelation
 from pytorch_ie.core import Annotation, AnnotationList, annotation_field
 from pytorch_ie.documents import TextBasedDocument, TokenBasedDocument
 
@@ -57,3 +58,11 @@ class TokenDocumentWithLabeledSpansBinaryRelationsAndLabeledPartitions(
     TokenDocumentWithLabeledSpansAndBinaryRelations
 ):
     labeled_partitions: AnnotationList[LabeledSpan] = annotation_field(target="tokens")
+
+
+@dataclasses.dataclass
+class SimplifiedDialAM2024Document(TextBasedDocument):
+    l_nodes: AnnotationLayer[LabeledSpan] = annotation_field(target="text")
+    ya_i2l_nodes: AnnotationLayer[NaryRelation] = annotation_field(target="l_nodes")
+    ya_s2ta_nodes: AnnotationLayer[NaryRelation] = annotation_field(target="l_nodes")
+    s_nodes: AnnotationLayer[NaryRelation] = annotation_field(target="l_nodes")

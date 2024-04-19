@@ -1,13 +1,12 @@
 import argparse
-import dataclasses
 import logging
 from collections import defaultdict
 from typing import Any, Dict, List, Optional
 
 import pyrootutils
-from pytorch_ie import AnnotationLayer, annotation_field
 from pytorch_ie.annotations import LabeledSpan, NaryRelation
-from pytorch_ie.documents import TextBasedDocument
+
+from src.document.types import SimplifiedDialAM2024Document
 
 pyrootutils.setup_root(search_from=__file__, indicator=[".project-root"], pythonpath=True)
 
@@ -22,14 +21,6 @@ from src.utils.nodeset_utils import (
 )
 
 logger = logging.getLogger(__name__)
-
-
-@dataclasses.dataclass
-class SimplifiedDialAM2024Document(TextBasedDocument):
-    l_nodes: AnnotationLayer[LabeledSpan] = annotation_field(target="text")
-    ya_i2l_nodes: AnnotationLayer[NaryRelation] = annotation_field(target="l_nodes")
-    ya_s2ta_nodes: AnnotationLayer[NaryRelation] = annotation_field(target="l_nodes")
-    s_nodes: AnnotationLayer[NaryRelation] = annotation_field(target="l_nodes")
 
 
 def convert_to_document(

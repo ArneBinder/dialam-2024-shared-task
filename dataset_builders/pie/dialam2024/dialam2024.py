@@ -24,7 +24,8 @@ import logging
 import datasets
 from pie_datasets import GeneratorBasedBuilder
 
-from src.utils.nodeset2document import SimplifiedDialAM2024Document, convert_to_document
+from src.document.types import SimplifiedDialAM2024Document
+from src.utils.nodeset2document import convert_to_document
 from src.utils.prepare_data import prepare_nodeset
 
 logger = logging.getLogger(__name__)
