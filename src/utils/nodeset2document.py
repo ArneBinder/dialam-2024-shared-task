@@ -4,7 +4,6 @@ import logging
 from collections import defaultdict
 from typing import Any, Dict, List, Optional
 
-import datasets
 import pyrootutils
 from pytorch_ie import AnnotationLayer, annotation_field
 from pytorch_ie.annotations import LabeledSpan, NaryRelation
