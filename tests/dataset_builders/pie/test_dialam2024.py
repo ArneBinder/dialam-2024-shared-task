@@ -77,7 +77,7 @@ def document(dataset):
 
 def test_document(document):
     assert isinstance(document, SimplifiedDialAM2024Document)
-    assert document.id == "23156"
+    assert document.id == "17918"
     assert len(document.l_nodes) > 0
     fist_l_node = document.l_nodes[0]
     assert isinstance(fist_l_node, LabeledSpan)
