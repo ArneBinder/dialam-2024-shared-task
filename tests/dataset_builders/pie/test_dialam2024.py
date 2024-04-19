@@ -54,7 +54,9 @@ def test_convert_document(builder, hf_example):
     assert isinstance(fist_l_node, LabeledSpan)
     assert (
         str(fist_l_node)
-        == "Claire Cooper : Even if some children do get back to school before the end of the summer term, their experience is more likely to be about social distancing and hygiene rather than anything of any educational value"
+        == "Claire Cooper : Even if some children do get back to school before the end of the summer term, "
+           "their experience is more likely to be about social distancing and hygiene rather than anything "
+           "of any educational value"
     )
 
 
