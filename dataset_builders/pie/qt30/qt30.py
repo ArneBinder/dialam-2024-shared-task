@@ -1,16 +1,5 @@
-import logging
+"""Nodesets that are not suitable for conversion to documents (blacklisted):
 
-import datasets
-from pie_datasets import ArrowBasedBuilder
-
-from src.utils.nodeset2document import SimplifiedQT30Document, convert_to_document
-from src.utils.nodeset_utils import get_node_id_from_filename
-from src.utils.prepare_data import prepare_nodeset
-
-logger = logging.getLogger(__name__)
-
-"""
-Nodesets that are not suitable for conversion to documents:
 - excluded by the organizers (23): 24255, 24807, 24808, 24809, 24903, 24905, 24992, 25045, 25441, 25442,
     25443, 25444, 25445, 25452, 25461, 25462, 25463, 25465, 25468, 25472, 25473, 25474, 25475
 - excluded because of warning (6): "Could not align I-node (dummy-L-node was selected)": 21083, 18888,
@@ -27,6 +16,18 @@ Nodesets that are not suitable for conversion to documents:
 - still problematic (19): 19897, 18321, 18877, 18874, 19174, 23552, 23799, 23517, 20729, 25691, 21023,
     23144, 23120, 23560, 23892, 23959, 19173, 19918, 25511
 """
+
+import logging
+
+import datasets
+from pie_datasets import ArrowBasedBuilder
+
+from src.utils.nodeset2document import SimplifiedQT30Document, convert_to_document
+from src.utils.nodeset_utils import get_node_id_from_filename
+from src.utils.prepare_data import prepare_nodeset
+
+logger = logging.getLogger(__name__)
+
 NODESET_BLACKLIST = [
     "24255",
     "24807",
