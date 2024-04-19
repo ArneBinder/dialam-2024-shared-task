@@ -1,10 +1,10 @@
 import argparse
 import dataclasses
 import logging
-import os
 from collections import defaultdict
 from typing import Any, Dict, List, Optional
 
+import datasets
 import pyrootutils
 from pytorch_ie import AnnotationLayer, annotation_field
 from pytorch_ie.annotations import LabeledSpan, NaryRelation
@@ -59,7 +59,6 @@ def convert_to_document(
     doc = SimplifiedQT30Document(text=text, id=nodeset_id)
     doc.l_nodes.extend([l_node_spans[node_id] for node_id in sorted_l_node_ids])
     doc.metadata["l_node_ids"] = sorted_l_node_ids
-    doc.metadata["l_node_spans"] = l_node_spans
 
     # 2. encode YA relations between I and L nodes
     ya_i2l_relations = list(get_relations(nodeset, "YA-L2I", enforce_cardinality=True))
@@ -171,7 +170,7 @@ def validate_document(nodeset: Nodeset, document: SimplifiedQT30Document):
         if n["type"] == "L":
             orig_l_node_id2text[n["nodeID"]] = n["text"]
     l_node_ids = metadata["l_node_ids"]
-    l_node_spans = metadata["l_node_spans"]
+    l_node_spans = {l_node_id: l_span for l_node_id, l_span in zip(l_node_ids, document.l_nodes)}
     converted_l_node_id2text = dict()
     for l_node_id in l_node_ids:
         l_span = l_node_spans[l_node_id]
