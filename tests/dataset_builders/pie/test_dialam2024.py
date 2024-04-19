@@ -45,8 +45,7 @@ def builder():
     return PieDialAM2024()
 
 
-def test_convert_document(builder, hf_example):
-    document = builder._generate_document(hf_example)
+def assert_document(document):
     assert isinstance(document, SimplifiedDialAM2024Document)
     assert document.id == "17918"
     assert len(document.l_nodes) > 0
@@ -58,6 +57,12 @@ def test_convert_document(builder, hf_example):
         "their experience is more likely to be about social distancing and hygiene rather than anything "
         "of any educational value"
     )
+
+
+def test_convert_document(builder, hf_example):
+    # test nodeset cleanup and conversion to document
+    document = builder._generate_document(hf_example)
+    assert_document(document)
 
 
 @pytest.fixture(scope="module")
@@ -76,12 +81,4 @@ def document(dataset):
 
 
 def test_document(document):
-    assert isinstance(document, SimplifiedDialAM2024Document)
-    assert document.id == "17918"
-    assert len(document.l_nodes) > 0
-    fist_l_node = document.l_nodes[0]
-    assert isinstance(fist_l_node, LabeledSpan)
-    assert (
-        str(fist_l_node)
-        == "Kate Forbes : I don't expect everybody on the panel to agree with me on independence"
-    )
+    assert_document(document)
