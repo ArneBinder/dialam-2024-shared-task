@@ -569,6 +569,8 @@ def sort_nodes_by_hierarchy(node_ids: Collection[str], edges: Collection[Edge]) 
     src2targets = defaultdict(list)
     trg2sources = defaultdict(list)
     for src, trg, _ in valid_binary_relations:
+        if src == trg:
+            continue
         src2targets[src].append(trg)
         trg2sources[trg].append(src)
 
