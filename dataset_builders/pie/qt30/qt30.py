@@ -1,5 +1,8 @@
-"""Nodesets that are not suitable for conversion to documents (blacklisted):
+"""This module defines a HuggingFace dataset builder for the QT30 dataset used in the DialAM-2024 shared task.
+See http://dialam.arg.tech/ for more information about the DialAM-2024 shared task.
 
+Unfortunately, there are some nodesets that are not suitable for conversion to documents. These nodesets are
+excluded from the dataset. The following nodesets are excluded:
 - excluded by the organizers (23): 24255, 24807, 24808, 24809, 24903, 24905, 24992, 25045, 25441, 25442,
     25443, 25444, 25445, 25452, 25461, 25462, 25463, 25465, 25468, 25472, 25473, 25474, 25475
 - excluded because of warning (6): "Could not align I-node (dummy-L-node was selected)": 21083, 18888,
@@ -16,11 +19,14 @@
 - still problematic (19): 19897, 18321, 18877, 18874, 19174, 23552, 23799, 23517, 20729, 25691, 21023,
     23144, 23120, 23560, 23892, 23959, 19173, 19918, 25511
 """
-
+import glob
+import json
 import logging
+import os
 
 import datasets
-from pie_datasets import ArrowBasedBuilder
+from datasets import Features
+from pie_datasets import GeneratorBasedBuilder
 
 from src.utils.nodeset2document import SimplifiedQT30Document, convert_to_document
 from src.utils.nodeset_utils import get_node_id_from_filename
@@ -28,6 +34,8 @@ from src.utils.prepare_data import prepare_nodeset
 
 logger = logging.getLogger(__name__)
 
+DATA_URL = "http://dialam.arg.tech/res/files/dataset.zip"
+SUBDIR = "dataset"
 NODESET_BLACKLIST = [
     "24255",
     "24807",
@@ -135,10 +143,14 @@ def is_blacklisted(nodeset_filename: str) -> bool:
     return nodeset_id in NODESET_BLACKLIST
 
 
-class SimplifiedQT30(ArrowBasedBuilder):
+def dictoflists_to_listofdicts(data):
+    return [dict(zip(data, t)) for t in zip(*data.values())]
+
+
+class SimplifiedQT30(GeneratorBasedBuilder):
     DOCUMENT_TYPE = SimplifiedQT30Document
 
-    BASE_DATASET_PATH = "json"
+    BASE_DATASET_PATH = None
     BASE_DATASET_REVISION = None
 
     BUILDER_CONFIGS = [
@@ -147,36 +159,89 @@ class SimplifiedQT30(ArrowBasedBuilder):
         ),
     ]
 
-    # This is the same as _split_generators from the HF json builder, see
-    # https://github.com/huggingface/datasets/blob/2.15.0/src/datasets/packaged_modules/json/json.py,
-    # but with the blacklist check added.
+    def _info(self):
+        return datasets.DatasetInfo(
+            features=Features(
+                {
+                    "id": datasets.Value("string"),
+                    "nodes": datasets.Sequence(
+                        {
+                            "nodeID": datasets.Value("string"),
+                            "text": datasets.Value("string"),
+                            "type": datasets.Value("string"),
+                            "timestamp": datasets.Value("string"),
+                            # Since optional fields are not supported in HuggingFace datasets, we exclude the
+                            # scheme and schemeID fields from the dataset. Note that the scheme field has the
+                            # same value as the text field where it is present.
+                            # "scheme": datasets.Value("string"),
+                            # "schemeID": datasets.Value("string"),
+                        }
+                    ),
+                    "edges": datasets.Sequence(
+                        {
+                            "edgeID": datasets.Value("string"),
+                            "fromID": datasets.Value("string"),
+                            "toID": datasets.Value("string"),
+                            "formEdgeID": datasets.Value("string"),
+                        }
+                    ),
+                    "locutions": datasets.Sequence(
+                        {
+                            "nodeID": datasets.Value("string"),
+                            "personID": datasets.Value("string"),
+                            "timestamp": datasets.Value("string"),
+                            "start": datasets.Value("string"),
+                            "end": datasets.Value("string"),
+                            "source": datasets.Value("string"),
+                        }
+                    ),
+                }
+            )
+        )
+
     def _split_generators(self, dl_manager):
         """We handle string, list and dicts in datafiles."""
-        if not self.config.data_files:
-            raise ValueError(
-                f"At least one data file must be specified, but got data_files={self.config.data_files}"
+        if dl_manager.manual_dir is None:
+            data_dir = os.path.join(dl_manager.download_and_extract(DATA_URL), SUBDIR)
+        else:
+            # make absolute path of the manual_dir
+            data_dir = os.path.abspath(dl_manager.manual_dir)
+        # collect all json files in the data_dir with glob
+        file_names = glob.glob(os.path.join(data_dir, "*.json"))
+        file_names_filtered = [fn for fn in file_names if not is_blacklisted(fn)]
+        return [
+            datasets.SplitGenerator(
+                name=datasets.Split.TRAIN,
+                gen_kwargs={"file_names": file_names_filtered},
             )
-        data_files = dl_manager.download_and_extract(self.config.data_files)
-        if isinstance(data_files, (str, list, tuple)):
-            files = data_files
-            if isinstance(files, str):
-                files = [files]
-            files = [dl_manager.iter_files(file) for file in files if not is_blacklisted(file)]
-            return [
-                datasets.SplitGenerator(name=datasets.Split.TRAIN, gen_kwargs={"files": files})
-            ]
-        splits = []
-        for split_name, files in data_files.items():
-            if isinstance(files, str):
-                files = [files]
-            files = [dl_manager.iter_files(file) for file in files if not is_blacklisted(file)]
-            splits.append(datasets.SplitGenerator(name=split_name, gen_kwargs={"files": files}))
-        return splits
+        ]
+
+    def _generate_examples(self, file_names):
+        idx = 0
+        for file_name in file_names:
+            with open(file_name, encoding="utf-8", errors=None) as f:
+                data = json.load(f)
+            data["id"] = get_node_id_from_filename(file_name)
+            # delete optional node fields: scheme, schemeID
+            for node in data["nodes"]:
+                node.pop("scheme", None)
+                node.pop("schemeID", None)
+
+            yield idx, data
+            idx += 1
 
     def _generate_document(self, example, **kwargs):
-        # TODO: use real nodeset_id
-        nodeset_id = None
-        nodeset = dict(example)
+        nodeset_id = example["id"]
+        # because of the tabular format that backs HuggingFace datasets, the sequential data fields, like
+        # nodes / edges / locutions, are stored as dict of lists, where each key is a field name and the value
+        # is a list of values for that field; however, the nodeset2document conversion function expects the
+        # data to be stored as list of dicts, where each dict is a record; therefore, before converting the
+        # nodeset to a document, we need to convert the nodes / edges / locutions back to lists of dicts
+        nodeset = {
+            "nodes": dictoflists_to_listofdicts(example["nodes"]),
+            "edges": dictoflists_to_listofdicts(example["edges"]),
+            "locutions": dictoflists_to_listofdicts(example["locutions"]),
+        }
         cleaned_nodeset = prepare_nodeset(
             nodeset=nodeset,
             nodeset_id=nodeset_id,
