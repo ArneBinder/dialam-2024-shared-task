@@ -296,15 +296,12 @@ def check_relations(
 
 def main(
     input_dir: str,
-    output_dir: str,
     show_progress: bool = True,
     verbose: bool = True,
     nodeset_id: Optional[str] = None,
     nodeset_blacklist: Optional[List[str]] = None,
     **kwargs,
 ):
-    # create the output directory if it does not exist
-    os.makedirs(output_dir, exist_ok=True)
     if nodeset_id is not None:
         nodeset = read_nodeset(nodeset_dir=input_dir, nodeset_id=nodeset_id)
         result = convert_to_document(
@@ -334,12 +331,6 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="", formatter_class=argparse.RawTextHelpFormatter)
     parser.add_argument(
         "--input_dir", type=str, required=True, help="The input directory containing the nodesets."
-    )
-    parser.add_argument(
-        "--output_dir",
-        type=str,
-        required=True,
-        help="The output directory for the modified nodesets.",
     )
     parser.add_argument(
         "--nodeset_id",
