@@ -25,7 +25,7 @@ logger = logging.getLogger(__name__)
 
 
 @dataclasses.dataclass
-class SimplifiedQT30Document(TextBasedDocument):
+class SimplifiedDialAM2024Document(TextBasedDocument):
     l_nodes: AnnotationLayer[LabeledSpan] = annotation_field(target="text")
     ya_i2l_nodes: AnnotationLayer[NaryRelation] = annotation_field(target="l_nodes")
     ya_s2ta_nodes: AnnotationLayer[NaryRelation] = annotation_field(target="l_nodes")
@@ -34,7 +34,7 @@ class SimplifiedQT30Document(TextBasedDocument):
 
 def convert_to_document(
     nodeset: Nodeset, nodeset_id: str, text_mode: str = "l-nodes", text_sep: str = " "
-) -> SimplifiedQT30Document:
+) -> SimplifiedDialAM2024Document:
 
     # 1. create document text and L-node-spans
     l_node_ids = get_node_ids_by_type(nodeset, node_types=["L"])
@@ -55,7 +55,7 @@ def convert_to_document(
             raise ValueError(f"Unsupported text mode: {text_mode}")
         text += node_text
 
-    doc = SimplifiedQT30Document(text=text, id=nodeset_id)
+    doc = SimplifiedDialAM2024Document(text=text, id=nodeset_id)
     doc.l_nodes.extend([l_node_spans[node_id] for node_id in sorted_l_node_ids])
     doc.metadata["l_node_ids"] = sorted_l_node_ids
 
@@ -160,7 +160,7 @@ def convert_to_document(
     return doc
 
 
-def validate_document(nodeset: Nodeset, document: SimplifiedQT30Document):
+def validate_document(nodeset: Nodeset, document: SimplifiedDialAM2024Document):
     metadata = document.metadata
     original = nodeset.copy()
     # check that we have the same L-nodes as in the original nodeset

@@ -1,16 +1,23 @@
+import datasets
 import pytest
 from pie_datasets import load_dataset
 from pytorch_ie.annotations import LabeledSpan
 
-from src.utils.nodeset2document import SimplifiedQT30Document
+from src.utils.nodeset2document import SimplifiedDialAM2024Document
+
+
+def test_hf_dataset():
+    ds = datasets.load_dataset("ArneBinder/dialam2024")
+    assert set(ds) == {"train"}
+    assert len(ds["train"]) == 1381
 
 
 @pytest.fixture(scope="module")
 def dataset():
     return load_dataset(
-        "dataset_builders/pie/qt30",
+        "dataset_builders/pie/dialam2024",
         # to use local data:
-        # data_dir="data/dataset",
+        # data_dir="data/dataset_excerpt",
     )
 
 
@@ -25,7 +32,7 @@ def document(dataset):
 
 
 def test_document(document):
-    assert isinstance(document, SimplifiedQT30Document)
+    assert isinstance(document, SimplifiedDialAM2024Document)
     assert len(document.l_nodes) > 0
     fist_l_node = document.l_nodes[0]
     assert isinstance(fist_l_node, LabeledSpan)
