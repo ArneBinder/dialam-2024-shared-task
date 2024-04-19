@@ -202,7 +202,8 @@ class DialAM2024(GeneratorBasedBuilder):
             data_dir = os.path.abspath(dl_manager.manual_dir)
         # collect all json files in the data_dir with glob
         file_names = glob.glob(os.path.join(data_dir, "*.json"))
-        file_names_filtered = [fn for fn in file_names if not is_blacklisted(fn)]
+        # filter out blacklisted nodesets and sort to get deterministic order
+        file_names_filtered = sorted([fn for fn in file_names if not is_blacklisted(fn)])
         return [
             datasets.SplitGenerator(
                 name=datasets.Split.TRAIN,
