@@ -40,14 +40,16 @@ Relation = TypedDict("Relation", {"sources": List[str], "targets": List[str], "r
 logger = logging.getLogger(__name__)
 
 
+def get_node_id_from_filename(filename: str) -> str:
+    """Get the ID of a nodeset from a filename."""
+
+    return filename.split("nodeset")[1].split(".json")[0]
+
+
 def get_nodeset_ids_from_directory(nodeset_dir: str) -> List[str]:
     """Get the IDs of all nodesets in a directory."""
 
-    return [
-        f.split("nodeset")[1].split(".json")[0]
-        for f in os.listdir(nodeset_dir)
-        if f.endswith(".json")
-    ]
+    return [get_node_id_from_filename(f) for f in os.listdir(nodeset_dir) if f.endswith(".json")]
 
 
 def read_nodeset(nodeset_dir: str, nodeset_id: str) -> Nodeset:
@@ -569,6 +571,8 @@ def sort_nodes_by_hierarchy(node_ids: Collection[str], edges: Collection[Edge]) 
     src2targets = defaultdict(list)
     trg2sources = defaultdict(list)
     for src, trg, _ in valid_binary_relations:
+        if src == trg:
+            continue
         src2targets[src].append(trg)
         trg2sources[trg].append(src)
 
