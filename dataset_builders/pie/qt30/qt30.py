@@ -1,5 +1,5 @@
-"""This module defines a HuggingFace dataset builder for the QT30 dataset used in the DialAM-2024 shared task.
-See http://dialam.arg.tech/ for more information about the DialAM-2024 shared task.
+"""This module defines a HuggingFace dataset builder for the QT30 dataset used in the DialAM-2024
+shared task. See http://dialam.arg.tech/ for more information about the DialAM-2024 shared task.
 
 Unfortunately, there are some nodesets that are not suitable for conversion to documents. These nodesets are
 excluded from the dataset. The following nodesets are excluded:

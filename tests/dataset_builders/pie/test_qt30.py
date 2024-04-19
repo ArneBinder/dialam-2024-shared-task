@@ -29,4 +29,7 @@ def test_document(document):
     assert len(document.l_nodes) > 0
     fist_l_node = document.l_nodes[0]
     assert isinstance(fist_l_node, LabeledSpan)
-    assert str(fist_l_node) == "Kate Forbes : I don't expect everybody on the panel to agree with me on independence"
+    assert (
+        str(fist_l_node)
+        == "Kate Forbes : I don't expect everybody on the panel to agree with me on independence"
+    )
