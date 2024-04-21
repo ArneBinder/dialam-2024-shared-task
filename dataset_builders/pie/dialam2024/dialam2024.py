@@ -16,8 +16,6 @@ excluded from the dataset. The following nodesets are excluded:
 - excluded because of error "direction of RA-node 587841 is ambiguous!" (16): 19059, 19217, 19878, 20479,
     20507, 20510, 20766, 20844, 20888, 20992, 21401, 21477, 21588, 23114, 23766, 23891
 - excluded because of error "I-node texts are not unique!" (1): 19911
-- still problematic (19): 19897, 18321, 18877, 18874, 19174, 23552, 23799, 23517, 20729, 25691, 21023,
-    23144, 23120, 23560, 23892, 23959, 19173, 19918, 25511
 """
 import logging
 from typing import List

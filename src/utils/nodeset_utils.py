@@ -551,6 +551,38 @@ def merge_other_into_nodeset(
     return result
 
 
+def find_multihop_relation(source: str, target: str, src2targets: Dict[str, List[str]]) -> bool:
+    """Checks whether there is a multi-hop relation (e.g., A -> B -> A) between the two nodes.
+
+    Args:
+        source: NodeID of the source.
+        target: NodeID of the target.
+        src2targets: Edges from source nodes to their targets.
+
+    Returns:
+        Whether there is a multi-hop relation between the two nodes.
+    """
+
+    processed_successor_nodes = []
+    if source in src2targets:
+        successors = src2targets[source]
+        iteration = 0
+        while len(successors) > 0:
+            if target in successors and iteration > 0:
+                return True
+            successors_new = []
+            for successor in successors:
+                # avoid endless loops
+                if successor in processed_successor_nodes:
+                    continue
+                processed_successor_nodes.append(successor)
+                if successor in src2targets:
+                    successors_new.extend(src2targets[successor])
+            successors = successors_new
+            iteration += 1
+    return False
+
+
 def sort_nodes_by_hierarchy(node_ids: Collection[str], edges: Collection[Edge]) -> List[str]:
     """Sort nodes in reversed depth-first order. The nodes are sorted in such a way that parents
     are always before children.
@@ -571,17 +603,23 @@ def sort_nodes_by_hierarchy(node_ids: Collection[str], edges: Collection[Edge]) 
     src2targets = defaultdict(list)
     trg2sources = defaultdict(list)
     for src, trg, _ in valid_binary_relations:
-        if src == trg:
-            continue
         src2targets[src].append(trg)
         trg2sources[trg].append(src)
+
+    nodes_with_loops = set()
+    # check if there are any loops between each pair of L-nodes (e.g., L1 -> TA1 -> L2 -> TA2 -> L1)
+    # these nodes will be added to the stack, so that they can be processed after the leaves
+    for src in src2targets:
+        for src2 in src2targets:
+            if find_multihop_relation(src, src2, src2targets):
+                nodes_with_loops.add(src)
 
     # do a reversed depth-first search starting from the leaves
     result_reverted = []
     # all nodes that are no source of a relation are leaves
     leaves = set(node_ids) - set(src2targets)
     visited = set()
-    stack = list(leaves)
+    stack = list(nodes_with_loops) + list(leaves)
     while stack:
         node_id = stack.pop()
         if node_id in visited:
