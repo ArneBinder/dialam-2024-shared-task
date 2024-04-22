@@ -47,7 +47,9 @@ def convert_to_document(
 
     # 1. create document text and L-node-spans
     l_node_ids = get_node_ids_by_type(nodeset, node_types=["L"])
-    sorted_l_node_ids: List[str] = sort_nodes_by_hierarchy(l_node_ids, edges=nodeset["edges"])
+    sorted_l_node_ids: List[str] = sort_nodes_by_hierarchy(
+        l_node_ids, edges=nodeset["edges"], nodeset_id=nodeset_id
+    )
     node_id2node = get_id2node(nodeset)
     text = ""
     l_node_spans = dict()

@@ -563,33 +563,34 @@ def connected_via_path(source: str, target: str, src2targets: Dict[str, List[str
         Whether there is a path between source and target.
     """
 
-    processed_successor_nodes = []
-    if source in src2targets:
-        successors = src2targets[source]
-        iteration = 0
-        while len(successors) > 0:
-            if target in successors and iteration > 0:
-                return True
-            successors_new = []
-            for successor in successors:
-                # avoid endless loops
-                if successor in processed_successor_nodes:
-                    continue
-                processed_successor_nodes.append(successor)
-                if successor in src2targets:
-                    successors_new.extend(src2targets[successor])
-            successors = successors_new
-            iteration += 1
+    visited = []
+    successors = src2targets.get(source, [])
+    iteration = 0
+    while len(successors) > 0:
+        if target in successors:
+            return True
+        successors_new = []
+        for successor in successors:
+            # avoid endless loops
+            if successor in visited:
+                continue
+            visited.append(successor)
+            successors_new.extend(src2targets.get(successor, []))
+        successors = successors_new
+        iteration += 1
     return False
 
 
-def sort_nodes_by_hierarchy(node_ids: Collection[str], edges: Collection[Edge]) -> List[str]:
+def sort_nodes_by_hierarchy(
+    node_ids: Collection[str], edges: Collection[Edge], nodeset_id: Optional[str] = None
+) -> List[str]:
     """Sort nodes in reversed depth-first order. The nodes are sorted in such a way that parents
     are always before children.
 
     Args:
         node_ids (Collection[str]): List of ids of nodes to sort.
         edges (Collection[Edge]): List of edges.
+        nodeset_id (Optional[str]): The ID of the nodeset for better logging.
 
     Returns:
         List[str]: List of sorted node ids.
@@ -606,20 +607,24 @@ def sort_nodes_by_hierarchy(node_ids: Collection[str], edges: Collection[Edge]) 
         src2targets[src].append(trg)
         trg2sources[trg].append(src)
 
-    nodes_with_loops = set()
-    # check if there are any loops between each pair of L-nodes (e.g., L1 -> TA1 -> L2 -> TA2 -> L1)
-    # these nodes will be added to the stack, so that they can be processed after the leaves
-    for src in src2targets:
-        for src2 in src2targets:
-            if connected_via_path(src, src2, src2targets):
-                nodes_with_loops.add(src)
+    # collect loop nodes
+    loop_nodes = set()
+    for src, targets in src2targets.items():
+        for trg in targets:
+            # if there is a path from trg to src, we have a loop
+            if connected_via_path(source=trg, target=src, src2targets=src2targets):
+                loop_nodes.add(src)
+
+    if len(loop_nodes) > 0:
+        logger.warning(f"nodeset_id={nodeset_id}: Detected loop nodes: {loop_nodes}")
+
+    # all nodes that are no source of a relation are leaves
+    leaves = set(node_ids) - set(src2targets)
 
     # do a reversed depth-first search starting from the leaves
     result_reverted = []
-    # all nodes that are no source of a relation are leaves
-    leaves = set(node_ids) - set(src2targets)
     visited = set()
-    stack = sorted(list(nodes_with_loops)) + list(leaves)
+    stack = sorted(loop_nodes) + sorted(leaves)
     while stack:
         node_id = stack.pop()
         if node_id in visited:
