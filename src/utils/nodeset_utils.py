@@ -551,8 +551,9 @@ def merge_other_into_nodeset(
     return result
 
 
-def find_multihop_relation(source: str, target: str, src2targets: Dict[str, List[str]]) -> bool:
-    """Checks whether there is a multi-hop relation (e.g., A -> B -> A) between the two nodes.
+def connected_via_loop(source: str, target: str, src2targets: Dict[str, List[str]]) -> bool:
+    """Check whether there is a way to reach the target node from the source node through multi-hop
+    relations. This also accounts for one-hop loops (A -> B -> A) and self-loops (A -> A).
 
     Args:
         source: NodeID of the source.
@@ -611,7 +612,7 @@ def sort_nodes_by_hierarchy(node_ids: Collection[str], edges: Collection[Edge]) 
     # these nodes will be added to the stack, so that they can be processed after the leaves
     for src in src2targets:
         for src2 in src2targets:
-            if find_multihop_relation(src, src2, src2targets):
+            if connected_via_loop(src, src2, src2targets):
                 nodes_with_loops.add(src)
 
     # do a reversed depth-first search starting from the leaves
