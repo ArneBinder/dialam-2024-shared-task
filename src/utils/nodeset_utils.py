@@ -551,9 +551,8 @@ def merge_other_into_nodeset(
     return result
 
 
-def connected_via_loop(source: str, target: str, src2targets: Dict[str, List[str]]) -> bool:
-    """Check whether there is a way to reach the target node from the source node through multi-hop
-    relations. This also accounts for one-hop loops (A -> B -> A) and self-loops (A -> A).
+def connected_via_path(source: str, target: str, src2targets: Dict[str, List[str]]) -> bool:
+    """Check whether there is a path between two nodes. This also includes self-loops (A -> A).
 
     Args:
         source: NodeID of the source.
@@ -561,7 +560,7 @@ def connected_via_loop(source: str, target: str, src2targets: Dict[str, List[str
         src2targets: Edges from source nodes to their targets.
 
     Returns:
-        Whether there is a multi-hop relation between the two nodes.
+        Whether there is a path between source and target.
     """
 
     processed_successor_nodes = []
@@ -612,7 +611,7 @@ def sort_nodes_by_hierarchy(node_ids: Collection[str], edges: Collection[Edge]) 
     # these nodes will be added to the stack, so that they can be processed after the leaves
     for src in src2targets:
         for src2 in src2targets:
-            if connected_via_loop(src, src2, src2targets):
+            if connected_via_path(src, src2, src2targets):
                 nodes_with_loops.add(src)
 
     # do a reversed depth-first search starting from the leaves
