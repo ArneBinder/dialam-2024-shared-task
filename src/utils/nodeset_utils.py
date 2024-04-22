@@ -620,7 +620,7 @@ def sort_nodes_by_hierarchy(node_ids: Collection[str], edges: Collection[Edge]) 
     # all nodes that are no source of a relation are leaves
     leaves = set(node_ids) - set(src2targets)
     visited = set()
-    stack = list(nodes_with_loops) + list(leaves)
+    stack = sorted(list(nodes_with_loops)) + list(leaves)
     while stack:
         node_id = stack.pop()
         if node_id in visited:
