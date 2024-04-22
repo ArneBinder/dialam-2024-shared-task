@@ -624,6 +624,8 @@ def sort_nodes_by_hierarchy(
     # do a reversed depth-first search starting from the leaves
     result_reverted = []
     visited = set()
+    # First, start with leaves, then process loop nodes, if they are not already handled.
+    # Note that we get the elements in reverse order, see stack.pop() below.
     stack = sorted(loop_nodes) + sorted(leaves)
     while stack:
         node_id = stack.pop()
