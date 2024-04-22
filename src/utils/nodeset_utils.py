@@ -612,6 +612,7 @@ def sort_nodes_by_hierarchy(
             # if there is a path from trg to src, we have a loop
             if connected_via_path(source=trg, target=src, src2targets=src2targets):
                 loop_nodes.add(src)
+                loop_nodes.add(trg)
 
     if len(loop_nodes) > 0:
         logger.warning(f"nodeset_id={nodeset_id}: Detected loop nodes: {loop_nodes}")
