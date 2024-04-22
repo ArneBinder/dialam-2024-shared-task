@@ -1,0 +1,5 @@
+_target_: pie_modules.taskmodules.RETextClassificationWithIndicesTaskModule
+tokenizer_name_or_path: ???
+
+## Long sequence handling
+max_window: 512
