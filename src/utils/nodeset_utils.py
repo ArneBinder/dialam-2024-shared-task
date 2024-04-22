@@ -565,7 +565,6 @@ def connected_via_path(source: str, target: str, src2targets: Dict[str, List[str
 
     visited = []
     successors = src2targets.get(source, [])
-    iteration = 0
     while len(successors) > 0:
         if target in successors:
             return True
@@ -577,7 +576,6 @@ def connected_via_path(source: str, target: str, src2targets: Dict[str, List[str
             visited.append(successor)
             successors_new.extend(src2targets.get(successor, []))
         successors = successors_new
-        iteration += 1
     return False
 
 
