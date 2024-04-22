@@ -23,7 +23,7 @@ def hf_dataset():
 
 def test_hf_dataset(hf_dataset):
     assert set(hf_dataset) == {"train"}
-    assert len(hf_dataset["train"]) == 1381
+    assert len(hf_dataset["train"]) == 1400
 
 
 @pytest.fixture(scope="module")
@@ -72,7 +72,7 @@ def dataset():
 
 def test_dataset(dataset):
     assert set(dataset) == {"train"}
-    assert len(dataset["train"]) == 1381
+    assert len(dataset["train"]) == 1400
 
 
 @pytest.fixture(scope="module")

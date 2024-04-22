@@ -551,13 +551,44 @@ def merge_other_into_nodeset(
     return result
 
 
-def sort_nodes_by_hierarchy(node_ids: Collection[str], edges: Collection[Edge]) -> List[str]:
+def connected_via_path(source: str, target: str, src2targets: Dict[str, List[str]]) -> bool:
+    """Check whether there is a path between two nodes. This also includes self-loops (A -> A).
+
+    Args:
+        source: NodeID of the source.
+        target: NodeID of the target.
+        src2targets: Edges from source nodes to their targets.
+
+    Returns:
+        Whether there is a path between source and target.
+    """
+
+    visited = []
+    successors = src2targets.get(source, [])
+    while len(successors) > 0:
+        if target in successors:
+            return True
+        successors_new = []
+        for successor in successors:
+            # avoid endless loops
+            if successor in visited:
+                continue
+            visited.append(successor)
+            successors_new.extend(src2targets.get(successor, []))
+        successors = successors_new
+    return False
+
+
+def sort_nodes_by_hierarchy(
+    node_ids: Collection[str], edges: Collection[Edge], nodeset_id: Optional[str] = None
+) -> List[str]:
     """Sort nodes in reversed depth-first order. The nodes are sorted in such a way that parents
     are always before children.
 
     Args:
         node_ids (Collection[str]): List of ids of nodes to sort.
         edges (Collection[Edge]): List of edges.
+        nodeset_id (Optional[str]): The ID of the nodeset for better logging.
 
     Returns:
         List[str]: List of sorted node ids.
@@ -571,17 +602,30 @@ def sort_nodes_by_hierarchy(node_ids: Collection[str], edges: Collection[Edge]) 
     src2targets = defaultdict(list)
     trg2sources = defaultdict(list)
     for src, trg, _ in valid_binary_relations:
-        if src == trg:
-            continue
         src2targets[src].append(trg)
         trg2sources[trg].append(src)
 
-    # do a reversed depth-first search starting from the leaves
-    result_reverted = []
+    # collect loop nodes
+    loop_nodes = set()
+    for src, targets in src2targets.items():
+        for trg in targets:
+            # if there is a path from trg to src, we have a loop
+            if connected_via_path(source=trg, target=src, src2targets=src2targets):
+                loop_nodes.add(src)
+                loop_nodes.add(trg)
+
+    if len(loop_nodes) > 0:
+        logger.warning(f"nodeset_id={nodeset_id}: Detected loop nodes: {loop_nodes}")
+
     # all nodes that are no source of a relation are leaves
     leaves = set(node_ids) - set(src2targets)
+
+    # do a reversed depth-first search starting from the leaves
+    result_reverted = []
     visited = set()
-    stack = list(leaves)
+    # First, start with leaves, then process loop nodes, if they are not already handled.
+    # Note that we get the elements in reverse order, see stack.pop() below.
+    stack = sorted(loop_nodes) + sorted(leaves)
     while stack:
         node_id = stack.pop()
         if node_id in visited:

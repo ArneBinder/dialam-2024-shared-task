@@ -151,7 +151,7 @@ def create_visualization(
 
         # sort L-nodes by hierarchy, i.e. that parents are always before children
         l_node_ids_sorted = sort_nodes_by_hierarchy(
-            node_ids=node_types2node_ids["L"], edges=data["edges"]
+            node_ids=node_types2node_ids["L"], edges=data["edges"], nodeset_id=nodeset
         )
 
         # add L-nodes and all connected TA-nodes

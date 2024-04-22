@@ -1,24 +1,3 @@
-"""This module defines a HuggingFace dataset builder for the QT30 dataset used in the DialAM-2024
-shared task. See http://dialam.arg.tech/ for more information about the DialAM-2024 shared task.
-
-Unfortunately, there are some nodesets that are not suitable for conversion to documents. These nodesets are
-excluded from the dataset. The following nodesets are excluded:
-- excluded by the organizers (23): 24255, 24807, 24808, 24809, 24903, 24905, 24992, 25045, 25441, 25442,
-    25443, 25444, 25445, 25452, 25461, 25462, 25463, 25465, 25468, 25472, 25473, 25474, 25475
-- excluded because of warning (6): "Could not align I-node (dummy-L-node was selected)": 21083, 18888,
-    23701, 18484, 17938, 19319
-- excluded because of error "could not determine direction of RA-nodes ... because there is no TA
-    relation between any combination of anchoring I-nodes!" (26): 25411, 25510, 25516, 25901, 25902,
-    25904, 25906, 25907, 25936, 25937, 25938, 25940, 26066, 26067, 26068, 26087, 17964, 18459, 19091,
-    19146, 19149, 19757, 19761, 19908, 21449, 23749
-- excluded because of error "S-node arguments are not unique!" (7): 25552, 19165, 22969, 21342, 25400,
-    21681, 23710
-- excluded because of error "direction of RA-node 587841 is ambiguous!" (16): 19059, 19217, 19878, 20479,
-    20507, 20510, 20766, 20844, 20888, 20992, 21401, 21477, 21588, 23114, 23766, 23891
-- excluded because of error "I-node texts are not unique!" (1): 19911
-- still problematic (19): 19897, 18321, 18877, 18874, 19174, 23552, 23799, 23517, 20729, 25691, 21023,
-    23144, 23120, 23560, 23892, 23959, 19173, 19918, 25511
-"""
 import logging
 from typing import List
 
@@ -49,7 +28,9 @@ def convert_to_document(
 
     # 1. create document text and L-node-spans
     l_node_ids = get_node_ids_by_type(nodeset, node_types=["L"])
-    sorted_l_node_ids: List[str] = sort_nodes_by_hierarchy(l_node_ids, edges=nodeset["edges"])
+    sorted_l_node_ids: List[str] = sort_nodes_by_hierarchy(
+        l_node_ids, edges=nodeset["edges"], nodeset_id=nodeset_id
+    )
     node_id2node = get_id2node(nodeset)
     text = ""
     l_node_spans = dict()
