@@ -1,0 +1,25 @@
+# @package _global_
+
+# to execute this experiment run:
+# python train.py experiment=dialam2024_merged_relations
+
+defaults:
+  - _dialam2024.yaml
+
+# name of the run determines folder name in logs
+name: "dialam2024_merged_relations/re_text_classification_with_indices"
+
+dataset:
+  input:
+    name: "merged_relations"
+
+taskmodule:
+  relation_annotation: "nary_relations"
+  none_label: "s_nodes:NONE"
+  argument_role_to_marker:
+    "s_nodes:source": "S:S"
+    "s_nodes:target": "S:T"
+    "ya_i2l_nodes:source": "YA-I2L:S"
+    "ya_i2l_nodes:target": "YA-I2L:T"
+    "ya_s2ta_nodes:source": "YA-S2TA:S"
+    "ya_s2ta_nodes:target": "YA-S2TA:T"
