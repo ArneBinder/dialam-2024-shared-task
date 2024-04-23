@@ -66,7 +66,7 @@ def convert_to_document(
         i_ya_nary_relation = NaryRelation(
             arguments=(source_span,),
             roles=("source",),
-            label=f"YA-I2L:{ya_12l_relation_node['text']}",
+            label=ya_12l_relation_node["text"],
         )
         doc.ya_i2l_nodes.append(i_ya_nary_relation)
         doc.metadata["ya_i2l_relations"].append(ya_12l_relation)
@@ -104,7 +104,7 @@ def convert_to_document(
         s_nary_relation = NaryRelation(
             arguments=tuple(source_spans + target_spans),
             roles=tuple(source_roles + target_roles),
-            label=f"S:{s_relation_node['text']}",
+            label=s_relation_node["text"],
         )
         doc.s_nodes.append(s_nary_relation)
         doc.metadata["s_relations"].append(s_relation)
@@ -137,7 +137,7 @@ def convert_to_document(
         ya_s2ta_nary_relation = NaryRelation(
             arguments=tuple(source_spans + target_spans),
             roles=tuple(source_roles + target_roles),
-            label=f"YA-S2TA:{ya_s2ta_relation_node['text']}",
+            label=ya_s2ta_relation_node["text"],
         )
         doc.ya_s2ta_nodes.append(ya_s2ta_nary_relation)
         doc.metadata["ya_s2ta_relations"].append(ya_s2ta_relation)

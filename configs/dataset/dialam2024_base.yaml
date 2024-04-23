@@ -1,0 +1,4 @@
+_target_: src.utils.execute_pipeline
+input:
+  _target_: pie_datasets.DatasetDict.load_dataset
+  path: dataset_builders/pie/dialam2024
