@@ -10,7 +10,7 @@ defaults:
 name: "dialam2024_ya_i2l/re_text_classification_with_indices"
 
 taskmodule:
-  relation_annotation: "ya_i2l_nodes"
+  relation_annotation: "s_nodes"
   argument_role_to_marker:
     source: "S"
     target: "T"
