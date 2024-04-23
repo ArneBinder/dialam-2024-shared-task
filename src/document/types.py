@@ -64,3 +64,9 @@ class SimplifiedDialAM2024Document(TextBasedDocument):
     ya_i2l_nodes: AnnotationLayer[NaryRelation] = annotation_field(target="l_nodes")
     ya_s2ta_nodes: AnnotationLayer[NaryRelation] = annotation_field(target="l_nodes")
     s_nodes: AnnotationLayer[NaryRelation] = annotation_field(target="l_nodes")
+
+
+@dataclasses.dataclass
+class TextDocumentWithLabeledEntitiesAndNaryRelations(TextBasedDocument):
+    labeled_spans: AnnotationLayer[LabeledSpan] = annotation_field(target="text")
+    nary_relations: AnnotationLayer[NaryRelation] = annotation_field(target="labeled_spans")
