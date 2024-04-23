@@ -4,8 +4,12 @@ from typing import List
 import datasets
 from pie_datasets import GeneratorBasedBuilder
 from pytorch_ie.annotations import LabeledSpan, NaryRelation
+from pytorch_ie.documents import TextBasedDocument
 
-from src.document.types import SimplifiedDialAM2024Document
+from src.document.types import (
+    SimplifiedDialAM2024Document,
+    TextDocumentWithLabeledEntitiesAndNaryRelations,
+)
 from src.utils.nodeset_utils import (
     Nodeset,
     get_id2node,
@@ -152,20 +156,83 @@ def convert_to_document(
     return doc
 
 
+def prefix_nary_relation(nary_relation: NaryRelation, prefix: str, sep: str = ":") -> NaryRelation:
+    # prefix the label and roles of the nary relation
+    new_label = f"{prefix}{sep}{nary_relation.label}"
+    new_roles = tuple(f"{prefix}{sep}{role}" for role in nary_relation.roles)
+    new_arguments = nary_relation.arguments
+    return NaryRelation(arguments=new_arguments, roles=new_roles, label=new_label)
+
+
+def merge_relations(
+    document: TextBasedDocument, labeled_span_layer: str, nary_relation_layers: List[str]
+) -> TextDocumentWithLabeledEntitiesAndNaryRelations:
+    """Merges the relations from multiple n-ary relation layers into a single layer. The labels and
+    roles of the n-ary relations are prefixed with the name of the layer.
+
+    Note that this is destructive and will remove the original span and relation annotations
+    from the input document!
+
+    Args:
+        document: The input document
+        labeled_span_layer: The name of the layer containing the labeled spans
+        nary_relation_layers: The names of the n-ary relation layers to merge
+
+    Returns:
+    """
+    new_document = TextDocumentWithLabeledEntitiesAndNaryRelations(
+        text=document.text, id=document.id, metadata=document.metadata
+    )
+    # to allow reconstructing the original document, store the original labeled span layer name
+    # and the n-ary relation layer names
+    new_document.metadata["labeled_span_layer"] = labeled_span_layer
+    new_document.metadata["nary_relation_layers"] = nary_relation_layers
+    # get labeled spans and detach them from the document
+    labeled_span = document[labeled_span_layer].clear()
+    # add the labeled spans to the new document
+    new_document.labeled_spans.extend(labeled_span)
+    # iterate over the nary relation layers and prefix the labels and roles
+    for nary_relation_layer in nary_relation_layers:
+        if document[nary_relation_layer].target_name != labeled_span_layer:
+            raise ValueError(
+                f"Expected target name of nary relation layer {nary_relation_layer} to be "
+                f"{labeled_span_layer}, got {document[nary_relation_layer].target_name}."
+            )
+        nary_relations = document[nary_relation_layer].clear()
+        prefixed_nary_relations = [
+            prefix_nary_relation(rel, prefix=nary_relation_layer) for rel in nary_relations
+        ]
+        new_document.nary_relations.extend(prefixed_nary_relations)
+
+    return new_document
+
+
 class PieDialAM2024(GeneratorBasedBuilder):
-    DOCUMENT_TYPE = SimplifiedDialAM2024Document
-
     # BASE_DATASET_PATH = "ArneBinder/dialam2024"
-    # BASE_DATASET_REVISION = "dc0c50174e0f1d4d697be5d017c390054aa8aa9d"
+    # BASE_DATASET_REVISION = ???  # fill in the revision of the dataset
     BASE_DATASET_PATH = "dataset_builders/hf/dialam2024"
-
     BUILDER_CONFIGS = [
         datasets.BuilderConfig(
-            name="dialam2024",
+            name="default",
             version=datasets.Version("1.0.0"),
             description="PIE-wrapped DialAM-2024 dataset",
         ),
+        datasets.BuilderConfig(
+            name="merged_relations",
+            version=datasets.Version("1.0.0"),
+            description="PIE-wrapped DialAM-2024 dataset with merged relations",
+        ),
     ]
+    DOCUMENT_TYPES = {
+        "default": SimplifiedDialAM2024Document,
+        "merged_relations": TextDocumentWithLabeledEntitiesAndNaryRelations,
+    }
+    # both configs use the same base config
+    BASE_CONFIG_KWARGS_DICT = {
+        "default": {"name": "default"},
+        "merged_relations": {"name": "default"},
+    }
+    DEFAULT_CONFIG_NAME = "default"
 
     def _generate_document(self, example, **kwargs):
         nodeset_id = example["id"]
@@ -189,4 +256,10 @@ class PieDialAM2024(GeneratorBasedBuilder):
             add_gold_data=True,
         )
         doc = convert_to_document(nodeset=cleaned_nodeset, nodeset_id=nodeset_id)
+        if self.config.name == "merged_relations":
+            doc = merge_relations(
+                document=doc,
+                labeled_span_layer="l_nodes",
+                nary_relation_layers=["ya_i2l_nodes", "ya_s2ta_nodes", "s_nodes"],
+            )
         return doc

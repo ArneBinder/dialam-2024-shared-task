@@ -129,7 +129,7 @@ def get_node_id_from_filename(filename: str) -> str:
 class DialAM2024(GeneratorBasedBuilder):
     BUILDER_CONFIGS = [
         datasets.BuilderConfig(
-            name="dialam_2024",
+            name="default",
             version=datasets.Version("1.0.0"),
             description="DialAM-2024 dataset",
         ),
