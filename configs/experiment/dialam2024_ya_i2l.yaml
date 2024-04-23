@@ -4,49 +4,13 @@
 # python train.py experiment=dialam2024_ya_i2l
 
 defaults:
-  - override /dataset: dialam2024_prepared.yaml
-  - override /datamodule: default.yaml
-  - override /taskmodule: re_text_classification_with_indices.yaml
-  - override /model: sequence_classification_with_pooler.yaml
-  - override /callbacks: default.yaml
-  - override /logger: wandb.yaml
-  - override /trainer: default.yaml
-
-# all parameters below will be merged with parameters from default configurations set above
-# this allows you to overwrite only specified parameters
+  - _dialam2024.yaml
 
 # name of the run determines folder name in logs
 name: "dialam2024_ya_i2l/re_text_classification_with_indices"
 
-base_model_name: bert-base-uncased
-
-tags: ["dataset=dialam2024", "model=sequence_classification_with_pooler"]
-
-seed: 12345
-
-monitor_metric: metric/macro/f1/val
-
-trainer:
-  min_epochs: 5
-  max_epochs: 20
-  # gradient_clip_val: 0.5
-
-datamodule:
-  batch_size: 32
-  num_workers: 8
-
 taskmodule:
   relation_annotation: "ya_i2l_nodes"
-  none_label: "NONE"
-  tokenizer_name_or_path: ${base_model_name}
-  # add_type_to_marker: true
-  # we have just a single argument role for now
   argument_role_to_marker:
     source: "S"
-  # max_argument_distance: ???
-  collect_statistics: true
-
-model:
-  learning_rate: 1e-5
-  task_learning_rate: 1e-4
-  model_name_or_path: ${base_model_name}
+    target: "T"
