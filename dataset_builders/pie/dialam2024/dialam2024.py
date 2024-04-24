@@ -43,7 +43,8 @@ def convert_to_document(
             text += text_sep
         l_node = node_id2node[l_node_id]
         if text_mode == "l-nodes":
-            node_text = l_node["text"]
+            # avoid multiple spaces since they will be removed later by the tokenizer and will cause offset mismatch
+            node_text = " ".join(l_node["text"].split())
             l_node_spans[l_node_id] = LabeledSpan(
                 start=len(text), end=len(text) + len(node_text), label=l_node["type"]
             )
