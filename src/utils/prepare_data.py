@@ -338,7 +338,9 @@ def reverse_relations_nodes(
         rel_id = rel["relation"]
         node_text = node_id2nodes[rel_id]["text"]
         if not redo:
-            node_id2nodes[rel_id]["text"] = f"{node_text}{reversed_text_suffix}"
+            # check whether this node has already appeared in reverted relations to avoid appending the same suffix several times
+            if not node_id2nodes[rel_id]["text"].endswith(reversed_text_suffix):
+                node_id2nodes[rel_id]["text"] = f"{node_text}{reversed_text_suffix}"
         else:
             if not node_text.endswith(reversed_text_suffix):
                 raise ValueError(f"nodeset={nodeset_id}: Node {rel_id} is not reversed!")
@@ -652,6 +654,7 @@ def prepare_nodeset(
             logger.warning(
                 "re_remove_none_relations=True is only supported in combination with add_gold_data=True."
             )
+
     return nodeset_with_dummy_relations
 
 
