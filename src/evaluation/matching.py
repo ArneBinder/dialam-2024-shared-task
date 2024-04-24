@@ -315,7 +315,7 @@ def s_rel_anchor(
                 except Exception as e:
                     rel2_id = ""
                     logger.error(
-                        f"nodeset={nodeset_id}: Failed to find the predicted node for the gold node {rel} (relation type {rel_type}): {e}"
+                        f"nodeset={nodeset_id}: Failed to find the gold node for the predicted node {rel} (relation type {rel_type}): {e}"
                     )
                 if rel2_id == "":
                     conf_matrix[1][0] += 1
@@ -390,9 +390,7 @@ def count_s_nodes(node_id: int, graph: DiGraph, nodeset_id: str) -> Tuple[int, i
     MA_count = 0
     CA_count = 0
     try:
-        s_nodes = list(
-            graph.predecessors(node_id)
-        )  # TODO: Why do we consider *only* predecessors? In principle, RA-nodes can also point down, i.e., RA-node could be in successors of the node with the current node_id!
+        s_nodes = list(graph.predecessors(node_id))
     except Exception as e:
         logger.error(
             f"nodeset={nodeset_id}: Failed to get predecessors for node with ID {node_id}"
