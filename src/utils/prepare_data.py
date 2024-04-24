@@ -242,8 +242,8 @@ def get_node_matching(
 
 
 def cleanup_nodeset(nodeset: Nodeset, nodeset_id: str, verbose: bool = True) -> Nodeset:
-    """Remove all edges from the nodeset that are not in valid transitions and remove isolated
-    nodes. Optionally, normalize the relation direction.
+    """Remove all edges from the nodeset that are not in valid transitions, remove isolated nodes
+    and self-loops. Optionally, normalize the relation direction.
 
     Args:
         nodeset: A Nodeset.
@@ -275,7 +275,8 @@ def cleanup_nodeset(nodeset: Nodeset, nodeset_id: str, verbose: bool = True) -> 
 def get_valid_src_trg_and_node_ids_from_relations(
     relations_to_keep: List[Relation], valid_node_ids: Optional[List[str]] = None
 ) -> Tuple[Set[Tuple[str, str]], Set[str]]:
-    """Remove all relations that do not correspond to the patterns specified in relations_to_keep.
+    """Remove all relations that do not correspond to the patterns specified in relations_to_keep
+    or if they have self-loops.
 
     Args:
         relations_to_keep: List of relations to keep: (source, target, relation).
@@ -292,8 +293,14 @@ def get_valid_src_trg_and_node_ids_from_relations(
             for node_id in rel["sources"] + rel["targets"] + [rel["relation"]]
         ):
             for src_id in rel["sources"]:
+                # remove self-loops
+                if src_id in rel["targets"]:
+                    continue
                 valid_src_trg.append((src_id, rel["relation"]))
             for trg_id in rel["targets"]:
+                # remove self-loops
+                if trg_id in rel["sources"]:
+                    continue
                 valid_src_trg.append((rel["relation"], trg_id))
 
     valid_node_ids = []
@@ -338,7 +345,9 @@ def reverse_relations_nodes(
         rel_id = rel["relation"]
         node_text = node_id2nodes[rel_id]["text"]
         if not redo:
-            node_id2nodes[rel_id]["text"] = f"{node_text}{reversed_text_suffix}"
+            # check whether this node has already appeared in reverted relations to avoid appending the same suffix several times
+            if not node_id2nodes[rel_id]["text"].endswith(reversed_text_suffix):
+                node_id2nodes[rel_id]["text"] = f"{node_text}{reversed_text_suffix}"
         else:
             if not node_text.endswith(reversed_text_suffix):
                 raise ValueError(f"nodeset={nodeset_id}: Node {rel_id} is not reversed!")
@@ -652,6 +661,7 @@ def prepare_nodeset(
             logger.warning(
                 "re_remove_none_relations=True is only supported in combination with add_gold_data=True."
             )
+
     return nodeset_with_dummy_relations
 
 
