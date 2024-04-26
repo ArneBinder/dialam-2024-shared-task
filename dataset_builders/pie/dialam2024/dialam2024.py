@@ -247,6 +247,8 @@ class PieDialAM2024(GeneratorBasedBuilder):
             "edges": dictoflists_to_listofdicts(example["edges"]),
             "locutions": dictoflists_to_listofdicts(example["locutions"]),
         }
+        # this is a bit hacky, but we can use the nodeset_id to determine if the example is a test example
+        is_test_example = nodeset_id.startswith("test_map")
         cleaned_nodeset = prepare_nodeset(
             nodeset=nodeset,
             nodeset_id=nodeset_id,
@@ -254,7 +256,7 @@ class PieDialAM2024(GeneratorBasedBuilder):
             ya_node_text="NONE",
             s_node_type="RA",
             l2i_similarity_measure="lcsstr",
-            add_gold_data=True,
+            add_gold_data=not is_test_example,
         )
         doc = convert_to_document(nodeset=cleaned_nodeset, nodeset_id=nodeset_id)
         if self.config.name == "merged_relations":

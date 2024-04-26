@@ -18,6 +18,8 @@ DATA_DIR = None
 # DATA_DIR = "data/dataset_excerpt"
 
 SPLIT_SIZES = {"train": 1399, "test": 11}
+# for the test set, we want to have the map "test_map10" as example because it contains complex stuff
+SPLIT2IDX = {"train": 0, "test": 1}
 
 
 @pytest.fixture(scope="module")
@@ -38,7 +40,7 @@ def split_name(request):
 
 @pytest.fixture(scope="module")
 def hf_example(hf_dataset, split_name):
-    return hf_dataset[split_name][1 if split_name == "test" else 0]
+    return hf_dataset[split_name][SPLIT2IDX[split_name]]
 
 
 def test_hf_example(hf_example, split_name):
@@ -102,8 +104,55 @@ def assert_document(document, config_name, split_name):
             "of any educational value"
         )
     elif split_name == "test":
-        # TODO
-        pass
+        if config_name == "default":
+            assert isinstance(document, SimplifiedDialAM2024Document)
+            assert document.id == "test_map10"
+            assert len(document.l_nodes) == 11
+            fist_l_node = document.l_nodes[0]
+            assert len(document.ya_i2l_nodes) == 11
+            assert len(document.ya_s2ta_nodes) == 11
+            assert len(document.s_nodes) == 11
+            last_s_node = document.s_nodes[-1]
+            assert last_s_node.resolve() == (
+                "NONE",
+                (
+                    ("source", ("L", "David Davies: this is what’s in store for us")),
+                    (
+                        "target",
+                        (
+                            "L",
+                            "David Davies: unless they’re amongst the extra Assembly members who’ll be able to have a full slap-up English breakfast for £3.50 in the Senate",
+                        ),
+                    ),
+                ),
+            )
+        elif config_name == "merged_relations":
+            assert isinstance(document, TextDocumentWithLabeledEntitiesAndNaryRelations)
+            assert document.id == "test_map10"
+            assert len(document.labeled_spans) == 11
+            fist_l_node = document.labeled_spans[0]
+            assert len(document.nary_relations) == 33
+            last_nary_relation = document.nary_relations[-1]
+            assert last_nary_relation.resolve() == (
+                "s_nodes:NONE",
+                (
+                    ("s_nodes:source", ("L", "David Davies: this is what’s in store for us")),
+                    (
+                        "s_nodes:target",
+                        (
+                            "L",
+                            "David Davies: unless they’re amongst the extra Assembly members who’ll be able to have a full slap-up English breakfast for £3.50 in the Senate",
+                        ),
+                    ),
+                ),
+            )
+        else:
+            raise ValueError(f"Unknown config name {config_name}")
+        assert isinstance(fist_l_node, LabeledSpan)
+        assert (
+            str(fist_l_node)
+            == "David Davies: £100 million being spent on a whole load of extra Welsh Assembly members"
+        )
     else:
         raise ValueError(f"Unknown split name {split_name}")
 
@@ -126,7 +175,7 @@ def test_dataset(dataset):
 
 @pytest.fixture(scope="module")
 def document(dataset, split_name):
-    return dataset[split_name][0]
+    return dataset[split_name][SPLIT2IDX[split_name]]
 
 
 def test_document(document, config_name, split_name):
