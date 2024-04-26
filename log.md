@@ -824,3 +824,176 @@ This file is meant to log the development and experimentation process of this pr
 | metric/ya_s2ta_nodes:Rhetorical Questioning/f1/val   |         0 |         0 |        0 |     3 |        0 |         0 |           0 |          0 |
 
 </details>
+
+### S-relations with RoBERTa (lr=1e-4)
+
+- training a single model for s-relation types with xlm-roberta-large
+  - command:
+    ```bash
+      python src/train.py \
+      experiment=dialam2024_s \
+      model.task_learning_rate=1e-4 \
+      base_model_name=FacebookAI/roberta-large \
+      trainer=gpu \
+      seed=1,2,3 \
+      +hydra.callbacks.save_job_return.integrate_multirun_result=true \
+      name=roberta-single-relations \
+      --multirun
+    ```
+  - wandb (weights & biases) run:
+    - seed1: https://wandb.ai/tanikina/roberta-single-relations-training/runs/kcufnalb
+    - seed2: https://wandb.ai/tanikina/roberta-single-relations-training/runs/bi8nnrw2
+    - seed3: https://wandb.ai/tanikina/roberta-single-relations-training/runs/a1d7gnh1
+  - artefacts
+    - model location:
+      - seed1: `/netscratch/anikina/dialam-2024-shared-task/models/roberta-single-relations/2024-04-25_09-20-12`
+      - seed2: `/netscratch/anikina/dialam-2024-shared-task/models/roberta-single-relations/2024-04-25_11-00-54`
+      - seed3: `/netscratch/anikina/dialam-2024-shared-task/models/roberta-single-relations/2024-04-25_12-42-38`
+  - aggregated metric values: macro/f1/val: 0.393, micro/f1/val: 0.469
+
+<details>
+
+|                                       |         25% |         50% |         75% | count |         max |        mean |         min |         std |
+| :------------------------------------ | ----------: | ----------: | ----------: | ----: | ----------: | ----------: | ----------: | ----------: |
+| loss/train                            |  0.00018739 | 0.000196616 |  0.00020003 |     3 | 0.000203443 | 0.000192741 | 0.000178163 | 1.30781e-05 |
+| loss/train_epoch                      |  0.00018739 | 0.000196616 |  0.00020003 |     3 | 0.000203443 | 0.000192741 | 0.000178163 | 1.30781e-05 |
+| loss/train_step                       | 8.09023e-05 | 0.000111095 | 0.000136851 |     3 | 0.000162606 | 0.000108137 | 5.07096e-05 | 5.60069e-05 |
+| loss/val                              |     2.37783 |     2.46812 |     2.48552 |     3 |     2.50292 |     2.41953 |     2.28755 |    0.115618 |
+| metric/Default Conflict/f1/train      |    0.999666 |           1 |           1 |     3 |           1 |    0.999777 |    0.999332 | 0.000385664 |
+| metric/Default Conflict/f1/val        |    0.341492 |     0.34965 |    0.351296 |     3 |    0.352941 |    0.345308 |    0.333333 |   0.0105003 |
+| metric/Default Inference-rev/f1/train |           1 |           1 |           1 |     3 |           1 |           1 |           1 |           0 |
+| metric/Default Inference-rev/f1/val   |    0.483294 |    0.491018 |      0.5011 |     3 |    0.511182 |     0.49259 |     0.47557 |    0.017858 |
+| metric/Default Inference/f1/train     |           1 |           1 |           1 |     3 |           1 |           1 |           1 |           0 |
+| metric/Default Inference/f1/val       |    0.485525 |    0.485876 |    0.488552 |     3 |    0.491228 |    0.487426 |    0.485175 |  0.00331099 |
+| metric/Default Rephrase/f1/train      |           1 |           1 |           1 |     3 |           1 |           1 |           1 |           0 |
+| metric/Default Rephrase/f1/val        |    0.634252 |    0.652893 |    0.653218 |     3 |    0.653543 |    0.640682 |    0.615611 |   0.0217147 |
+| metric/NONE/f1/train                  |           0 |           0 |           0 |     3 |           0 |           0 |           0 |           0 |
+| metric/NONE/f1/val                    |           0 |           0 |           0 |     3 |           0 |           0 |           0 |           0 |
+| metric/macro/f1/train                 |    0.899933 |           1 |           1 |     3 |           1 |    0.933289 |    0.799866 |    0.115547 |
+| metric/macro/f1/val                   |    0.391479 |    0.395887 |    0.396267 |     3 |    0.396647 |    0.393201 |     0.38707 |  0.00532343 |
+| metric/micro/f1/train                 |    0.999939 |           1 |           1 |     3 |           1 |    0.999959 |    0.999878 | 7.03397e-05 |
+| metric/micro/f1/val                   |    0.460133 |     0.47619 |    0.481174 |     3 |    0.486157 |    0.468808 |    0.444075 |   0.0219909 |
+
+</details>
+
+### YA S2TA relations with RoBERTa (lr=1e-4)
+
+- training a single model for YA-relation types (between S and TA nodes) with xlm-roberta-large
+  - command:
+    ```bash
+      python src/train.py \
+      experiment=dialam2024_ya_s2ta \
+      model.task_learning_rate=1e-4 \
+      base_model_name=FacebookAI/roberta-large \
+      trainer=gpu \
+      seed=1,2,3 \
+      +hydra.callbacks.save_job_return.integrate_multirun_result=true \
+      name=roberta-single-relations \
+      --multirun
+    ```
+  - wandb (weights & biases) run:
+    - seed1: https://wandb.ai/tanikina/roberta-single-relations-training/runs/yu2egcp2
+    - seed2: https://wandb.ai/tanikina/roberta-single-relations-training/runs/mxvmb5oj
+    - seed3: https://wandb.ai/tanikina/roberta-single-relations-training/runs/08tov8mg
+  - artefacts
+    - model location:
+      - seed1: `/netscratch/anikina/dialam-2024-shared-task/models/roberta-single-relations/2024-04-25_09-18-57`
+      - seed2: `/netscratch/anikina/dialam-2024-shared-task/models/roberta-single-relations/2024-04-25_11-05-15`
+      - seed3: `/netscratch/anikina/dialam-2024-shared-task/models/roberta-single-relations/2024-04-25_12-51-45`
+  - aggregated metric values: macro/f1/val: 0.266, micro/f1/val: 0.484
+
+<details>
+
+|                                        |         25% |         50% |         75% | count |         max |        mean |         min |         std |
+| :------------------------------------- | ----------: | ----------: | ----------: | ----: | ----------: | ----------: | ----------: | ----------: |
+| loss/train                             | 0.000227897 | 0.000234378 | 0.000239494 |     3 | 0.000244609 | 0.000233468 | 0.000221416 | 1.16236e-05 |
+| loss/train_epoch                       | 0.000227897 | 0.000234378 | 0.000239494 |     3 | 0.000244609 | 0.000233468 | 0.000221416 | 1.16236e-05 |
+| loss/train_step                        | 6.15492e-05 | 7.71235e-05 | 0.000119097 |     3 |  0.00016107 | 9.47229e-05 | 4.59749e-05 | 5.95319e-05 |
+| loss/val                               |     1.46896 |     1.55501 |      2.2539 |     3 |      2.9528 |     1.96357 |      1.3829 |    0.861007 |
+| metric/Agreeing/f1/train               |           1 |           1 |           1 |     3 |           1 |           1 |           1 |           0 |
+| metric/Agreeing/f1/val                 |           0 |           0 |           0 |     3 |           0 |           0 |           0 |           0 |
+| metric/Arguing/f1/train                |           1 |           1 |           1 |     3 |           1 |           1 |           1 |           0 |
+| metric/Arguing/f1/val                  |    0.584126 |    0.606952 |    0.608653 |     3 |    0.610354 |    0.592869 |      0.5613 |   0.0273923 |
+| metric/Asserting/f1/train              |           1 |           1 |           1 |     3 |           1 |           1 |           1 |           0 |
+| metric/Asserting/f1/val                |           0 |           0 |           0 |     3 |           0 |           0 |           0 |           0 |
+| metric/Challenging/f1/train            |           1 |           1 |           1 |     3 |           1 |           1 |           1 |           0 |
+| metric/Challenging/f1/val              |           0 |           0 |           0 |     3 |           0 |           0 |           0 |           0 |
+| metric/Default Illocuting/f1/train     |           1 |           1 |           1 |     3 |           1 |           1 |           1 |           0 |
+| metric/Default Illocuting/f1/val       |    0.570713 |    0.588235 |    0.597148 |     3 |    0.606061 |    0.582496 |    0.553191 |   0.0268978 |
+| metric/Disagreeing/f1/train            |    0.999289 |    0.999289 |    0.999645 |     3 |           1 |    0.999526 |    0.999289 | 0.000410338 |
+| metric/Disagreeing/f1/val              |    0.340663 |    0.342342 |    0.397734 |     3 |    0.453125 |     0.37815 |    0.338983 |   0.0649519 |
+| metric/NONE/f1/train                   |           0 |           0 |           0 |     3 |           0 |           0 |           0 |           0 |
+| metric/NONE/f1/val                     |           0 |           0 |           0 |     3 |           0 |           0 |           0 |           0 |
+| metric/Pure Questioning/f1/train       |           1 |           1 |           1 |     3 |           1 |           1 |           1 |           0 |
+| metric/Pure Questioning/f1/val         |           0 |           0 |           0 |     3 |           0 |           0 |           0 |           0 |
+| metric/Restating/f1/train              |           1 |           1 |           1 |     3 |           1 |           1 |           1 |           0 |
+| metric/Restating/f1/val                |    0.568239 |    0.588435 |    0.589969 |     3 |    0.591503 |    0.575994 |    0.548043 |   0.0242549 |
+| metric/Rhetorical Questioning/f1/train |           1 |           1 |           1 |     3 |           1 |           1 |           1 |           0 |
+| metric/Rhetorical Questioning/f1/val   |           0 |           0 |           0 |     3 |           0 |           0 |           0 |           0 |
+| metric/macro/f1/train                  |    0.899929 |    0.899929 |    0.949964 |     3 |           1 |    0.933286 |    0.899929 |   0.0577761 |
+| metric/macro/f1/val                    |    0.258159 |    0.260697 |    0.271472 |     3 |    0.282247 |    0.266189 |    0.255622 |   0.0141365 |
+| metric/micro/f1/train                  |    0.999877 |    0.999877 |    0.999938 |     3 |           1 |    0.999918 |    0.999877 | 7.11656e-05 |
+| metric/micro/f1/val                    |    0.471604 |    0.478842 |    0.493318 |     3 |    0.507795 |    0.483667 |    0.464365 |   0.0221134 |
+
+</details>
+
+### YA I2L relations with RoBERTa (lr=1e-4)
+
+- training a single model for YA-relation types (between S and TA nodes) with xlm-roberta-large
+  - command:
+    ```bash
+      python src/train.py \
+      experiment=dialam2024_ya_i2l \
+      model.task_learning_rate=1e-4 \
+      base_model_name=FacebookAI/roberta-large \
+      trainer=gpu \
+      seed=1,2,3 \
+      +hydra.callbacks.save_job_return.integrate_multirun_result=true \
+      name=roberta-single-relations \
+      --multirun
+    ```
+  - wandb (weights & biases) run:
+    - seed1: https://wandb.ai/tanikina/roberta-single-relations-training/runs/5ilcukyf
+    - seed2: https://wandb.ai/tanikina/roberta-single-relations-training/runs/zzhwvfvs
+    - seed3: https://wandb.ai/tanikina/roberta-single-relations-training/runs/pj6yzcqa
+  - artefacts
+    - model location:
+      - seed1: `/netscratch/anikina/dialam-2024-shared-task/models/roberta-single-relations/2024-04-25_09-20-09`
+      - seed2: `/netscratch/anikina/dialam-2024-shared-task/models/roberta-single-relations/2024-04-25_11-05-43`
+      - seed3: `/netscratch/anikina/dialam-2024-shared-task/models/roberta-single-relations/2024-04-25_12-51-43`
+  - aggregated metric values: macro/f1/val: 0.357, micro/f1/val: 0.960
+
+<details>
+
+|                                        |         25% |         50% |         75% | count |         max |        mean |         min |         std |
+| :------------------------------------- | ----------: | ----------: | ----------: | ----: | ----------: | ----------: | ----------: | ----------: |
+| loss/train                             | 3.78374e-05 | 4.22252e-05 |  5.7257e-05 |     3 | 7.22887e-05 | 4.93212e-05 | 3.34495e-05 | 2.03687e-05 |
+| loss/train_epoch                       | 3.78374e-05 | 4.22252e-05 |  5.7257e-05 |     3 | 7.22887e-05 | 4.93212e-05 | 3.34495e-05 | 2.03687e-05 |
+| loss/train_step                        | 1.90816e-05 | 3.31962e-05 | 4.01399e-05 |     3 | 4.70837e-05 | 2.84156e-05 |   4.967e-06 | 2.14615e-05 |
+| loss/val                               |    0.331133 |    0.340382 |     0.34974 |     3 |    0.359098 |    0.340455 |    0.321884 |   0.0186072 |
+| metric/Agreeing/f1/train               |           1 |           1 |           1 |     3 |           1 |           1 |           1 |           0 |
+| metric/Agreeing/f1/val                 |           0 |           0 |           0 |     3 |           0 |           0 |           0 |           0 |
+| metric/Arguing/f1/train                |           1 |           1 |           1 |     3 |           1 |           1 |           1 |           0 |
+| metric/Arguing/f1/val                  |           0 |           0 |           0 |     3 |           0 |           0 |           0 |           0 |
+| metric/Asserting/f1/train              |           1 |           1 |           1 |     3 |           1 |           1 |           1 |           0 |
+| metric/Asserting/f1/val                |    0.985943 |    0.986838 |    0.986842 |     3 |    0.986846 |    0.986244 |    0.985048 |  0.00103564 |
+| metric/Assertive Questioning/f1/train  |           1 |           1 |           1 |     3 |           1 |           1 |           1 |           0 |
+| metric/Assertive Questioning/f1/val    |    0.479266 |    0.484848 |    0.492424 |     3 |         0.5 |    0.486178 |    0.473684 |   0.0132081 |
+| metric/Challenging/f1/train            |           1 |           1 |           1 |     3 |           1 |           1 |           1 |           0 |
+| metric/Challenging/f1/val              |           0 |           0 |    0.166667 |     3 |    0.333333 |    0.111111 |           0 |     0.19245 |
+| metric/Default Illocuting/f1/train     |           1 |           1 |           1 |     3 |           1 |           1 |           1 |           0 |
+| metric/Default Illocuting/f1/val       |           0 |           0 |           0 |     3 |           0 |           0 |           0 |           0 |
+| metric/NONE/f1/train                   |           0 |           0 |           0 |     3 |           0 |           0 |           0 |           0 |
+| metric/NONE/f1/val                     |           0 |           0 |           0 |     3 |           0 |           0 |           0 |           0 |
+| metric/Pure Questioning/f1/train       |           1 |           1 |           1 |     3 |           1 |           1 |           1 |           0 |
+| metric/Pure Questioning/f1/val         |    0.800975 |    0.803828 |    0.804692 |     3 |    0.805556 |    0.802502 |    0.798122 |  0.00389011 |
+| metric/Restating/f1/train              |           1 |           1 |           1 |     3 |           1 |           1 |           1 |           0 |
+| metric/Restating/f1/val                |           0 |           0 |           0 |     3 |           0 |           0 |           0 |           0 |
+| metric/Rhetorical Questioning/f1/train |           1 |           1 |           1 |     3 |           1 |           1 |           1 |           0 |
+| metric/Rhetorical Questioning/f1/val   |    0.299683 |    0.372093 |    0.396573 |     3 |    0.421053 |    0.340139 |    0.227273 |    0.100764 |
+| metric/macro/f1/train                  |           1 |           1 |           1 |     3 |           1 |           1 |           1 |           0 |
+| metric/macro/f1/val                    |    0.344627 |    0.353578 |     0.36711 |     3 |    0.380641 |    0.356632 |    0.335676 |   0.0226373 |
+| metric/micro/f1/train                  |           1 |           1 |           1 |     3 |           1 |           1 |           1 |           0 |
+| metric/micro/f1/val                    |     0.95914 |    0.961828 |    0.962097 |     3 |    0.962366 |    0.960215 |    0.956452 |   0.0032703 |
+
+</details>
