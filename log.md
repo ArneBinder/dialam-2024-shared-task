@@ -939,7 +939,7 @@ This file is meant to log the development and experimentation process of this pr
 
 ### YA I2L relations with RoBERTa (lr=1e-4)
 
-- training a single model for YA-relation types (between S and TA nodes) with xlm-roberta-large
+- training a single model for YA-relation types (between I and L nodes) with xlm-roberta-large
   - command:
     ```bash
       python src/train.py \
