@@ -33,7 +33,6 @@ datamodule:
 
 taskmodule:
   relation_annotation: ???
-  none_label: "NONE"
   tokenizer_name_or_path: ${base_model_name}
   argument_role_to_marker: ???
   collect_statistics: true
