@@ -3,7 +3,7 @@ import itertools
 import logging
 import math
 from collections import defaultdict
-from typing import Any, Dict, Optional, Union
+from typing import Any, Dict, List, Optional, Union
 
 import pyrootutils
 from sklearn.metrics import precision_recall_fscore_support
@@ -189,38 +189,9 @@ def eval_arguments(
         if not added_pred:
             y_pred.append(3)
 
-    if verbose:
-        print(y_true)
-        print(y_pred)
-    focused_true = []
-    focused_pred = []
-    for i in range(len(y_true)):
-        if y_true[i] != 3:
-            focused_true.append(y_true[i])
-            focused_pred.append(y_pred[i])
-
-    zero_division: Union[str, float]
-    if verbose:
-        print(focused_true)
-        print(focused_pred)
-        zero_division = "warn"
-    else:
-        zero_division = 0.0
-
-    result_general = precision_recall_fscore_support(
-        y_true, y_pred, average="macro", zero_division=zero_division
+    return handle_true_pred(
+        y_true=y_true, y_pred=y_pred, focused_value=3, nodeset_id=nodeset_id, verbose=verbose
     )
-    result_focused = precision_recall_fscore_support(
-        focused_true, focused_pred, average="macro", zero_division=zero_division
-    )
-    if verbose:
-        print("General", result_general)
-        print("Focused", result_focused)
-
-    return {
-        "general": {"p": result_general[0], "r": result_general[1], "f1": result_general[2]},
-        "focused": {"p": result_focused[0], "r": result_focused[1], "f1": result_focused[2]},
-    }
 
 
 def eval_illocutions(
@@ -322,6 +293,18 @@ def eval_illocutions(
         if not added_pred:
             y_pred.append("None")
 
+    return handle_true_pred(
+        y_true=y_true, y_pred=y_pred, focused_value="None", nodeset_id=nodeset_id, verbose=verbose
+    )
+
+
+def handle_true_pred(
+    y_true: List,
+    y_pred: List,
+    focused_value: Union[str, int],
+    nodeset_id: str,
+    verbose: bool = True,
+):
     if verbose:
         print(y_true)
         print(y_pred)
@@ -329,7 +312,7 @@ def eval_illocutions(
     focused_true = []
     focused_pred = []
     for i in range(len(y_true)):
-        if y_true[i] != "None":
+        if y_true[i] != focused_value:
             focused_true.append(y_true[i])
             focused_pred.append(y_pred[i])
 
@@ -341,20 +324,36 @@ def eval_illocutions(
     else:
         zero_division = 0.0
 
-    result_general = precision_recall_fscore_support(
-        y_true, y_pred, average="macro", zero_division=zero_division
-    )
-    result_focused = precision_recall_fscore_support(
-        focused_true, focused_pred, average="macro", zero_division=zero_division
-    )
-    if verbose:
-        print("General", result_general)
-        print("Focused", result_focused)
+    result = {}
+    if len(y_true) > 0:
+        result_general = precision_recall_fscore_support(
+            y_true, y_pred, average="macro", zero_division=zero_division
+        )
+        if verbose:
+            print("General", result_general)
+        result["general"] = {
+            "p": result_general[0],
+            "r": result_general[1],
+            "f1": result_general[2],
+        }
+    else:
+        logger.warning(f"nodeset_id={nodeset_id}: No true relations found")
 
-    return {
-        "general": {"p": result_general[0], "r": result_general[1], "f1": result_general[2]},
-        "focused": {"p": result_focused[0], "r": result_focused[1], "f1": result_focused[2]},
-    }
+    if len(focused_true) > 0:
+        result_focused = precision_recall_fscore_support(
+            focused_true, focused_pred, average="macro", zero_division=zero_division
+        )
+        if verbose:
+            print("Focused", result_focused)
+        result["focused"] = {
+            "p": result_focused[0],
+            "r": result_focused[1],
+            "f1": result_focused[2],
+        }
+    else:
+        logger.warning(f"nodeset_id={nodeset_id}: No focused true relations found")
+
+    return result
 
 
 def eval_single_nodeset(mode: str, **kwargs):
