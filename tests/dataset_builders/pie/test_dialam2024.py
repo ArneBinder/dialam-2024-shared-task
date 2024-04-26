@@ -17,8 +17,7 @@ DATA_DIR = None
 # (change it in dataset_builder/hf/dialam2024/dialam2024.py file, if necessary)
 # DATA_DIR = "data/dataset_excerpt"
 
-# TODO: change test data sizes when fixed
-SPLIT_SIZES = {"train": 1399, "test": 9}
+SPLIT_SIZES = {"train": 1399, "test": 11}
 
 
 @pytest.fixture(scope="module")
@@ -39,7 +38,7 @@ def split_name(request):
 
 @pytest.fixture(scope="module")
 def hf_example(hf_dataset, split_name):
-    return hf_dataset[split_name][0]
+    return hf_dataset[split_name][1 if split_name == "test" else 0]
 
 
 def test_hf_example(hf_example, split_name):
