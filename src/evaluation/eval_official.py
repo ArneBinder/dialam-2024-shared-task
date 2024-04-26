@@ -1,14 +1,17 @@
 import argparse
 import itertools
 import logging
-from typing import Dict, Optional
+from collections import defaultdict
+from typing import Any, Dict, Optional
 
 import pyrootutils
 from sklearn.metrics import precision_recall_fscore_support
 
 pyrootutils.setup_root(search_from=__file__, indicator=[".project-root"], pythonpath=True)
 
-from src.utils.nodeset_utils import Nodeset, read_nodeset
+from src.utils.nodeset_utils import Nodeset, process_all_nodesets, read_nodeset
+
+logger = logging.getLogger(__name__)
 
 
 def eval_arguments(
@@ -337,6 +340,51 @@ def eval_illocutions(
     }
 
 
+def eval_single_nodeset(mode: str, **kwargs):
+    if mode == "arguments":
+        return eval_arguments(**kwargs)
+    elif mode == "illocutions":
+        return eval_illocutions(**kwargs)
+    else:
+        raise ValueError(f"Unknown mode: {mode}")
+
+
+def flatten_dict(d: Dict[str, Any], sep: str = ".") -> Dict[str, Any]:
+    # flatten arbitrary nested dict
+    def items():
+        for key, value in d.items():
+            if isinstance(value, dict):
+                for subkey, subvalue in flatten_dict(value).items():
+                    yield key + sep + subkey, subvalue
+            else:
+                yield key, value
+
+    return dict(items())
+
+
+def main(
+    predictions_dir: str, nodeset_id: Optional[str] = None, show_progress: bool = True, **kwargs
+):
+    if nodeset_id is not None:
+        print(eval_single_nodeset(nodeset_id, predictions_dir=predictions_dir, **kwargs))
+    else:
+        result = defaultdict(list)
+        for nodeset_id, result_or_error in process_all_nodesets(
+            func=eval_single_nodeset,
+            nodeset_dir=predictions_dir,
+            show_progress=show_progress,
+            predictions_dir=predictions_dir,
+            **kwargs,
+        ):
+            if isinstance(result_or_error, Exception):
+                logger.error(f"nodeset={nodeset_id}: Failed to process: {result_or_error}")
+            else:
+                for stat_name, stat_value in flatten_dict(result_or_error, sep=".").items():
+                    result[stat_name].append(stat_value)
+        for stat_name, stat_values in result.items():
+            print(f"{stat_name}: {sum(stat_values) / len(stat_values)}")
+
+
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Evaluate arguments")
     parser.add_argument(
@@ -354,18 +402,15 @@ if __name__ == "__main__":
         required=True,
         help="Path to the directory containing the predicted nodesets",
     )
-    parser.add_argument("--nodeset_id", type=str, help="ID of the nodeset to evaluate")
+    parser.add_argument(
+        "--nodeset_id",
+        type=str,
+        help="ID of the nodeset to evaluate. If not provided, evaluate all nodesets in predictions_dir",
+    )
     parser.add_argument(
         "--silent", dest="verbose", action="store_false", help="Whether to show verbose output"
     )
 
     args = vars(parser.parse_args())
     logging.basicConfig(level=logging.INFO)
-    mode = args.pop("mode")
-
-    if mode == "arguments":
-        print(eval_arguments(**args))
-    elif mode == "illocutions":
-        print(eval_illocutions(**args))
-    else:
-        raise ValueError(f"Unknown mode: {mode}")
+    main(**args)
