@@ -1,6 +1,7 @@
 import argparse
 import itertools
 import logging
+import math
 from collections import defaultdict
 from typing import Any, Dict, Optional, Union
 
@@ -398,6 +399,12 @@ def main(
             if isinstance(result_or_error, Exception):
                 logger.error(f"nodeset={nodeset_id}: Failed to process: {result_or_error}")
             else:
+                result_flat = flatten_dict(result_or_error, sep=".")
+                if any(math.isnan(stat_value) for stat_value in result_flat.values()):
+                    logger.error(
+                        f"nodeset={nodeset_id}: NaN value found in result, skipping this nodeset: {result_flat}"
+                    )
+                    continue
                 for stat_name, stat_value in flatten_dict(result_or_error, sep=".").items():
                     result[stat_name].append(stat_value)
         for stat_name, stat_values in result.items():
