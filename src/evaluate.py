@@ -40,6 +40,8 @@ import pytorch_lightning as pl
 from omegaconf import DictConfig
 from pie_datasets import DatasetDict
 from pytorch_ie.core import PyTorchIEModel, TaskModule
+from pytorch_ie.models import *  # noqa: F403
+from pytorch_ie.taskmodules import *  # noqa: F403
 from pytorch_lightning import Trainer
 
 from src import utils
