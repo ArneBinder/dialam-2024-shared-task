@@ -2,7 +2,7 @@ import argparse
 import itertools
 import logging
 from collections import defaultdict
-from typing import Any, Dict, Optional
+from typing import Any, Dict, Optional, Union
 
 import pyrootutils
 from sklearn.metrics import precision_recall_fscore_support
@@ -198,12 +198,20 @@ def eval_arguments(
             focused_true.append(y_true[i])
             focused_pred.append(y_pred[i])
 
+    zero_division: Union[str, float]
     if verbose:
         print(focused_true)
         print(focused_pred)
+        zero_division = "warn"
+    else:
+        zero_division = 0.0
 
-    result_general = precision_recall_fscore_support(y_true, y_pred, average="macro")
-    result_focused = precision_recall_fscore_support(focused_true, focused_pred, average="macro")
+    result_general = precision_recall_fscore_support(
+        y_true, y_pred, average="macro", zero_division=zero_division
+    )
+    result_focused = precision_recall_fscore_support(
+        focused_true, focused_pred, average="macro", zero_division=zero_division
+    )
     if verbose:
         print("General", result_general)
         print("Focused", result_focused)
@@ -324,12 +332,20 @@ def eval_illocutions(
             focused_true.append(y_true[i])
             focused_pred.append(y_pred[i])
 
+    zero_division: Union[str, float]
     if verbose:
         print(focused_true)
         print(focused_pred)
+        zero_division = "warn"
+    else:
+        zero_division = 0.0
 
-    result_general = precision_recall_fscore_support(y_true, y_pred, average="macro")
-    result_focused = precision_recall_fscore_support(focused_true, focused_pred, average="macro")
+    result_general = precision_recall_fscore_support(
+        y_true, y_pred, average="macro", zero_division=zero_division
+    )
+    result_focused = precision_recall_fscore_support(
+        focused_true, focused_pred, average="macro", zero_division=zero_division
+    )
     if verbose:
         print("General", result_general)
         print("Focused", result_focused)
