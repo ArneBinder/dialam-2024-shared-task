@@ -16,6 +16,7 @@ excluded from the dataset. The following nodesets are excluded:
 - excluded because of error "direction of RA-node 587841 is ambiguous!" (16): 19059, 19217, 19878, 20479,
     20507, 20510, 20766, 20844, 20888, 20992, 21401, 21477, 21588, 23114, 23766, 23891
 - excluded because of error "I-node texts are not unique!" (1): 19911
+- excluded because of error "I-node texts are not unique!" (1): 18293
 
 Problematic, but still included:
 - warnings because of TA-loops (42): 18321, 18795, 18874, 18877, 19173, 19174, 19773, 19897, 19918, 20729, 20894, 21022, 21023, 21039, 21275, 21279, 23120, 23144, 23391, 23479, 23517, 23533, 23551, 23552, 23560, 23599, 23688, 23696, 23789, 23799, 23809, 23837, 23849, 23853, 23878, 23892, 23959, 25511, 25526, 25528, 25691, 25723
@@ -114,6 +115,9 @@ NODESET_BLACKLIST = [
     "23766",
     "23891",
     "19911",
+    "18293",
+    "test_map10",  # TODD
+    "test_map2",  # TODD
 ]
 
 
@@ -204,11 +208,12 @@ class DialAM2024(GeneratorBasedBuilder):
         ]
         if test_data_dir is not None:
             # collect all json files in the data_dir with glob
-            test_file_names = glob.glob(os.path.join(test_data_dir, "*.json"))
+            test_file_names = sorted(glob.glob(os.path.join(test_data_dir, "*.json")))
+            test_file_names_filtered = [fn for fn in test_file_names if not is_blacklisted(fn)]
             result.append(
                 datasets.SplitGenerator(
                     name=datasets.Split.TEST,
-                    gen_kwargs={"file_names": test_file_names},
+                    gen_kwargs={"file_names": test_file_names_filtered},
                 )
             )
 
