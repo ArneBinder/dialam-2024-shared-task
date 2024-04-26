@@ -1,7 +1,7 @@
 import argparse
 import itertools
 import logging
-from typing import Optional
+from typing import Dict, Optional
 
 import pyrootutils
 from sklearn.metrics import precision_recall_fscore_support
@@ -11,13 +11,13 @@ pyrootutils.setup_root(search_from=__file__, indicator=[".project-root"], python
 from src.utils.nodeset_utils import Nodeset, read_nodeset
 
 
-def main(
+def eval_arguments(
     nodeset_id: str,
     predictions_dir: str,
     gold_dir: str,
     nodeset: Optional[Nodeset] = None,
     verbose: bool = True,
-) -> None:
+) -> Dict[str, Dict[str, float]]:
 
     preds = read_nodeset(predictions_dir, nodeset_id) if nodeset is None else nodeset
     truth = read_nodeset(gold_dir, nodeset_id)
@@ -199,8 +199,16 @@ def main(
         print(focused_true)
         print(focused_pred)
 
-    print("General", precision_recall_fscore_support(y_true, y_pred, average="macro"))
-    print("Focused", precision_recall_fscore_support(focused_true, focused_pred, average="macro"))
+    result_general = precision_recall_fscore_support(y_true, y_pred, average="macro")
+    result_focused = precision_recall_fscore_support(focused_true, focused_pred, average="macro")
+    if verbose:
+        print("General", result_general)
+        print("Focused", result_focused)
+
+    return {
+        "general": {"p": result_general[0], "r": result_general[1], "f1": result_general[2]},
+        "focused": {"p": result_focused[0], "r": result_focused[1], "f1": result_focused[2]},
+    }
 
 
 if __name__ == "__main__":
@@ -225,4 +233,4 @@ if __name__ == "__main__":
     args = vars(parser.parse_args())
     logging.basicConfig(level=logging.INFO)
 
-    main(**args)
+    print(eval_arguments(**args))
