@@ -3,7 +3,10 @@ import itertools
 import logging
 from typing import Optional
 
+import pyrootutils
 from sklearn.metrics import precision_recall_fscore_support
+
+pyrootutils.setup_root(search_from=__file__, indicator=[".project-root"], pythonpath=True)
 
 from src.utils.nodeset_utils import Nodeset, read_nodeset
 
