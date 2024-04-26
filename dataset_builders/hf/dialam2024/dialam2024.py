@@ -31,7 +31,9 @@ from datasets import Features, GeneratorBasedBuilder
 logger = logging.getLogger(__name__)
 
 DATA_URL = "http://dialam.arg.tech/res/files/dataset.zip"
+TEST_DATA_URL = "http://dialam.arg.tech/res/files/test-data.zip"
 SUBDIR = "dataset"
+TEST_SUBDIR = "test"
 NODESET_BLACKLIST = [
     "24255",
     "24807",
@@ -123,7 +125,11 @@ def is_blacklisted(nodeset_filename: str) -> bool:
 def get_node_id_from_filename(filename: str) -> str:
     """Get the ID of a nodeset from a filename."""
 
-    return filename.split("nodeset")[1].split(".json")[0]
+    fn_no_ext = os.path.splitext(os.path.basename(filename))[0]
+    if "nodeset" in fn_no_ext:
+        return fn_no_ext.split("nodeset")[1]
+    else:
+        return fn_no_ext
 
 
 class DialAM2024(GeneratorBasedBuilder):
@@ -179,19 +185,34 @@ class DialAM2024(GeneratorBasedBuilder):
         """We handle string, list and dicts in datafiles."""
         if dl_manager.manual_dir is None:
             data_dir = os.path.join(dl_manager.download_and_extract(DATA_URL), SUBDIR)
+            test_data_dir = os.path.join(
+                dl_manager.download_and_extract(TEST_DATA_URL), TEST_SUBDIR
+            )
         else:
             # make absolute path of the manual_dir
             data_dir = os.path.abspath(dl_manager.manual_dir)
+            test_data_dir = None
         # collect all json files in the data_dir with glob
         file_names = glob.glob(os.path.join(data_dir, "*.json"))
         # filter out blacklisted nodesets and sort to get deterministic order
         file_names_filtered = sorted([fn for fn in file_names if not is_blacklisted(fn)])
-        return [
+        result = [
             datasets.SplitGenerator(
                 name=datasets.Split.TRAIN,
                 gen_kwargs={"file_names": file_names_filtered},
             )
         ]
+        if test_data_dir is not None:
+            # collect all json files in the data_dir with glob
+            test_file_names = glob.glob(os.path.join(test_data_dir, "*.json"))
+            result.append(
+                datasets.SplitGenerator(
+                    name=datasets.Split.TEST,
+                    gen_kwargs={"file_names": test_file_names},
+                )
+            )
+
+        return result
 
     def _generate_examples(self, file_names):
         idx = 0
@@ -199,10 +220,24 @@ class DialAM2024(GeneratorBasedBuilder):
             with open(file_name, encoding="utf-8", errors=None) as f:
                 data = json.load(f)
             data["id"] = get_node_id_from_filename(file_name)
+
             # delete optional node fields: scheme, schemeID
             for node in data["nodes"]:
                 node.pop("scheme", None)
                 node.pop("schemeID", None)
+
+            # set missing entries to None
+            for key, subkey in [
+                # ("nodes", "scheme"),
+                # ("nodes", "schemeID"),
+                ("nodes", "timestamp"),
+                ("locutions", "timestamp"),
+                ("locutions", "source"),
+                ("edges", "formEdgeID"),
+            ]:
+                for entry in data[key]:
+                    if subkey not in entry:
+                        entry[subkey] = None
 
             yield idx, data
             idx += 1

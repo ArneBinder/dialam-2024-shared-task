@@ -25,7 +25,7 @@ def hf_dataset():
 
 
 def test_hf_dataset(hf_dataset):
-    assert set(hf_dataset) == {"train"}
+    assert set(hf_dataset) == {"train", "test"}
     assert len(hf_dataset["train"]) == 1400
 
 
