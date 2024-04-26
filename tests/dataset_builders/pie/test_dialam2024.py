@@ -108,6 +108,21 @@ def assert_document(document, config_name, split_name):
             assert isinstance(document, SimplifiedDialAM2024Document)
             assert document.id == "test_map10"
             assert len(document.l_nodes) == 11
+            # TODO: it looks like the order of the nodes is not deterministic. Does this matter?
+            #   At least, the tests should be fixed to not rely on the order.
+            assert document.metadata["l_node_ids"] == [
+                "28_168141153402989746",
+                "18_168141153402989746",
+                "13_168141153402989746",
+                "23_168141153402989746",
+                "3_168141153402989746",
+                "8_168141153402989746",
+                "38_168141153402989746",
+                "83_168141153402989746",
+                "88_168141153402989746",
+                "43_168141153402989746",
+                "48_168141153402989746",
+            ]
             fist_l_node = document.l_nodes[0]
             assert len(document.ya_i2l_nodes) == 11
             assert len(document.ya_s2ta_nodes) == 11
@@ -130,6 +145,21 @@ def assert_document(document, config_name, split_name):
             assert isinstance(document, TextDocumentWithLabeledEntitiesAndNaryRelations)
             assert document.id == "test_map10"
             assert len(document.labeled_spans) == 11
+            # TODO: it looks like the order of the nodes is not deterministic. Does this matter?
+            #   At least, the tests should be fixed to not rely on the order.
+            assert document.metadata["l_node_ids"] == [
+                "18_168141153402989746",
+                "28_168141153402989746",
+                "8_168141153402989746",
+                "3_168141153402989746",
+                "23_168141153402989746",
+                "13_168141153402989746",
+                "38_168141153402989746",
+                "83_168141153402989746",
+                "88_168141153402989746",
+                "43_168141153402989746",
+                "48_168141153402989746",
+            ]
             fist_l_node = document.labeled_spans[0]
             assert len(document.nary_relations) == 33
             last_nary_relation = document.nary_relations[-1]

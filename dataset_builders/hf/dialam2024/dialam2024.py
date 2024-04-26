@@ -116,8 +116,6 @@ NODESET_BLACKLIST = [
     "23891",
     "19911",
     "18293",
-    # "test_map10",  # TODD
-    # "test_map2",  # TODD
 ]
 
 
