@@ -15,7 +15,6 @@ dataset:
 
 taskmodule:
   relation_annotation: "nary_relations"
-  none_label: "s_nodes:NONE"
   argument_role_to_marker:
     "s_nodes:source": "S:S"
     "s_nodes:target": "S:T"
