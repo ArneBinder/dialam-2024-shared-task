@@ -366,7 +366,10 @@ def main(
     predictions_dir: str, nodeset_id: Optional[str] = None, show_progress: bool = True, **kwargs
 ):
     if nodeset_id is not None:
-        print(eval_single_nodeset(nodeset_id, predictions_dir=predictions_dir, **kwargs))
+        result = eval_single_nodeset(
+            nodeset_id=nodeset_id, predictions_dir=predictions_dir, **kwargs
+        )
+        print(result)
     else:
         result = defaultdict(list)
         for nodeset_id, result_or_error in process_all_nodesets(
