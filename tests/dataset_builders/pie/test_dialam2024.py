@@ -7,11 +7,16 @@ from pie_datasets import load_dataset
 from pytorch_ie import Annotation
 from pytorch_ie.annotations import LabeledSpan, NaryRelation
 
-from dataset_builders.pie.dialam2024.dialam2024 import PieDialAM2024
+from dataset_builders.pie.dialam2024.dialam2024 import (
+    PieDialAM2024,
+    convert_to_example,
+    unmerge_relations,
+)
 from src.document.types import (
     SimplifiedDialAM2024Document,
     TextDocumentWithLabeledEntitiesAndNaryRelations,
 )
+from src.serializer import JsonSerializer
 
 DATA_DIR = None
 # To use local data, set DATA_DIR to a local directory containing the nodeset files.
@@ -360,10 +365,15 @@ def assert_document(document, config_name, split_name):
         assert set(current_node_ids2annotations) == NODE_IDS[document.id][node_type]
 
 
-def test_convert_document(builder, hf_example, split_name):
+@pytest.fixture(scope="module")
+def converted_document(builder, hf_example, split_name):
     # test nodeset cleanup and conversion to document
     document = builder._generate_document(hf_example)
-    assert_document(document, config_name=builder.config.name, split_name=split_name)
+    return document
+
+
+def test_converted_document(converted_document, builder, split_name):
+    assert_document(converted_document, config_name=builder.config.name, split_name=split_name)
 
 
 @pytest.fixture(scope="module")
@@ -383,3 +393,29 @@ def document(dataset, split_name):
 
 def test_document(document, config_name, split_name):
     assert_document(document, config_name, split_name)
+
+
+@pytest.fixture(scope="module")
+def document_with_predictions():
+    docs = JsonSerializer.read(
+        path="data/prediction",
+        file_name="test_documents.jsonl",
+        document_type=TextDocumentWithLabeledEntitiesAndNaryRelations,
+    )
+    assert len(docs) == 11
+    return docs[0]
+
+
+@pytest.mark.skip(reason="The predicted data is not available in the repository")
+def test_document_with_predictions(document_with_predictions):
+    assert document_with_predictions is not None
+    assert isinstance(document_with_predictions, TextDocumentWithLabeledEntitiesAndNaryRelations)
+
+
+@pytest.mark.skip(
+    reason="The predicted data with required metadata is not available in the repository"
+)
+def test_convert_to_task_format(document_with_predictions):
+    unmerged_document = unmerge_relations(document_with_predictions)
+    result = convert_to_example(unmerged_document, use_predictions=True)
+    assert result is not None
