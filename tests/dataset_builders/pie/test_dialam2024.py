@@ -397,12 +397,13 @@ def test_document(document, config_name, split_name):
 
 @pytest.fixture(scope="module")
 def document_with_predictions():
+    # TODO: add this to the test fixtures
     docs = JsonSerializer.read(
-        path="data/prediction",
-        file_name="test_documents.jsonl",
+        path="tests/fixtures/dataset_builders/pie/dialam2024/test_with_predictions",
+        file_name="documents.jsonl",
         document_type=TextDocumentWithLabeledEntitiesAndNaryRelations,
     )
-    assert len(docs) == 11
+    assert len(docs) == 1
     return docs[0]
 
 
@@ -410,6 +411,7 @@ def document_with_predictions():
 def test_document_with_predictions(document_with_predictions):
     assert document_with_predictions is not None
     assert isinstance(document_with_predictions, TextDocumentWithLabeledEntitiesAndNaryRelations)
+    assert document_with_predictions.id == "test_map1"
 
 
 @pytest.mark.skip(
