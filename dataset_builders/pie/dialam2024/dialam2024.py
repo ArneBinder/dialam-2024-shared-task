@@ -192,7 +192,7 @@ def convert_to_example(
     l_node_ids = document.metadata["l_node_ids"]
     l_nodes = [node_ids2original[l_node_id] for l_node_id in l_node_ids]
 
-    rel_layer_names = ["ya_i2l_relations", "ya_s2ta_relations", "s_relations"]
+    rel_layer_names = ["ya_i2l_nodes", "ya_s2ta_nodes", "s_nodes"]
 
     annotation2predicted_label: Dict[str, Dict[NaryRelation, str]] = defaultdict(dict)
     if use_predictions:
@@ -218,7 +218,8 @@ def convert_to_example(
         for annotation, relation in zip(document[layer_name], relations):
             label = annotation2predicted_label[layer_name].get(annotation, annotation.label)
             if label != NONE_LABEL:
-                new_node = dict(node_ids2original[relation["relation"]])
+                rel_node_id = relation["relation"]
+                new_node = dict(node_ids2original[rel_node_id])
                 new_node["text"] = label
                 other_rel_nodes.append(new_node)
                 for src in relation["sources"]:
