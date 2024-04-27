@@ -259,6 +259,10 @@ def cleanup_nodeset(nodeset: Nodeset, nodeset_id: str, verbose: bool = True) -> 
     # remove invalid relations
     valid_src_trg, valid_node_ids = get_valid_src_trg_and_node_ids_from_relations(valid_relations)
 
+    # re-add all (isolated) I-nodes, in the test set, we need to keep them
+    i_node_ids = get_node_ids_by_type(nodeset, ["I"])
+    valid_node_ids.update(i_node_ids)
+
     # create a copy of the nodeset to avoid modifying the original
     result = nodeset.copy()
 

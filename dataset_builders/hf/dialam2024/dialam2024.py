@@ -16,6 +16,7 @@ excluded from the dataset. The following nodesets are excluded:
 - excluded because of error "direction of RA-node 587841 is ambiguous!" (16): 19059, 19217, 19878, 20479,
     20507, 20510, 20766, 20844, 20888, 20992, 21401, 21477, 21588, 23114, 23766, 23891
 - excluded because of error "I-node texts are not unique!" (1): 19911
+- excluded because of error "I-node texts are not unique!" (1): 18293
 
 Problematic, but still included:
 - warnings because of TA-loops (42): 18321, 18795, 18874, 18877, 19173, 19174, 19773, 19897, 19918, 20729, 20894, 21022, 21023, 21039, 21275, 21279, 23120, 23144, 23391, 23479, 23517, 23533, 23551, 23552, 23560, 23599, 23688, 23696, 23789, 23799, 23809, 23837, 23849, 23853, 23878, 23892, 23959, 25511, 25526, 25528, 25691, 25723
@@ -31,7 +32,9 @@ from datasets import Features, GeneratorBasedBuilder
 logger = logging.getLogger(__name__)
 
 DATA_URL = "http://dialam.arg.tech/res/files/dataset.zip"
+TEST_DATA_URL = "http://dialam.arg.tech/res/files/test-data.zip"
 SUBDIR = "dataset"
+TEST_SUBDIR = "test"
 NODESET_BLACKLIST = [
     "24255",
     "24807",
@@ -112,6 +115,7 @@ NODESET_BLACKLIST = [
     "23766",
     "23891",
     "19911",
+    "18293",
 ]
 
 
@@ -123,7 +127,11 @@ def is_blacklisted(nodeset_filename: str) -> bool:
 def get_node_id_from_filename(filename: str) -> str:
     """Get the ID of a nodeset from a filename."""
 
-    return filename.split("nodeset")[1].split(".json")[0]
+    fn_no_ext = os.path.splitext(os.path.basename(filename))[0]
+    if "nodeset" in fn_no_ext:
+        return fn_no_ext.split("nodeset")[1]
+    else:
+        return fn_no_ext
 
 
 class DialAM2024(GeneratorBasedBuilder):
@@ -179,19 +187,35 @@ class DialAM2024(GeneratorBasedBuilder):
         """We handle string, list and dicts in datafiles."""
         if dl_manager.manual_dir is None:
             data_dir = os.path.join(dl_manager.download_and_extract(DATA_URL), SUBDIR)
+            test_data_dir = os.path.join(
+                dl_manager.download_and_extract(TEST_DATA_URL), TEST_SUBDIR
+            )
         else:
             # make absolute path of the manual_dir
             data_dir = os.path.abspath(dl_manager.manual_dir)
+            test_data_dir = None
         # collect all json files in the data_dir with glob
         file_names = glob.glob(os.path.join(data_dir, "*.json"))
         # filter out blacklisted nodesets and sort to get deterministic order
         file_names_filtered = sorted([fn for fn in file_names if not is_blacklisted(fn)])
-        return [
+        result = [
             datasets.SplitGenerator(
                 name=datasets.Split.TRAIN,
                 gen_kwargs={"file_names": file_names_filtered},
             )
         ]
+        if test_data_dir is not None:
+            # collect all json files in the data_dir with glob
+            test_file_names = sorted(glob.glob(os.path.join(test_data_dir, "*.json")))
+            test_file_names_filtered = [fn for fn in test_file_names if not is_blacklisted(fn)]
+            result.append(
+                datasets.SplitGenerator(
+                    name=datasets.Split.TEST,
+                    gen_kwargs={"file_names": test_file_names_filtered},
+                )
+            )
+
+        return result
 
     def _generate_examples(self, file_names):
         idx = 0
@@ -199,10 +223,24 @@ class DialAM2024(GeneratorBasedBuilder):
             with open(file_name, encoding="utf-8", errors=None) as f:
                 data = json.load(f)
             data["id"] = get_node_id_from_filename(file_name)
+
             # delete optional node fields: scheme, schemeID
             for node in data["nodes"]:
                 node.pop("scheme", None)
                 node.pop("schemeID", None)
+
+            # set missing entries to None
+            for key, subkey in [
+                # ("nodes", "scheme"),
+                # ("nodes", "schemeID"),
+                ("nodes", "timestamp"),
+                ("locutions", "timestamp"),
+                ("locutions", "source"),
+                ("edges", "formEdgeID"),
+            ]:
+                for entry in data[key]:
+                    if subkey not in entry:
+                        entry[subkey] = None
 
             yield idx, data
             idx += 1
