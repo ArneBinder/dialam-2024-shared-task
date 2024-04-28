@@ -397,26 +397,21 @@ def test_document(document, config_name, split_name):
 
 @pytest.fixture(scope="module")
 def document_with_predictions():
-    # TODO: add this to the test fixtures
     docs = JsonSerializer.read(
         path="tests/fixtures/dataset_builders/pie/dialam2024/test_with_predictions",
-        file_name="documents.jsonl",
+        file_name="test_documents_roberta_large.jsonl",
         document_type=TextDocumentWithLabeledEntitiesAndNaryRelations,
     )
-    assert len(docs) == 1
-    return docs[0]
+    assert len(docs) == 11
+    doc_id2doc = {doc.id: doc for doc in docs}
+    return doc_id2doc["test_map2"]
 
 
-@pytest.mark.skip(reason="The predicted data is not available in the repository")
 def test_document_with_predictions(document_with_predictions):
     assert document_with_predictions is not None
     assert isinstance(document_with_predictions, TextDocumentWithLabeledEntitiesAndNaryRelations)
-    assert document_with_predictions.id == "test_map1"
 
 
-@pytest.mark.skip(
-    reason="The predicted data with required metadata is not available in the repository"
-)
 def test_convert_to_task_format(document_with_predictions):
     unmerged_document = unmerge_relations(document_with_predictions)
     result = convert_to_example(unmerged_document, use_predictions=True)
