@@ -396,7 +396,7 @@ def test_document(document, config_name, split_name):
 
 
 @pytest.fixture(scope="module")
-def document_with_predictions():
+def documents_with_predictions() -> Dict[str, TextDocumentWithLabeledEntitiesAndNaryRelations]:
     docs = JsonSerializer.read(
         path="tests/fixtures/dataset_builders/pie/dialam2024/test_with_predictions",
         file_name="test_documents_roberta_large.jsonl",
@@ -404,15 +404,17 @@ def document_with_predictions():
     )
     assert len(docs) == 11
     doc_id2doc = {doc.id: doc for doc in docs}
-    return doc_id2doc["test_map2"]
+    return doc_id2doc
 
 
-def test_document_with_predictions(document_with_predictions):
+def test_documents_with_predictions(documents_with_predictions):
+    document_with_predictions = documents_with_predictions["test_map10"]
     assert document_with_predictions is not None
     assert isinstance(document_with_predictions, TextDocumentWithLabeledEntitiesAndNaryRelations)
 
 
-def test_convert_to_task_format(document_with_predictions):
-    unmerged_document = unmerge_relations(document_with_predictions)
-    result = convert_to_example(unmerged_document, use_predictions=True)
-    assert result is not None
+def test_convert_to_task_format_all(documents_with_predictions):
+    for document_id, document_with_predictions in documents_with_predictions.items():
+        unmerged_document = unmerge_relations(document_with_predictions)
+        result = convert_to_example(unmerged_document, use_predictions=True)
+        assert result is not None

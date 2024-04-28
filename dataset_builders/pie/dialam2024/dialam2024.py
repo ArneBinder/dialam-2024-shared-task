@@ -1,6 +1,6 @@
 import logging
 from collections import defaultdict
-from typing import Any, Dict, List, Tuple
+from typing import Any, Dict, List, Tuple, Union
 
 import datasets
 from pie_datasets import GeneratorBasedBuilder
@@ -179,7 +179,7 @@ def get_roles_and_arguments(annotation: NaryRelation) -> Tuple[Tuple[str, Labele
 # - re-creates edges, i.e. the ids of any original edges are not preserved
 # - requires to set use_predictions to either True or False
 def convert_to_example(
-    document: SimplifiedDialAM2024Document, use_predictions: bool
+    document: SimplifiedDialAM2024Document, use_predictions: Union[bool, List[str]]
 ) -> Dict[str, Any]:
 
     edge_set = set((edge["fromID"], edge["toID"]) for edge in document.metadata["edges"])
@@ -193,13 +193,23 @@ def convert_to_example(
     l_node_ids = document.metadata["l_node_ids"]
     l_nodes = [node_ids2original[l_node_id] for l_node_id in l_node_ids]
 
-    rel_layer_names = ["ya_i2l_nodes", "ya_s2ta_nodes", "s_nodes"]
+    # NOTE: The order of the relation layers is important here because we check for all new relation
+    #   nodes if their source and target nodes are already in the document and skip the relation node
+    #   if not. Therefore, the order should be such that the source and target nodes are added before
+    #   the respective relation nodes.
+    rel_layer_names = ["ya_i2l_nodes", "s_nodes", "ya_s2ta_nodes"]
 
     annotation2predicted_label: Dict[str, Dict[NaryRelation, str]] = defaultdict(dict)
-    # TODO: allow to use predictions just for some layers
-    #  (the current implementation works just for merged_relations)
     if use_predictions:
-        for layer_name in rel_layer_names:
+        if isinstance(use_predictions, bool):
+            prediction_layer_names = rel_layer_names
+        elif isinstance(use_predictions, (list, tuple)):
+            prediction_layer_names = use_predictions
+        else:
+            raise ValueError(
+                f"Unsupported value for use_predictions: {use_predictions}. Expected bool or list of layer names."
+            )
+        for layer_name in prediction_layer_names:
             rel_args2annotation = {
                 get_roles_and_arguments(rel): rel for rel in document[layer_name]
             }
@@ -213,8 +223,9 @@ def convert_to_example(
                 else:
                     annotation2predicted_label[layer_name][annotation] = NONE_LABEL
 
+    nodes = i_nodes + ta_nodes + l_nodes
+    node_ids = set(node["nodeID"] for node in nodes)
     # create ya_i2l_nodes / ya_s2ta_nodes / s_nodes from the nary relations
-    other_rel_nodes = []
     for layer_name in rel_layer_names:
         metadata_key = layer_name.replace("_nodes", "_relations")
         relations = document.metadata[metadata_key]
@@ -224,14 +235,23 @@ def convert_to_example(
                 rel_node_id = relation["relation"]
                 new_node = dict(node_ids2original[rel_node_id])
                 new_node["text"] = label
-                other_rel_nodes.append(new_node)
+                # check if all source and target nodes are in the document
+                if not all(
+                    source_or_target in node_ids
+                    for source_or_target in relation["sources"] + relation["targets"]
+                ):
+                    logger.warning(
+                        f"doc={document.id}: Skipping relation {relation} because not all source or target "
+                        f"nodes are in the document."
+                    )
+                    continue
+                nodes.append(new_node)
+                node_ids.add(rel_node_id)
                 for src in relation["sources"]:
                     edge_set.add((src, relation["relation"]))
                 for tgt in relation["targets"]:
                     edge_set.add((relation["relation"], tgt))
 
-    nodes = i_nodes + ta_nodes + l_nodes + other_rel_nodes
-    node_ids = set(node["nodeID"] for node in nodes)
     edge_set_filtered = set(
         (src, tgt) for src, tgt in edge_set if src in node_ids and tgt in node_ids
     )
@@ -273,7 +293,7 @@ def unprefix_nary_relation(
     role_prefixes = set()
     for role in nary_relation.roles:
         if sep not in role:
-            raise ValueError(f"Role {role} does not contain separator {sep}.")
+            raise ValueError(f'Role "{role}" does not contain separator "{sep}".')
         role_prefix, new_role = role.split(sep, maxsplit=1)
         role_prefixes.add(role_prefix)
         new_roles.append(new_role)
@@ -283,7 +303,8 @@ def unprefix_nary_relation(
     label_prefix, new_label = nary_relation.label.split(sep, maxsplit=1)
     if label_prefix != role_prefix:
         logger.warning(
-            f"Label prefix {label_prefix} does not match role prefix {role_prefix}. Set label to NONE_lABEL={NONE_LABEL}."
+            f'Label prefix "{label_prefix}" does not match role prefix "{role_prefix}". '
+            f'Set label to NONE_LABEL="{NONE_LABEL}".'
         )
         new_label = NONE_LABEL
     return role_prefix, NaryRelation(
