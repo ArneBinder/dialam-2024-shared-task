@@ -24,6 +24,7 @@ from src.utils.prepare_data import prepare_nodeset
 logger = logging.getLogger(__name__)
 
 NONE_LABEL = "NONE"
+PREFIX_SEPARATOR = ":"
 
 
 def dictoflists_to_listofdicts(data):
@@ -195,6 +196,8 @@ def convert_to_example(
     rel_layer_names = ["ya_i2l_nodes", "ya_s2ta_nodes", "s_nodes"]
 
     annotation2predicted_label: Dict[str, Dict[NaryRelation, str]] = defaultdict(dict)
+    # TODO: allow to use predictions just for some layers
+    #  (the current implementation works just for merged_relations)
     if use_predictions:
         for layer_name in rel_layer_names:
             rel_args2annotation = {
@@ -257,23 +260,42 @@ def prefix_nary_relation(nary_relation: NaryRelation, prefix: str, sep: str = ":
 def unprefix_nary_relation(
     nary_relation: NaryRelation, sep: str = ":"
 ) -> Tuple[str, NaryRelation]:
-    # unprefix the label and roles of the nary relation
-    prefix, new_label = nary_relation.label.split(sep, maxsplit=1)
-    # check that all roles are prefixed with the same prefix
+    """Unprefixes the label and roles of a n-ary relation. The prefix is assumed to be the same for
+    the label and all roles. If the roles have different prefixes, a ValueError is raised. If the
+    label prefix does not match the role prefix, a warning is logged and the label is set to
+    NONE_LABEL.
+
+    Args:
+        nary_relation: The n-ary relation to unprefix
+        sep: The separator used to separate the prefix from the label and roles
+    """
     new_roles = []
+    role_prefixes = set()
     for role in nary_relation.roles:
-        if not role.startswith(prefix + sep):
-            raise ValueError(
-                f"Expected all roles of n-ary relation {nary_relation.label} to be prefixed with "
-                f"{prefix}{sep}, got {role}."
-            )
-        new_roles.append(role[len(prefix) + len(sep) :])
-    new_arguments = nary_relation.arguments
-    return prefix, NaryRelation(arguments=new_arguments, roles=tuple(new_roles), label=new_label)
+        if sep not in role:
+            raise ValueError(f"Role {role} does not contain separator {sep}.")
+        role_prefix, new_role = role.split(sep, maxsplit=1)
+        role_prefixes.add(role_prefix)
+        new_roles.append(new_role)
+    if len(role_prefixes) != 1:
+        raise ValueError(f"Roles have different prefixes: {role_prefixes}.")
+    role_prefix = role_prefixes.pop()
+    label_prefix, new_label = nary_relation.label.split(sep, maxsplit=1)
+    if label_prefix != role_prefix:
+        logger.warning(
+            f"Label prefix {label_prefix} does not match role prefix {role_prefix}. Set label to NONE_lABEL={NONE_LABEL}."
+        )
+        new_label = NONE_LABEL
+    return role_prefix, NaryRelation(
+        arguments=nary_relation.arguments, roles=tuple(new_roles), label=new_label
+    )
 
 
 def merge_relations(
-    document: TextBasedDocument, labeled_span_layer: str, nary_relation_layers: List[str]
+    document: TextBasedDocument,
+    labeled_span_layer: str,
+    nary_relation_layers: List[str],
+    sep: str = ":",
 ) -> TextDocumentWithLabeledEntitiesAndNaryRelations:
     """Merges the relations from multiple n-ary relation layers into a single layer. The labels and
     roles of the n-ary relations are prefixed with the name of the layer.
@@ -285,6 +307,7 @@ def merge_relations(
         document: The input document
         labeled_span_layer: The name of the layer containing the labeled spans
         nary_relation_layers: The names of the n-ary relation layers to merge
+        sep: The separator used to separate the prefix from the label and roles
 
     Returns: A new document with the relation layers merged
     """
@@ -308,7 +331,8 @@ def merge_relations(
             )
         nary_relations = document[nary_relation_layer].clear()
         prefixed_nary_relations = [
-            prefix_nary_relation(rel, prefix=nary_relation_layer) for rel in nary_relations
+            prefix_nary_relation(rel, prefix=nary_relation_layer, sep=sep)
+            for rel in nary_relations
         ]
         new_document.nary_relations.extend(prefixed_nary_relations)
 
@@ -316,7 +340,7 @@ def merge_relations(
 
 
 def unmerge_relations(
-    document: TextDocumentWithLabeledEntitiesAndNaryRelations,
+    document: TextDocumentWithLabeledEntitiesAndNaryRelations, sep: str = ":"
 ) -> SimplifiedDialAM2024Document:
     """Unmerges the relations from a single n-ary relation layer into multiple layers. The labels
     and roles of the n-ary relations are un-prefixed.
@@ -326,6 +350,7 @@ def unmerge_relations(
 
     Args:
         document: The input document
+        sep: The separator used to separate the prefix from the label and roles
 
     Returns: A new document with the relation layers unmerged
     """
@@ -338,13 +363,13 @@ def unmerge_relations(
     new_document.l_nodes.extend(labeled_spans)
     # iterate over the nary relations and un-prefix the labels and roles
     for nary_relation in document.nary_relations:
-        prefix, new_nary_relation = unprefix_nary_relation(nary_relation)
+        prefix, new_nary_relation = unprefix_nary_relation(nary_relation, sep=sep)
         if prefix not in new_document.metadata["nary_relation_layers"]:
             raise ValueError(f"Unknown n-ary relation layer prefix {prefix}.")
         new_document[prefix].append(new_nary_relation)
     # also handle predictions
     for nary_relation in document.nary_relations.predictions:
-        prefix, new_nary_relation = unprefix_nary_relation(nary_relation)
+        prefix, new_nary_relation = unprefix_nary_relation(nary_relation, sep=sep)
         if prefix not in new_document.metadata["nary_relation_layers"]:
             raise ValueError(f"Unknown n-ary relation layer prefix {prefix}.")
         new_document[prefix].predictions.append(new_nary_relation)
@@ -408,12 +433,13 @@ class PieDialAM2024(GeneratorBasedBuilder):
                 document=doc,
                 labeled_span_layer="l_nodes",
                 nary_relation_layers=["ya_i2l_nodes", "ya_s2ta_nodes", "s_nodes"],
+                sep=PREFIX_SEPARATOR,
             )
         return doc
 
     def _generate_example(self, document: Document, **kwargs) -> Dict[str, Any]:
         if isinstance(document, TextDocumentWithLabeledEntitiesAndNaryRelations):
-            document = unmerge_relations(document)
+            document = unmerge_relations(document, sep=PREFIX_SEPARATOR)
         elif not isinstance(document, SimplifiedDialAM2024Document):
             raise ValueError(f"Unsupported document type {type(document)}")
         converted = convert_to_example(document, use_predictions=False)
