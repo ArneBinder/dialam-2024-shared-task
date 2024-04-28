@@ -32,8 +32,10 @@ from datasets import Features, GeneratorBasedBuilder
 logger = logging.getLogger(__name__)
 
 DATA_URL = "http://dialam.arg.tech/res/files/dataset.zip"
+SAMPLE_TEST_DATA_URL = "http://dialam.arg.tech/res/files/sample_test.zip"
 TEST_DATA_URL = "http://dialam.arg.tech/res/files/test-data.zip"
 SUBDIR = "dataset"
+SAMPLE_TEST_SUBDIR = "sample_test"
 TEST_SUBDIR = "test"
 NODESET_BLACKLIST = [
     "24255",
@@ -134,6 +136,18 @@ def get_node_id_from_filename(filename: str) -> str:
         return fn_no_ext
 
 
+def _construct_split_generator(data_dir: str, split_name: str) -> datasets.SplitGenerator:
+    # collect all json files in the data_dir with glob
+    sample_test_file_names = sorted(glob.glob(os.path.join(data_dir, "*.json")))
+    sample_test_file_names_filtered = [
+        fn for fn in sample_test_file_names if not is_blacklisted(fn)
+    ]
+    return datasets.SplitGenerator(
+        name=split_name,
+        gen_kwargs={"file_names": sample_test_file_names_filtered},
+    )
+
+
 class DialAM2024(GeneratorBasedBuilder):
     BUILDER_CONFIGS = [
         datasets.BuilderConfig(
@@ -190,30 +204,19 @@ class DialAM2024(GeneratorBasedBuilder):
             test_data_dir = os.path.join(
                 dl_manager.download_and_extract(TEST_DATA_URL), TEST_SUBDIR
             )
+            sample_test_data_dir = os.path.join(
+                dl_manager.download_and_extract(SAMPLE_TEST_DATA_URL), SAMPLE_TEST_SUBDIR
+            )
         else:
             # make absolute path of the manual_dir
             data_dir = os.path.abspath(dl_manager.manual_dir)
             test_data_dir = None
-        # collect all json files in the data_dir with glob
-        file_names = glob.glob(os.path.join(data_dir, "*.json"))
-        # filter out blacklisted nodesets and sort to get deterministic order
-        file_names_filtered = sorted([fn for fn in file_names if not is_blacklisted(fn)])
-        result = [
-            datasets.SplitGenerator(
-                name=datasets.Split.TRAIN,
-                gen_kwargs={"file_names": file_names_filtered},
-            )
-        ]
+            sample_test_data_dir = None
+        result = [_construct_split_generator(data_dir, datasets.Split.TRAIN)]
         if test_data_dir is not None:
-            # collect all json files in the data_dir with glob
-            test_file_names = sorted(glob.glob(os.path.join(test_data_dir, "*.json")))
-            test_file_names_filtered = [fn for fn in test_file_names if not is_blacklisted(fn)]
-            result.append(
-                datasets.SplitGenerator(
-                    name=datasets.Split.TEST,
-                    gen_kwargs={"file_names": test_file_names_filtered},
-                )
-            )
+            result.append(_construct_split_generator(test_data_dir, datasets.Split.TEST))
+        if sample_test_data_dir is not None:
+            result.append(_construct_split_generator(sample_test_data_dir, "sample_test"))
 
         return result
 
