@@ -19,7 +19,7 @@ DATA_DIR = None
 # (change it in dataset_builder/hf/dialam2024/dialam2024.py file, if necessary)
 # DATA_DIR = "data/dataset_excerpt"
 
-SPLIT_SIZES = {"train": 1399, 'sample_test': 3, "test": 11}
+SPLIT_SIZES = {"train": 1399, "sample_test": 3, "test": 11}
 # for the test set, we want to have the map "test_map10" as example because it contains complex stuff
 SPLIT2IDX = {"train": 0, "test": 1}
 
