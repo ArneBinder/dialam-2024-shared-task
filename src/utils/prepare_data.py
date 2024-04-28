@@ -66,13 +66,16 @@ def get_valid_relations(nodeset: Nodeset) -> List[Relation]:
     return s_relations + ya_relations + ta_relations
 
 
-def normalize_ra_relation_direction(nodeset: Nodeset, nodeset_id: str) -> Nodeset:
+def normalize_ra_relation_direction(
+    nodeset: Nodeset, nodeset_id: str, reversed_text_suffix: str = "-rev"
+) -> Nodeset:
     """Normalize the direction of the relations in the nodeset to point in the opposite direction
     as their anchoring TA-relation.
 
     Args:
         nodeset: Nodeset.
         nodeset_id: Nodeset ID.
+        reversed_text_suffix: Suffix to append to the type of the reversed relation node.
 
     Returns:
         Nodeset with normalized relations.
@@ -86,7 +89,7 @@ def normalize_ra_relation_direction(nodeset: Nodeset, nodeset_id: str) -> Nodese
         relations=reversed_ra_relations,
         nodeset=nodeset,
         nodeset_id=nodeset_id,
-        reversed_text_suffix="-rev",
+        reversed_text_suffix=reversed_text_suffix,
         redo=False,
     )
     return result
@@ -554,6 +557,7 @@ def prepare_nodeset(
     ya_node_text: str,
     s_node_type: str = "S",
     l2i_similarity_measure: str = "lcsstr",
+    reversed_text_suffix: str = "-rev",
     add_gold_data: bool = False,
     re_revert_ra_relations: bool = False,
     re_remove_none_relations: bool = False,
@@ -575,6 +579,7 @@ def prepare_nodeset(
         ya_node_text: Text for the dummy YA-node.
         s_node_type: Type for the dummy S-node.
         l2i_similarity_measure: Similarity measure to use for matching L- and I-nodes.
+        reversed_text_suffix: Suffix to append to the type of the reversed relation node.
         add_gold_data: Whether to add gold data to the dummy relation nodes.
         re_revert_ra_relations: Whether to revert the normalized RA-relation nodes back to the original state.
         re_remove_none_relations: Whether to re-remove the new S and YA relations.
@@ -600,7 +605,9 @@ def prepare_nodeset(
 
     if add_gold_data:
         # normalize the direction of the RA-relation nodes in the cleaned (gold) data
-        nodeset_normalized_relations = normalize_ra_relation_direction(nodeset_clean, nodeset_id)
+        nodeset_normalized_relations = normalize_ra_relation_direction(
+            nodeset_clean, nodeset_id, reversed_text_suffix
+        )
         # match the dummy relation nodes with the gold data
         dummy2gold_node_matching = get_node_matching(
             nodeset=nodeset_with_dummy_relations,

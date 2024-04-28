@@ -455,6 +455,7 @@ class PieDialAM2024(GeneratorBasedBuilder):
             s_node_text=NONE_LABEL,
             ya_node_text=NONE_LABEL,
             s_node_type="RA",
+            reversed_text_suffix=REVERSE_SUFFIX,
             l2i_similarity_measure="lcsstr",
             add_gold_data=not is_test_example,
         )
