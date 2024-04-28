@@ -25,6 +25,7 @@ logger = logging.getLogger(__name__)
 
 NONE_LABEL = "NONE"
 PREFIX_SEPARATOR = ":"
+REVERSE_SUFFIX = "-rev"
 
 
 def dictoflists_to_listofdicts(data):
@@ -179,7 +180,9 @@ def get_roles_and_arguments(annotation: NaryRelation) -> Tuple[Tuple[str, Labele
 # - re-creates edges, i.e. the ids of any original edges are not preserved
 # - requires to set use_predictions to either True or False
 def convert_to_example(
-    document: SimplifiedDialAM2024Document, use_predictions: Union[bool, List[str]]
+    document: SimplifiedDialAM2024Document,
+    use_predictions: Union[bool, List[str]],
+    denormalize_relation_direction: bool = True,
 ) -> Dict[str, Any]:
 
     edge_set = set((edge["fromID"], edge["toID"]) for edge in document.metadata["edges"])
@@ -234,23 +237,30 @@ def convert_to_example(
             if label != NONE_LABEL:
                 rel_node_id = relation["relation"]
                 new_node = dict(node_ids2original[rel_node_id])
+                # if the relation was normalized, re-reverse it
+                if denormalize_relation_direction and label.endswith(REVERSE_SUFFIX):
+                    label = label[: -len(REVERSE_SUFFIX)]
+                    source_ids = relation["targets"]
+                    target_ids = relation["sources"]
+                else:
+                    source_ids = relation["sources"]
+                    target_ids = relation["targets"]
                 new_node["text"] = label
                 # check if all source and target nodes are in the document
                 if not all(
-                    source_or_target in node_ids
-                    for source_or_target in relation["sources"] + relation["targets"]
+                    source_or_target in node_ids for source_or_target in source_ids + target_ids
                 ):
                     logger.warning(
-                        f"doc={document.id}: Skipping relation {relation} because not all source or target "
-                        f"nodes are in the document."
+                        f"doc={document.id}: Skipping relation node {relation} because not all source or target "
+                        f"nodes are yet available."
                     )
                     continue
                 nodes.append(new_node)
                 node_ids.add(rel_node_id)
-                for src in relation["sources"]:
-                    edge_set.add((src, relation["relation"]))
-                for tgt in relation["targets"]:
-                    edge_set.add((relation["relation"], tgt))
+                for src in source_ids:
+                    edge_set.add((src, rel_node_id))
+                for tgt in target_ids:
+                    edge_set.add((rel_node_id, tgt))
 
     edge_set_filtered = set(
         (src, tgt) for src, tgt in edge_set if src in node_ids and tgt in node_ids
