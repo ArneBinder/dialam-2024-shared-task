@@ -6,7 +6,7 @@ create_validation_split:
   _processor_: pie_datasets.DatasetDict.move_to_new_split
   source_split: train
   target_split: validation
-  # take shuffled ~10% (140 out of 1399) of the train split as the validation split
+  # take ~10% (140 out of 1399) of the shuffled train split as the validation split
   ids:
     [
       "18275",
