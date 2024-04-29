@@ -276,7 +276,7 @@ This file is meant to log the development and experimentation process of this pr
 
 ### Merged relations with RoBERTa (task_learning_rate=1e-4, learning_rate=1e-5)
 
-- training a single model for all relation types with xlm-roberta-large
+- training a single model for all relation types with roberta-large
   - command:
     ```bash
       python src/train.py \
@@ -367,7 +367,7 @@ This file is meant to log the development and experimentation process of this pr
 
 ### Merged relations with RoBERTa (task_learning_rate=1e-3, learning_rate=1e-5)
 
-- training a single model for all relation types with xlm-roberta-large
+- training a single model for all relation types with roberta-large
   - command:
     ```bash
       python src/train.py \
@@ -458,7 +458,7 @@ This file is meant to log the development and experimentation process of this pr
 
 ### Merged relations with RoBERTa (task_learning_rate=2e-5, learning_rate=1e-5)
 
-- training a single model for all relation types with xlm-roberta-large
+- training a single model for all relation types with roberta-large
   - command:
     ```bash
       python src/train.py \
@@ -551,7 +551,7 @@ This file is meant to log the development and experimentation process of this pr
 
 ### Merged relations with RoBERTa (task_learning_rate=1e-4, learning_rate=1e-4)
 
-- training a single model for all relation types with xlm-roberta-large, experimenting with the base-model learning rate
+- training a single model for all relation types with roberta-large, experimenting with the base-model learning rate
   - command:
     ```bash
       python src/train.py \
@@ -643,7 +643,7 @@ This file is meant to log the development and experimentation process of this pr
 
 ### Merged relations with RoBERTa (task_learning_rate=1e-4, learning_rate=2e-4)
 
-- training a single model for all relation types with xlm-roberta-large, experimenting with the base-model learning rate
+- training a single model for all relation types with roberta-large, experimenting with the base-model learning rate
   - command:
     ```bash
       python src/train.py \
@@ -735,7 +735,7 @@ This file is meant to log the development and experimentation process of this pr
 
 ### Merged relations with RoBERTa (task_learning_rate=1e-4, learning_rate=2e-5)
 
-- training a single model for all relation types with xlm-roberta-large, experimenting with the base-model learning rate
+- training a single model for all relation types with roberta-large, experimenting with the base-model learning rate
   - command:
     ```bash
       python src/train.py \
@@ -827,7 +827,7 @@ This file is meant to log the development and experimentation process of this pr
 
 ### S-relations with RoBERTa (lr=1e-4)
 
-- training a single model for s-relation types with xlm-roberta-large
+- training a single model for s-relation types with roberta-large
   - command:
     ```bash
       python src/train.py \
@@ -878,7 +878,7 @@ This file is meant to log the development and experimentation process of this pr
 
 ### YA S2TA relations with RoBERTa (lr=1e-4)
 
-- training a single model for YA-relation types (between S and TA nodes) with xlm-roberta-large
+- training a single model for YA-relation types (between S and TA nodes) with roberta-large
   - command:
     ```bash
       python src/train.py \
@@ -939,7 +939,7 @@ This file is meant to log the development and experimentation process of this pr
 
 ### YA I2L relations with RoBERTa (lr=1e-4)
 
-- training a single model for YA-relation types (between I and L nodes) with xlm-roberta-large
+- training a single model for YA-relation types (between I and L nodes) with roberta-large
   - command:
     ```bash
       python src/train.py \
@@ -995,5 +995,477 @@ This file is meant to log the development and experimentation process of this pr
 | metric/macro/f1/val                    |    0.344627 |    0.353578 |     0.36711 |     3 |    0.380641 |    0.356632 |    0.335676 |   0.0226373 |
 | metric/micro/f1/train                  |           1 |           1 |           1 |     3 |           1 |           1 |           1 |           0 |
 | metric/micro/f1/val                    |     0.95914 |    0.961828 |    0.962097 |     3 |    0.962366 |    0.960215 |    0.956452 |   0.0032703 |
+
+</details>
+
+## 2024-04-29
+
+### Merged relations with RoBERTa (task_learning_rate=1e-4, learning_rate=2e-6)
+
+- training a single model for all relation types with roberta-large, experimenting with the base-model learning rate
+  - command:
+    ```bash
+      python src/train.py \
+      experiment=dialam2024_merged_relations \
+      model.task_learning_rate=1e-4 \
+      model.learning_rate=2e-6 \
+      base_model_name=FacebookAI/roberta-large \
+      trainer=gpu \
+      seed=1,2,3 \
+      +hydra.callbacks.save_job_return.integrate_multirun_result=true \
+      name=bert-base-uncased-model \
+      --multirun
+    ```
+  - wandb (weights & biases) run:
+    - seed1: https://wandb.ai/tanikina/bert-base-uncased-model-training/runs/xm1j3aem
+    - seed2: https://wandb.ai/tanikina/bert-base-uncased-model-training/runs/slr2ujms
+    - seed3: https://wandb.ai/tanikina/bert-base-uncased-model-training/runs/0iemuxr3
+  - artefacts
+    - model location:
+      - seed1: `/netscratch/anikina/dialam-2024-shared-task/models/bert-base-uncased-model/2024-04-27_17-09-09`
+      - seed2: `/netscratch/anikina/dialam-2024-shared-task/models/bert-base-uncased-model/2024-04-27_22-01-01`
+      - seed3: `/netscratch/anikina/dialam-2024-shared-task/models/bert-base-uncased-model/2024-04-28_02-52-38`
+  - aggregated metric values: macro/f1/val: 0.331, micro/f1/val: 0.678
+
+<details>
+
+|                                                      |         25% |         50% |         75% | count |        max |        mean |         min |         std |
+| :--------------------------------------------------- | ----------: | ----------: | ----------: | ----: | ---------: | ----------: | ----------: | ----------: |
+| loss/train                                           | 0.000680504 | 0.000700527 |  0.00231092 |     3 | 0.00392131 |  0.00176077 | 0.000660482 |  0.00187119 |
+| loss/train_epoch                                     | 0.000680504 | 0.000700527 |  0.00231092 |     3 | 0.00392131 |  0.00176077 | 0.000660482 |  0.00187119 |
+| loss/train_step                                      | 0.000464073 | 0.000653444 | 0.000665977 |     3 | 0.00067851 | 0.000535552 | 0.000274702 |  0.00022625 |
+| loss/val                                             |      2.1554 |     2.33091 |       2.333 |     3 |     2.3351 |      2.2153 |     1.97989 |    0.203883 |
+| metric/macro/f1/train                                |    0.994516 |    0.994808 |    0.996878 |     3 |   0.998949 |    0.995994 |    0.994225 |  0.00257579 |
+| metric/macro/f1/val                                  |    0.327649 |    0.327807 |     0.33276 |     3 |   0.337713 |    0.331004 |    0.327491 |  0.00581243 |
+| metric/micro/f1/train                                |    0.999873 |    0.999902 |    0.999922 |     3 |   0.999941 |    0.999895 |    0.999843 | 4.93506e-05 |
+| metric/micro/f1/val                                  |    0.674776 |    0.674955 |    0.679964 |     3 |   0.684973 |    0.678175 |    0.674598 |  0.00588984 |
+| metric/no_relation/f1/train                          |           0 |           0 |           0 |     3 |          0 |           0 |           0 |           0 |
+| metric/no_relation/f1/val                            |           0 |           0 |           0 |     3 |          0 |           0 |           0 |           0 |
+| metric/s_nodes:Default Conflict/f1/train             |    0.998665 |    0.998665 |    0.998998 |     3 |   0.999332 |    0.998887 |    0.998665 | 0.000385148 |
+| metric/s_nodes:Default Conflict/f1/val               |    0.223216 |    0.230216 |    0.243763 |     3 |    0.25731 |    0.234581 |    0.216216 |   0.0208917 |
+| metric/s_nodes:Default Inference-rev/f1/train        |    0.999861 |           1 |           1 |     3 |          1 |    0.999907 |    0.999722 | 0.000160226 |
+| metric/s_nodes:Default Inference-rev/f1/val          |    0.344434 |    0.351852 |    0.359782 |     3 |   0.367713 |    0.352194 |    0.337017 |   0.0153511 |
+| metric/s_nodes:Default Inference/f1/train            |    0.999874 |           1 |           1 |     3 |          1 |    0.999916 |    0.999748 | 0.000145669 |
+| metric/s_nodes:Default Inference/f1/val              |    0.349395 |    0.358744 |    0.382846 |     3 |   0.406948 |    0.368579 |    0.340045 |   0.0345188 |
+| metric/s_nodes:Default Rephrase/f1/train             |           1 |           1 |           1 |     3 |          1 |           1 |           1 |           0 |
+| metric/s_nodes:Default Rephrase/f1/val               |    0.501919 |      0.5086 |    0.519277 |     3 |   0.529954 |    0.511264 |    0.495238 |   0.0175106 |
+| metric/s_nodes:NONE/f1/train                         |    0.999876 |    0.999876 |    0.999907 |     3 |   0.999938 |    0.999897 |    0.999876 | 3.58237e-05 |
+| metric/s_nodes:NONE/f1/val                           |    0.654159 |    0.654655 |    0.663781 |     3 |   0.672907 |    0.660409 |    0.653664 |   0.0108355 |
+| metric/ya_i2l_nodes:Agreeing/f1/train                |    0.973684 |           1 |           1 |     3 |          1 |    0.982456 |    0.947368 |   0.0303868 |
+| metric/ya_i2l_nodes:Agreeing/f1/val                  |           0 |           0 |           0 |     3 |          0 |           0 |           0 |           0 |
+| metric/ya_i2l_nodes:Arguing/f1/train                 |    0.928571 |           1 |           1 |     3 |          1 |    0.952381 |    0.857143 |   0.0824786 |
+| metric/ya_i2l_nodes:Arguing/f1/val                   |           0 |           0 |           0 |     3 |          0 |           0 |           0 |           0 |
+| metric/ya_i2l_nodes:Asserting/f1/train               |    0.999952 |    0.999968 |    0.999968 |     3 |   0.999968 |    0.999958 |    0.999936 | 1.83764e-05 |
+| metric/ya_i2l_nodes:Asserting/f1/val                 |    0.966387 |    0.966735 |    0.967097 |     3 |   0.967458 |    0.966744 |    0.966038 | 0.000710286 |
+| metric/ya_i2l_nodes:Assertive Questioning/f1/train   |           1 |           1 |           1 |     3 |          1 |           1 |           1 |           0 |
+| metric/ya_i2l_nodes:Assertive Questioning/f1/val     |    0.197198 |    0.206897 |    0.236782 |     3 |   0.266667 |    0.220354 |      0.1875 |   0.0412635 |
+| metric/ya_i2l_nodes:Challenging/f1/train             |           1 |           1 |           1 |     3 |          1 |           1 |           1 |           0 |
+| metric/ya_i2l_nodes:Challenging/f1/val               |           0 |           0 |           0 |     3 |          0 |           0 |           0 |           0 |
+| metric/ya_i2l_nodes:Default Illocuting/f1/train      |    0.988372 |           1 |           1 |     3 |          1 |    0.992248 |    0.976744 |   0.0134268 |
+| metric/ya_i2l_nodes:Default Illocuting/f1/val        |           0 |           0 |           0 |     3 |          0 |           0 |           0 |           0 |
+| metric/ya_i2l_nodes:NONE/f1/train                    |           1 |           1 |           1 |     3 |          1 |           1 |           1 |           0 |
+| metric/ya_i2l_nodes:NONE/f1/val                      |    0.223724 |       0.325 |    0.386638 |     3 |   0.448276 |    0.298575 |    0.122449 |    0.164513 |
+| metric/ya_i2l_nodes:Pure Questioning/f1/train        |           1 |           1 |           1 |     3 |          1 |           1 |           1 |           0 |
+| metric/ya_i2l_nodes:Pure Questioning/f1/val          |    0.744115 |    0.752381 |     0.75945 |     3 |    0.76652 |    0.751583 |    0.735849 |   0.0153509 |
+| metric/ya_i2l_nodes:Restating/f1/train               |           1 |           1 |           1 |     3 |          1 |           1 |           1 |           0 |
+| metric/ya_i2l_nodes:Restating/f1/val                 |           0 |           0 |           0 |     3 |          0 |           0 |           0 |           0 |
+| metric/ya_i2l_nodes:Rhetorical Questioning/f1/train  |    0.998674 |           1 |           1 |     3 |          1 |    0.999116 |    0.997347 |  0.00153144 |
+| metric/ya_i2l_nodes:Rhetorical Questioning/f1/val    |    0.298413 |    0.311111 |    0.360101 |     3 |   0.409091 |    0.335305 |    0.285714 |   0.0651496 |
+| metric/ya_s2ta_nodes:Agreeing/f1/train               |           1 |           1 |           1 |     3 |          1 |           1 |           1 |           0 |
+| metric/ya_s2ta_nodes:Agreeing/f1/val                 |           0 |           0 |           0 |     3 |          0 |           0 |           0 |           0 |
+| metric/ya_s2ta_nodes:Arguing/f1/train                |    0.999863 |           1 |           1 |     3 |          1 |    0.999909 |    0.999726 |  0.00015792 |
+| metric/ya_s2ta_nodes:Arguing/f1/val                  |    0.431326 |     0.43257 |    0.441832 |     3 |   0.451093 |    0.437915 |    0.430082 |   0.0114801 |
+| metric/ya_s2ta_nodes:Asserting/f1/train              |    0.964286 |           1 |           1 |     3 |          1 |     0.97619 |    0.928571 |   0.0412393 |
+| metric/ya_s2ta_nodes:Asserting/f1/val                |           0 |           0 |           0 |     3 |          0 |           0 |           0 |           0 |
+| metric/ya_s2ta_nodes:Challenging/f1/train            |           1 |           1 |           1 |     3 |          1 |           1 |           1 |           0 |
+| metric/ya_s2ta_nodes:Challenging/f1/val              |           0 |           0 |           0 |     3 |          0 |           0 |           0 |           0 |
+| metric/ya_s2ta_nodes:Default Illocuting/f1/train     |           1 |           1 |           1 |     3 |          1 |           1 |           1 |           0 |
+| metric/ya_s2ta_nodes:Default Illocuting/f1/val       |    0.460663 |    0.472727 |    0.473206 |     3 |   0.473684 |    0.465003 |    0.448598 |   0.0142153 |
+| metric/ya_s2ta_nodes:Disagreeing/f1/train            |    0.998934 |    0.999289 |     0.99929 |     3 |    0.99929 |    0.999053 |     0.99858 | 0.000410046 |
+| metric/ya_s2ta_nodes:Disagreeing/f1/val              |    0.191218 |     0.19403 |    0.215659 |     3 |   0.237288 |    0.206575 |    0.188406 |   0.0267469 |
+| metric/ya_s2ta_nodes:NONE/f1/train                   |    0.999919 |    0.999946 |    0.999946 |     3 |   0.999946 |    0.999928 |    0.999891 | 3.13156e-05 |
+| metric/ya_s2ta_nodes:NONE/f1/val                     |    0.686236 |    0.686522 |    0.688648 |     3 |   0.690774 |    0.687749 |     0.68595 |  0.00263557 |
+| metric/ya_s2ta_nodes:Pure Questioning/f1/train       |           1 |           1 |           1 |     3 |          1 |           1 |           1 |           0 |
+| metric/ya_s2ta_nodes:Pure Questioning/f1/val         |           0 |           0 |           0 |     3 |          0 |           0 |           0 |           0 |
+| metric/ya_s2ta_nodes:Restating/f1/train              |           1 |           1 |           1 |     3 |          1 |           1 |           1 |           0 |
+| metric/ya_s2ta_nodes:Restating/f1/val                |    0.450073 |    0.462366 |    0.462485 |     3 |   0.462604 |     0.45425 |    0.437781 |   0.0142631 |
+| metric/ya_s2ta_nodes:Rhetorical Questioning/f1/train |           1 |           1 |           1 |     3 |          1 |           1 |           1 |           0 |
+| metric/ya_s2ta_nodes:Rhetorical Questioning/f1/val   |           0 |           0 |           0 |     3 |          0 |           0 |           0 |           0 |
+
+</details>
+
+### Merged relations with RoBERTa (task_learning_rate=1e-4, learning_rate=1e-6)
+
+- training a single model for all relation types with roberta-large, experimenting with the base-model learning rate
+  - command:
+    ```bash
+      python src/train.py \
+      experiment=dialam2024_merged_relations \
+      model.task_learning_rate=1e-4 \
+      model.learning_rate=1e-6 \
+      base_model_name=FacebookAI/roberta-large \
+      trainer=gpu \
+      seed=1,2,3 \
+      +hydra.callbacks.save_job_return.integrate_multirun_result=true \
+      name=bert-base-uncased-model \
+      --multirun
+    ```
+  - wandb (weights & biases) run:
+    - seed1: https://wandb.ai/tanikina/bert-base-uncased-model-training/runs/dbpr5oxe
+    - seed2: https://wandb.ai/tanikina/bert-base-uncased-model-training/runs/3psjaqxy
+    - seed3: https://wandb.ai/tanikina/bert-base-uncased-model-training/runs/wdbni044
+  - artefacts
+    - model location:
+      - seed1: `/netscratch/anikina/dialam-2024-shared-task/models/bert-base-uncased-model/2024-04-27_17-09-17`
+      - seed2: `/netscratch/anikina/dialam-2024-shared-task/models/bert-base-uncased-model/2024-04-27_22-01-19`
+      - seed3: `/netscratch/anikina/dialam-2024-shared-task/models/bert-base-uncased-model/2024-04-28_02-53-56`
+  - aggregated metric values: macro/f1/val: 0.217, micro/f1/val: 0.496
+
+<details>
+
+|                                                      |       25% |       50% |       75% | count |      max |      mean |       min |         std |
+| :--------------------------------------------------- | --------: | --------: | --------: | ----: | -------: | --------: | --------: | ----------: |
+| loss/train                                           |  0.485969 |  0.487393 |  0.489783 |     3 | 0.492172 |  0.488037 |  0.484544 |  0.00385462 |
+| loss/train_epoch                                     |  0.485969 |  0.487393 |  0.489783 |     3 | 0.492172 |  0.488037 |  0.484544 |  0.00385462 |
+| loss/train_step                                      |  0.369703 |  0.493096 |  0.512468 |     3 |  0.53184 |  0.423749 |  0.246311 |    0.154882 |
+| loss/val                                             |   2.33167 |   2.38502 |   2.50561 |     3 |   2.6262 |   2.42985 |   2.27833 |    0.178216 |
+| metric/macro/f1/train                                |  0.598031 |  0.620516 |  0.629133 |     3 |  0.63775 |  0.611271 |  0.575546 |   0.0321158 |
+| metric/macro/f1/val                                  |  0.215375 |  0.218867 |  0.220265 |     3 | 0.221664 |  0.217471 |  0.211883 |  0.00503767 |
+| metric/micro/f1/train                                |  0.691928 |  0.692026 |  0.692937 |     3 | 0.693849 |  0.692568 |   0.69183 |  0.00111372 |
+| metric/micro/f1/val                                  |  0.494633 |   0.49517 |  0.497496 |     3 | 0.499821 |  0.496363 |  0.494097 |  0.00304289 |
+| metric/no_relation/f1/train                          |         0 |         0 |         0 |     3 |        0 |         0 |         0 |           0 |
+| metric/no_relation/f1/val                            |         0 |         0 |         0 |     3 |        0 |         0 |         0 |           0 |
+| metric/s_nodes:Default Conflict/f1/train             |  0.529131 |  0.548971 |  0.553326 |     3 |  0.55768 |  0.538647 |  0.509291 |   0.0257936 |
+| metric/s_nodes:Default Conflict/f1/val               |  0.117661 |  0.118919 |  0.128209 |     3 |   0.1375 |  0.124274 |  0.116402 |   0.0115232 |
+| metric/s_nodes:Default Inference-rev/f1/train        |   0.45018 |  0.450704 |  0.464216 |     3 | 0.477728 |  0.459363 |  0.449656 |   0.0159134 |
+| metric/s_nodes:Default Inference-rev/f1/val          |  0.102795 |  0.113924 |  0.138929 |     3 | 0.163934 |  0.123175 | 0.0916667 |   0.0370114 |
+| metric/s_nodes:Default Inference/f1/train            |  0.468024 |  0.473527 |   0.47584 |     3 | 0.478153 |    0.4714 |  0.462521 |  0.00803032 |
+| metric/s_nodes:Default Inference/f1/val              |  0.162247 |  0.184143 |  0.196106 |     3 | 0.208068 |  0.177521 |  0.140351 |   0.0343408 |
+| metric/s_nodes:Default Rephrase/f1/train             |  0.524299 |  0.530789 |  0.530872 |     3 | 0.530955 |  0.526518 |  0.517809 |  0.00754242 |
+| metric/s_nodes:Default Rephrase/f1/val               |  0.234786 |   0.24235 |  0.247951 |     3 | 0.253552 |  0.241041 |  0.227222 |   0.0132139 |
+| metric/s_nodes:NONE/f1/train                         |  0.458411 |  0.464684 |  0.464875 |     3 | 0.465067 |   0.46063 |  0.452138 |  0.00735652 |
+| metric/s_nodes:NONE/f1/val                           |  0.273207 |  0.302477 |  0.328757 |     3 | 0.355036 |  0.300484 |  0.243937 |   0.0555763 |
+| metric/ya_i2l_nodes:Agreeing/f1/train                |  0.697479 |  0.823529 |  0.856209 |     3 | 0.888889 |  0.761282 |  0.571429 |    0.167634 |
+| metric/ya_i2l_nodes:Agreeing/f1/val                  |         0 |         0 |         0 |     3 |        0 |         0 |         0 |           0 |
+| metric/ya_i2l_nodes:Arguing/f1/train                 |       0.2 |       0.4 |       0.4 |     3 |      0.4 |  0.266667 |         0 |     0.23094 |
+| metric/ya_i2l_nodes:Arguing/f1/val                   |         0 |         0 |         0 |     3 |        0 |         0 |         0 |           0 |
+| metric/ya_i2l_nodes:Asserting/f1/train               |  0.997714 |  0.998126 |  0.998523 |     3 | 0.998919 |  0.998116 |  0.997303 | 0.000808406 |
+| metric/ya_i2l_nodes:Asserting/f1/val                 |  0.954185 |   0.95448 |  0.956656 |     3 | 0.958832 |  0.955734 |  0.953891 |  0.00269913 |
+| metric/ya_i2l_nodes:Assertive Questioning/f1/train   |   0.90544 |   0.91906 |   0.94808 |     3 | 0.977099 |  0.929327 |  0.891821 |   0.0435564 |
+| metric/ya_i2l_nodes:Assertive Questioning/f1/val     |  0.256536 |  0.277778 |  0.295139 |     3 |   0.3125 |  0.275191 |  0.235294 |   0.0386679 |
+| metric/ya_i2l_nodes:Challenging/f1/train             |   0.72973 |  0.756757 |  0.828378 |     3 |      0.9 |  0.786486 |  0.702703 |    0.101953 |
+| metric/ya_i2l_nodes:Challenging/f1/val               |         0 |         0 |         0 |     3 |        0 |         0 |         0 |           0 |
+| metric/ya_i2l_nodes:Default Illocuting/f1/train      |       0.5 |  0.533333 |  0.627778 |     3 | 0.722222 |  0.574074 |  0.466667 |    0.132559 |
+| metric/ya_i2l_nodes:Default Illocuting/f1/val        |         0 |         0 |         0 |     3 |        0 |         0 |         0 |           0 |
+| metric/ya_i2l_nodes:NONE/f1/train                    |  0.916695 |  0.946984 |  0.954775 |     3 | 0.962567 |  0.931985 |  0.886406 |   0.0402347 |
+| metric/ya_i2l_nodes:NONE/f1/val                      |  0.196429 |  0.214286 |  0.232143 |     3 |     0.25 |  0.214286 |  0.178571 |   0.0357143 |
+| metric/ya_i2l_nodes:Pure Questioning/f1/train        |  0.990079 |  0.990586 |  0.994506 |     3 | 0.998427 |  0.992862 |  0.989572 |  0.00484613 |
+| metric/ya_i2l_nodes:Pure Questioning/f1/val          |  0.719734 |  0.727273 |  0.747916 |     3 | 0.768559 |  0.736009 |  0.712195 |   0.0291798 |
+| metric/ya_i2l_nodes:Restating/f1/train               |  0.660714 |      0.75 |      0.75 |     3 |     0.75 |  0.690476 |  0.571429 |    0.103098 |
+| metric/ya_i2l_nodes:Restating/f1/val                 |         0 |         0 |         0 |     3 |        0 |         0 |         0 |           0 |
+| metric/ya_i2l_nodes:Rhetorical Questioning/f1/train  |  0.931131 |  0.947368 |  0.965663 |     3 | 0.983957 |   0.94874 |  0.914894 |   0.0345522 |
+| metric/ya_i2l_nodes:Rhetorical Questioning/f1/val    |  0.296703 |  0.307692 |  0.325275 |     3 | 0.342857 |  0.312088 |  0.285714 |   0.0288239 |
+| metric/ya_s2ta_nodes:Agreeing/f1/train               |  0.403935 |    0.4375 |    0.4375 |     3 |   0.4375 |  0.415123 |   0.37037 |   0.0387573 |
+| metric/ya_s2ta_nodes:Agreeing/f1/val                 |         0 |         0 |         0 |     3 |        0 |         0 |         0 |           0 |
+| metric/ya_s2ta_nodes:Arguing/f1/train                |   0.54468 |  0.548615 |  0.552411 |     3 | 0.556207 |  0.548522 |  0.540744 |  0.00773173 |
+| metric/ya_s2ta_nodes:Arguing/f1/val                  |  0.196398 |  0.206035 |  0.221308 |     3 | 0.236581 |  0.209792 |  0.186761 |   0.0251212 |
+| metric/ya_s2ta_nodes:Asserting/f1/train              |  0.285714 |  0.285714 |  0.328042 |     3 |  0.37037 |  0.313933 |  0.285714 |   0.0488762 |
+| metric/ya_s2ta_nodes:Asserting/f1/val                |         0 |         0 |         0 |     3 |        0 |         0 |         0 |           0 |
+| metric/ya_s2ta_nodes:Challenging/f1/train            |  0.379973 |  0.413793 |   0.45305 |     3 | 0.492308 |  0.417418 |  0.346154 |   0.0731443 |
+| metric/ya_s2ta_nodes:Challenging/f1/val              |         0 |         0 |         0 |     3 |        0 |         0 |         0 |           0 |
+| metric/ya_s2ta_nodes:Default Illocuting/f1/train     |  0.502244 |  0.523652 |  0.539435 |     3 | 0.555218 |  0.519902 |  0.480836 |   0.0373323 |
+| metric/ya_s2ta_nodes:Default Illocuting/f1/val       |  0.175939 |  0.207547 |  0.220278 |     3 |  0.23301 |  0.194962 |   0.14433 |   0.0456597 |
+| metric/ya_s2ta_nodes:Disagreeing/f1/train            |  0.480728 |   0.48578 |  0.514562 |     3 | 0.543345 |    0.5016 |  0.475676 |   0.0365032 |
+| metric/ya_s2ta_nodes:Disagreeing/f1/val              | 0.0833565 | 0.0847458 | 0.0959443 |     3 | 0.107143 | 0.0912853 | 0.0819672 |   0.0138032 |
+| metric/ya_s2ta_nodes:NONE/f1/train                   |  0.621148 |  0.621653 |  0.623977 |     3 | 0.626301 |  0.622865 |  0.620642 |  0.00301796 |
+| metric/ya_s2ta_nodes:NONE/f1/val                     |  0.366634 |  0.385305 |  0.403416 |     3 | 0.421528 |  0.384932 |  0.347964 |   0.0367836 |
+| metric/ya_s2ta_nodes:Pure Questioning/f1/train       |  0.530769 |       0.6 |  0.684615 |     3 | 0.769231 |  0.610256 |  0.461538 |    0.154102 |
+| metric/ya_s2ta_nodes:Pure Questioning/f1/val         |         0 |         0 |         0 |     3 |        0 |         0 |         0 |           0 |
+| metric/ya_s2ta_nodes:Restating/f1/train              |    0.5049 |  0.507397 |  0.508822 |     3 | 0.510246 |  0.506682 |  0.502403 |  0.00397013 |
+| metric/ya_s2ta_nodes:Restating/f1/val                |  0.208331 |  0.215385 |  0.238546 |     3 | 0.261708 |  0.226124 |  0.201278 |   0.0316139 |
+| metric/ya_s2ta_nodes:Rhetorical Questioning/f1/train |       0.4 |       0.4 |  0.533333 |     3 | 0.666667 |  0.488889 |       0.4 |     0.15396 |
+| metric/ya_s2ta_nodes:Rhetorical Questioning/f1/val   |         0 |         0 |         0 |     3 |        0 |         0 |         0 |           0 |
+
+</details>
+
+### Merged relations with RoBERTa (task_learning_rate=1e-4, window_size=256)
+
+- training a single model for all relation types with roberta-large, experimenting with the window size
+  - command:
+    ```bash
+      python src/train.py \
+      experiment=dialam2024_merged_relations \
+      model.task_learning_rate=1e-4 \
+      taskmodule.max_window=256 \
+      base_model_name=FacebookAI/roberta-large \
+      trainer=gpu \
+      seed=1,2,3 \
+      +hydra.callbacks.save_job_return.integrate_multirun_result=true \
+      name=bert-base-uncased-model \
+      --multirun
+    ```
+  - wandb (weights & biases) run:
+    - seed1: https://wandb.ai/tanikina/bert-base-uncased-model-training/runs/fk6pyjqy
+    - seed2: https://wandb.ai/tanikina/bert-base-uncased-model-training/runs/26f0sj3j
+    - seed3: https://wandb.ai/tanikina/bert-base-uncased-model-training/runs/xayp3w82
+  - artefacts
+    - model location:
+      - seed1: `/netscratch/anikina/dialam-2024-shared-task/models/bert-base-uncased-model/2024-04-27_17-21-18`
+      - seed2: `/netscratch/anikina/dialam-2024-shared-task/models/bert-base-uncased-model/2024-04-27_19-46-01`
+      - seed3: `/netscratch/anikina/dialam-2024-shared-task/models/bert-base-uncased-model/2024-04-27_22-11-29`
+  - aggregated metric values: macro/f1/val: 0.378, micro/f1/val: 0.718
+
+<details>
+
+|                                                      |         25% |         50% |         75% | count |         max |        mean |         min |         std |
+| :--------------------------------------------------- | ----------: | ----------: | ----------: | ----: | ----------: | ----------: | ----------: | ----------: |
+| loss/train                                           | 0.000186682 | 0.000206277 |  0.00085849 |     3 |   0.0015107 | 0.000628022 | 0.000167086 | 0.000764674 |
+| loss/train_epoch                                     | 0.000186682 | 0.000206277 |  0.00085849 |     3 |   0.0015107 | 0.000628022 | 0.000167086 | 0.000764674 |
+| loss/train_step                                      |  2.7559e-05 | 2.93062e-05 | 0.000389215 |     3 | 0.000749123 |  0.00026808 | 2.58118e-05 | 0.000416599 |
+| loss/val                                             |     1.58306 |     1.59055 |       1.743 |     3 |     1.89545 |     1.68719 |     1.57556 |    0.180514 |
+| metric/macro/f1/train                                |    0.999874 |     0.99988 |     0.99991 |     3 |     0.99994 |    0.999896 |    0.999868 | 3.86082e-05 |
+| metric/macro/f1/val                                  |    0.376783 |    0.381968 |    0.382199 |     3 |    0.382429 |    0.378665 |    0.371599 |  0.00612401 |
+| metric/micro/f1/train                                |    0.999912 |    0.999921 |    0.999941 |     3 |    0.999961 |    0.999928 |    0.999902 | 3.00132e-05 |
+| metric/micro/f1/val                                  |     0.71229 |    0.714798 |    0.721336 |     3 |    0.727875 |    0.717485 |    0.709781 |  0.00934144 |
+| metric/no_relation/f1/train                          |           0 |           0 |           0 |     3 |           0 |           0 |           0 |           0 |
+| metric/no_relation/f1/val                            |           0 |           0 |           0 |     3 |           0 |           0 |           0 |           0 |
+| metric/s_nodes:Default Conflict/f1/train             |    0.998997 |    0.999331 |    0.999332 |     3 |    0.999332 |    0.999109 |    0.998663 | 0.000385922 |
+| metric/s_nodes:Default Conflict/f1/val               |    0.329811 |    0.339623 |    0.349122 |     3 |    0.358621 |    0.339414 |        0.32 |   0.0193112 |
+| metric/s_nodes:Default Inference-rev/f1/train        |           1 |           1 |           1 |     3 |           1 |           1 |           1 |           0 |
+| metric/s_nodes:Default Inference-rev/f1/val          |    0.429308 |     0.42963 |    0.435627 |     3 |    0.441624 |    0.433413 |    0.428986 |   0.0071184 |
+| metric/s_nodes:Default Inference/f1/train            |           1 |           1 |           1 |     3 |           1 |           1 |           1 |           0 |
+| metric/s_nodes:Default Inference/f1/val              |    0.394243 |    0.406321 |    0.412879 |     3 |    0.419437 |    0.402641 |    0.382166 |   0.0189063 |
+| metric/s_nodes:Default Rephrase/f1/train             |           1 |           1 |           1 |     3 |           1 |           1 |           1 |           0 |
+| metric/s_nodes:Default Rephrase/f1/val               |    0.555053 |    0.574257 |    0.579124 |     3 |    0.583991 |    0.564699 |    0.535849 |   0.0254545 |
+| metric/s_nodes:NONE/f1/train                         |    0.999907 |    0.999938 |    0.999938 |     3 |    0.999938 |    0.999917 |    0.999876 | 3.59097e-05 |
+| metric/s_nodes:NONE/f1/val                           |    0.686343 |    0.698413 |    0.704664 |     3 |    0.710916 |    0.694534 |    0.674273 |   0.0186271 |
+| metric/ya_i2l_nodes:Agreeing/f1/train                |           1 |           1 |           1 |     3 |           1 |           1 |           1 |           0 |
+| metric/ya_i2l_nodes:Agreeing/f1/val                  |           0 |           0 |           0 |     3 |           0 |           0 |           0 |           0 |
+| metric/ya_i2l_nodes:Arguing/f1/train                 |           1 |           1 |           1 |     3 |           1 |           1 |           1 |           0 |
+| metric/ya_i2l_nodes:Arguing/f1/val                   |           0 |           0 |           0 |     3 |           0 |           0 |           0 |           0 |
+| metric/ya_i2l_nodes:Asserting/f1/train               |           1 |           1 |           1 |     3 |           1 |           1 |           1 |           0 |
+| metric/ya_i2l_nodes:Asserting/f1/val                 |    0.979873 |    0.980415 |    0.980757 |     3 |    0.981099 |    0.980282 |     0.97933 | 0.000891885 |
+| metric/ya_i2l_nodes:Assertive Questioning/f1/train   |           1 |           1 |           1 |     3 |           1 |           1 |           1 |           0 |
+| metric/ya_i2l_nodes:Assertive Questioning/f1/val     |    0.332721 |    0.352941 |    0.432881 |     3 |    0.512821 |    0.392754 |      0.3125 |    0.105929 |
+| metric/ya_i2l_nodes:Challenging/f1/train             |           1 |           1 |           1 |     3 |           1 |           1 |           1 |           0 |
+| metric/ya_i2l_nodes:Challenging/f1/val               |           0 |           0 |           0 |     3 |           0 |           0 |           0 |           0 |
+| metric/ya_i2l_nodes:Default Illocuting/f1/train      |           1 |           1 |           1 |     3 |           1 |           1 |           1 |           0 |
+| metric/ya_i2l_nodes:Default Illocuting/f1/val        |           0 |           0 |           0 |     3 |           0 |           0 |           0 |           0 |
+| metric/ya_i2l_nodes:NONE/f1/train                    |           1 |           1 |           1 |     3 |           1 |           1 |           1 |           0 |
+| metric/ya_i2l_nodes:NONE/f1/val                      |    0.455923 |    0.459016 |    0.519831 |     3 |    0.580645 |    0.497497 |     0.45283 |   0.0720746 |
+| metric/ya_i2l_nodes:Pure Questioning/f1/train        |           1 |           1 |           1 |     3 |           1 |           1 |           1 |           0 |
+| metric/ya_i2l_nodes:Pure Questioning/f1/val          |    0.777478 |    0.794393 |    0.804276 |     3 |    0.814159 |    0.789705 |    0.760563 |   0.0271037 |
+| metric/ya_i2l_nodes:Restating/f1/train               |           1 |           1 |           1 |     3 |           1 |           1 |           1 |           0 |
+| metric/ya_i2l_nodes:Restating/f1/val                 |           0 |           0 |           0 |     3 |           0 |           0 |           0 |           0 |
+| metric/ya_i2l_nodes:Rhetorical Questioning/f1/train  |           1 |           1 |           1 |     3 |           1 |           1 |           1 |           0 |
+| metric/ya_i2l_nodes:Rhetorical Questioning/f1/val    |    0.304236 |    0.315789 |    0.330309 |     3 |    0.344828 |    0.317767 |    0.292683 |   0.0261285 |
+| metric/ya_s2ta_nodes:Agreeing/f1/train               |           1 |           1 |           1 |     3 |           1 |           1 |           1 |           0 |
+| metric/ya_s2ta_nodes:Agreeing/f1/val                 |           0 |           0 |           0 |     3 |           0 |           0 |           0 |           0 |
+| metric/ya_s2ta_nodes:Arguing/f1/train                |    0.999863 |           1 |           1 |     3 |           1 |    0.999909 |    0.999726 | 0.000158368 |
+| metric/ya_s2ta_nodes:Arguing/f1/val                  |    0.453276 |    0.464419 |    0.478587 |     3 |    0.492754 |    0.466435 |    0.442133 |   0.0253706 |
+| metric/ya_s2ta_nodes:Asserting/f1/train              |           1 |           1 |           1 |     3 |           1 |           1 |           1 |           0 |
+| metric/ya_s2ta_nodes:Asserting/f1/val                |           0 |           0 |           0 |     3 |           0 |           0 |           0 |           0 |
+| metric/ya_s2ta_nodes:Challenging/f1/train            |           1 |           1 |           1 |     3 |           1 |           1 |           1 |           0 |
+| metric/ya_s2ta_nodes:Challenging/f1/val              |           0 |           0 |           0 |     3 |           0 |           0 |           0 |           0 |
+| metric/ya_s2ta_nodes:Default Illocuting/f1/train     |           1 |           1 |           1 |     3 |           1 |           1 |           1 |           0 |
+| metric/ya_s2ta_nodes:Default Illocuting/f1/val       |    0.504589 |    0.504673 |    0.510957 |     3 |    0.517241 |    0.508806 |    0.504505 |   0.0073055 |
+| metric/ya_s2ta_nodes:Disagreeing/f1/train            |    0.998223 |    0.998578 |    0.998933 |     3 |    0.999288 |    0.998578 |    0.997868 | 0.000710219 |
+| metric/ya_s2ta_nodes:Disagreeing/f1/val              |    0.292403 |    0.308943 |    0.328714 |     3 |    0.348485 |    0.311097 |    0.275862 |   0.0363593 |
+| metric/ya_s2ta_nodes:NONE/f1/train                   |    0.999864 |    0.999891 |    0.999918 |     3 |    0.999946 |    0.999891 |    0.999837 | 5.44488e-05 |
+| metric/ya_s2ta_nodes:NONE/f1/val                     |    0.708632 |    0.711382 |    0.726274 |     3 |    0.741165 |    0.719477 |    0.705882 |   0.0189832 |
+| metric/ya_s2ta_nodes:Pure Questioning/f1/train       |           1 |           1 |           1 |     3 |           1 |           1 |           1 |           0 |
+| metric/ya_s2ta_nodes:Pure Questioning/f1/val         |           0 |           0 |           0 |     3 |           0 |           0 |           0 |           0 |
+| metric/ya_s2ta_nodes:Restating/f1/train              |           1 |           1 |           1 |     3 |           1 |           1 |           1 |           0 |
+| metric/ya_s2ta_nodes:Restating/f1/val                |    0.525841 |    0.527439 |    0.538056 |     3 |    0.548673 |    0.533451 |    0.524242 |   0.0132785 |
+| metric/ya_s2ta_nodes:Rhetorical Questioning/f1/train |           1 |           1 |           1 |     3 |           1 |           1 |           1 |           0 |
+| metric/ya_s2ta_nodes:Rhetorical Questioning/f1/val   |           0 |           0 |           0 |     3 |           0 |           0 |           0 |           0 |
+
+</details>
+
+### Merged relations with RoBERTa (task_learning_rate=1e-4, window_size=128)
+
+- training a single model for all relation types with roberta-large, experimenting with the window size
+  - command:
+    ```bash
+      python src/train.py \
+      experiment=dialam2024_merged_relations \
+      model.task_learning_rate=1e-4 \
+      taskmodule.max_window=128 \
+      base_model_name=FacebookAI/roberta-large \
+      trainer=gpu \
+      seed=1,2,3 \
+      +hydra.callbacks.save_job_return.integrate_multirun_result=true \
+      name=bert-base-uncased-model \
+      --multirun
+    ```
+  - wandb (weights & biases) run:
+    - seed1: https://wandb.ai/tanikina/bert-base-uncased-model-training/runs/9uyfy2wj
+    - seed2: https://wandb.ai/tanikina/bert-base-uncased-model-training/runs/wvw5t44v
+    - seed3: https://wandb.ai/tanikina/bert-base-uncased-model-training/runs/7lk3qnip
+  - artefacts
+    - model location:
+      - seed1: `/netscratch/anikina/dialam-2024-shared-task/models/bert-base-uncased-model/2024-04-27_17-26-02`
+      - seed2: `/netscratch/anikina/dialam-2024-shared-task/models/bert-base-uncased-model/2024-04-27_18-48-26`
+      - seed3: `/netscratch/anikina/dialam-2024-shared-task/models/bert-base-uncased-model/2024-04-27_20-11-28`
+  - aggregated metric values: macro/f1/val: 0.400, micro/f1/val: 0.719
+
+<details>
+
+|                                                      |         25% |         50% |         75% | count |         max |        mean |         min |         std |
+| :--------------------------------------------------- | ----------: | ----------: | ----------: | ----: | ----------: | ----------: | ----------: | ----------: |
+| loss/train                                           | 0.000109819 | 0.000119359 | 0.000127856 |     3 | 0.000136354 | 0.000118664 | 0.000100279 | 1.80474e-05 |
+| loss/train_epoch                                     | 0.000109819 | 0.000119359 | 0.000127856 |     3 | 0.000136354 | 0.000118664 | 0.000100279 | 1.80474e-05 |
+| loss/train_step                                      | 2.31727e-05 |  3.9323e-05 | 8.26563e-05 |     3 |  0.00012599 |  5.7445e-05 | 7.02248e-06 | 6.15191e-05 |
+| loss/val                                             |     1.42807 |     1.68703 |     1.77197 |     3 |     1.85691 |     1.57102 |      1.1691 |    0.358284 |
+| metric/macro/f1/train                                |    0.999891 |    0.999906 |    0.999938 |     3 |     0.99997 |    0.999917 |    0.999876 | 4.79724e-05 |
+| metric/macro/f1/val                                  |    0.390912 |    0.391248 |    0.405019 |     3 |     0.41879 |    0.400205 |    0.390576 |   0.0160986 |
+| metric/micro/f1/train                                |     0.99993 |     0.99994 |     0.99996 |     3 |     0.99998 |    0.999947 |     0.99992 | 3.05335e-05 |
+| metric/micro/f1/val                                  |    0.716194 |    0.717194 |    0.721011 |     3 |    0.724827 |    0.719072 |    0.715194 |  0.00508366 |
+| metric/no_relation/f1/train                          |           0 |           0 |           0 |     3 |           0 |           0 |           0 |           0 |
+| metric/no_relation/f1/val                            |           0 |           0 |           0 |     3 |           0 |           0 |           0 |           0 |
+| metric/s_nodes:Default Conflict/f1/train             |    0.998957 |    0.999304 |    0.999305 |     3 |    0.999305 |    0.999073 |    0.998609 | 0.000401494 |
+| metric/s_nodes:Default Conflict/f1/val               |    0.298438 |         0.3 |    0.314773 |     3 |    0.329545 |    0.308807 |    0.296875 |    0.018028 |
+| metric/s_nodes:Default Inference-rev/f1/train        |           1 |           1 |           1 |     3 |           1 |           1 |           1 |           0 |
+| metric/s_nodes:Default Inference-rev/f1/val          |    0.369871 |     0.39548 |    0.408771 |     3 |    0.422062 |    0.387268 |    0.344262 |   0.0395448 |
+| metric/s_nodes:Default Inference/f1/train            |           1 |           1 |           1 |     3 |           1 |           1 |           1 |           0 |
+| metric/s_nodes:Default Inference/f1/val              |     0.39999 |    0.403893 |    0.424664 |     3 |    0.445434 |    0.415138 |    0.396088 |   0.0265256 |
+| metric/s_nodes:Default Rephrase/f1/train             |           1 |           1 |           1 |     3 |           1 |           1 |           1 |           0 |
+| metric/s_nodes:Default Rephrase/f1/val               |    0.551044 |    0.568365 |     0.57488 |     3 |    0.581395 |    0.561161 |    0.533724 |   0.0246383 |
+| metric/s_nodes:NONE/f1/train                         |    0.999905 |    0.999937 |    0.999937 |     3 |    0.999937 |    0.999916 |    0.999874 | 3.64431e-05 |
+| metric/s_nodes:NONE/f1/val                           |    0.697969 |      0.7049 |    0.709292 |     3 |    0.713684 |    0.703207 |    0.691038 |   0.0114177 |
+| metric/ya_i2l_nodes:Agreeing/f1/train                |           1 |           1 |           1 |     3 |           1 |           1 |           1 |           0 |
+| metric/ya_i2l_nodes:Agreeing/f1/val                  |           0 |           0 |           0 |     3 |           0 |           0 |           0 |           0 |
+| metric/ya_i2l_nodes:Arguing/f1/train                 |           1 |           1 |           1 |     3 |           1 |           1 |           1 |           0 |
+| metric/ya_i2l_nodes:Arguing/f1/val                   |           0 |           0 |           0 |     3 |           0 |           0 |           0 |           0 |
+| metric/ya_i2l_nodes:Asserting/f1/train               |           1 |           1 |           1 |     3 |           1 |           1 |           1 |           0 |
+| metric/ya_i2l_nodes:Asserting/f1/val                 |     0.97541 |    0.976961 |    0.977836 |     3 |    0.978711 |     0.97651 |    0.973858 |  0.00245772 |
+| metric/ya_i2l_nodes:Assertive Questioning/f1/train   |           1 |           1 |           1 |     3 |           1 |           1 |           1 |           0 |
+| metric/ya_i2l_nodes:Assertive Questioning/f1/val     |    0.411338 |    0.432432 |    0.492078 |     3 |    0.551724 |    0.458133 |    0.390244 |   0.0837519 |
+| metric/ya_i2l_nodes:Challenging/f1/train             |           1 |           1 |           1 |     3 |           1 |           1 |           1 |           0 |
+| metric/ya_i2l_nodes:Challenging/f1/val               |           0 |           0 |    0.333333 |     3 |    0.666667 |    0.222222 |           0 |      0.3849 |
+| metric/ya_i2l_nodes:Default Illocuting/f1/train      |           1 |           1 |           1 |     3 |           1 |           1 |           1 |           0 |
+| metric/ya_i2l_nodes:Default Illocuting/f1/val        |           0 |           0 |           0 |     3 |           0 |           0 |           0 |           0 |
+| metric/ya_i2l_nodes:NONE/f1/train                    |           1 |           1 |           1 |     3 |           1 |           1 |           1 |           0 |
+| metric/ya_i2l_nodes:NONE/f1/val                      |    0.329932 |    0.333333 |    0.359649 |     3 |    0.385965 |     0.34861 |    0.326531 |   0.0325289 |
+| metric/ya_i2l_nodes:Pure Questioning/f1/train        |           1 |           1 |           1 |     3 |           1 |           1 |           1 |           0 |
+| metric/ya_i2l_nodes:Pure Questioning/f1/val          |    0.769307 |    0.823529 |    0.827019 |     3 |    0.830508 |    0.789707 |    0.715084 |   0.0647199 |
+| metric/ya_i2l_nodes:Restating/f1/train               |           1 |           1 |           1 |     3 |           1 |           1 |           1 |           0 |
+| metric/ya_i2l_nodes:Restating/f1/val                 |           0 |           0 |           0 |     3 |           0 |           0 |           0 |           0 |
+| metric/ya_i2l_nodes:Rhetorical Questioning/f1/train  |           1 |           1 |           1 |     3 |           1 |           1 |           1 |           0 |
+| metric/ya_i2l_nodes:Rhetorical Questioning/f1/val    |    0.363698 |    0.368421 |    0.384211 |     3 |         0.4 |    0.375798 |    0.358974 |   0.0214848 |
+| metric/ya_s2ta_nodes:Agreeing/f1/train               |           1 |           1 |           1 |     3 |           1 |           1 |           1 |           0 |
+| metric/ya_s2ta_nodes:Agreeing/f1/val                 |           0 |           0 |           0 |     3 |           0 |           0 |           0 |           0 |
+| metric/ya_s2ta_nodes:Arguing/f1/train                |           1 |           1 |           1 |     3 |           1 |           1 |           1 |           0 |
+| metric/ya_s2ta_nodes:Arguing/f1/val                  |    0.453221 |    0.459184 |    0.469251 |     3 |    0.479319 |     0.46192 |    0.447257 |   0.0162049 |
+| metric/ya_s2ta_nodes:Asserting/f1/train              |           1 |           1 |           1 |     3 |           1 |           1 |           1 |           0 |
+| metric/ya_s2ta_nodes:Asserting/f1/val                |           0 |           0 |           0 |     3 |           0 |           0 |           0 |           0 |
+| metric/ya_s2ta_nodes:Challenging/f1/train            |           1 |           1 |           1 |     3 |           1 |           1 |           1 |           0 |
+| metric/ya_s2ta_nodes:Challenging/f1/val              |           0 |           0 |           0 |     3 |           0 |           0 |           0 |           0 |
+| metric/ya_s2ta_nodes:Default Illocuting/f1/train     |           1 |           1 |           1 |     3 |           1 |           1 |           1 |           0 |
+| metric/ya_s2ta_nodes:Default Illocuting/f1/val       |    0.394645 |    0.433735 |     0.45091 |     3 |    0.468085 |    0.419125 |    0.355556 |   0.0576698 |
+| metric/ya_s2ta_nodes:Disagreeing/f1/train            |    0.998519 |    0.998519 |    0.999259 |     3 |           1 |    0.999012 |    0.998519 | 0.000855329 |
+| metric/ya_s2ta_nodes:Disagreeing/f1/val              |    0.329593 |    0.330827 |    0.334531 |     3 |    0.338235 |    0.332474 |    0.328358 |  0.00514027 |
+| metric/ya_s2ta_nodes:NONE/f1/train                   |    0.999889 |    0.999889 |    0.999945 |     3 |           1 |    0.999926 |    0.999889 | 6.39045e-05 |
+| metric/ya_s2ta_nodes:NONE/f1/val                     |    0.718056 |    0.719842 |    0.728245 |     3 |    0.736648 |    0.724254 |     0.71627 |   0.0108818 |
+| metric/ya_s2ta_nodes:Pure Questioning/f1/train       |           1 |           1 |           1 |     3 |           1 |           1 |           1 |           0 |
+| metric/ya_s2ta_nodes:Pure Questioning/f1/val         |           0 |           0 |           0 |     3 |           0 |           0 |           0 |           0 |
+| metric/ya_s2ta_nodes:Restating/f1/train              |           1 |           1 |           1 |     3 |           1 |           1 |           1 |           0 |
+| metric/ya_s2ta_nodes:Restating/f1/val                |    0.509885 |    0.515397 |    0.527445 |     3 |    0.539493 |    0.519755 |    0.504373 |    0.017961 |
+| metric/ya_s2ta_nodes:Rhetorical Questioning/f1/train |           1 |           1 |           1 |     3 |           1 |           1 |           1 |           0 |
+| metric/ya_s2ta_nodes:Rhetorical Questioning/f1/val   |           0 |           0 |           0 |     3 |           0 |           0 |           0 |           0 |
+
+</details>
+
+### Merged relations with RoBERTa (task_learning_rate=1e-4, window_size=64)
+
+- training a single model for all relation types with roberta-large, experimenting with the window size
+  - command:
+    ```bash
+      python src/train.py \
+      experiment=dialam2024_merged_relations \
+      model.task_learning_rate=1e-4 \
+      taskmodule.max_window=64 \
+      base_model_name=FacebookAI/roberta-large \
+      trainer=gpu \
+      seed=1,2,3 \
+      +hydra.callbacks.save_job_return.integrate_multirun_result=true \
+      name=bert-base-uncased-model \
+      --multirun
+    ```
+  - wandb (weights & biases) run:
+    - seed1: https://wandb.ai/tanikina/bert-base-uncased-model-training/runs/whdwaa9p
+    - seed2: https://wandb.ai/tanikina/bert-base-uncased-model-training/runs/mi1c6gxj
+    - seed3: https://wandb.ai/tanikina/bert-base-uncased-model-training/runs/i3jkfjam
+  - artefacts
+    - model location:
+      - seed1: `/netscratch/anikina/dialam-2024-shared-task/models/bert-base-uncased-model/2024-04-28_22-20-52`
+      - seed2: `/netscratch/anikina/dialam-2024-shared-task/models/bert-base-uncased-model/2024-04-28_22-49-42`
+      - seed3: `/netscratch/anikina/dialam-2024-shared-task/models/bert-base-uncased-model/2024-04-28_23-18-31`
+  - aggregated metric values: macro/f1/val: 0.353, micro/f1/val: 0.733
+
+<details>
+
+|                                                      |         25% |         50% |         75% | count |         max |        mean |         min |         std |
+| :--------------------------------------------------- | ----------: | ----------: | ----------: | ----: | ----------: | ----------: | ----------: | ----------: |
+| loss/train                                           | 0.000128074 | 0.000128848 | 0.000143496 |     3 | 0.000158144 | 0.000138097 | 0.000127299 | 1.73782e-05 |
+| loss/train_epoch                                     | 0.000128074 | 0.000128848 | 0.000143496 |     3 | 0.000158144 | 0.000138097 | 0.000127299 | 1.73782e-05 |
+| loss/train_step                                      | 2.25985e-05 |   2.681e-05 | 8.30262e-05 |     3 | 0.000139242 | 6.14798e-05 |  1.8387e-05 |  6.7476e-05 |
+| loss/val                                             |     1.72642 |     1.98983 |     2.22527 |     3 |     2.46072 |     1.97118 |       1.463 |     0.49912 |
+| metric/macro/f1/train                                |    0.999965 |     0.99997 |    0.999975 |     3 |     0.99998 |     0.99997 |     0.99996 | 9.89653e-06 |
+| metric/macro/f1/val                                  |    0.340788 |    0.351542 |    0.364619 |     3 |    0.377696 |    0.353091 |    0.330034 |   0.0238687 |
+| metric/micro/f1/train                                |    0.999924 |    0.999935 |    0.999946 |     3 |    0.999956 |    0.999935 |    0.999913 | 2.17557e-05 |
+| metric/micro/f1/val                                  |    0.730624 |    0.731021 |    0.735084 |     3 |    0.739148 |    0.733465 |    0.730228 |  0.00493686 |
+| metric/no_relation/f1/train                          |           0 |           0 |           0 |     3 |           0 |           0 |           0 |           0 |
+| metric/no_relation/f1/val                            |           0 |           0 |           0 |     3 |           0 |           0 |           0 |           0 |
+| metric/s_nodes:Default Conflict/f1/train             |           1 |           1 |           1 |     3 |           1 |           1 |           1 |           0 |
+| metric/s_nodes:Default Conflict/f1/val               |    0.288894 |    0.350515 |    0.370173 |     3 |     0.38983 |     0.32254 |    0.227273 |    0.084813 |
+| metric/s_nodes:Default Inference-rev/f1/train        |           1 |           1 |           1 |     3 |           1 |           1 |           1 |           0 |
+| metric/s_nodes:Default Inference-rev/f1/val          |    0.348023 |     0.35443 |    0.374707 |     3 |    0.394984 |    0.363677 |    0.341615 |   0.0278602 |
+| metric/s_nodes:Default Inference/f1/train            |           1 |           1 |           1 |     3 |           1 |           1 |           1 |           0 |
+| metric/s_nodes:Default Inference/f1/val              |     0.32842 |    0.360544 |    0.365457 |     3 |     0.37037 |    0.342404 |    0.296296 |   0.0402312 |
+| metric/s_nodes:Default Rephrase/f1/train             |    0.999745 |     0.99983 |     0.99983 |     3 |     0.99983 |    0.999773 |     0.99966 | 9.82828e-05 |
+| metric/s_nodes:Default Rephrase/f1/val               |    0.455005 |    0.459559 |    0.474546 |     3 |    0.489533 |    0.466514 |     0.45045 |   0.0204486 |
+| metric/s_nodes:NONE/f1/train                         |    0.999895 |     0.99993 |     0.99993 |     3 |     0.99993 |    0.999907 |    0.999861 | 4.02285e-05 |
+| metric/s_nodes:NONE/f1/val                           |     0.72123 |    0.722679 |    0.724663 |     3 |    0.726648 |    0.723036 |     0.71978 |  0.00344752 |
+| metric/ya_i2l_nodes:Agreeing/f1/train                |           1 |           1 |           1 |     3 |           1 |           1 |           1 |           0 |
+| metric/ya_i2l_nodes:Agreeing/f1/val                  |           0 |           0 |           0 |     3 |           0 |           0 |           0 |           0 |
+| metric/ya_i2l_nodes:Arguing/f1/train                 |           1 |           1 |           1 |     3 |           1 |           1 |           1 |           0 |
+| metric/ya_i2l_nodes:Arguing/f1/val                   |           0 |           0 |           0 |     3 |           0 |           0 |           0 |           0 |
+| metric/ya_i2l_nodes:Asserting/f1/train               |           1 |           1 |           1 |     3 |           1 |           1 |           1 |           0 |
+| metric/ya_i2l_nodes:Asserting/f1/val                 |    0.977146 |    0.977791 |    0.977829 |     3 |    0.977867 |    0.977386 |    0.976501 | 0.000767449 |
+| metric/ya_i2l_nodes:Assertive Questioning/f1/train   |           1 |           1 |           1 |     3 |           1 |           1 |           1 |           0 |
+| metric/ya_i2l_nodes:Assertive Questioning/f1/val     |    0.280392 |    0.294118 |    0.298574 |     3 |     0.30303 |    0.287938 |    0.266667 |    0.018953 |
+| metric/ya_i2l_nodes:Challenging/f1/train             |           1 |           1 |           1 |     3 |           1 |           1 |           1 |           0 |
+| metric/ya_i2l_nodes:Challenging/f1/val               |           0 |           0 |         0.5 |     3 |           1 |    0.333333 |           0 |     0.57735 |
+| metric/ya_i2l_nodes:Default Illocuting/f1/train      |           1 |           1 |           1 |     3 |           1 |           1 |           1 |           0 |
+| metric/ya_i2l_nodes:Default Illocuting/f1/val        |           0 |           0 |           0 |     3 |           0 |           0 |           0 |           0 |
+| metric/ya_i2l_nodes:NONE/f1/train                    |           1 |           1 |           1 |     3 |           1 |           1 |           1 |           0 |
+| metric/ya_i2l_nodes:NONE/f1/val                      |    0.348679 |    0.377358 |    0.415346 |     3 |    0.453333 |    0.383564 |        0.32 |   0.0668829 |
+| metric/ya_i2l_nodes:Pure Questioning/f1/train        |           1 |           1 |           1 |     3 |           1 |           1 |           1 |           0 |
+| metric/ya_i2l_nodes:Pure Questioning/f1/val          |    0.791047 |     0.79638 |    0.802841 |     3 |    0.809302 |    0.797132 |    0.785714 |    0.011812 |
+| metric/ya_i2l_nodes:Restating/f1/train               |           1 |           1 |           1 |     3 |           1 |           1 |           1 |           0 |
+| metric/ya_i2l_nodes:Restating/f1/val                 |           0 |           0 |           0 |     3 |           0 |           0 |           0 |           0 |
+| metric/ya_i2l_nodes:Rhetorical Questioning/f1/train  |           1 |           1 |           1 |     3 |           1 |           1 |           1 |           0 |
+| metric/ya_i2l_nodes:Rhetorical Questioning/f1/val    |    0.226678 |    0.324324 |    0.328829 |     3 |    0.333333 |     0.26223 |    0.129032 |    0.115441 |
+| metric/ya_s2ta_nodes:Agreeing/f1/train               |           1 |           1 |           1 |     3 |           1 |           1 |           1 |           0 |
+| metric/ya_s2ta_nodes:Agreeing/f1/val                 |           0 |           0 |           0 |     3 |           0 |           0 |           0 |           0 |
+| metric/ya_s2ta_nodes:Arguing/f1/train                |           1 |           1 |           1 |     3 |           1 |           1 |           1 |           0 |
+| metric/ya_s2ta_nodes:Arguing/f1/val                  |    0.401324 |     0.40678 |    0.428979 |     3 |    0.451178 |    0.417942 |    0.395869 |   0.0292956 |
+| metric/ya_s2ta_nodes:Asserting/f1/train              |           1 |           1 |           1 |     3 |           1 |           1 |           1 |           0 |
+| metric/ya_s2ta_nodes:Asserting/f1/val                |           0 |           0 |           0 |     3 |           0 |           0 |           0 |           0 |
+| metric/ya_s2ta_nodes:Challenging/f1/train            |           1 |           1 |           1 |     3 |           1 |           1 |           1 |           0 |
+| metric/ya_s2ta_nodes:Challenging/f1/val              |           0 |           0 |           0 |     3 |           0 |           0 |           0 |           0 |
+| metric/ya_s2ta_nodes:Default Illocuting/f1/train     |           1 |           1 |           1 |     3 |           1 |           1 |           1 |           0 |
+| metric/ya_s2ta_nodes:Default Illocuting/f1/val       |    0.579051 |    0.636364 |    0.641259 |     3 |    0.646154 |    0.601419 |    0.521739 |   0.0691781 |
+| metric/ya_s2ta_nodes:Disagreeing/f1/train            |           1 |           1 |           1 |     3 |           1 |           1 |           1 |           0 |
+| metric/ya_s2ta_nodes:Disagreeing/f1/val              |    0.284853 |    0.316832 |    0.337363 |     3 |    0.357895 |      0.3092 |    0.252874 |   0.0529249 |
+| metric/ya_s2ta_nodes:NONE/f1/train                   |    0.999878 |    0.999878 |    0.999908 |     3 |    0.999939 |    0.999898 |    0.999878 | 3.52387e-05 |
+| metric/ya_s2ta_nodes:NONE/f1/val                     |     0.74536 |    0.747748 |     0.74939 |     3 |    0.751033 |    0.747251 |    0.742972 |  0.00405349 |
+| metric/ya_s2ta_nodes:Pure Questioning/f1/train       |           1 |           1 |           1 |     3 |           1 |           1 |           1 |           0 |
+| metric/ya_s2ta_nodes:Pure Questioning/f1/val         |           0 |           0 |           0 |     3 |           0 |           0 |           0 |           0 |
+| metric/ya_s2ta_nodes:Restating/f1/train              |    0.999613 |    0.999613 |     0.99971 |     3 |    0.999806 |    0.999677 |    0.999613 | 0.000111841 |
+| metric/ya_s2ta_nodes:Restating/f1/val                |    0.426214 |    0.444008 |     0.44443 |     3 |    0.444853 |    0.432427 |    0.408421 |   0.0207943 |
+| metric/ya_s2ta_nodes:Rhetorical Questioning/f1/train |           1 |           1 |           1 |     3 |           1 |           1 |           1 |           0 |
+| metric/ya_s2ta_nodes:Rhetorical Questioning/f1/val   |           0 |           0 |           0 |     3 |           0 |           0 |           0 |           0 |
 
 </details>
