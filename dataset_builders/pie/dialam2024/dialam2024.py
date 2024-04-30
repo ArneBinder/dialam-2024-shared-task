@@ -234,8 +234,12 @@ def convert_to_example(
         relations = document.metadata[metadata_key]
         for annotation, relation in zip(document[layer_name], relations):
             label = annotation2predicted_label[layer_name].get(annotation, annotation.label)
+            rel_node_id = relation["relation"]
+            for src in relation["sources"]:
+                edge_set.remove((src, rel_node_id))
+            for tgt in relation["targets"]:
+                edge_set.remove((rel_node_id, tgt))
             if label != NONE_LABEL:
-                rel_node_id = relation["relation"]
                 new_node = dict(node_ids2original[rel_node_id])
                 # if the relation was normalized, re-reverse it
                 if denormalize_relation_direction and label.endswith(REVERSE_SUFFIX):
