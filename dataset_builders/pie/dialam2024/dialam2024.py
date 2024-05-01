@@ -250,6 +250,12 @@ def convert_to_example(
                     source_ids = relation["sources"]
                     target_ids = relation["targets"]
                 new_node["text"] = label
+                # update the type of S-nodes depending on the label (RA is default):
+                # "Default Inference" -> RA, "Default Rephrase" -> MA, "Default Conflict" -> RA
+                if label == "Default Rephrase":
+                    new_node["type"] = "MA"
+                elif label == "Default Conflict":
+                    new_node["type"] = "CA"
                 # check if all source and target nodes are in the document
                 if not all(
                     source_or_target in node_ids for source_or_target in source_ids + target_ids
