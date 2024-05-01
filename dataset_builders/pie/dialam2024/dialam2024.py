@@ -250,8 +250,8 @@ def convert_to_example(
                     source_ids = relation["sources"]
                     target_ids = relation["targets"]
                 new_node["text"] = label
-                # update the type of S-nodes depending on the label (RA is default):
-                # "Default Inference" -> RA, "Default Rephrase" -> MA, "Default Conflict" -> RA
+                # update the S-node type depending on the label (RA is default):
+                # "Default Inference" -> RA, "Default Rephrase" -> MA, "Default Conflict" -> CA
                 if label == "Default Rephrase":
                     new_node["type"] = "MA"
                 elif label == "Default Conflict":
