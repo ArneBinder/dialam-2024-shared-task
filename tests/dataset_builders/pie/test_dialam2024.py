@@ -7,11 +7,16 @@ from pie_datasets import load_dataset
 from pytorch_ie import Annotation
 from pytorch_ie.annotations import LabeledSpan, NaryRelation
 
-from dataset_builders.pie.dialam2024.dialam2024 import PieDialAM2024
+from dataset_builders.pie.dialam2024.dialam2024 import (
+    PieDialAM2024,
+    convert_to_example,
+    unmerge_relations,
+)
 from src.document.types import (
     SimplifiedDialAM2024Document,
     TextDocumentWithLabeledEntitiesAndNaryRelations,
 )
+from src.serializer import JsonSerializer
 
 DATA_DIR = None
 # To use local data, set DATA_DIR to a local directory containing the nodeset files.
@@ -360,10 +365,15 @@ def assert_document(document, config_name, split_name):
         assert set(current_node_ids2annotations) == NODE_IDS[document.id][node_type]
 
 
-def test_convert_document(builder, hf_example, split_name):
+@pytest.fixture(scope="module")
+def converted_document(builder, hf_example, split_name):
     # test nodeset cleanup and conversion to document
     document = builder._generate_document(hf_example)
-    assert_document(document, config_name=builder.config.name, split_name=split_name)
+    return document
+
+
+def test_converted_document(converted_document, builder, split_name):
+    assert_document(converted_document, config_name=builder.config.name, split_name=split_name)
 
 
 @pytest.fixture(scope="module")
@@ -383,3 +393,28 @@ def document(dataset, split_name):
 
 def test_document(document, config_name, split_name):
     assert_document(document, config_name, split_name)
+
+
+@pytest.fixture(scope="module")
+def documents_with_predictions() -> Dict[str, TextDocumentWithLabeledEntitiesAndNaryRelations]:
+    docs = JsonSerializer.read(
+        path="tests/fixtures/dataset_builders/pie/dialam2024/test_with_predictions",
+        file_name="test_documents_roberta_large.jsonl",
+        document_type=TextDocumentWithLabeledEntitiesAndNaryRelations,
+    )
+    assert len(docs) == 11
+    doc_id2doc = {doc.id: doc for doc in docs}
+    return doc_id2doc
+
+
+def test_documents_with_predictions(documents_with_predictions):
+    document_with_predictions = documents_with_predictions["test_map10"]
+    assert document_with_predictions is not None
+    assert isinstance(document_with_predictions, TextDocumentWithLabeledEntitiesAndNaryRelations)
+
+
+def test_convert_to_task_format_all(documents_with_predictions):
+    for document_id, document_with_predictions in documents_with_predictions.items():
+        unmerged_document = unmerge_relations(document_with_predictions)
+        result = convert_to_example(unmerged_document, use_predictions=True)
+        assert result is not None

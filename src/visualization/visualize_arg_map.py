@@ -55,7 +55,11 @@ def assemble_node_text(node: dict) -> str:
     text = node["text"]
     if node["type"] in ["L", "I"]:
         text = chunk_text(text)
-    timestamp = node["timestamp"].split()[1] if "timestamp" in node else ""
+    timestamp = (
+        node["timestamp"].split()[1]
+        if "timestamp" in node and node["timestamp"] is not None
+        else ""
+    )
     node_text = f"<<b>{node['type']}</b> {node['nodeID']} {timestamp}<br/>{text}>"
     return node_text
 

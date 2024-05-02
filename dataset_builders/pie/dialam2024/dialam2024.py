@@ -1,8 +1,10 @@
 import logging
-from typing import List
+from collections import defaultdict
+from typing import Any, Dict, List, Tuple, Union
 
 import datasets
 from pie_datasets import GeneratorBasedBuilder
+from pytorch_ie import Document
 from pytorch_ie.annotations import LabeledSpan, NaryRelation
 from pytorch_ie.documents import TextBasedDocument
 
@@ -21,9 +23,17 @@ from src.utils.prepare_data import prepare_nodeset
 
 logger = logging.getLogger(__name__)
 
+NONE_LABEL = "NONE"
+PREFIX_SEPARATOR = ":"
+REVERSE_SUFFIX = "-rev"
+
 
 def dictoflists_to_listofdicts(data):
     return [dict(zip(data, t)) for t in zip(*data.values())]
+
+
+def listofdicts_to_dictoflists(data):
+    return {k: [t[k] for t in data] for k in data[0]}
 
 
 def convert_to_document(
@@ -152,9 +162,131 @@ def convert_to_document(
     ta_nodes = get_node_ids_by_type(nodeset, node_types=["TA"])
     doc.metadata["ta_node_ids"] = ta_nodes
 
-    # validate_document(nodeset=nodeset, document=doc)
+    # add all original data
+    doc.metadata["nodes"] = nodeset["nodes"]
+    doc.metadata["edges"] = nodeset["edges"]
+    doc.metadata["locutions"] = nodeset["locutions"]
 
     return doc
+
+
+def get_roles_and_arguments(annotation: NaryRelation) -> Tuple[Tuple[str, LabeledSpan], ...]:
+    return tuple(sorted(zip(annotation.roles, annotation.arguments)))
+
+
+# NOTE: this does not exactly do the inverse of convert_to_document, because it:
+# - produces the format expected by the DialAM2024 shared task evaluation script, but
+#   not the HuggingFace examples, i.e. the nodes / edges / locutions are not stored in lists of dicts
+# - re-creates edges, i.e. the ids of any original edges are not preserved
+# - requires to set use_predictions to either True or False
+def convert_to_example(
+    document: SimplifiedDialAM2024Document,
+    use_predictions: Union[bool, List[str]],
+    denormalize_relation_direction: bool = True,
+) -> Dict[str, Any]:
+
+    edge_set = set((edge["fromID"], edge["toID"]) for edge in document.metadata["edges"])
+
+    node_ids2original = {node["nodeID"]: node for node in document.metadata["nodes"]}
+
+    i_node_ids = document.metadata["i_node_ids"]
+    i_nodes = [node_ids2original[i_node_id] for i_node_id in i_node_ids]
+    ta_node_ids = document.metadata["ta_node_ids"]
+    ta_nodes = [node_ids2original[ta_node_id] for ta_node_id in ta_node_ids]
+    l_node_ids = document.metadata["l_node_ids"]
+    l_nodes = [node_ids2original[l_node_id] for l_node_id in l_node_ids]
+
+    # NOTE: The order of the relation layers is important here because we check for all new relation
+    #   nodes if their source and target nodes are already in the document and skip the relation node
+    #   if not. Therefore, the order should be such that the source and target nodes are added before
+    #   the respective relation nodes.
+    rel_layer_names = ["ya_i2l_nodes", "s_nodes", "ya_s2ta_nodes"]
+
+    annotation2predicted_label: Dict[str, Dict[NaryRelation, str]] = defaultdict(dict)
+    if use_predictions:
+        if isinstance(use_predictions, bool):
+            prediction_layer_names = rel_layer_names
+        elif isinstance(use_predictions, (list, tuple)):
+            prediction_layer_names = use_predictions
+        else:
+            raise ValueError(
+                f"Unsupported value for use_predictions: {use_predictions}. Expected bool or list of layer names."
+            )
+        for layer_name in prediction_layer_names:
+            rel_args2annotation = {
+                get_roles_and_arguments(rel): rel for rel in document[layer_name]
+            }
+            rel_args2predictions = {
+                get_roles_and_arguments(rel): rel for rel in document[layer_name].predictions
+            }
+            for args, annotation in rel_args2annotation.items():
+                if args in rel_args2predictions:
+                    predicted_label = rel_args2predictions[args].label
+                    annotation2predicted_label[layer_name][annotation] = predicted_label
+                else:
+                    annotation2predicted_label[layer_name][annotation] = NONE_LABEL
+
+    nodes = i_nodes + ta_nodes + l_nodes
+    node_ids = set(node["nodeID"] for node in nodes)
+    # create ya_i2l_nodes / ya_s2ta_nodes / s_nodes from the nary relations
+    for layer_name in rel_layer_names:
+        metadata_key = layer_name.replace("_nodes", "_relations")
+        relations = document.metadata[metadata_key]
+        for annotation, relation in zip(document[layer_name], relations):
+            label = annotation2predicted_label[layer_name].get(annotation, annotation.label)
+            rel_node_id = relation["relation"]
+            for src in relation["sources"]:
+                edge_set.remove((src, rel_node_id))
+            for tgt in relation["targets"]:
+                edge_set.remove((rel_node_id, tgt))
+            if label != NONE_LABEL:
+                new_node = dict(node_ids2original[rel_node_id])
+                # if the relation was normalized, re-reverse it
+                if denormalize_relation_direction and label.endswith(REVERSE_SUFFIX):
+                    label = label[: -len(REVERSE_SUFFIX)]
+                    source_ids = relation["targets"]
+                    target_ids = relation["sources"]
+                else:
+                    source_ids = relation["sources"]
+                    target_ids = relation["targets"]
+                new_node["text"] = label
+                # update the S-node type depending on the label (RA is default):
+                # "Default Inference" -> RA, "Default Rephrase" -> MA, "Default Conflict" -> CA
+                if label == "Default Rephrase":
+                    new_node["type"] = "MA"
+                elif label == "Default Conflict":
+                    new_node["type"] = "CA"
+                # check if all source and target nodes are in the document
+                if not all(
+                    source_or_target in node_ids for source_or_target in source_ids + target_ids
+                ):
+                    logger.warning(
+                        f"doc={document.id}: Skipping relation node {relation} because not all source or target "
+                        f"nodes are yet available."
+                    )
+                    continue
+                nodes.append(new_node)
+                node_ids.add(rel_node_id)
+                for src in source_ids:
+                    edge_set.add((src, rel_node_id))
+                for tgt in target_ids:
+                    edge_set.add((rel_node_id, tgt))
+
+    edge_set_filtered = set(
+        (src, tgt) for src, tgt in edge_set if src in node_ids and tgt in node_ids
+    )
+    edges = [
+        {"edgeID": str(idx + 1), "fromID": src, "toID": tgt}
+        for idx, (src, tgt) in enumerate(sorted(edge_set_filtered))
+    ]
+    result = {
+        "id": document.id,
+        "nodes": nodes,
+        "edges": edges,
+        "locutions": document.metadata["locutions"],  # TODO: better copy.deepcopy?
+    }
+
+    return result
 
 
 def prefix_nary_relation(nary_relation: NaryRelation, prefix: str, sep: str = ":") -> NaryRelation:
@@ -165,8 +297,46 @@ def prefix_nary_relation(nary_relation: NaryRelation, prefix: str, sep: str = ":
     return NaryRelation(arguments=new_arguments, roles=new_roles, label=new_label)
 
 
+def unprefix_nary_relation(
+    nary_relation: NaryRelation, sep: str = ":"
+) -> Tuple[str, NaryRelation]:
+    """Unprefixes the label and roles of a n-ary relation. The prefix is assumed to be the same for
+    the label and all roles. If the roles have different prefixes, a ValueError is raised. If the
+    label prefix does not match the role prefix, a warning is logged and the label is set to
+    NONE_LABEL.
+
+    Args:
+        nary_relation: The n-ary relation to unprefix
+        sep: The separator used to separate the prefix from the label and roles
+    """
+    new_roles = []
+    role_prefixes = set()
+    for role in nary_relation.roles:
+        if sep not in role:
+            raise ValueError(f'Role "{role}" does not contain separator "{sep}".')
+        role_prefix, new_role = role.split(sep, maxsplit=1)
+        role_prefixes.add(role_prefix)
+        new_roles.append(new_role)
+    if len(role_prefixes) != 1:
+        raise ValueError(f"Roles have different prefixes: {role_prefixes}.")
+    role_prefix = role_prefixes.pop()
+    label_prefix, new_label = nary_relation.label.split(sep, maxsplit=1)
+    if label_prefix != role_prefix:
+        logger.warning(
+            f'Label prefix "{label_prefix}" does not match role prefix "{role_prefix}". '
+            f'Set label to NONE_LABEL="{NONE_LABEL}".'
+        )
+        new_label = NONE_LABEL
+    return role_prefix, NaryRelation(
+        arguments=nary_relation.arguments, roles=tuple(new_roles), label=new_label
+    )
+
+
 def merge_relations(
-    document: TextBasedDocument, labeled_span_layer: str, nary_relation_layers: List[str]
+    document: TextBasedDocument,
+    labeled_span_layer: str,
+    nary_relation_layers: List[str],
+    sep: str = ":",
 ) -> TextDocumentWithLabeledEntitiesAndNaryRelations:
     """Merges the relations from multiple n-ary relation layers into a single layer. The labels and
     roles of the n-ary relations are prefixed with the name of the layer.
@@ -178,8 +348,9 @@ def merge_relations(
         document: The input document
         labeled_span_layer: The name of the layer containing the labeled spans
         nary_relation_layers: The names of the n-ary relation layers to merge
+        sep: The separator used to separate the prefix from the label and roles
 
-    Returns:
+    Returns: A new document with the relation layers merged
     """
     new_document = TextDocumentWithLabeledEntitiesAndNaryRelations(
         text=document.text, id=document.id, metadata=document.metadata
@@ -201,9 +372,48 @@ def merge_relations(
             )
         nary_relations = document[nary_relation_layer].clear()
         prefixed_nary_relations = [
-            prefix_nary_relation(rel, prefix=nary_relation_layer) for rel in nary_relations
+            prefix_nary_relation(rel, prefix=nary_relation_layer, sep=sep)
+            for rel in nary_relations
         ]
         new_document.nary_relations.extend(prefixed_nary_relations)
+
+    return new_document
+
+
+def unmerge_relations(
+    document: TextDocumentWithLabeledEntitiesAndNaryRelations, sep: str = ":"
+) -> SimplifiedDialAM2024Document:
+    """Unmerges the relations from a single n-ary relation layer into multiple layers. The labels
+    and roles of the n-ary relations are un-prefixed.
+
+    Note that this is destructive and will remove the original span and relation annotations
+    from the input document!
+
+    Args:
+        document: The input document
+        sep: The separator used to separate the prefix from the label and roles
+
+    Returns: A new document with the relation layers unmerged
+    """
+    new_document = SimplifiedDialAM2024Document(
+        text=document.text, id=document.id, metadata=document.metadata
+    )
+    # get the labeled spans and detach them from the document
+    labeled_spans = document.labeled_spans.clear()
+    # add the labeled spans to the new document
+    new_document.l_nodes.extend(labeled_spans)
+    # iterate over the nary relations and un-prefix the labels and roles
+    for nary_relation in document.nary_relations:
+        prefix, new_nary_relation = unprefix_nary_relation(nary_relation, sep=sep)
+        if prefix not in new_document.metadata["nary_relation_layers"]:
+            raise ValueError(f"Unknown n-ary relation layer prefix {prefix}.")
+        new_document[prefix].append(new_nary_relation)
+    # also handle predictions
+    for nary_relation in document.nary_relations.predictions:
+        prefix, new_nary_relation = unprefix_nary_relation(nary_relation, sep=sep)
+        if prefix not in new_document.metadata["nary_relation_layers"]:
+            raise ValueError(f"Unknown n-ary relation layer prefix {prefix}.")
+        new_document[prefix].predictions.append(new_nary_relation)
 
     return new_document
 
@@ -252,9 +462,10 @@ class PieDialAM2024(GeneratorBasedBuilder):
         cleaned_nodeset = prepare_nodeset(
             nodeset=nodeset,
             nodeset_id=nodeset_id,
-            s_node_text="NONE",
-            ya_node_text="NONE",
+            s_node_text=NONE_LABEL,
+            ya_node_text=NONE_LABEL,
             s_node_type="RA",
+            reversed_text_suffix=REVERSE_SUFFIX,
             l2i_similarity_measure="lcsstr",
             add_gold_data=not is_test_example,
         )
@@ -264,5 +475,16 @@ class PieDialAM2024(GeneratorBasedBuilder):
                 document=doc,
                 labeled_span_layer="l_nodes",
                 nary_relation_layers=["ya_i2l_nodes", "ya_s2ta_nodes", "s_nodes"],
+                sep=PREFIX_SEPARATOR,
             )
         return doc
+
+    def _generate_example(self, document: Document, **kwargs) -> Dict[str, Any]:
+        if isinstance(document, TextDocumentWithLabeledEntitiesAndNaryRelations):
+            document = unmerge_relations(document, sep=PREFIX_SEPARATOR)
+        elif not isinstance(document, SimplifiedDialAM2024Document):
+            raise ValueError(f"Unsupported document type {type(document)}")
+        converted = convert_to_example(document, use_predictions=False)
+        # convert the nodes / edges / locutions back to dict of lists (see _generate_document)
+        result = {k: listofdicts_to_dictoflists(v) for k, v in converted.items()}
+        return result
