@@ -12,9 +12,11 @@ from src.document.types import (
     SimplifiedDialAM2024Document,
     TextDocumentWithLabeledEntitiesAndNaryRelations,
 )
+from src.utils.align_i2l_nodes import align_i_and_l_nodes
 from src.utils.nodeset_utils import (
     Nodeset,
     get_id2node,
+    get_node_ids,
     get_node_ids_by_type,
     get_relations,
     sort_nodes_by_hierarchy,
@@ -37,7 +39,11 @@ def listofdicts_to_dictoflists(data):
 
 
 def convert_to_document(
-    nodeset: Nodeset, nodeset_id: str, text_mode: str = "l-nodes", text_sep: str = " "
+    nodeset: Nodeset,
+    nodeset_id: str,
+    text_mode: str = "l-nodes",
+    text_sep: str = " ",
+    add_i_node_text: bool = True,
 ) -> SimplifiedDialAM2024Document:
 
     # 1. create document text and L-node-spans
@@ -46,6 +52,27 @@ def convert_to_document(
         l_node_ids, edges=nodeset["edges"], nodeset_id=nodeset_id
     )
     node_id2node = get_id2node(nodeset)
+
+    l2i_node_alignments = dict()
+    if add_i_node_text:
+        # get L and I node IDs
+        l_node_ids_with_isolates = get_node_ids(
+            node_id2node=node_id2node, allowed_node_types=["L"]
+        )
+        i_node_ids_with_isolates = get_node_ids(
+            node_id2node=node_id2node, allowed_node_types=["I"]
+        )
+        # align I and L nodes
+        il_node_alignment_with_isolates = align_i_and_l_nodes(
+            node_id2node=node_id2node,
+            i_node_ids=i_node_ids_with_isolates,
+            l_node_ids=l_node_ids_with_isolates,
+            similarity_measure="lcsstr",
+            nodeset_id=nodeset_id,
+        )
+        for i_id, l_id in il_node_alignment_with_isolates:
+            l2i_node_alignments[l_id] = i_id
+
     text = ""
     l_node_spans = dict()
     for l_node_id in sorted_l_node_ids:
@@ -55,6 +82,10 @@ def convert_to_document(
         if text_mode == "l-nodes":
             # avoid multiple spaces since they will be removed later by the tokenizer and will cause offset mismatch
             node_text = " ".join(l_node["text"].split())
+            if add_i_node_text and l_node_id in l2i_node_alignments:
+                # add I-node text
+                i_node_text = node_id2node[l2i_node_alignments[l_node_id]]["text"]
+                node_text += " Argument: " + " ".join(i_node_text.split())
             l_node_spans[l_node_id] = LabeledSpan(
                 start=len(text), end=len(text) + len(node_text), label=l_node["type"]
             )
