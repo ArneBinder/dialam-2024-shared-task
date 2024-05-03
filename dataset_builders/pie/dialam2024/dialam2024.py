@@ -43,7 +43,7 @@ def convert_to_document(
     nodeset_id: str,
     text_mode: str = "l-nodes",
     text_sep: str = " ",
-    add_i_node_text: bool = True,
+    add_i_node_text: bool = False,
 ) -> SimplifiedDialAM2024Document:
 
     # 1. create document text and L-node-spans
