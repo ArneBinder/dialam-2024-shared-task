@@ -3080,3 +3080,270 @@ self.model.model.embed_tokens.weight.requires_grad_(False)
 | model_save_dir                                       | /netscratch/anikina/dialam-2024-shared-task/models/dialam2024_merged_relations/re_text_classification_with_indices/2024-05-05_23-45-53 |
 
 </details>
+
+## 2024-05-08
+
+### Merged relations with DeBERTa-v3 trained on the combination of the original DialaAM data and the same data augmented with textaugment
+
+- (1) applying Easy Data Augmentation to L-node texts: random token insertion, deletion, swap or synonym replacement. Note that to make this work the following scripts were modified: `dataset_builders/hf/dialam2024/dialam2024.py` and `dataset_builders/pie/dialam2024/dialam2024.py` in `/netscratch/anikina/dialam-eda/dialam-2024-shared-task`. After extending the training set with the augmented data, (2) training a single model for all relation types with deberta-v3-large (task_learning_rate=1e-4, fixed validation set and it has 2890 vs 1399 samples in the train split).
+  - command:
+    ```bash
+      python src/train.py \
+      experiment=dialam2024_merged_relations \
+      model.task_learning_rate=1e-4 \
+      base_model_name=microsoft/deberta-v3-large \
+      +model.classifier_dropout=0.1 \
+      datamodule.batch_size=16 \
+      trainer=gpu
+    ```
+  - wandb (weights & biases) run:
+    - seed1: https://wandb.ai/tanikina/dialam2024_merged_relations-re_text_classification_with_indices-training/runs/df4xituu
+  - artefacts
+    - model location:
+      - seed1: `/netscratch/anikina/dialam-eda/dialam-2024-shared-task/models/dialam2024_merged_relations/re_text_classification_with_indices/2024-05-07_14-14-46`
+  - aggregated metric values: macro/f1/val: 0.399, micro/f1/val: 0.716
+
+<details>
+
+|                                                      | 0                                                                                                                                                 |
+| :--------------------------------------------------- | :------------------------------------------------------------------------------------------------------------------------------------------------ |
+| loss/train                                           | 3.242516322643496e-05                                                                                                                             |
+| loss/train_step                                      | 1.0967239632009296e-06                                                                                                                            |
+| loss/val                                             | 3.06596302986145                                                                                                                                  |
+| metric/no_relation/f1/val                            | 0.0                                                                                                                                               |
+| metric/s_nodes:Default Conflict/f1/val               | 0.3513513505458832                                                                                                                                |
+| metric/s_nodes:Default Inference/f1/val              | 0.3868131935596466                                                                                                                                |
+| metric/s_nodes:Default Inference-rev/f1/val          | 0.3510638177394867                                                                                                                                |
+| metric/s_nodes:Default Rephrase/f1/val               | 0.5803468227386475                                                                                                                                |
+| metric/s_nodes:NONE/f1/val                           | 0.68482905626297                                                                                                                                  |
+| metric/ya_i2l_nodes:Agreeing/f1/val                  | 0.0                                                                                                                                               |
+| metric/ya_i2l_nodes:Arguing/f1/val                   | 0.0                                                                                                                                               |
+| metric/ya_i2l_nodes:Asserting/f1/val                 | 0.9833148121833801                                                                                                                                |
+| metric/ya_i2l_nodes:Assertive Questioning/f1/val     | 0.2857142984867096                                                                                                                                |
+| metric/ya_i2l_nodes:Challenging/f1/val               | 0.0                                                                                                                                               |
+| metric/ya_i2l_nodes:Default Illocuting/f1/val        | 0.0                                                                                                                                               |
+| metric/ya_i2l_nodes:NONE/f1/val                      | 0.5128205418586731                                                                                                                                |
+| metric/ya_i2l_nodes:Pure Questioning/f1/val          | 0.8032786846160889                                                                                                                                |
+| metric/ya_i2l_nodes:Restating/f1/val                 | 0.0                                                                                                                                               |
+| metric/ya_i2l_nodes:Rhetorical Questioning/f1/val    | 0.4571428596973419                                                                                                                                |
+| metric/ya_s2ta_nodes:Agreeing/f1/val                 | 0.0                                                                                                                                               |
+| metric/ya_s2ta_nodes:Arguing/f1/val                  | 0.4438839852809906                                                                                                                                |
+| metric/ya_s2ta_nodes:Asserting/f1/val                | 0.0                                                                                                                                               |
+| metric/ya_s2ta_nodes:Challenging/f1/val              | 0.0                                                                                                                                               |
+| metric/ya_s2ta_nodes:Default Illocuting/f1/val       | 0.594059407711029                                                                                                                                 |
+| metric/ya_s2ta_nodes:Disagreeing/f1/val              | 0.30882352590560913                                                                                                                               |
+| metric/ya_s2ta_nodes:NONE/f1/val                     | 0.7175430655479431                                                                                                                                |
+| metric/ya_s2ta_nodes:Pure Questioning/f1/val         | 0.0                                                                                                                                               |
+| metric/ya_s2ta_nodes:Restating/f1/val                | 0.5230769515037537                                                                                                                                |
+| metric/ya_s2ta_nodes:Rhetorical Questioning/f1/val   | 0.0                                                                                                                                               |
+| metric/macro/f1/val                                  | 0.3992031216621399                                                                                                                                |
+| metric/micro/f1/val                                  | 0.7158094048500061                                                                                                                                |
+| loss/train_epoch                                     | 3.242516322643496e-05                                                                                                                             |
+| metric/no_relation/f1/train                          | 0.0                                                                                                                                               |
+| metric/s_nodes:Default Conflict/f1/train             | 1.0                                                                                                                                               |
+| metric/s_nodes:Default Inference/f1/train            | 0.9998828172683716                                                                                                                                |
+| metric/s_nodes:Default Inference-rev/f1/train        | 1.0                                                                                                                                               |
+| metric/s_nodes:Default Rephrase/f1/train             | 1.0                                                                                                                                               |
+| metric/s_nodes:NONE/f1/train                         | 1.0                                                                                                                                               |
+| metric/ya_i2l_nodes:Agreeing/f1/train                | 1.0                                                                                                                                               |
+| metric/ya_i2l_nodes:Arguing/f1/train                 | 1.0                                                                                                                                               |
+| metric/ya_i2l_nodes:Asserting/f1/train               | 1.0                                                                                                                                               |
+| metric/ya_i2l_nodes:Assertive Questioning/f1/train   | 1.0                                                                                                                                               |
+| metric/ya_i2l_nodes:Challenging/f1/train             | 1.0                                                                                                                                               |
+| metric/ya_i2l_nodes:Default Illocuting/f1/train      | 1.0                                                                                                                                               |
+| metric/ya_i2l_nodes:NONE/f1/train                    | 1.0                                                                                                                                               |
+| metric/ya_i2l_nodes:Pure Questioning/f1/train        | 1.0                                                                                                                                               |
+| metric/ya_i2l_nodes:Restating/f1/train               | 1.0                                                                                                                                               |
+| metric/ya_i2l_nodes:Rhetorical Questioning/f1/train  | 0.9987849593162537                                                                                                                                |
+| metric/ya_s2ta_nodes:Agreeing/f1/train               | 1.0                                                                                                                                               |
+| metric/ya_s2ta_nodes:Arguing/f1/train                | 1.0                                                                                                                                               |
+| metric/ya_s2ta_nodes:Asserting/f1/train              | 1.0                                                                                                                                               |
+| metric/ya_s2ta_nodes:Challenging/f1/train            | 1.0                                                                                                                                               |
+| metric/ya_s2ta_nodes:Default Illocuting/f1/train     | 1.0                                                                                                                                               |
+| metric/ya_s2ta_nodes:Disagreeing/f1/train            | 1.0                                                                                                                                               |
+| metric/ya_s2ta_nodes:NONE/f1/train                   | 1.0                                                                                                                                               |
+| metric/ya_s2ta_nodes:Pure Questioning/f1/train       | 1.0                                                                                                                                               |
+| metric/ya_s2ta_nodes:Restating/f1/train              | 1.0                                                                                                                                               |
+| metric/ya_s2ta_nodes:Rhetorical Questioning/f1/train | 1.0                                                                                                                                               |
+| metric/macro/f1/train                                | 0.9999467134475708                                                                                                                                |
+| metric/micro/f1/train                                | 0.9999909400939941                                                                                                                                |
+| model_save_dir                                       | /netscratch/anikina/dialam-eda/dialam-2024-shared-task/models/dialam2024_merged_relations/re_text_classification_with_indices/2024-05-07_14-14-46 |
+
+</details>
+
+### Merged relations with DeBERTa-v3 first fine-tuned on the augmented DialaAM data and then on the original data
+
+- (1) fine-tuning deberta-v3-large on the DialAM data augmented with `textaugment` (Easy Data Augmentation: random token insertion, deletion, swap or synonym replacement) and then (2) further tuning this model (from the saved checkpoint) on the original DialaAM data.
+  - command:
+    ```bash
+      python src/train.py \
+      experiment=dialam2024_merged_relations \
+      model.task_learning_rate=1e-4 \
+      base_model_name=microsoft/deberta-v3-large \
+      +model.classifier_dropout=0.1 \
+      datamodule.batch_size=16 \
+      ckpt_path=/netscratch/anikina/dialam-eda-pretrain/dialam-2024-shared-task/logs/training/runs/dialam2024_merged_relations/re_text_classification_with_indices/2024-05-07_23-43-25/checkpoints/epoch_010.ckpt \
+      trainer=gpu
+    ```
+  - wandb (weights & biases) run:
+    - seed1: https://wandb.ai/tanikina/dialam2024_merged_relations-re_text_classification_with_indices-training/runs/ojttbaf3
+  - artefacts
+    - model location:
+      - seed1: `/netscratch/anikina/dialam-2024-shared-task/models/dialam2024_merged_relations/re_text_classification_with_indices/2024-05-08_08-54-28`
+  - aggregated metric values: macro/f1/val: 0.398, micro/f1/val: 0.715
+
+<details>
+
+|                                                      | 0                                                                                                                                      |
+| :--------------------------------------------------- | :------------------------------------------------------------------------------------------------------------------------------------- |
+| loss/train                                           | 0.00010523261880734935                                                                                                                 |
+| loss/train_step                                      | 1.0887669304793235e-05                                                                                                                 |
+| loss/val                                             | 2.380398988723755                                                                                                                      |
+| metric/no_relation/f1/val                            | 0.0                                                                                                                                    |
+| metric/s_nodes:Default Conflict/f1/val               | 0.30215826630592346                                                                                                                    |
+| metric/s_nodes:Default Inference/f1/val              | 0.40434783697128296                                                                                                                    |
+| metric/s_nodes:Default Inference-rev/f1/val          | 0.33000001311302185                                                                                                                    |
+| metric/s_nodes:Default Rephrase/f1/val               | 0.5737704634666443                                                                                                                     |
+| metric/s_nodes:NONE/f1/val                           | 0.6859903335571289                                                                                                                     |
+| metric/ya_i2l_nodes:Agreeing/f1/val                  | 0.0                                                                                                                                    |
+| metric/ya_i2l_nodes:Arguing/f1/val                   | 0.0                                                                                                                                    |
+| metric/ya_i2l_nodes:Asserting/f1/val                 | 0.9844271540641785                                                                                                                     |
+| metric/ya_i2l_nodes:Assertive Questioning/f1/val     | 0.3478260934352875                                                                                                                     |
+| metric/ya_i2l_nodes:Challenging/f1/val               | 0.0                                                                                                                                    |
+| metric/ya_i2l_nodes:Default Illocuting/f1/val        | 0.0                                                                                                                                    |
+| metric/ya_i2l_nodes:NONE/f1/val                      | 0.4390243887901306                                                                                                                     |
+| metric/ya_i2l_nodes:Pure Questioning/f1/val          | 0.8215767741203308                                                                                                                     |
+| metric/ya_i2l_nodes:Restating/f1/val                 | 0.0                                                                                                                                    |
+| metric/ya_i2l_nodes:Rhetorical Questioning/f1/val    | 0.4117647111415863                                                                                                                     |
+| metric/ya_s2ta_nodes:Agreeing/f1/val                 | 0.0                                                                                                                                    |
+| metric/ya_s2ta_nodes:Arguing/f1/val                  | 0.4602409601211548                                                                                                                     |
+| metric/ya_s2ta_nodes:Asserting/f1/val                | 0.0                                                                                                                                    |
+| metric/ya_s2ta_nodes:Challenging/f1/val              | 0.0                                                                                                                                    |
+| metric/ya_s2ta_nodes:Default Illocuting/f1/val       | 0.6336633563041687                                                                                                                     |
+| metric/ya_s2ta_nodes:Disagreeing/f1/val              | 0.3448275923728943                                                                                                                     |
+| metric/ya_s2ta_nodes:NONE/f1/val                     | 0.7150210738182068                                                                                                                     |
+| metric/ya_s2ta_nodes:Pure Questioning/f1/val         | 0.0                                                                                                                                    |
+| metric/ya_s2ta_nodes:Restating/f1/val                | 0.5093833804130554                                                                                                                     |
+| metric/ya_s2ta_nodes:Rhetorical Questioning/f1/val   | 0.0                                                                                                                                    |
+| metric/macro/f1/val                                  | 0.3982011377811432                                                                                                                     |
+| metric/micro/f1/val                                  | 0.7147772312164307                                                                                                                     |
+| loss/train_epoch                                     | 0.00010523261880734935                                                                                                                 |
+| metric/no_relation/f1/train                          | 0.0                                                                                                                                    |
+| metric/s_nodes:Default Conflict/f1/train             | 0.999323844909668                                                                                                                      |
+| metric/s_nodes:Default Inference/f1/train            | 1.0                                                                                                                                    |
+| metric/s_nodes:Default Inference-rev/f1/train        | 1.0                                                                                                                                    |
+| metric/s_nodes:Default Rephrase/f1/train             | 1.0                                                                                                                                    |
+| metric/s_nodes:NONE/f1/train                         | 0.9999381303787231                                                                                                                     |
+| metric/ya_i2l_nodes:Agreeing/f1/train                | 1.0                                                                                                                                    |
+| metric/ya_i2l_nodes:Arguing/f1/train                 | 1.0                                                                                                                                    |
+| metric/ya_i2l_nodes:Asserting/f1/train               | 1.0                                                                                                                                    |
+| metric/ya_i2l_nodes:Assertive Questioning/f1/train   | 1.0                                                                                                                                    |
+| metric/ya_i2l_nodes:Challenging/f1/train             | 1.0                                                                                                                                    |
+| metric/ya_i2l_nodes:Default Illocuting/f1/train      | 1.0                                                                                                                                    |
+| metric/ya_i2l_nodes:NONE/f1/train                    | 1.0                                                                                                                                    |
+| metric/ya_i2l_nodes:Pure Questioning/f1/train        | 1.0                                                                                                                                    |
+| metric/ya_i2l_nodes:Restating/f1/train               | 1.0                                                                                                                                    |
+| metric/ya_i2l_nodes:Rhetorical Questioning/f1/train  | 1.0                                                                                                                                    |
+| metric/ya_s2ta_nodes:Agreeing/f1/train               | 1.0                                                                                                                                    |
+| metric/ya_s2ta_nodes:Arguing/f1/train                | 1.0                                                                                                                                    |
+| metric/ya_s2ta_nodes:Asserting/f1/train              | 1.0                                                                                                                                    |
+| metric/ya_s2ta_nodes:Challenging/f1/train            | 1.0                                                                                                                                    |
+| metric/ya_s2ta_nodes:Default Illocuting/f1/train     | 1.0                                                                                                                                    |
+| metric/ya_s2ta_nodes:Disagreeing/f1/train            | 1.0                                                                                                                                    |
+| metric/ya_s2ta_nodes:NONE/f1/train                   | 1.0                                                                                                                                    |
+| metric/ya_s2ta_nodes:Pure Questioning/f1/train       | 1.0                                                                                                                                    |
+| metric/ya_s2ta_nodes:Restating/f1/train              | 1.0                                                                                                                                    |
+| metric/ya_s2ta_nodes:Rhetorical Questioning/f1/train | 1.0                                                                                                                                    |
+| metric/macro/f1/train                                | 0.9999704360961914                                                                                                                     |
+| metric/micro/f1/train                                | 0.9999802708625793                                                                                                                     |
+| model_save_dir                                       | /netscratch/anikina/dialam-2024-shared-task/models/dialam2024_merged_relations/re_text_classification_with_indices/2024-05-08_08-54-28 |
+
+</details>
+
+### Merged relations with DeBERTa-v3 including nodesets that were previously blacklisted
+
+- adding nodesets previously blacklisted because of the following error messages: `ambiguous direction of RA-node`, `could not find TA-relation for RA-node`, `could not determine direction of RA-nodes because there is no TA relation between any combination of anchoring I-nodes`, `S-node arguments are not unique`. These error messages were simply commented out in `src/utils/prepare_data.py`. The following script was also modified to remove problematic nodesets from the blacklist: `dataset_builders/hf/dialam2024/dialam2024.py`. The idea was to see if there are any useful annotations in those problematic nodesets that could be still helpful for training the model. This setting uses fixed validation set and 1475 vs 1399 samples in the train split, we train a single model for all relation types with deberta-v3-large.
+  - command:
+    ```bash
+      python src/train.py \
+      experiment=dialam2024_merged_relations \
+      model.task_learning_rate=1e-4 \
+      base_model_name=microsoft/deberta-v3-large \
+      +model.classifier_dropout=0.1 \
+      datamodule.batch_size=16 \
+      trainer=gpu
+    ```
+  - wandb (weights & biases) run:
+    - seed1: https://wandb.ai/tanikina/dialam2024_merged_relations-re_text_classification_with_indices-training/runs/hmige0zt
+  - artefacts
+    - model location:
+      - seed1: `/netscratch/anikina/dialam-all/dialam-2024-shared-task/models/dialam2024_merged_relations/re_text_classification_with_indices/2024-05-08_10-24-25`
+  - aggregated metric values: macro/f1/val: 0.449, micro/f1/val: 0.715
+
+<details>
+
+|                                                      | 0                                                                                                                                                 |
+| :--------------------------------------------------- | :------------------------------------------------------------------------------------------------------------------------------------------------ |
+| loss/train                                           | 0.0003238235367462039                                                                                                                             |
+| loss/train_step                                      | 8.627030911156908e-05                                                                                                                             |
+| loss/val                                             | 2.022005319595337                                                                                                                                 |
+| metric/no_relation/f1/val                            | 0.0                                                                                                                                               |
+| metric/s_nodes:Default Conflict/f1/val               | 0.3544303774833679                                                                                                                                |
+| metric/s_nodes:Default Inference/f1/val              | 0.35862070322036743                                                                                                                               |
+| metric/s_nodes:Default Inference-rev/f1/val          | 0.31460675597190857                                                                                                                               |
+| metric/s_nodes:Default Rephrase/f1/val               | 0.565116286277771                                                                                                                                 |
+| metric/s_nodes:NONE/f1/val                           | 0.693235456943512                                                                                                                                 |
+| metric/ya_i2l_nodes:Agreeing/f1/val                  | 0.0                                                                                                                                               |
+| metric/ya_i2l_nodes:Arguing/f1/val                   | 0.0                                                                                                                                               |
+| metric/ya_i2l_nodes:Asserting/f1/val                 | 0.9849833250045776                                                                                                                                |
+| metric/ya_i2l_nodes:Assertive Questioning/f1/val     | 0.21621622145175934                                                                                                                               |
+| metric/ya_i2l_nodes:Challenging/f1/val               | 1.0                                                                                                                                               |
+| metric/ya_i2l_nodes:Default Illocuting/f1/val        | 0.0                                                                                                                                               |
+| metric/ya_i2l_nodes:NONE/f1/val                      | 0.6315789222717285                                                                                                                                |
+| metric/ya_i2l_nodes:Pure Questioning/f1/val          | 0.8264462947845459                                                                                                                                |
+| metric/ya_i2l_nodes:Restating/f1/val                 | 0.0                                                                                                                                               |
+| metric/ya_i2l_nodes:Rhetorical Questioning/f1/val    | 0.43478259444236755                                                                                                                               |
+| metric/ya_s2ta_nodes:Agreeing/f1/val                 | 0.0                                                                                                                                               |
+| metric/ya_s2ta_nodes:Arguing/f1/val                  | 0.45995423197746277                                                                                                                               |
+| metric/ya_s2ta_nodes:Asserting/f1/val                | 0.0                                                                                                                                               |
+| metric/ya_s2ta_nodes:Challenging/f1/val              | 0.0                                                                                                                                               |
+| metric/ya_s2ta_nodes:Default Illocuting/f1/val       | 0.581818163394928                                                                                                                                 |
+| metric/ya_s2ta_nodes:Disagreeing/f1/val              | 0.31081080436706543                                                                                                                               |
+| metric/ya_s2ta_nodes:NONE/f1/val                     | 0.7124585509300232                                                                                                                                |
+| metric/ya_s2ta_nodes:Pure Questioning/f1/val         | 0.0                                                                                                                                               |
+| metric/ya_s2ta_nodes:Restating/f1/val                | 0.5251396894454956                                                                                                                                |
+| metric/ya_s2ta_nodes:Rhetorical Questioning/f1/val   | 0.0                                                                                                                                               |
+| metric/macro/f1/val                                  | 0.44850993156433105                                                                                                                               |
+| metric/micro/f1/val                                  | 0.7147772312164307                                                                                                                                |
+| loss/train_epoch                                     | 0.0003238235367462039                                                                                                                             |
+| metric/no_relation/f1/train                          | 0.0                                                                                                                                               |
+| metric/s_nodes:Default Conflict/f1/train             | 1.0                                                                                                                                               |
+| metric/s_nodes:Default Inference/f1/train            | 1.0                                                                                                                                               |
+| metric/s_nodes:Default Inference-rev/f1/train        | 1.0                                                                                                                                               |
+| metric/s_nodes:Default Rephrase/f1/train             | 1.0                                                                                                                                               |
+| metric/s_nodes:NONE/f1/train                         | 1.0                                                                                                                                               |
+| metric/ya_i2l_nodes:Agreeing/f1/train                | 1.0                                                                                                                                               |
+| metric/ya_i2l_nodes:Arguing/f1/train                 | 1.0                                                                                                                                               |
+| metric/ya_i2l_nodes:Asserting/f1/train               | 1.0                                                                                                                                               |
+| metric/ya_i2l_nodes:Assertive Questioning/f1/train   | 1.0                                                                                                                                               |
+| metric/ya_i2l_nodes:Challenging/f1/train             | 1.0                                                                                                                                               |
+| metric/ya_i2l_nodes:Default Illocuting/f1/train      | 1.0                                                                                                                                               |
+| metric/ya_i2l_nodes:NONE/f1/train                    | 1.0                                                                                                                                               |
+| metric/ya_i2l_nodes:Pure Questioning/f1/train        | 1.0                                                                                                                                               |
+| metric/ya_i2l_nodes:Restating/f1/train               | 1.0                                                                                                                                               |
+| metric/ya_i2l_nodes:Rhetorical Questioning/f1/train  | 1.0                                                                                                                                               |
+| metric/ya_s2ta_nodes:Agreeing/f1/train               | 1.0                                                                                                                                               |
+| metric/ya_s2ta_nodes:Arguing/f1/train                | 0.9993793964385986                                                                                                                                |
+| metric/ya_s2ta_nodes:Asserting/f1/train              | 1.0                                                                                                                                               |
+| metric/ya_s2ta_nodes:Challenging/f1/train            | 1.0                                                                                                                                               |
+| metric/ya_s2ta_nodes:Default Illocuting/f1/train     | 0.9954614043235779                                                                                                                                |
+| metric/ya_s2ta_nodes:Disagreeing/f1/train            | 1.0                                                                                                                                               |
+| metric/ya_s2ta_nodes:NONE/f1/train                   | 1.0                                                                                                                                               |
+| metric/ya_s2ta_nodes:Pure Questioning/f1/train       | 1.0                                                                                                                                               |
+| metric/ya_s2ta_nodes:Restating/f1/train              | 0.9989503622055054                                                                                                                                |
+| metric/ya_s2ta_nodes:Rhetorical Questioning/f1/train | 1.0                                                                                                                                               |
+| metric/macro/f1/train                                | 0.999751627445221                                                                                                                                 |
+| metric/micro/f1/train                                | 0.9997991919517517                                                                                                                                |
+| model_save_dir                                       | /netscratch/anikina/dialam-all/dialam-2024-shared-task/models/dialam2024_merged_relations/re_text_classification_with_indices/2024-05-08_10-24-25 |
+
+</details>
