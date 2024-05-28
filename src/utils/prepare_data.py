@@ -682,6 +682,7 @@ def main(
     show_progress: bool = True,
     nodeset_id: Optional[str] = None,
     nodeset_blacklist: Optional[List[str]] = None,
+    nodeset_whitelist: Optional[List[str]] = None,
     **kwargs,
 ):
     # create the output directory if it does not exist
@@ -701,6 +702,7 @@ def main(
             nodeset_dir=input_dir,
             show_progress=show_progress,
             nodeset_blacklist=nodeset_blacklist,
+            nodeset_whitelist=nodeset_whitelist,
             **kwargs,
         ):
             if isinstance(result_or_error, Exception):
@@ -734,6 +736,13 @@ if __name__ == "__main__":
         type=lambda x: [nid.strip() for nid in x.split(",")] if x else None,
         default=None,
         help="List of nodeset IDs that should be ignored.",
+    )
+    parser.add_argument(
+        "--nodeset_whitelist",
+        # split by comma and remove leading/trailing whitespaces
+        type=lambda x: [nid.strip() for nid in x.split(",")] if x else None,
+        default=None,
+        help="List of nodeset IDs that should be processed.",
     )
     parser.add_argument(
         "--s_node_type",
