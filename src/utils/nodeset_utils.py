@@ -73,6 +73,7 @@ def process_all_nodesets(
     func: Callable[..., FuncResult],
     show_progress: bool = True,
     nodeset_blacklist: Optional[List[str]] = None,
+    nodeset_whitelist: Optional[List[str]] = None,
     **kwargs,
 ) -> Iterator[Tuple[str, Union[FuncResult, Exception]]]:
     """Process all nodesets in a directory.
@@ -82,6 +83,7 @@ def process_all_nodesets(
         func: The function to apply to each nodeset.
         show_progress: Whether to show a progress bar.
         nodeset_blacklist: Whether to ignore some nodeset IDs.
+        nodeset_whitelist: Whether to only process some nodeset IDs.
         **kwargs: Additional keyword arguments to pass to the function.
 
     Yields:
@@ -89,7 +91,10 @@ def process_all_nodesets(
         If an exception occurs, the result will be the exception.
     """
 
-    nodeset_ids = get_nodeset_ids_from_directory(nodeset_dir=nodeset_dir)
+    if nodeset_whitelist is not None:
+        nodeset_ids = nodeset_whitelist
+    else:
+        nodeset_ids = get_nodeset_ids_from_directory(nodeset_dir=nodeset_dir)
     failed_nodesets = []
     n_success = 0
     n_blacklisted = 0
