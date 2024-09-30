@@ -43,7 +43,9 @@ and data augmentation. Our source code is publicly available.
    +hydra.callbacks.save_job_return.integrate_multirun_result=true \
    --multirun
    ```
-3. Run the inference on the test set (the `model_save_dir`s from the training step will be used as the `model_name_or_path`, see the content of the `job_return_value.json` in your `logs/training` folder for the exact paths):
+3. Run the inference on the test set (the `model_save_dir`s from the training step will be used as the
+   `model_name_or_path`, see the content of the `job_return_value.json` in your `logs/training` folder
+   for the exact paths):
    ```bash
    python src/predict.py \
    dataset=dialam2024_merged_relations \
@@ -53,19 +55,23 @@ and data augmentation. Our source code is publicly available.
    --multirun
    ```
 4. Evaluate the results:
-   First, convert the serialized JSON documents into the JSON format required for the DialAM Shared Task with each nodeset in a separate JSON file (note that `INPUT/DATA/DIR` is the path to the directory where the predicted outputs from step 2 are stored):
+   First, convert the serialized JSON documents into the JSON format required for the DialAM Shared
+   Task with each nodeset in a separate JSON file (note that `INPUT/DATA/DIR` is the path to one of the
+   directories where the predicted outputs from the previous step are stored):
    ```bash
    python src/utils/convert_documents2nodesets.py \
    --input_dir=INPUT/DATA/DIR \
    --output_dir=PREDICTION/DATA/DIR
    ```
-   Second, evaluate using the official script both argumentative and illocutionary relations:
+   Second, evaluate using the official script for argumentative relations:
    ```bash
    python src/evaluation/eval_official.py \
    --gold_dir=GOLD/DATA/DIR \
    --predictions_dir=PREDICTION/DATA/DIR \
    --mode=arguments
-
+   ```
+   ... and for illocutionary relations:
+   ```bash
    python src/evaluation/eval_official.py \
    --gold_dir=GOLD/DATA/DIR \
    --predictions_dir=PREDICTION/DATA/DIR \
