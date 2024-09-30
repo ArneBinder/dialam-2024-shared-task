@@ -30,8 +30,21 @@ and data augmentation. Our source code is publicly available.
 ### ✨ How to Reproduce the Results from Our Paper
 
 1. Set up the environment as described in the [Environment Setup](#environment-setup) section.
-2. Train the model with the configuration from the paper: TODO
-3. Evaluate the model on the test set: TODO
+2. Train the model with the configuration from the paper (this will execute 3 runs with different seeds): **TODO: double-check the configuration**
+   ```bash
+   python src/train.py \
+   experiment=dialam2024_merged_relations \
+   base_model_name=microsoft/deberta-v3-large \
+   model.task_learning_rate=1e-4 \
+   +model.classifier_dropout=0.1 \
+   datamodule.batch_size=8 \
+   trainer=gpu \
+   seed=1,2,3 \
+   +hydra.callbacks.save_job_return.integrate_multirun_result=true \
+   --multirun
+   ```
+3. Run the inference on the test set: TODO
+4. Evaluate the results: TODO
 
 ## 🚀 Quickstart
 
