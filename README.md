@@ -7,7 +7,7 @@
 <a href="https://hydra.cc/"><img alt="Config: Hydra" src="https://img.shields.io/badge/Config-Hydra-89b8cd"></a>
 <a href="https://github.com/ChristophAlt/pytorch-ie-hydra-template"><img alt="Template" src="https://img.shields.io/badge/-PyTorch--IE--Hydra--Template-017F2F?style=flat&logo=github&labelColor=gray"></a><br>
 [![Paper](https://img.shields.io/badge/paper-2024.argmining.1.9-B31B1B.svg)](https://aclanthology.org/2024.argmining-1.9)
-[![Conference](https://img.shields.io/badge/ArgMining-2024-4b44ce.svg)](https://aclanthology.org/volumes/2024.argmining-1)
+[![Conference](https://img.shields.io/badge/ArgMining@ACL-2024-4b44ce.svg)](https://aclanthology.org/volumes/2024.argmining-1)
 
 </div>
 
