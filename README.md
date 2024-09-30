@@ -1,6 +1,6 @@
 <div align="center">
 
-# DialAM-2024 Shared Task
+# DFKI-MLST@DialAM-2024 Shared Task
 
 <a href="https://pytorch.org/get-started/locally/"><img alt="PyTorch" src="https://img.shields.io/badge/PyTorch-ee4c2c?logo=pytorch&logoColor=white"></a>
 <a href="https://pytorchlightning.ai/"><img alt="Lightning" src="https://img.shields.io/badge/-Lightning-792ee5?logo=pytorchlightning&logoColor=white"></a>
@@ -11,12 +11,15 @@
 
 </div>
 
+![data_structure_and_task.png](figures/data_structure_and_task.png "Data Structure and Task")
+
 ## 📌 Description
 
 This repository contains the code for our submission to the DialAM-2024 Shared Task as described in the
-paper [DFKI-MLST at DialAM-2024 Shared Task: System Description (Binder et al., ArgMining 2024)](https://aclanthology.org/2024.argmining-1.9/).
-The task is part of the ArgMining 2024 workshop and focuses on the identification of argumentative relations in dialogues.
-See the [official website](https://dialam.arg.tech/) for more information.
+paper [DFKI-MLST at DialAM-2024 Shared Task: System Description (Binder et al., ArgMining 2024)](https://aclanthology.org/2024.argmining-1.9/) and
+[poster](paper/2024-argument-mining-workshop-poster.pdf) presented at the ArgMining 2024 workshop co-located with
+ACL 2024 in Bangkok, Thailand. The task was part of the workshop and focused on the identification
+of argumentative relations in dialogues. See the [official website](https://dialam.arg.tech/) for more information.
 
 ### 📃 Abstract
 
@@ -30,7 +33,7 @@ and data augmentation. Our source code is publicly available.
 ### ✨ How to Reproduce the Results from Our Paper
 
 1. Set up the environment as described in the [Environment Setup](#environment-setup) section.
-2. Train models with the configuration from the paper (this will execute 3 runs with different seeds): **TODO: double-check the configuration**
+2. Train models with the configuration from the paper (this will execute 3 runs with different seeds):
    ```bash
    python src/train.py \
    experiment=dialam2024_merged_relations \
@@ -43,7 +46,9 @@ and data augmentation. Our source code is publicly available.
    +hydra.callbacks.save_job_return.integrate_multirun_result=true \
    --multirun
    ```
-3. Run the inference on the test set (the `model_save_dir`s from the training step will be used as the `model_name_or_path`, see the content of the `job_return_value.json` in your `logs/training` folder for the exact paths):
+3. Run the inference on the test set (the `model_save_dir`s from the training step will be used as the
+   `model_name_or_path`, see the content of the `job_return_value.json` in your `logs/training` folder
+   for the exact paths):
    ```bash
    python src/predict.py \
    dataset=dialam2024_merged_relations \
@@ -52,7 +57,29 @@ and data augmentation. Our source code is publicly available.
    +python.batch_size=8 \
    --multirun
    ```
-4. Evaluate the results: TODO
+4. Evaluate the results:
+   First, convert the serialized JSON documents into the JSON format required for the DialAM Shared
+   Task with each nodeset in a separate JSON file (note that `INPUT/DATA/DIR` is the path to one of the
+   directories where the predicted outputs from the previous step are stored):
+   ```bash
+   python src/utils/convert_documents2nodesets.py \
+   --input_dir=INPUT/DATA/DIR \
+   --output_dir=PREDICTION/DATA/DIR
+   ```
+   Second, evaluate using the official script for argumentative relations:
+   ```bash
+   python src/evaluation/eval_official.py \
+   --gold_dir=GOLD/DATA/DIR \
+   --predictions_dir=PREDICTION/DATA/DIR \
+   --mode=arguments
+   ```
+   ... and for illocutionary relations:
+   ```bash
+   python src/evaluation/eval_official.py \
+   --gold_dir=GOLD/DATA/DIR \
+   --predictions_dir=PREDICTION/DATA/DIR \
+   --mode=illocutions
+   ```
 
 ## 🚀 Quickstart
 
