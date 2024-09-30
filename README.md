@@ -30,7 +30,7 @@ and data augmentation. Our source code is publicly available.
 ### ✨ How to Reproduce the Results from Our Paper
 
 1. Set up the environment as described in the [Environment Setup](#environment-setup) section.
-2. Train the model with the configuration from the paper (this will execute 3 runs with different seeds): **TODO: double-check the configuration**
+2. Train models with the configuration from the paper (this will execute 3 runs with different seeds): **TODO: double-check the configuration**
    ```bash
    python src/train.py \
    experiment=dialam2024_merged_relations \
@@ -43,7 +43,7 @@ and data augmentation. Our source code is publicly available.
    +hydra.callbacks.save_job_return.integrate_multirun_result=true \
    --multirun
    ```
-3. Run the inference on the test set (the `model_save_dir` from the training step will be used as the `model_name_or_path`, see the content of the `job_return_value.json` in your `logs/training` folder for the exact paths):
+3. Run the inference on the test set (the `model_save_dir`s from the training step will be used as the `model_name_or_path`, see the content of the `job_return_value.json` in your `logs/training` folder for the exact paths):
    ```bash
    python src/predict.py \
    dataset=dialam2024_merged_relations \
