@@ -5,15 +5,54 @@
 <a href="https://pytorch.org/get-started/locally/"><img alt="PyTorch" src="https://img.shields.io/badge/PyTorch-ee4c2c?logo=pytorch&logoColor=white"></a>
 <a href="https://pytorchlightning.ai/"><img alt="Lightning" src="https://img.shields.io/badge/-Lightning-792ee5?logo=pytorchlightning&logoColor=white"></a>
 <a href="https://hydra.cc/"><img alt="Config: Hydra" src="https://img.shields.io/badge/Config-Hydra-89b8cd"></a>
-<a href="https://github.com/ChristophAlt/pytorch-ie-hydra-template"><img alt="Template" src="https://img.shields.io/badge/-PyTorch--IE--Hydra--Template-017F2F?style=flat&logo=github&labelColor=gray"></a><br>
-[![Paper](http://img.shields.io/badge/paper-arxiv.1001.2234-B31B1B.svg)](https://www.nature.com/articles/nature14539)
-[![Conference](http://img.shields.io/badge/AnyConference-year-4b44ce.svg)](https://papers.nips.cc/paper/2020)
+<a href="https://github.com/ArneBinder/pytorch-ie-hydra-template-1"><img alt="Template" src="https://img.shields.io/badge/-PyTorch--IE--Hydra--Template-017F2F?style=flat&logo=github&labelColor=gray"></a><br>
+[![Paper](https://img.shields.io/badge/paper-2024.argmining.1.9-B31B1B.svg)](https://aclanthology.org/2024.argmining-1.9)
+[![Conference](https://img.shields.io/badge/ArgMining@ACL-2024-4b44ce.svg)](https://aclanthology.org/volumes/2024.argmining-1)
 
 </div>
 
 ## 📌 Description
 
-What it does
+This repository contains the code for our submission to the DialAM-2024 Shared Task as described in the
+paper [DFKI-MLST at DialAM-2024 Shared Task: System Description (Binder et al., ArgMining 2024)](https://aclanthology.org/2024.argmining-1.9/).
+The task is part of the ArgMining 2024 workshop and focuses on the identification of argumentative relations in dialogues.
+See the [official website](https://dialam.arg.tech/) for more information.
+
+### 📃 Abstract
+
+We present the dfki-mlst submission for the DialAM shared task on identification of argumentative and illocutionary
+relations in dialogue. Our model achieves the best results in the global setting: 48.25 F1 at the focused level when
+looking only at the related arguments/locutions and 67.05 F1 at the general level when evaluating the complete
+argument maps. We describe our implementation of the data pre-processing pipeline, relation encoding and
+classification, evaluating 11 different base models and performing experiments with, e.g., node text combination
+and data augmentation. Our source code is publicly available.
+
+### ✨ How to Reproduce the Results from Our Paper
+
+1. Set up the environment as described in the [Environment Setup](#environment-setup) section.
+2. Train models with the configuration from the paper (this will execute 3 runs with different seeds): **TODO: double-check the configuration**
+   ```bash
+   python src/train.py \
+   experiment=dialam2024_merged_relations \
+   base_model_name=microsoft/deberta-v3-large \
+   model.task_learning_rate=1e-4 \
+   +model.classifier_dropout=0.1 \
+   datamodule.batch_size=8 \
+   trainer=gpu \
+   seed=1,2,3 \
+   +hydra.callbacks.save_job_return.integrate_multirun_result=true \
+   --multirun
+   ```
+3. Run the inference on the test set (the `model_save_dir`s from the training step will be used as the `model_name_or_path`, see the content of the `job_return_value.json` in your `logs/training` folder for the exact paths):
+   ```bash
+   python src/predict.py \
+   dataset=dialam2024_merged_relations \
+   model_name_or_path=MODEL/SAVE/DIR1,MODEL/SAVE/DIR2,MODEL/SAVE/DIR3 \
+   +pipeline.device=0 \
+   +python.batch_size=8 \
+   --multirun
+   ```
+4. Evaluate the results: TODO
 
 ## 🚀 Quickstart
 
@@ -21,12 +60,12 @@ What it does
 
 ```bash
 # clone project
-git clone https://github.com/your-github-name/your-project-name.git
-cd your-project-name
+git clone https://github.com/ArneBinder/dialam-2024-shared-task.git
+cd dialam-2024-shared-task
 
 # [OPTIONAL] create conda environment
-conda create -n your-project-name python=3.9
-conda activate your-project-name
+conda create -n dialam-2024-shared-task python=3.9
+conda activate dialam-2024-shared-task
 
 # install PyTorch according to instructions
 # https://pytorch.org/get-started/
@@ -35,8 +74,8 @@ conda activate your-project-name
 pip install -r requirements.txt
 
 # [OPTIONAL] symlink log directories and the default model directory to
-# "$HOME/experiments/your-project-name" since they can grow a lot
-bash setup_symlinks.sh $HOME/experiments/your-project-name
+# "$HOME/experiments/dialam-2024-shared-task" since they can grow a lot
+bash setup_symlinks.sh $HOME/experiments/dialam-2024-shared-task
 
 # [OPTIONAL] set any environment variables by creating an .env file
 # 1. copy the provided example file:
@@ -147,4 +186,30 @@ pre-commit run -a
 
 # run tests
 pytest -k "not slow" --cov --cov-report term-missing
+```
+
+## 📃 Citation
+
+```bibtex
+@inproceedings{binder-etal-2024-dfki,
+    title = "{DFKI}-{MLST} at {D}ial{AM}-2024 Shared Task: System Description",
+    author = "Binder, Arne  and
+      Anikina, Tatiana  and
+      Hennig, Leonhard  and
+      Ostermann, Simon",
+    editor = "Ajjour, Yamen  and
+      Bar-Haim, Roy  and
+      El Baff, Roxanne  and
+      Liu, Zhexiong  and
+      Skitalinskaya, Gabriella",
+    booktitle = "Proceedings of the 11th Workshop on Argument Mining (ArgMining 2024)",
+    month = aug,
+    year = "2024",
+    address = "Bangkok, Thailand",
+    publisher = "Association for Computational Linguistics",
+    url = "https://aclanthology.org/2024.argmining-1.9",
+    doi = "10.18653/v1/2024.argmining-1.9",
+    pages = "93--102",
+    abstract = "This paper presents the dfki-mlst submission for the DialAM shared task (Ruiz-Dolz et al., 2024) on identification of argumentative and illocutionary relations in dialogue. Our model achieves best results in the global setting: 48.25 F1 at the focused level when looking only at the related arguments/locutions and 67.05 F1 at the general level when evaluating the complete argument maps. We describe our implementation of the data pre-processing, relation encoding and classification, evaluating 11 different base models and performing experiments with, e.g., node text combination and data augmentation. Our source code is publicly available.",
+}
 ```
