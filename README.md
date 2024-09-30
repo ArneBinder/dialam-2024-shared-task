@@ -43,13 +43,14 @@ and data augmentation. Our source code is publicly available.
    +hydra.callbacks.save_job_return.integrate_multirun_result=true \
    --multirun
    ```
-3. Run the inference on the test set (the `model_save_dir` from the training step will be used as the `model_name_or_path`, see the last logging output for the exact path):
+3. Run the inference on the test set (the `model_save_dir` from the training step will be used as the `model_name_or_path`, see the content of the `job_return_value.json` in your `logs/training` folder for the exact paths):
    ```bash
    python src/predict.py \
    dataset=dialam2024_merged_relations \
-   model_name_or_path=MODEL/SAVE/DIR \
+   model_name_or_path=MODEL/SAVE/DIR1,MODEL/SAVE/DIR2,MODEL/SAVE/DIR3 \
    +pipeline.device=0 \
-   +python.batch_size=8
+   +python.batch_size=8 \
+   --multirun
    ```
 4. Evaluate the results: TODO
 
