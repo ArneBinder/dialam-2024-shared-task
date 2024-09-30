@@ -11,6 +11,8 @@
 
 </div>
 
+![data_structure_and_task.png](figures/data_structure_and_task.png "Data Structure and Task")
+
 ## 📌 Description
 
 This repository contains the code for our submission to the DialAM-2024 Shared Task as described in the
