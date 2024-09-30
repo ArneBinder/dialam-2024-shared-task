@@ -30,7 +30,7 @@ and data augmentation. Our source code is publicly available.
 ### ✨ How to Reproduce the Results from Our Paper
 
 1. Set up the environment as described in the [Environment Setup](#environment-setup) section.
-2. Train models with the configuration from the paper (this will execute 3 runs with different seeds): **TODO: double-check the configuration**
+2. Train models with the configuration from the paper (this will execute 3 runs with different seeds):
    ```bash
    python src/train.py \
    experiment=dialam2024_merged_relations \
@@ -52,7 +52,25 @@ and data augmentation. Our source code is publicly available.
    +python.batch_size=8 \
    --multirun
    ```
-4. Evaluate the results: TODO
+4. Evaluate the results:
+   First, convert the serialized JSON documents into the JSON format required for the DialAM Shared Task with each nodeset in a separate JSON file (note that `INPUT/DATA/DIR` is the path to the directory where the predicted outputs from step 2 are stored):
+   ```bash
+   python src/utils/convert_documents2nodesets.py \
+   --input_dir=INPUT/DATA/DIR \
+   --output_dir=PREDICTION/DATA/DIR
+   ```
+   Second, evaluate using the official script both argumentative and illocutionary relations:
+   ```bash
+   python src/evaluation/eval_official.py \
+   --gold_dir=GOLD/DATA/DIR \
+   --predictions_dir=PREDICTION/DATA/DIR \
+   --mode=arguments
+
+   python src/evaluation/eval_official.py \
+   --gold_dir=GOLD/DATA/DIR \
+   --predictions_dir=PREDICTION/DATA/DIR \
+   --mode=illocutions
+   ```
 
 ## 🚀 Quickstart
 
