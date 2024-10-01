@@ -51,10 +51,11 @@ and data augmentation. Our source code is publicly available.
    for the exact paths):
    ```bash
    python src/predict.py \
-   dataset=dialam2024_merged_relations \
+   dataset=dialam2024_prepared \
+   +dataset.input.name=merged_relations \
    model_name_or_path=MODEL/SAVE/DIR1,MODEL/SAVE/DIR2,MODEL/SAVE/DIR3 \
    +pipeline.device=0 \
-   +python.batch_size=8 \
+   +pipeline.batch_size=8 \
    --multirun
    ```
 4. Evaluate the results:
