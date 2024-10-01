@@ -65,7 +65,7 @@ and data augmentation. Our source code is publicly available.
    +dataset.input.name=merged_relations \
    model_name_or_path=DFKI-SLT/dfki-mlst-deberta-v3 \
    +pipeline.device=0 \
-   +pipeline.batch_size=8 \
+   +pipeline.batch_size=8
    ```
 4. Evaluate the results:
    First, convert the serialized JSON documents into the JSON format required for the DialAM Shared
