@@ -17,7 +17,7 @@
 
 This repository contains the code for our submission to the DialAM-2024 Shared Task as described in the
 paper [DFKI-MLST at DialAM-2024 Shared Task: System Description (Binder et al., ArgMining 2024)](https://aclanthology.org/2024.argmining-1.9/) and
-[poster](paper/2024-argument-mining-workshop-poster.pdf) presented at the ArgMining 2024 workshop co-located with
+[poster](presentation/poster-2024-argument-mining-workshop-poster.pdf) presented at the ArgMining 2024 workshop co-located with
 ACL 2024 in Bangkok, Thailand. The task was part of the workshop and focused on the identification
 of argumentative relations in dialogues. See the [official website](https://dialam.arg.tech/) for more information.
 
