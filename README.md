@@ -91,6 +91,51 @@ and data augmentation. Our source code is publicly available.
    --mode=illocutions
    ```
 
+### 🔮 Inference with the Trained Model on New Data
+
+```python
+import json
+
+# this import is necessary to load the pipeline
+from pie_modules.taskmodules import RETextClassificationWithIndicesTaskModule
+from pytorch_ie import AutoPipeline
+
+from dataset_builders.pie.dialam2024.dialam2024 import PieDialAM2024, listofdicts_to_dictoflists
+from src.document.types import SimplifiedDialAM2024Document
+
+
+data_builder = PieDialAM2024(name="merged_relations")
+
+pipe = AutoPipeline.from_pretrained("DFKI-SLT/dfki-mlst-deberta-v3")
+# disable because it can cause errors when no model inputs are created
+pipe.taskmodule.collect_statistics = False
+
+# load test data
+path = "/home/arbi01/Downloads/test-data(8)/test/test_map1.json"
+with open(path, "r") as f:
+    nodeset = json.load(f)
+# bring the nodeset to the format expected by the builder
+nodeset = {k: listofdicts_to_dictoflists(v) for k, v in nodeset.items()}
+nodeset["id"] = "test_map1"
+# convert to src.document.types.SimplifiedDialAM2024Document
+doc: SimplifiedDialAM2024Document = data_builder._generate_document(nodeset)
+# inference (works also with multiple documents)
+doc = pipe(doc)
+# print predictions
+print("predictions:")
+for rel in doc.nary_relations.predictions:
+    print(rel.resolve())
+
+# predictions:
+# ('ya_i2l_nodes:Asserting', (('ya_i2l_nodes:source', ('L', 'AudienceMember 20210912QT02: My parents both had COVID')),))
+# ('ya_i2l_nodes:Asserting', (('ya_i2l_nodes:source', ('L', 'AudienceMember 20210912QT02: We followed the guidance')),))
+# ('ya_i2l_nodes:Asserting', (('ya_i2l_nodes:source', ('L', 'AudienceMember 20210912QT02: did what we were told')),))
+# ...
+# ('ya_s2ta_nodes:NONE', (('ya_s2ta_nodes:source', ('L', 'AudienceMember 20210912QT02: My parents both had COVID')), ('ya_s2ta_nodes:target', ('L', 'AudienceMember 20210912QT02: We followed the guidance'))))
+# ('ya_s2ta_nodes:Restating', (('ya_s2ta_nodes:source', ('L', 'AudienceMember 20210912QT02: We followed the guidance')), ('ya_s2ta_nodes:target', ('L', 'AudienceMember 20210912QT02: did what we were told'))))
+# ...
+```
+
 ## 🚀 Quickstart
 
 ### Environment Setup
