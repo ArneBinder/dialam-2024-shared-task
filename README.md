@@ -58,6 +58,15 @@ and data augmentation. Our source code is publicly available.
    +pipeline.batch_size=8 \
    --multirun
    ```
+   or run the inference with the model checkpoint from the paper ([from Huggingface hub](https://huggingface.co/DFKI-SLT/dfki-mlst-deberta-v3)):
+   ```bash
+   python src/predict.py \
+   dataset=dialam2024_prepared \
+   +dataset.input.name=merged_relations \
+   model_name_or_path=DFKI-SLT/dfki-mlst-deberta-v3 \
+   +pipeline.device=0 \
+   +pipeline.batch_size=8 \
+   ```
 4. Evaluate the results:
    First, convert the serialized JSON documents into the JSON format required for the DialAM Shared
    Task with each nodeset in a separate JSON file (note that `INPUT/DATA/DIR` is the path to one of the
