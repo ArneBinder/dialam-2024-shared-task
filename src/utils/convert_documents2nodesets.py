@@ -29,7 +29,7 @@ def main(args):
         # create output directory if it doesn't exist
         if not os.path.exists(output_dir):
             os.makedirs(output_dir)
-        with open(f"{output_dir}/nodeset{doc_id}.json", "w") as f:
+        with open(f"{output_dir}/{doc.id}.json", "w") as f:
             json.dump(result, f, indent=2)
 
 

@@ -43,7 +43,11 @@ logger = logging.getLogger(__name__)
 def get_node_id_from_filename(filename: str) -> str:
     """Get the ID of a nodeset from a filename."""
 
-    return filename.split("nodeset")[1].split(".json")[0]
+    fn_no_ext = os.path.splitext(os.path.basename(filename))[0]
+    if "nodeset" in fn_no_ext:
+        return fn_no_ext.split("nodeset")[1]
+    else:
+        return fn_no_ext
 
 
 def get_nodeset_ids_from_directory(nodeset_dir: str) -> List[str]:
@@ -56,6 +60,9 @@ def read_nodeset(nodeset_dir: str, nodeset_id: str) -> Nodeset:
     """Read a nodeset with a given ID from a directory."""
 
     filename = os.path.join(nodeset_dir, f"nodeset{nodeset_id}.json")
+    if not os.path.exists(filename):
+        filename = os.path.join(nodeset_dir, f"{nodeset_id}.json")
+
     with open(filename) as f:
         return json.load(f)
 
