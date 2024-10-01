@@ -1,0 +1,1177 @@
+{
+  "nodes": [
+    {
+      "nodeID": "2_168261834222054982",
+      "text": "Andrew Murrison is interested to see what happens with Albania",
+      "type": "I"
+    },
+    {
+      "nodeID": "3_168261834222054982",
+      "text": "Andrew Murrison: I'm interested to see is what happens with Albania",
+      "type": "L"
+    },
+    {
+      "nodeID": "4_168261834222054982",
+      "text": "Analysing",
+      "type": "YA"
+    },
+    {
+      "nodeID": "5_168261834222054982",
+      "text": "Anon: Andrew Murrison: I'm interested to see is what happens with Albania",
+      "type": "L"
+    },
+    {
+      "nodeID": "6_168261834222054982",
+      "text": "Asserting",
+      "type": "YA"
+    },
+    {
+      "nodeID": "7_168261834222054982",
+      "text": "we're now repatriating Albanians",
+      "type": "I"
+    },
+    {
+      "nodeID": "8_168261834222054982",
+      "text": "Andrew Murrison: we're now repatriating Albanians",
+      "type": "L"
+    },
+    {
+      "nodeID": "9_168261834222054982",
+      "text": "Analysing",
+      "type": "YA"
+    },
+    {
+      "nodeID": "10_168261834222054982",
+      "text": "Anon: Andrew Murrison: we're now repatriating Albanians",
+      "type": "L"
+    },
+    {
+      "nodeID": "11_168261834222054982",
+      "text": "Asserting",
+      "type": "YA"
+    },
+    {
+      "nodeID": "12_168261834222054982",
+      "text": "Default Transition",
+      "type": "TA"
+    },
+    {
+      "nodeID": "13_168261834222054982",
+      "text": "Default Inference",
+      "type": "RA"
+    },
+    {
+      "nodeID": "14_168261834222054982",
+      "text": "Arguing",
+      "type": "YA"
+    },
+    {
+      "nodeID": "15_168261834222054982",
+      "text": "Albanians have no basis to be in the UK",
+      "type": "I"
+    },
+    {
+      "nodeID": "16_168261834222054982",
+      "text": "Andrew Murrison: they have no basis to be in this country",
+      "type": "L"
+    },
+    {
+      "nodeID": "17_168261834222054982",
+      "text": "Analysing",
+      "type": "YA"
+    },
+    {
+      "nodeID": "18_168261834222054982",
+      "text": "Anon: Andrew Murrison: they have no basis to be in this country",
+      "type": "L"
+    },
+    {
+      "nodeID": "19_168261834222054982",
+      "text": "Asserting",
+      "type": "YA"
+    },
+    {
+      "nodeID": "20_168261834222054982",
+      "text": "Default Transition",
+      "type": "TA"
+    },
+    {
+      "nodeID": "21_168261834222054982",
+      "text": "Default Inference",
+      "type": "RA"
+    },
+    {
+      "nodeID": "22_168261834222054982",
+      "text": "Arguing",
+      "type": "YA"
+    },
+    {
+      "nodeID": "28_168261834222054982",
+      "text": "we hope to see a falloff in people making that hazardous journey from Albania, a safe country, to the UK",
+      "type": "I"
+    },
+    {
+      "nodeID": "29_168261834222054982",
+      "text": "Andrew Murrison:  we see, as we anticipate, a falloff in people making that hazardous journey from Albania, a safe country, to the UK",
+      "type": "L"
+    },
+    {
+      "nodeID": "30_168261834222054982",
+      "text": "Analysing",
+      "type": "YA"
+    },
+    {
+      "nodeID": "31_168261834222054982",
+      "text": "Anon: Andrew Murrison:  we see, as we anticipate, a falloff in people making that hazardous journey from Albania, a safe country, to the UK",
+      "type": "L"
+    },
+    {
+      "nodeID": "32_168261834222054982",
+      "text": "Asserting",
+      "type": "YA"
+    },
+    {
+      "nodeID": "33_168261834222054982",
+      "text": "Default Transition",
+      "type": "TA"
+    },
+    {
+      "nodeID": "39_168261834222054982",
+      "text": "we anticipate a falloff in people making that hazardous journey from Albania, a safe country, to the UK",
+      "type": "I"
+    },
+    {
+      "nodeID": "40_168261834222054982",
+      "text": "Andrew Murrison:  as we anticipate",
+      "type": "L"
+    },
+    {
+      "nodeID": "41_168261834222054982",
+      "text": "Analysing",
+      "type": "YA"
+    },
+    {
+      "nodeID": "42_168261834222054982",
+      "text": "Anon: Andrew Murrison:  as we anticipate",
+      "type": "L"
+    },
+    {
+      "nodeID": "43_168261834222054982",
+      "text": "Asserting",
+      "type": "YA"
+    },
+    {
+      "nodeID": "44_168261834222054982",
+      "text": "Default Transition",
+      "type": "TA"
+    },
+    {
+      "nodeID": "45_168261834222054982",
+      "text": "Default Rephrase",
+      "type": "MA"
+    },
+    {
+      "nodeID": "46_168261834222054982",
+      "text": "Restating",
+      "type": "YA"
+    },
+    {
+      "nodeID": "47_168261834222054982",
+      "text": "Default Transition",
+      "type": "TA"
+    },
+    {
+      "nodeID": "48_168261834222054982",
+      "text": "Default Inference",
+      "type": "RA"
+    },
+    {
+      "nodeID": "49_168261834222054982",
+      "text": "Arguing",
+      "type": "YA"
+    },
+    {
+      "nodeID": "50_168261834222054982",
+      "text": "seeing a falloff in people making that hazardous journey from Albania, a safe country, to the UK will be an indicator of success",
+      "type": "I"
+    },
+    {
+      "nodeID": "51_168261834222054982",
+      "text": "Andrew Murrison: that will be an indicator of success",
+      "type": "L"
+    },
+    {
+      "nodeID": "52_168261834222054982",
+      "text": "Analysing",
+      "type": "YA"
+    },
+    {
+      "nodeID": "53_168261834222054982",
+      "text": "Anon: Andrew Murrison: that will be an indicator of success",
+      "type": "L"
+    },
+    {
+      "nodeID": "54_168261834222054982",
+      "text": "Asserting",
+      "type": "YA"
+    },
+    {
+      "nodeID": "55_168261834222054982",
+      "text": "Default Transition",
+      "type": "TA"
+    },
+    {
+      "nodeID": "56_168261834222054982",
+      "text": "Default Rephrase",
+      "type": "MA"
+    },
+    {
+      "nodeID": "57_168261834222054982",
+      "text": "Restating",
+      "type": "YA"
+    },
+    {
+      "nodeID": "58_168261834222054982",
+      "text": "the solution to the issue of people coming to the UK by boat isn't one-off",
+      "type": "I"
+    },
+    {
+      "nodeID": "59_168261834222054982",
+      "text": "Andrew Murrison: the solution to this isn't one-off",
+      "type": "L"
+    },
+    {
+      "nodeID": "60_168261834222054982",
+      "text": "Analysing",
+      "type": "YA"
+    },
+    {
+      "nodeID": "61_168261834222054982",
+      "text": "Anon: Andrew Murrison: the solution to this isn't one-off",
+      "type": "L"
+    },
+    {
+      "nodeID": "62_168261834222054982",
+      "text": "Asserting",
+      "type": "YA"
+    },
+    {
+      "nodeID": "63_168261834222054982",
+      "text": "Default Transition",
+      "type": "TA"
+    },
+    {
+      "nodeID": "64_168261834222054982",
+      "text": "the solution to the issue of people coming to the UK by boat is multi-factorial",
+      "type": "I"
+    },
+    {
+      "nodeID": "65_168261834222054982",
+      "text": "Andrew Murrison: it's multi-factorial",
+      "type": "L"
+    },
+    {
+      "nodeID": "66_168261834222054982",
+      "text": "Analysing",
+      "type": "YA"
+    },
+    {
+      "nodeID": "67_168261834222054982",
+      "text": "Anon: Andrew Murrison: it's multi-factorial",
+      "type": "L"
+    },
+    {
+      "nodeID": "68_168261834222054982",
+      "text": "Asserting",
+      "type": "YA"
+    },
+    {
+      "nodeID": "69_168261834222054982",
+      "text": "Default Transition",
+      "type": "TA"
+    },
+    {
+      "nodeID": "70_168261834222054982",
+      "text": "Default Rephrase",
+      "type": "MA"
+    },
+    {
+      "nodeID": "71_168261834222054982",
+      "text": "Restating",
+      "type": "YA"
+    },
+    {
+      "nodeID": "72_168261834222054982",
+      "text": "the things we've heard described this evening are all part of a solution to the issue of people coming to the UK by boat",
+      "type": "I"
+    },
+    {
+      "nodeID": "73_168261834222054982",
+      "text": "Andrew Murrison: the things we've heard describe this evening are all part of a solution",
+      "type": "L"
+    },
+    {
+      "nodeID": "74_168261834222054982",
+      "text": "Analysing",
+      "type": "YA"
+    },
+    {
+      "nodeID": "75_168261834222054982",
+      "text": "Anon: Andrew Murrison: the things we've heard describe this evening are all part of a solution",
+      "type": "L"
+    },
+    {
+      "nodeID": "76_168261834222054982",
+      "text": "Asserting",
+      "type": "YA"
+    },
+    {
+      "nodeID": "77_168261834222054982",
+      "text": "Default Transition",
+      "type": "TA"
+    },
+    {
+      "nodeID": "78_168261834222054982",
+      "text": "solving the issue of people coming to the UK by boat is going to be a long and complex",
+      "type": "I"
+    },
+    {
+      "nodeID": "79_168261834222054982",
+      "text": "Andrew Murrison: it's going to be long and complex",
+      "type": "L"
+    },
+    {
+      "nodeID": "80_168261834222054982",
+      "text": "Analysing",
+      "type": "YA"
+    },
+    {
+      "nodeID": "81_168261834222054982",
+      "text": "Anon: Andrew Murrison: it's going to be long and complex",
+      "type": "L"
+    },
+    {
+      "nodeID": "82_168261834222054982",
+      "text": "Asserting",
+      "type": "YA"
+    },
+    {
+      "nodeID": "83_168261834222054982",
+      "text": "Default Transition",
+      "type": "TA"
+    },
+    {
+      "nodeID": "84_168261834222054982",
+      "text": "Default Rephrase",
+      "type": "MA"
+    },
+    {
+      "nodeID": "85_168261834222054982",
+      "text": "Restating",
+      "type": "YA"
+    },
+    {
+      "nodeID": "86_168261834222054982",
+      "text": "at the end of the day the solution to the issue of people coming to the UK by boats will be incomplete",
+      "type": "I"
+    },
+    {
+      "nodeID": "87_168261834222054982",
+      "text": "Andrew Murrison: at the end of the day it will be incomplete",
+      "type": "L"
+    },
+    {
+      "nodeID": "88_168261834222054982",
+      "text": "Analysing",
+      "type": "YA"
+    },
+    {
+      "nodeID": "89_168261834222054982",
+      "text": "Anon: Andrew Murrison: at the end of the day it will be incomplete",
+      "type": "L"
+    },
+    {
+      "nodeID": "90_168261834222054982",
+      "text": "Asserting",
+      "type": "YA"
+    },
+    {
+      "nodeID": "91_168261834222054982",
+      "text": "Default Transition",
+      "type": "TA"
+    },
+    {
+      "nodeID": "95_168261834222054982",
+      "text": "there will always be people who make that hazardous journey",
+      "type": "I"
+    },
+    {
+      "nodeID": "96_168261834222054982",
+      "text": "Andrew Murrison: They will always be people who make that hazardous journey",
+      "type": "L"
+    },
+    {
+      "nodeID": "97_168261834222054982",
+      "text": "Analysing",
+      "type": "YA"
+    },
+    {
+      "nodeID": "98_168261834222054982",
+      "text": "Anon: Andrew Murrison: They will always be people who make that hazardous journey",
+      "type": "L"
+    },
+    {
+      "nodeID": "99_168261834222054982",
+      "text": "Asserting",
+      "type": "YA"
+    },
+    {
+      "nodeID": "103_168261834222054982",
+      "text": "what we have to do is to drive the number of people coming to the UK by boat down to a minimum",
+      "type": "I"
+    },
+    {
+      "nodeID": "104_168261834222054982",
+      "text": "Andrew Murrison: What we have to do is to drive that down to a minimum",
+      "type": "L"
+    },
+    {
+      "nodeID": "105_168261834222054982",
+      "text": "Analysing",
+      "type": "YA"
+    },
+    {
+      "nodeID": "106_168261834222054982",
+      "text": "Anon: Andrew Murrison: What we have to do is to drive that down to a minimum",
+      "type": "L"
+    },
+    {
+      "nodeID": "107_168261834222054982",
+      "text": "Asserting",
+      "type": "YA"
+    },
+    {
+      "nodeID": "108_168261834222054982",
+      "text": "we need to make sure genuine asylum seekers seek safe and legal routes to claim asylum in this country where they have always been welcomed",
+      "type": "I"
+    },
+    {
+      "nodeID": "109_168261834222054982",
+      "text": "Andrew Murrison: make sure genuine asylum seekers seek safe and legal routes to claim asylum in this country where they have always been welcomed",
+      "type": "L"
+    },
+    {
+      "nodeID": "110_168261834222054982",
+      "text": "Analysing",
+      "type": "YA"
+    },
+    {
+      "nodeID": "111_168261834222054982",
+      "text": "Anon: Andrew Murrison: make sure genuine asylum seekers seek safe and legal routes to claim asylum in this country where they have always been welcomed",
+      "type": "L"
+    },
+    {
+      "nodeID": "112_168261834222054982",
+      "text": "Asserting",
+      "type": "YA"
+    },
+    {
+      "nodeID": "113_168261834222054982",
+      "text": "Default Transition",
+      "type": "TA"
+    },
+    {
+      "nodeID": "115_168261834222054982",
+      "text": "Default Transition",
+      "type": "TA"
+    },
+    {
+      "nodeID": "118_168261834222054982",
+      "text": "Default Transition",
+      "type": "TA"
+    },
+    {
+      "nodeID": "119_168261834222054982",
+      "text": "Default Inference",
+      "type": "RA"
+    },
+    {
+      "nodeID": "121_168261834222054982",
+      "text": "Arguing",
+      "type": "YA"
+    }
+  ],
+  "edges": [
+    {
+      "edgeID": 1,
+      "fromID": "4_168261834222054982",
+      "toID": "3_168261834222054982"
+    },
+    {
+      "edgeID": 2,
+      "fromID": "5_168261834222054982",
+      "toID": "4_168261834222054982"
+    },
+    {
+      "edgeID": 3,
+      "fromID": "3_168261834222054982",
+      "toID": "6_168261834222054982"
+    },
+    {
+      "edgeID": 4,
+      "fromID": "6_168261834222054982",
+      "toID": "2_168261834222054982"
+    },
+    {
+      "edgeID": 5,
+      "fromID": "9_168261834222054982",
+      "toID": "8_168261834222054982"
+    },
+    {
+      "edgeID": 6,
+      "fromID": "10_168261834222054982",
+      "toID": "9_168261834222054982"
+    },
+    {
+      "edgeID": 7,
+      "fromID": "8_168261834222054982",
+      "toID": "11_168261834222054982"
+    },
+    {
+      "edgeID": 8,
+      "fromID": "11_168261834222054982",
+      "toID": "7_168261834222054982"
+    },
+    {
+      "edgeID": 9,
+      "fromID": "3_168261834222054982",
+      "toID": "12_168261834222054982"
+    },
+    {
+      "edgeID": 10,
+      "fromID": "12_168261834222054982",
+      "toID": "8_168261834222054982"
+    },
+    {
+      "edgeID": 11,
+      "fromID": "7_168261834222054982",
+      "toID": "13_168261834222054982"
+    },
+    {
+      "edgeID": 12,
+      "fromID": "13_168261834222054982",
+      "toID": "2_168261834222054982"
+    },
+    {
+      "edgeID": 13,
+      "fromID": "12_168261834222054982",
+      "toID": "14_168261834222054982"
+    },
+    {
+      "edgeID": 14,
+      "fromID": "14_168261834222054982",
+      "toID": "13_168261834222054982"
+    },
+    {
+      "edgeID": 15,
+      "fromID": "17_168261834222054982",
+      "toID": "16_168261834222054982"
+    },
+    {
+      "edgeID": 16,
+      "fromID": "18_168261834222054982",
+      "toID": "17_168261834222054982"
+    },
+    {
+      "edgeID": 17,
+      "fromID": "16_168261834222054982",
+      "toID": "19_168261834222054982"
+    },
+    {
+      "edgeID": 18,
+      "fromID": "19_168261834222054982",
+      "toID": "15_168261834222054982"
+    },
+    {
+      "edgeID": 19,
+      "fromID": "8_168261834222054982",
+      "toID": "20_168261834222054982"
+    },
+    {
+      "edgeID": 20,
+      "fromID": "20_168261834222054982",
+      "toID": "16_168261834222054982"
+    },
+    {
+      "edgeID": 21,
+      "fromID": "15_168261834222054982",
+      "toID": "21_168261834222054982"
+    },
+    {
+      "edgeID": 22,
+      "fromID": "21_168261834222054982",
+      "toID": "7_168261834222054982"
+    },
+    {
+      "edgeID": 23,
+      "fromID": "20_168261834222054982",
+      "toID": "22_168261834222054982"
+    },
+    {
+      "edgeID": 24,
+      "fromID": "22_168261834222054982",
+      "toID": "21_168261834222054982"
+    },
+    {
+      "edgeID": 25,
+      "fromID": "30_168261834222054982",
+      "toID": "29_168261834222054982"
+    },
+    {
+      "edgeID": 26,
+      "fromID": "31_168261834222054982",
+      "toID": "30_168261834222054982"
+    },
+    {
+      "edgeID": 27,
+      "fromID": "29_168261834222054982",
+      "toID": "32_168261834222054982"
+    },
+    {
+      "edgeID": 28,
+      "fromID": "32_168261834222054982",
+      "toID": "28_168261834222054982"
+    },
+    {
+      "edgeID": 29,
+      "fromID": "16_168261834222054982",
+      "toID": "33_168261834222054982"
+    },
+    {
+      "edgeID": 30,
+      "fromID": "33_168261834222054982",
+      "toID": "29_168261834222054982"
+    },
+    {
+      "edgeID": 31,
+      "fromID": "41_168261834222054982",
+      "toID": "40_168261834222054982"
+    },
+    {
+      "edgeID": 32,
+      "fromID": "42_168261834222054982",
+      "toID": "41_168261834222054982"
+    },
+    {
+      "edgeID": 33,
+      "fromID": "40_168261834222054982",
+      "toID": "43_168261834222054982"
+    },
+    {
+      "edgeID": 34,
+      "fromID": "43_168261834222054982",
+      "toID": "39_168261834222054982"
+    },
+    {
+      "edgeID": 35,
+      "fromID": "29_168261834222054982",
+      "toID": "44_168261834222054982"
+    },
+    {
+      "edgeID": 36,
+      "fromID": "44_168261834222054982",
+      "toID": "40_168261834222054982"
+    },
+    {
+      "edgeID": 37,
+      "fromID": "39_168261834222054982",
+      "toID": "45_168261834222054982"
+    },
+    {
+      "edgeID": 38,
+      "fromID": "45_168261834222054982",
+      "toID": "28_168261834222054982"
+    },
+    {
+      "edgeID": 39,
+      "fromID": "44_168261834222054982",
+      "toID": "46_168261834222054982"
+    },
+    {
+      "edgeID": 40,
+      "fromID": "46_168261834222054982",
+      "toID": "45_168261834222054982"
+    },
+    {
+      "edgeID": 41,
+      "fromID": "8_168261834222054982",
+      "toID": "47_168261834222054982"
+    },
+    {
+      "edgeID": 42,
+      "fromID": "47_168261834222054982",
+      "toID": "40_168261834222054982"
+    },
+    {
+      "edgeID": 43,
+      "fromID": "7_168261834222054982",
+      "toID": "48_168261834222054982"
+    },
+    {
+      "edgeID": 44,
+      "fromID": "48_168261834222054982",
+      "toID": "39_168261834222054982"
+    },
+    {
+      "edgeID": 45,
+      "fromID": "47_168261834222054982",
+      "toID": "49_168261834222054982"
+    },
+    {
+      "edgeID": 46,
+      "fromID": "49_168261834222054982",
+      "toID": "48_168261834222054982"
+    },
+    {
+      "edgeID": 47,
+      "fromID": "52_168261834222054982",
+      "toID": "51_168261834222054982"
+    },
+    {
+      "edgeID": 48,
+      "fromID": "53_168261834222054982",
+      "toID": "52_168261834222054982"
+    },
+    {
+      "edgeID": 49,
+      "fromID": "51_168261834222054982",
+      "toID": "54_168261834222054982"
+    },
+    {
+      "edgeID": 50,
+      "fromID": "54_168261834222054982",
+      "toID": "50_168261834222054982"
+    },
+    {
+      "edgeID": 51,
+      "fromID": "40_168261834222054982",
+      "toID": "55_168261834222054982"
+    },
+    {
+      "edgeID": 52,
+      "fromID": "55_168261834222054982",
+      "toID": "51_168261834222054982"
+    },
+    {
+      "edgeID": 53,
+      "fromID": "50_168261834222054982",
+      "toID": "56_168261834222054982"
+    },
+    {
+      "edgeID": 54,
+      "fromID": "56_168261834222054982",
+      "toID": "39_168261834222054982"
+    },
+    {
+      "edgeID": 55,
+      "fromID": "55_168261834222054982",
+      "toID": "57_168261834222054982"
+    },
+    {
+      "edgeID": 56,
+      "fromID": "57_168261834222054982",
+      "toID": "56_168261834222054982"
+    },
+    {
+      "edgeID": 57,
+      "fromID": "60_168261834222054982",
+      "toID": "59_168261834222054982"
+    },
+    {
+      "edgeID": 58,
+      "fromID": "61_168261834222054982",
+      "toID": "60_168261834222054982"
+    },
+    {
+      "edgeID": 59,
+      "fromID": "59_168261834222054982",
+      "toID": "62_168261834222054982"
+    },
+    {
+      "edgeID": 60,
+      "fromID": "62_168261834222054982",
+      "toID": "58_168261834222054982"
+    },
+    {
+      "edgeID": 61,
+      "fromID": "51_168261834222054982",
+      "toID": "63_168261834222054982"
+    },
+    {
+      "edgeID": 62,
+      "fromID": "63_168261834222054982",
+      "toID": "59_168261834222054982"
+    },
+    {
+      "edgeID": 63,
+      "fromID": "66_168261834222054982",
+      "toID": "65_168261834222054982"
+    },
+    {
+      "edgeID": 64,
+      "fromID": "67_168261834222054982",
+      "toID": "66_168261834222054982"
+    },
+    {
+      "edgeID": 65,
+      "fromID": "65_168261834222054982",
+      "toID": "68_168261834222054982"
+    },
+    {
+      "edgeID": 66,
+      "fromID": "68_168261834222054982",
+      "toID": "64_168261834222054982"
+    },
+    {
+      "edgeID": 67,
+      "fromID": "59_168261834222054982",
+      "toID": "69_168261834222054982"
+    },
+    {
+      "edgeID": 68,
+      "fromID": "69_168261834222054982",
+      "toID": "65_168261834222054982"
+    },
+    {
+      "edgeID": 69,
+      "fromID": "64_168261834222054982",
+      "toID": "70_168261834222054982"
+    },
+    {
+      "edgeID": 70,
+      "fromID": "70_168261834222054982",
+      "toID": "58_168261834222054982"
+    },
+    {
+      "edgeID": 71,
+      "fromID": "69_168261834222054982",
+      "toID": "71_168261834222054982"
+    },
+    {
+      "edgeID": 72,
+      "fromID": "71_168261834222054982",
+      "toID": "70_168261834222054982"
+    },
+    {
+      "edgeID": 73,
+      "fromID": "74_168261834222054982",
+      "toID": "73_168261834222054982"
+    },
+    {
+      "edgeID": 74,
+      "fromID": "75_168261834222054982",
+      "toID": "74_168261834222054982"
+    },
+    {
+      "edgeID": 75,
+      "fromID": "73_168261834222054982",
+      "toID": "76_168261834222054982"
+    },
+    {
+      "edgeID": 76,
+      "fromID": "76_168261834222054982",
+      "toID": "72_168261834222054982"
+    },
+    {
+      "edgeID": 77,
+      "fromID": "65_168261834222054982",
+      "toID": "77_168261834222054982"
+    },
+    {
+      "edgeID": 78,
+      "fromID": "77_168261834222054982",
+      "toID": "73_168261834222054982"
+    },
+    {
+      "edgeID": 79,
+      "fromID": "80_168261834222054982",
+      "toID": "79_168261834222054982"
+    },
+    {
+      "edgeID": 80,
+      "fromID": "81_168261834222054982",
+      "toID": "80_168261834222054982"
+    },
+    {
+      "edgeID": 81,
+      "fromID": "79_168261834222054982",
+      "toID": "82_168261834222054982"
+    },
+    {
+      "edgeID": 82,
+      "fromID": "82_168261834222054982",
+      "toID": "78_168261834222054982"
+    },
+    {
+      "edgeID": 83,
+      "fromID": "65_168261834222054982",
+      "toID": "83_168261834222054982"
+    },
+    {
+      "edgeID": 84,
+      "fromID": "83_168261834222054982",
+      "toID": "79_168261834222054982"
+    },
+    {
+      "edgeID": 85,
+      "fromID": "78_168261834222054982",
+      "toID": "84_168261834222054982"
+    },
+    {
+      "edgeID": 86,
+      "fromID": "84_168261834222054982",
+      "toID": "64_168261834222054982"
+    },
+    {
+      "edgeID": 87,
+      "fromID": "83_168261834222054982",
+      "toID": "85_168261834222054982"
+    },
+    {
+      "edgeID": 88,
+      "fromID": "85_168261834222054982",
+      "toID": "84_168261834222054982"
+    },
+    {
+      "edgeID": 89,
+      "fromID": "88_168261834222054982",
+      "toID": "87_168261834222054982"
+    },
+    {
+      "edgeID": 90,
+      "fromID": "89_168261834222054982",
+      "toID": "88_168261834222054982"
+    },
+    {
+      "edgeID": 91,
+      "fromID": "87_168261834222054982",
+      "toID": "90_168261834222054982"
+    },
+    {
+      "edgeID": 92,
+      "fromID": "90_168261834222054982",
+      "toID": "86_168261834222054982"
+    },
+    {
+      "edgeID": 93,
+      "fromID": "79_168261834222054982",
+      "toID": "91_168261834222054982"
+    },
+    {
+      "edgeID": 94,
+      "fromID": "91_168261834222054982",
+      "toID": "87_168261834222054982"
+    },
+    {
+      "edgeID": 95,
+      "fromID": "97_168261834222054982",
+      "toID": "96_168261834222054982"
+    },
+    {
+      "edgeID": 96,
+      "fromID": "98_168261834222054982",
+      "toID": "97_168261834222054982"
+    },
+    {
+      "edgeID": 97,
+      "fromID": "96_168261834222054982",
+      "toID": "99_168261834222054982"
+    },
+    {
+      "edgeID": 98,
+      "fromID": "99_168261834222054982",
+      "toID": "95_168261834222054982"
+    },
+    {
+      "edgeID": 99,
+      "fromID": "105_168261834222054982",
+      "toID": "104_168261834222054982"
+    },
+    {
+      "edgeID": 100,
+      "fromID": "106_168261834222054982",
+      "toID": "105_168261834222054982"
+    },
+    {
+      "edgeID": 101,
+      "fromID": "104_168261834222054982",
+      "toID": "107_168261834222054982"
+    },
+    {
+      "edgeID": 102,
+      "fromID": "107_168261834222054982",
+      "toID": "103_168261834222054982"
+    },
+    {
+      "edgeID": 103,
+      "fromID": "110_168261834222054982",
+      "toID": "109_168261834222054982"
+    },
+    {
+      "edgeID": 104,
+      "fromID": "111_168261834222054982",
+      "toID": "110_168261834222054982"
+    },
+    {
+      "edgeID": 105,
+      "fromID": "109_168261834222054982",
+      "toID": "112_168261834222054982"
+    },
+    {
+      "edgeID": 106,
+      "fromID": "112_168261834222054982",
+      "toID": "108_168261834222054982"
+    },
+    {
+      "edgeID": 107,
+      "fromID": "104_168261834222054982",
+      "toID": "113_168261834222054982"
+    },
+    {
+      "edgeID": 108,
+      "fromID": "113_168261834222054982",
+      "toID": "109_168261834222054982"
+    },
+    {
+      "edgeID": 109,
+      "fromID": "96_168261834222054982",
+      "toID": "115_168261834222054982"
+    },
+    {
+      "edgeID": 110,
+      "fromID": "115_168261834222054982",
+      "toID": "104_168261834222054982"
+    },
+    {
+      "edgeID": 111,
+      "fromID": "87_168261834222054982",
+      "toID": "118_168261834222054982"
+    },
+    {
+      "edgeID": 112,
+      "fromID": "118_168261834222054982",
+      "toID": "104_168261834222054982"
+    },
+    {
+      "edgeID": 113,
+      "fromID": "86_168261834222054982",
+      "toID": "119_168261834222054982"
+    },
+    {
+      "edgeID": 114,
+      "fromID": "119_168261834222054982",
+      "toID": "103_168261834222054982"
+    },
+    {
+      "edgeID": 115,
+      "fromID": "95_168261834222054982",
+      "toID": "119_168261834222054982"
+    },
+    {
+      "edgeID": 116,
+      "fromID": "115_168261834222054982",
+      "toID": "121_168261834222054982"
+    },
+    {
+      "edgeID": 117,
+      "fromID": "121_168261834222054982",
+      "toID": "119_168261834222054982"
+    }
+  ],
+  "locutions": [
+    {
+      "nodeID": "3_168261834222054982",
+      "personID": 17,
+      "start": "2023-03-30 22:59:18",
+      "end": null
+    },
+    {
+      "nodeID": "8_168261834222054982",
+      "personID": 17,
+      "start": "2023-03-30 22:59:23",
+      "end": null
+    },
+    {
+      "nodeID": "16_168261834222054982",
+      "personID": 17,
+      "start": "2023-03-30 22:59:26",
+      "end": null
+    },
+    {
+      "nodeID": "29_168261834222054982",
+      "personID": 17,
+      "start": "2023-03-30 22:59:31",
+      "end": null
+    },
+    {
+      "nodeID": "40_168261834222054982",
+      "personID": 17,
+      "start": "2023-03-30 22:59:30",
+      "end": null
+    },
+    {
+      "nodeID": "51_168261834222054982",
+      "personID": 17,
+      "start": "2023-03-30 22:59:40",
+      "end": null
+    },
+    {
+      "nodeID": "59_168261834222054982",
+      "personID": 17,
+      "start": "2023-03-30 22:59:47",
+      "end": null
+    },
+    {
+      "nodeID": "65_168261834222054982",
+      "personID": 17,
+      "start": "2023-03-30 22:59:50",
+      "end": null
+    },
+    {
+      "nodeID": "73_168261834222054982",
+      "personID": 17,
+      "start": "2023-03-30 22:59:54",
+      "end": null
+    },
+    {
+      "nodeID": "79_168261834222054982",
+      "personID": 17,
+      "start": "2023-03-30 22:59:58",
+      "end": null
+    },
+    {
+      "nodeID": "87_168261834222054982",
+      "personID": 17,
+      "start": "2023-03-30 23:00:02",
+      "end": null
+    },
+    {
+      "nodeID": "96_168261834222054982",
+      "personID": 17,
+      "start": "2023-03-30 23:00:06",
+      "end": null
+    },
+    {
+      "nodeID": "104_168261834222054982",
+      "personID": 17,
+      "start": "2023-03-30 23:00:11",
+      "end": null
+    },
+    {
+      "nodeID": "109_168261834222054982",
+      "personID": 17,
+      "start": "2023-03-30 23:00:22",
+      "end": null
+    }
+  ]
+}

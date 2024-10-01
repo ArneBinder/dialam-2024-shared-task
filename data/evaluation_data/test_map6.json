@@ -1,0 +1,1547 @@
+{
+  "nodes": [
+    {
+      "nodeID": "7_167778512186880985",
+      "text": "asylum seekers coming from a safe country shouldn't be allowed into UK",
+      "type": "I"
+    },
+    {
+      "nodeID": "8_167778512186880985",
+      "text": "AudienceMember 20230302QT15: Mr Jenrick talked about asylum seekers coming from a safe country, that they shouldn't be allowed",
+      "type": "L"
+    },
+    {
+      "nodeID": "9_167778512186880985",
+      "text": "Analysing",
+      "type": "YA"
+    },
+    {
+      "nodeID": "10_167778512186880985",
+      "text": "Anon: AudienceMember 20230302QT15: Mr Jenrick talked about asylum seekers coming from a safe country, that they shouldn't be allowed",
+      "type": "L"
+    },
+    {
+      "nodeID": "12_167778512186880985",
+      "text": "Robert Jenrick: asylum seekers coming from a safe country, they shouldn't be allowed",
+      "type": "L"
+    },
+    {
+      "nodeID": "13_167778512186880985",
+      "text": "Analysing",
+      "type": "YA"
+    },
+    {
+      "nodeID": "14_167778512186880985",
+      "text": "Anon: Robert Jenrick: Mr Jenrick talked about asylum seekers coming from a safe country, that they shouldn't be allowed",
+      "type": "L"
+    },
+    {
+      "nodeID": "16_167778512186880985",
+      "text": "Asserting",
+      "type": "YA"
+    },
+    {
+      "nodeID": "17_167778512186880985",
+      "text": "Asserting",
+      "type": "YA"
+    },
+    {
+      "nodeID": "24_167778512186880985",
+      "text": "xxx about the people from Ukraine, around which there are safe countries as well",
+      "type": "I"
+    },
+    {
+      "nodeID": "25_167778512186880985",
+      "text": "AudienceMember 20230302QT15: what about the people from Ukraine, there are safe countries around there as well",
+      "type": "L"
+    },
+    {
+      "nodeID": "26_167778512186880985",
+      "text": "Analysing",
+      "type": "YA"
+    },
+    {
+      "nodeID": "27_167778512186880985",
+      "text": "Anon: AudienceMember 20230302QT15: what about the people from Ukraine, there are safe countries around there as well",
+      "type": "L"
+    },
+    {
+      "nodeID": "28_167778512186880985",
+      "text": "Pure Questioning",
+      "type": "YA"
+    },
+    {
+      "nodeID": "29_167778512186880985",
+      "text": "Default Transition",
+      "type": "TA"
+    },
+    {
+      "nodeID": "30_167778512186880985",
+      "text": "AudienceMember 20230302QT15 is not suggesting that Ukraine is safe",
+      "type": "I"
+    },
+    {
+      "nodeID": "31_167778512186880985",
+      "text": "Fiona Bruce: you\u2019re not suggesting that Ukraine is safe",
+      "type": "L"
+    },
+    {
+      "nodeID": "32_167778512186880985",
+      "text": "Analysing",
+      "type": "YA"
+    },
+    {
+      "nodeID": "33_167778512186880985",
+      "text": "Anon: Fiona Bruce: you\u2019re not suggesting that Ukraine is safe",
+      "type": "L"
+    },
+    {
+      "nodeID": "34_167778512186880985",
+      "text": "Asserting",
+      "type": "YA"
+    },
+    {
+      "nodeID": "35_167778512186880985",
+      "text": "Default Transition",
+      "type": "TA"
+    },
+    {
+      "nodeID": "36_167778512186880985",
+      "text": "AudienceMember 20230302QT15 is suggesting that Ukrainians could go to countries near them",
+      "type": "I"
+    },
+    {
+      "nodeID": "37_167778512186880985",
+      "text": "Fiona Bruce: they could go to countries near them",
+      "type": "L"
+    },
+    {
+      "nodeID": "38_167778512186880985",
+      "text": "Analysing",
+      "type": "YA"
+    },
+    {
+      "nodeID": "39_167778512186880985",
+      "text": "Anon: Fiona Bruce: they could go to countries near them",
+      "type": "L"
+    },
+    {
+      "nodeID": "40_167778512186880985",
+      "text": "Asserting",
+      "type": "YA"
+    },
+    {
+      "nodeID": "41_167778512186880985",
+      "text": "Default Rephrase",
+      "type": "MA"
+    },
+    {
+      "nodeID": "42_167778512186880985",
+      "text": "Restating",
+      "type": "YA"
+    },
+    {
+      "nodeID": "43_167778512186880985",
+      "text": "Default Transition",
+      "type": "TA"
+    },
+    {
+      "nodeID": "44_167778512186880985",
+      "text": "Default Rephrase",
+      "type": "MA"
+    },
+    {
+      "nodeID": "45_167778512186880985",
+      "text": "Restating",
+      "type": "YA"
+    },
+    {
+      "nodeID": "47_167778512186880985",
+      "text": "AudienceMember 20230302QT16: Yes",
+      "type": "L"
+    },
+    {
+      "nodeID": "48_167778512186880985",
+      "text": "Analysing",
+      "type": "YA"
+    },
+    {
+      "nodeID": "49_167778512186880985",
+      "text": "Anon: AudienceMember 20230302QT16: Yes",
+      "type": "L"
+    },
+    {
+      "nodeID": "51_167778512186880985",
+      "text": "Default Transition",
+      "type": "TA"
+    },
+    {
+      "nodeID": "52_167778512186880985",
+      "text": "Agreeing",
+      "type": "YA"
+    },
+    {
+      "nodeID": "53_167778512186880985",
+      "text": "Ukrainians are going to countries near them in a large part as well",
+      "type": "I"
+    },
+    {
+      "nodeID": "54_167778512186880985",
+      "text": "Fiona Bruce: Which of course they are doing in a large part as well",
+      "type": "L"
+    },
+    {
+      "nodeID": "55_167778512186880985",
+      "text": "Analysing",
+      "type": "YA"
+    },
+    {
+      "nodeID": "56_167778512186880985",
+      "text": "Anon: Fiona Bruce: Which of course they are doing in a large part as well",
+      "type": "L"
+    },
+    {
+      "nodeID": "57_167778512186880985",
+      "text": "Asserting",
+      "type": "YA"
+    },
+    {
+      "nodeID": "59_167778512186880985",
+      "text": "government don\u2019t want to let more people come to the UK in small boats",
+      "type": "I"
+    },
+    {
+      "nodeID": "60_167778512186880985",
+      "text": "Fiona Bruce: you don\u2019t want to",
+      "type": "L"
+    },
+    {
+      "nodeID": "61_167778512186880985",
+      "text": "Analysing",
+      "type": "YA"
+    },
+    {
+      "nodeID": "62_167778512186880985",
+      "text": "Anon: Fiona Bruce: you don\u2019t want to",
+      "type": "L"
+    },
+    {
+      "nodeID": "63_167778512186880985",
+      "text": "Asserting",
+      "type": "YA"
+    },
+    {
+      "nodeID": "64_167778512186880985",
+      "text": "Default Transition",
+      "type": "TA"
+    },
+    {
+      "nodeID": "68_167778512186880985",
+      "text": "more people are coming across in small boats",
+      "type": "I"
+    },
+    {
+      "nodeID": "69_167778512186880985",
+      "text": "Fiona Bruce: more people are coming across in small boats",
+      "type": "L"
+    },
+    {
+      "nodeID": "70_167778512186880985",
+      "text": "Analysing",
+      "type": "YA"
+    },
+    {
+      "nodeID": "71_167778512186880985",
+      "text": "Anon: Fiona Bruce: more people are coming across in small boats",
+      "type": "L"
+    },
+    {
+      "nodeID": "72_167778512186880985",
+      "text": "Asserting",
+      "type": "YA"
+    },
+    {
+      "nodeID": "73_167778512186880985",
+      "text": "Default Transition",
+      "type": "TA"
+    },
+    {
+      "nodeID": "74_167778512186880985",
+      "text": "Default Conflict",
+      "type": "CA"
+    },
+    {
+      "nodeID": "75_167778512186880985",
+      "text": "Disagreeing",
+      "type": "YA"
+    },
+    {
+      "nodeID": "77_167778512186880985",
+      "text": "Robert Jenrick: we don\u2019t want people to come across in small boats",
+      "type": "L"
+    },
+    {
+      "nodeID": "78_167778512186880985",
+      "text": "Analysing",
+      "type": "YA"
+    },
+    {
+      "nodeID": "79_167778512186880985",
+      "text": "Anon: Robert Jenrick: we don\u2019t want people to come across in small boats",
+      "type": "L"
+    },
+    {
+      "nodeID": "81_167778512186880985",
+      "text": "Default Transition",
+      "type": "TA"
+    },
+    {
+      "nodeID": "83_167778512186880985",
+      "text": "Asserting",
+      "type": "YA"
+    },
+    {
+      "nodeID": "84_167778512186880985",
+      "text": "Robert Jenrick made it very clear that they don\u2019t want to let more people come to the UK in small boats ",
+      "type": "I"
+    },
+    {
+      "nodeID": "85_167778512186880985",
+      "text": "Robert Jenrick: I\u2019ve made that very clear",
+      "type": "L"
+    },
+    {
+      "nodeID": "86_167778512186880985",
+      "text": "Analysing",
+      "type": "YA"
+    },
+    {
+      "nodeID": "87_167778512186880985",
+      "text": "Anon: Robert Jenrick: I\u2019ve made that very clear",
+      "type": "L"
+    },
+    {
+      "nodeID": "88_167778512186880985",
+      "text": "Asserting",
+      "type": "YA"
+    },
+    {
+      "nodeID": "89_167778512186880985",
+      "text": "Default Transition",
+      "type": "TA"
+    },
+    {
+      "nodeID": "90_167778512186880985",
+      "text": "Default Rephrase",
+      "type": "MA"
+    },
+    {
+      "nodeID": "91_167778512186880985",
+      "text": "Restating",
+      "type": "YA"
+    },
+    {
+      "nodeID": "92_167778512186880985",
+      "text": "xxx is the reason why the government do not to let more people into UK",
+      "type": "I"
+    },
+    {
+      "nodeID": "93_167778512186880985",
+      "text": "Fiona Bruce: why don't you let more people in",
+      "type": "L"
+    },
+    {
+      "nodeID": "94_167778512186880985",
+      "text": "Analysing",
+      "type": "YA"
+    },
+    {
+      "nodeID": "95_167778512186880985",
+      "text": "Anon: Fiona Bruce: why don't you let more people in",
+      "type": "L"
+    },
+    {
+      "nodeID": "96_167778512186880985",
+      "text": "Pure Questioning",
+      "type": "YA"
+    },
+    {
+      "nodeID": "97_167778512186880985",
+      "text": "xxx about getting people into UK legally ",
+      "type": "I"
+    },
+    {
+      "nodeID": "98_167778512186880985",
+      "text": "Fiona Bruce: what about getting people in to",
+      "type": "L"
+    },
+    {
+      "nodeID": "99_167778512186880985",
+      "text": "Analysing",
+      "type": "YA"
+    },
+    {
+      "nodeID": "100_167778512186880985",
+      "text": "Anon: Fiona Bruce: what about getting people in to",
+      "type": "L"
+    },
+    {
+      "nodeID": "101_167778512186880985",
+      "text": "Pure Questioning",
+      "type": "YA"
+    },
+    {
+      "nodeID": "102_167778512186880985",
+      "text": "Default Transition",
+      "type": "TA"
+    },
+    {
+      "nodeID": "103_167778512186880985",
+      "text": "Default Transition",
+      "type": "TA"
+    },
+    {
+      "nodeID": "104_167778512186880985",
+      "text": "Default Rephrase",
+      "type": "MA"
+    },
+    {
+      "nodeID": "105_167778512186880985",
+      "text": "Restating",
+      "type": "YA"
+    },
+    {
+      "nodeID": "106_167778512186880985",
+      "text": "our objective is to stop the boats",
+      "type": "I"
+    },
+    {
+      "nodeID": "107_167778512186880985",
+      "text": "Robert Jenrick: our objective is to stop the boats",
+      "type": "L"
+    },
+    {
+      "nodeID": "108_167778512186880985",
+      "text": "Analysing",
+      "type": "YA"
+    },
+    {
+      "nodeID": "109_167778512186880985",
+      "text": "Anon: Robert Jenrick: our objective is to stop the boats",
+      "type": "L"
+    },
+    {
+      "nodeID": "110_167778512186880985",
+      "text": "Asserting",
+      "type": "YA"
+    },
+    {
+      "nodeID": "111_167778512186880985",
+      "text": "Default Transition",
+      "type": "TA"
+    },
+    {
+      "nodeID": "112_167778512186880985",
+      "text": "Default Rephrase",
+      "type": "MA"
+    },
+    {
+      "nodeID": "113_167778512186880985",
+      "text": "Restating",
+      "type": "YA"
+    },
+    {
+      "nodeID": "114_167778512186880985",
+      "text": "xxx is the reason why the government will not let people in to fill the empty jobs ",
+      "type": "I"
+    },
+    {
+      "nodeID": "115_167778512186880985",
+      "text": "Fiona Bruce: Why don\u2019t you let people in to fill the empty jobs",
+      "type": "L"
+    },
+    {
+      "nodeID": "116_167778512186880985",
+      "text": "Analysing",
+      "type": "YA"
+    },
+    {
+      "nodeID": "117_167778512186880985",
+      "text": "Anon: Fiona Bruce: Why don\u2019t you let people in to fill the empty jobs",
+      "type": "L"
+    },
+    {
+      "nodeID": "118_167778512186880985",
+      "text": "Pure Questioning",
+      "type": "YA"
+    },
+    {
+      "nodeID": "120_167778512186880985",
+      "text": "Default Transition",
+      "type": "TA"
+    },
+    {
+      "nodeID": "121_167778512186880985",
+      "text": "Default Rephrase",
+      "type": "MA"
+    },
+    {
+      "nodeID": "122_167778512186880985",
+      "text": "Restating",
+      "type": "YA"
+    },
+    {
+      "nodeID": "123_167778512186880985",
+      "text": "we have let people into the UK to fill the empty jobs ",
+      "type": "I"
+    },
+    {
+      "nodeID": "124_167778512186880985",
+      "text": "Robert Jenrick: we have done",
+      "type": "L"
+    },
+    {
+      "nodeID": "125_167778512186880985",
+      "text": "Analysing",
+      "type": "YA"
+    },
+    {
+      "nodeID": "126_167778512186880985",
+      "text": "Anon: Robert Jenrick: we have done",
+      "type": "L"
+    },
+    {
+      "nodeID": "127_167778512186880985",
+      "text": "Asserting",
+      "type": "YA"
+    },
+    {
+      "nodeID": "128_167778512186880985",
+      "text": "Default Transition",
+      "type": "TA"
+    },
+    {
+      "nodeID": "129_167778512186880985",
+      "text": "Default Rephrase",
+      "type": "MA"
+    },
+    {
+      "nodeID": "130_167778512186880985",
+      "text": "Default Illocuting",
+      "type": "YA"
+    },
+    {
+      "nodeID": "131_167778512186880985",
+      "text": "last year net migration was over 500,000 in the UK",
+      "type": "I"
+    },
+    {
+      "nodeID": "132_167778512186880985",
+      "text": "Robert Jenrick:  Last year net migration was over 500,000 in this country",
+      "type": "L"
+    },
+    {
+      "nodeID": "133_167778512186880985",
+      "text": "Analysing",
+      "type": "YA"
+    },
+    {
+      "nodeID": "134_167778512186880985",
+      "text": "Anon: Robert Jenrick:  Last year net migration was over 500,000 in this country",
+      "type": "L"
+    },
+    {
+      "nodeID": "135_167778512186880985",
+      "text": "Asserting",
+      "type": "YA"
+    },
+    {
+      "nodeID": "136_167778512186880985",
+      "text": "very large numbers of work visas are being issued",
+      "type": "I"
+    },
+    {
+      "nodeID": "137_167778512186880985",
+      "text": "Robert Jenrick: very large numbers of work visas are being issued",
+      "type": "L"
+    },
+    {
+      "nodeID": "138_167778512186880985",
+      "text": "Analysing",
+      "type": "YA"
+    },
+    {
+      "nodeID": "139_167778512186880985",
+      "text": "Anon: Robert Jenrick: very large numbers of work visas are being issued",
+      "type": "L"
+    },
+    {
+      "nodeID": "140_167778512186880985",
+      "text": "Asserting",
+      "type": "YA"
+    },
+    {
+      "nodeID": "141_167778512186880985",
+      "text": "we are issuing more visas than we've issued in the past",
+      "type": "I"
+    },
+    {
+      "nodeID": "142_167778512186880985",
+      "text": "Robert Jenrick: more than we've issued in the past",
+      "type": "L"
+    },
+    {
+      "nodeID": "143_167778512186880985",
+      "text": "Analysing",
+      "type": "YA"
+    },
+    {
+      "nodeID": "144_167778512186880985",
+      "text": "Anon: Robert Jenrick: more than we've issued in the past",
+      "type": "L"
+    },
+    {
+      "nodeID": "145_167778512186880985",
+      "text": "Asserting",
+      "type": "YA"
+    },
+    {
+      "nodeID": "146_167778512186880985",
+      "text": "Default Transition",
+      "type": "TA"
+    },
+    {
+      "nodeID": "147_167778512186880985",
+      "text": "Default Rephrase",
+      "type": "MA"
+    },
+    {
+      "nodeID": "148_167778512186880985",
+      "text": "Restating",
+      "type": "YA"
+    },
+    {
+      "nodeID": "152_167778512186880985",
+      "text": "Default Transition",
+      "type": "TA"
+    },
+    {
+      "nodeID": "158_167778512186880985",
+      "text": "Default Transition",
+      "type": "TA"
+    },
+    {
+      "nodeID": "159_167778512186880985",
+      "text": "Default Transition",
+      "type": "TA"
+    },
+    {
+      "nodeID": "160_167778512186880985",
+      "text": "Default Inference",
+      "type": "RA"
+    },
+    {
+      "nodeID": "161_167778512186880985",
+      "text": "Arguing",
+      "type": "YA"
+    },
+    {
+      "nodeID": "162_167778512186880985",
+      "text": "Default Inference",
+      "type": "RA"
+    },
+    {
+      "nodeID": "163_167778512186880985",
+      "text": "Arguing",
+      "type": "YA"
+    }
+  ],
+  "edges": [
+    {
+      "edgeID": 1,
+      "fromID": "9_167778512186880985",
+      "toID": "8_167778512186880985"
+    },
+    {
+      "edgeID": 2,
+      "fromID": "10_167778512186880985",
+      "toID": "9_167778512186880985"
+    },
+    {
+      "edgeID": 3,
+      "fromID": "13_167778512186880985",
+      "toID": "12_167778512186880985"
+    },
+    {
+      "edgeID": 4,
+      "fromID": "14_167778512186880985",
+      "toID": "13_167778512186880985"
+    },
+    {
+      "edgeID": 5,
+      "fromID": "8_167778512186880985",
+      "toID": "16_167778512186880985"
+    },
+    {
+      "edgeID": 6,
+      "fromID": "16_167778512186880985",
+      "toID": "12_167778512186880985"
+    },
+    {
+      "edgeID": 7,
+      "fromID": "12_167778512186880985",
+      "toID": "17_167778512186880985"
+    },
+    {
+      "edgeID": 8,
+      "fromID": "17_167778512186880985",
+      "toID": "7_167778512186880985"
+    },
+    {
+      "edgeID": 9,
+      "fromID": "26_167778512186880985",
+      "toID": "25_167778512186880985"
+    },
+    {
+      "edgeID": 10,
+      "fromID": "27_167778512186880985",
+      "toID": "26_167778512186880985"
+    },
+    {
+      "edgeID": 11,
+      "fromID": "25_167778512186880985",
+      "toID": "28_167778512186880985"
+    },
+    {
+      "edgeID": 12,
+      "fromID": "28_167778512186880985",
+      "toID": "24_167778512186880985"
+    },
+    {
+      "edgeID": 13,
+      "fromID": "8_167778512186880985",
+      "toID": "29_167778512186880985"
+    },
+    {
+      "edgeID": 14,
+      "fromID": "29_167778512186880985",
+      "toID": "25_167778512186880985"
+    },
+    {
+      "edgeID": 15,
+      "fromID": "32_167778512186880985",
+      "toID": "31_167778512186880985"
+    },
+    {
+      "edgeID": 16,
+      "fromID": "33_167778512186880985",
+      "toID": "32_167778512186880985"
+    },
+    {
+      "edgeID": 17,
+      "fromID": "31_167778512186880985",
+      "toID": "34_167778512186880985"
+    },
+    {
+      "edgeID": 18,
+      "fromID": "34_167778512186880985",
+      "toID": "30_167778512186880985"
+    },
+    {
+      "edgeID": 19,
+      "fromID": "25_167778512186880985",
+      "toID": "35_167778512186880985"
+    },
+    {
+      "edgeID": 20,
+      "fromID": "35_167778512186880985",
+      "toID": "31_167778512186880985"
+    },
+    {
+      "edgeID": 21,
+      "fromID": "38_167778512186880985",
+      "toID": "37_167778512186880985"
+    },
+    {
+      "edgeID": 22,
+      "fromID": "39_167778512186880985",
+      "toID": "38_167778512186880985"
+    },
+    {
+      "edgeID": 23,
+      "fromID": "37_167778512186880985",
+      "toID": "40_167778512186880985"
+    },
+    {
+      "edgeID": 24,
+      "fromID": "40_167778512186880985",
+      "toID": "36_167778512186880985"
+    },
+    {
+      "edgeID": 25,
+      "fromID": "30_167778512186880985",
+      "toID": "41_167778512186880985"
+    },
+    {
+      "edgeID": 26,
+      "fromID": "41_167778512186880985",
+      "toID": "24_167778512186880985"
+    },
+    {
+      "edgeID": 27,
+      "fromID": "35_167778512186880985",
+      "toID": "42_167778512186880985"
+    },
+    {
+      "edgeID": 28,
+      "fromID": "42_167778512186880985",
+      "toID": "41_167778512186880985"
+    },
+    {
+      "edgeID": 29,
+      "fromID": "25_167778512186880985",
+      "toID": "43_167778512186880985"
+    },
+    {
+      "edgeID": 30,
+      "fromID": "43_167778512186880985",
+      "toID": "37_167778512186880985"
+    },
+    {
+      "edgeID": 31,
+      "fromID": "36_167778512186880985",
+      "toID": "44_167778512186880985"
+    },
+    {
+      "edgeID": 32,
+      "fromID": "44_167778512186880985",
+      "toID": "24_167778512186880985"
+    },
+    {
+      "edgeID": 33,
+      "fromID": "43_167778512186880985",
+      "toID": "45_167778512186880985"
+    },
+    {
+      "edgeID": 34,
+      "fromID": "45_167778512186880985",
+      "toID": "44_167778512186880985"
+    },
+    {
+      "edgeID": 35,
+      "fromID": "48_167778512186880985",
+      "toID": "47_167778512186880985"
+    },
+    {
+      "edgeID": 36,
+      "fromID": "49_167778512186880985",
+      "toID": "48_167778512186880985"
+    },
+    {
+      "edgeID": 37,
+      "fromID": "37_167778512186880985",
+      "toID": "51_167778512186880985"
+    },
+    {
+      "edgeID": 38,
+      "fromID": "51_167778512186880985",
+      "toID": "47_167778512186880985"
+    },
+    {
+      "edgeID": 39,
+      "fromID": "51_167778512186880985",
+      "toID": "52_167778512186880985"
+    },
+    {
+      "edgeID": 40,
+      "fromID": "52_167778512186880985",
+      "toID": "36_167778512186880985"
+    },
+    {
+      "edgeID": 41,
+      "fromID": "55_167778512186880985",
+      "toID": "54_167778512186880985"
+    },
+    {
+      "edgeID": 42,
+      "fromID": "56_167778512186880985",
+      "toID": "55_167778512186880985"
+    },
+    {
+      "edgeID": 43,
+      "fromID": "54_167778512186880985",
+      "toID": "57_167778512186880985"
+    },
+    {
+      "edgeID": 44,
+      "fromID": "57_167778512186880985",
+      "toID": "53_167778512186880985"
+    },
+    {
+      "edgeID": 45,
+      "fromID": "61_167778512186880985",
+      "toID": "60_167778512186880985"
+    },
+    {
+      "edgeID": 46,
+      "fromID": "62_167778512186880985",
+      "toID": "61_167778512186880985"
+    },
+    {
+      "edgeID": 47,
+      "fromID": "60_167778512186880985",
+      "toID": "63_167778512186880985"
+    },
+    {
+      "edgeID": 48,
+      "fromID": "63_167778512186880985",
+      "toID": "59_167778512186880985"
+    },
+    {
+      "edgeID": 49,
+      "fromID": "54_167778512186880985",
+      "toID": "64_167778512186880985"
+    },
+    {
+      "edgeID": 50,
+      "fromID": "64_167778512186880985",
+      "toID": "60_167778512186880985"
+    },
+    {
+      "edgeID": 51,
+      "fromID": "70_167778512186880985",
+      "toID": "69_167778512186880985"
+    },
+    {
+      "edgeID": 52,
+      "fromID": "71_167778512186880985",
+      "toID": "70_167778512186880985"
+    },
+    {
+      "edgeID": 53,
+      "fromID": "69_167778512186880985",
+      "toID": "72_167778512186880985"
+    },
+    {
+      "edgeID": 54,
+      "fromID": "72_167778512186880985",
+      "toID": "68_167778512186880985"
+    },
+    {
+      "edgeID": 55,
+      "fromID": "60_167778512186880985",
+      "toID": "73_167778512186880985"
+    },
+    {
+      "edgeID": 56,
+      "fromID": "73_167778512186880985",
+      "toID": "69_167778512186880985"
+    },
+    {
+      "edgeID": 57,
+      "fromID": "68_167778512186880985",
+      "toID": "74_167778512186880985"
+    },
+    {
+      "edgeID": 58,
+      "fromID": "74_167778512186880985",
+      "toID": "59_167778512186880985"
+    },
+    {
+      "edgeID": 59,
+      "fromID": "73_167778512186880985",
+      "toID": "75_167778512186880985"
+    },
+    {
+      "edgeID": 60,
+      "fromID": "75_167778512186880985",
+      "toID": "74_167778512186880985"
+    },
+    {
+      "edgeID": 61,
+      "fromID": "78_167778512186880985",
+      "toID": "77_167778512186880985"
+    },
+    {
+      "edgeID": 62,
+      "fromID": "79_167778512186880985",
+      "toID": "78_167778512186880985"
+    },
+    {
+      "edgeID": 63,
+      "fromID": "60_167778512186880985",
+      "toID": "81_167778512186880985"
+    },
+    {
+      "edgeID": 64,
+      "fromID": "81_167778512186880985",
+      "toID": "77_167778512186880985"
+    },
+    {
+      "edgeID": 65,
+      "fromID": "77_167778512186880985",
+      "toID": "83_167778512186880985"
+    },
+    {
+      "edgeID": 66,
+      "fromID": "83_167778512186880985",
+      "toID": "59_167778512186880985"
+    },
+    {
+      "edgeID": 67,
+      "fromID": "86_167778512186880985",
+      "toID": "85_167778512186880985"
+    },
+    {
+      "edgeID": 68,
+      "fromID": "87_167778512186880985",
+      "toID": "86_167778512186880985"
+    },
+    {
+      "edgeID": 69,
+      "fromID": "85_167778512186880985",
+      "toID": "88_167778512186880985"
+    },
+    {
+      "edgeID": 70,
+      "fromID": "88_167778512186880985",
+      "toID": "84_167778512186880985"
+    },
+    {
+      "edgeID": 71,
+      "fromID": "60_167778512186880985",
+      "toID": "89_167778512186880985"
+    },
+    {
+      "edgeID": 72,
+      "fromID": "89_167778512186880985",
+      "toID": "85_167778512186880985"
+    },
+    {
+      "edgeID": 73,
+      "fromID": "84_167778512186880985",
+      "toID": "90_167778512186880985"
+    },
+    {
+      "edgeID": 74,
+      "fromID": "90_167778512186880985",
+      "toID": "59_167778512186880985"
+    },
+    {
+      "edgeID": 75,
+      "fromID": "89_167778512186880985",
+      "toID": "91_167778512186880985"
+    },
+    {
+      "edgeID": 76,
+      "fromID": "91_167778512186880985",
+      "toID": "90_167778512186880985"
+    },
+    {
+      "edgeID": 77,
+      "fromID": "94_167778512186880985",
+      "toID": "93_167778512186880985"
+    },
+    {
+      "edgeID": 78,
+      "fromID": "95_167778512186880985",
+      "toID": "94_167778512186880985"
+    },
+    {
+      "edgeID": 79,
+      "fromID": "93_167778512186880985",
+      "toID": "96_167778512186880985"
+    },
+    {
+      "edgeID": 80,
+      "fromID": "96_167778512186880985",
+      "toID": "92_167778512186880985"
+    },
+    {
+      "edgeID": 81,
+      "fromID": "99_167778512186880985",
+      "toID": "98_167778512186880985"
+    },
+    {
+      "edgeID": 82,
+      "fromID": "100_167778512186880985",
+      "toID": "99_167778512186880985"
+    },
+    {
+      "edgeID": 83,
+      "fromID": "98_167778512186880985",
+      "toID": "101_167778512186880985"
+    },
+    {
+      "edgeID": 84,
+      "fromID": "101_167778512186880985",
+      "toID": "97_167778512186880985"
+    },
+    {
+      "edgeID": 85,
+      "fromID": "69_167778512186880985",
+      "toID": "102_167778512186880985"
+    },
+    {
+      "edgeID": 86,
+      "fromID": "102_167778512186880985",
+      "toID": "98_167778512186880985"
+    },
+    {
+      "edgeID": 87,
+      "fromID": "98_167778512186880985",
+      "toID": "103_167778512186880985"
+    },
+    {
+      "edgeID": 88,
+      "fromID": "103_167778512186880985",
+      "toID": "93_167778512186880985"
+    },
+    {
+      "edgeID": 89,
+      "fromID": "92_167778512186880985",
+      "toID": "104_167778512186880985"
+    },
+    {
+      "edgeID": 90,
+      "fromID": "104_167778512186880985",
+      "toID": "97_167778512186880985"
+    },
+    {
+      "edgeID": 91,
+      "fromID": "103_167778512186880985",
+      "toID": "105_167778512186880985"
+    },
+    {
+      "edgeID": 92,
+      "fromID": "105_167778512186880985",
+      "toID": "104_167778512186880985"
+    },
+    {
+      "edgeID": 93,
+      "fromID": "108_167778512186880985",
+      "toID": "107_167778512186880985"
+    },
+    {
+      "edgeID": 94,
+      "fromID": "109_167778512186880985",
+      "toID": "108_167778512186880985"
+    },
+    {
+      "edgeID": 95,
+      "fromID": "107_167778512186880985",
+      "toID": "110_167778512186880985"
+    },
+    {
+      "edgeID": 96,
+      "fromID": "110_167778512186880985",
+      "toID": "106_167778512186880985"
+    },
+    {
+      "edgeID": 97,
+      "fromID": "85_167778512186880985",
+      "toID": "111_167778512186880985"
+    },
+    {
+      "edgeID": 98,
+      "fromID": "111_167778512186880985",
+      "toID": "107_167778512186880985"
+    },
+    {
+      "edgeID": 99,
+      "fromID": "106_167778512186880985",
+      "toID": "112_167778512186880985"
+    },
+    {
+      "edgeID": 100,
+      "fromID": "112_167778512186880985",
+      "toID": "84_167778512186880985"
+    },
+    {
+      "edgeID": 101,
+      "fromID": "111_167778512186880985",
+      "toID": "113_167778512186880985"
+    },
+    {
+      "edgeID": 102,
+      "fromID": "113_167778512186880985",
+      "toID": "112_167778512186880985"
+    },
+    {
+      "edgeID": 103,
+      "fromID": "116_167778512186880985",
+      "toID": "115_167778512186880985"
+    },
+    {
+      "edgeID": 104,
+      "fromID": "117_167778512186880985",
+      "toID": "116_167778512186880985"
+    },
+    {
+      "edgeID": 105,
+      "fromID": "115_167778512186880985",
+      "toID": "118_167778512186880985"
+    },
+    {
+      "edgeID": 106,
+      "fromID": "118_167778512186880985",
+      "toID": "114_167778512186880985"
+    },
+    {
+      "edgeID": 107,
+      "fromID": "93_167778512186880985",
+      "toID": "120_167778512186880985"
+    },
+    {
+      "edgeID": 108,
+      "fromID": "120_167778512186880985",
+      "toID": "115_167778512186880985"
+    },
+    {
+      "edgeID": 109,
+      "fromID": "114_167778512186880985",
+      "toID": "121_167778512186880985"
+    },
+    {
+      "edgeID": 110,
+      "fromID": "121_167778512186880985",
+      "toID": "92_167778512186880985"
+    },
+    {
+      "edgeID": 111,
+      "fromID": "120_167778512186880985",
+      "toID": "122_167778512186880985"
+    },
+    {
+      "edgeID": 112,
+      "fromID": "122_167778512186880985",
+      "toID": "121_167778512186880985"
+    },
+    {
+      "edgeID": 113,
+      "fromID": "125_167778512186880985",
+      "toID": "124_167778512186880985"
+    },
+    {
+      "edgeID": 114,
+      "fromID": "126_167778512186880985",
+      "toID": "125_167778512186880985"
+    },
+    {
+      "edgeID": 115,
+      "fromID": "124_167778512186880985",
+      "toID": "127_167778512186880985"
+    },
+    {
+      "edgeID": 116,
+      "fromID": "127_167778512186880985",
+      "toID": "123_167778512186880985"
+    },
+    {
+      "edgeID": 117,
+      "fromID": "115_167778512186880985",
+      "toID": "128_167778512186880985"
+    },
+    {
+      "edgeID": 118,
+      "fromID": "128_167778512186880985",
+      "toID": "124_167778512186880985"
+    },
+    {
+      "edgeID": 119,
+      "fromID": "123_167778512186880985",
+      "toID": "129_167778512186880985"
+    },
+    {
+      "edgeID": 120,
+      "fromID": "129_167778512186880985",
+      "toID": "114_167778512186880985"
+    },
+    {
+      "edgeID": 121,
+      "fromID": "128_167778512186880985",
+      "toID": "130_167778512186880985"
+    },
+    {
+      "edgeID": 122,
+      "fromID": "130_167778512186880985",
+      "toID": "129_167778512186880985"
+    },
+    {
+      "edgeID": 123,
+      "fromID": "133_167778512186880985",
+      "toID": "132_167778512186880985"
+    },
+    {
+      "edgeID": 124,
+      "fromID": "134_167778512186880985",
+      "toID": "133_167778512186880985"
+    },
+    {
+      "edgeID": 125,
+      "fromID": "132_167778512186880985",
+      "toID": "135_167778512186880985"
+    },
+    {
+      "edgeID": 126,
+      "fromID": "135_167778512186880985",
+      "toID": "131_167778512186880985"
+    },
+    {
+      "edgeID": 127,
+      "fromID": "138_167778512186880985",
+      "toID": "137_167778512186880985"
+    },
+    {
+      "edgeID": 128,
+      "fromID": "139_167778512186880985",
+      "toID": "138_167778512186880985"
+    },
+    {
+      "edgeID": 129,
+      "fromID": "137_167778512186880985",
+      "toID": "140_167778512186880985"
+    },
+    {
+      "edgeID": 130,
+      "fromID": "140_167778512186880985",
+      "toID": "136_167778512186880985"
+    },
+    {
+      "edgeID": 131,
+      "fromID": "143_167778512186880985",
+      "toID": "142_167778512186880985"
+    },
+    {
+      "edgeID": 132,
+      "fromID": "144_167778512186880985",
+      "toID": "143_167778512186880985"
+    },
+    {
+      "edgeID": 133,
+      "fromID": "142_167778512186880985",
+      "toID": "145_167778512186880985"
+    },
+    {
+      "edgeID": 134,
+      "fromID": "145_167778512186880985",
+      "toID": "141_167778512186880985"
+    },
+    {
+      "edgeID": 135,
+      "fromID": "137_167778512186880985",
+      "toID": "146_167778512186880985"
+    },
+    {
+      "edgeID": 136,
+      "fromID": "146_167778512186880985",
+      "toID": "142_167778512186880985"
+    },
+    {
+      "edgeID": 137,
+      "fromID": "141_167778512186880985",
+      "toID": "147_167778512186880985"
+    },
+    {
+      "edgeID": 138,
+      "fromID": "147_167778512186880985",
+      "toID": "136_167778512186880985"
+    },
+    {
+      "edgeID": 139,
+      "fromID": "146_167778512186880985",
+      "toID": "148_167778512186880985"
+    },
+    {
+      "edgeID": 140,
+      "fromID": "148_167778512186880985",
+      "toID": "147_167778512186880985"
+    },
+    {
+      "edgeID": 141,
+      "fromID": "124_167778512186880985",
+      "toID": "152_167778512186880985"
+    },
+    {
+      "edgeID": 142,
+      "fromID": "152_167778512186880985",
+      "toID": "132_167778512186880985"
+    },
+    {
+      "edgeID": 143,
+      "fromID": "47_167778512186880985",
+      "toID": "158_167778512186880985"
+    },
+    {
+      "edgeID": 144,
+      "fromID": "158_167778512186880985",
+      "toID": "54_167778512186880985"
+    },
+    {
+      "edgeID": 145,
+      "fromID": "124_167778512186880985",
+      "toID": "159_167778512186880985"
+    },
+    {
+      "edgeID": 146,
+      "fromID": "159_167778512186880985",
+      "toID": "137_167778512186880985"
+    },
+    {
+      "edgeID": 147,
+      "fromID": "123_167778512186880985",
+      "toID": "160_167778512186880985"
+    },
+    {
+      "edgeID": 148,
+      "fromID": "160_167778512186880985",
+      "toID": "136_167778512186880985"
+    },
+    {
+      "edgeID": 149,
+      "fromID": "159_167778512186880985",
+      "toID": "161_167778512186880985"
+    },
+    {
+      "edgeID": 150,
+      "fromID": "161_167778512186880985",
+      "toID": "160_167778512186880985"
+    },
+    {
+      "edgeID": 151,
+      "fromID": "123_167778512186880985",
+      "toID": "162_167778512186880985"
+    },
+    {
+      "edgeID": 152,
+      "fromID": "162_167778512186880985",
+      "toID": "131_167778512186880985"
+    },
+    {
+      "edgeID": 153,
+      "fromID": "152_167778512186880985",
+      "toID": "163_167778512186880985"
+    },
+    {
+      "edgeID": 154,
+      "fromID": "163_167778512186880985",
+      "toID": "162_167778512186880985"
+    }
+  ],
+  "locutions": [
+    {
+      "nodeID": "8_167778512186880985",
+      "personID": 297,
+      "start": "2023-02-16 23:13:43",
+      "end": null
+    },
+    {
+      "nodeID": "12_167778512186880985",
+      "personID": 279,
+      "start": null,
+      "end": null
+    },
+    {
+      "nodeID": "25_167778512186880985",
+      "personID": 297,
+      "start": "2023-02-16 23:13:48",
+      "end": null
+    },
+    {
+      "nodeID": "31_167778512186880985",
+      "personID": 15,
+      "start": "2023-02-16 23:13:50",
+      "end": null
+    },
+    {
+      "nodeID": "37_167778512186880985",
+      "personID": 15,
+      "start": "2023-02-16 23:13:52",
+      "end": null
+    },
+    {
+      "nodeID": "47_167778512186880985",
+      "personID": 298,
+      "start": "2023-02-16 23:13:54",
+      "end": null
+    },
+    {
+      "nodeID": "54_167778512186880985",
+      "personID": 15,
+      "start": "2023-02-16 23:13:54",
+      "end": null
+    },
+    {
+      "nodeID": "60_167778512186880985",
+      "personID": 15,
+      "start": "2023-02-16 23:14:00",
+      "end": null
+    },
+    {
+      "nodeID": "69_167778512186880985",
+      "personID": 15,
+      "start": "2023-02-16 23:14:02",
+      "end": null
+    },
+    {
+      "nodeID": "77_167778512186880985",
+      "personID": 279,
+      "start": "2023-02-16 23:14:05",
+      "end": null
+    },
+    {
+      "nodeID": "85_167778512186880985",
+      "personID": 279,
+      "start": "2023-02-16 23:14:08",
+      "end": null
+    },
+    {
+      "nodeID": "93_167778512186880985",
+      "personID": 15,
+      "start": "2023-02-16 23:14:10",
+      "end": null
+    },
+    {
+      "nodeID": "98_167778512186880985",
+      "personID": 15,
+      "start": "2023-02-16 23:14:03",
+      "end": null
+    },
+    {
+      "nodeID": "107_167778512186880985",
+      "personID": 279,
+      "start": "2023-02-16 23:14:10",
+      "end": null
+    },
+    {
+      "nodeID": "115_167778512186880985",
+      "personID": 15,
+      "start": "2023-02-16 23:14:13",
+      "end": null
+    },
+    {
+      "nodeID": "124_167778512186880985",
+      "personID": 279,
+      "start": "2023-02-16 23:14:13",
+      "end": null
+    },
+    {
+      "nodeID": "132_167778512186880985",
+      "personID": 279,
+      "start": "2023-02-16 23:14:17",
+      "end": null
+    },
+    {
+      "nodeID": "137_167778512186880985",
+      "personID": 279,
+      "start": "2023-02-16 23:14:23",
+      "end": null
+    },
+    {
+      "nodeID": "142_167778512186880985",
+      "personID": 279,
+      "start": "2023-02-16 23:14:28",
+      "end": null
+    }
+  ]
+}

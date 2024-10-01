@@ -1,0 +1,1187 @@
+{
+  "nodes": [
+    {
+      "nodeID": "2_164935033632325209",
+      "text": "AudienceMember 20220331QT02 runs a community trust locally in Bath",
+      "type": "I"
+    },
+    {
+      "nodeID": "3_164935033632325209",
+      "text": "AudienceMember 20220310QT02: I run a community trust locally in Bath",
+      "type": "L"
+    },
+    {
+      "nodeID": "4_164935033632325209",
+      "text": "Analysing",
+      "type": "YA"
+    },
+    {
+      "nodeID": "5_164935033632325209",
+      "text": "Anon: AudienceMember 20220310QT02: I run a community trust locally in Bath",
+      "type": "L"
+    },
+    {
+      "nodeID": "6_164935033632325209",
+      "text": "Asserting",
+      "type": "YA"
+    },
+    {
+      "nodeID": "7_164935033632325209",
+      "text": "this Christmas AudienceMember 20220331QT02's community trust went out and fed 30 families their Christmas dinner",
+      "type": "I"
+    },
+    {
+      "nodeID": "8_164935033632325209",
+      "text": "AudienceMember 20220310QT02: this Christmas we went out and fed 30 families their Christmas dinner",
+      "type": "L"
+    },
+    {
+      "nodeID": "9_164935033632325209",
+      "text": "Analysing",
+      "type": "YA"
+    },
+    {
+      "nodeID": "10_164935033632325209",
+      "text": "Anon: AudienceMember 20220310QT02: this Christmas we went out and fed 30 families their Christmas dinner",
+      "type": "L"
+    },
+    {
+      "nodeID": "11_164935033632325209",
+      "text": "Asserting",
+      "type": "YA"
+    },
+    {
+      "nodeID": "12_164935033632325209",
+      "text": "Default Transition",
+      "type": "TA"
+    },
+    {
+      "nodeID": "13_164935033632325209",
+      "text": "Default Rephrase",
+      "type": "MA"
+    },
+    {
+      "nodeID": "14_164935033632325209",
+      "text": "Restating",
+      "type": "YA"
+    },
+    {
+      "nodeID": "15_164935033632325209",
+      "text": "this is children that are suffering and not having food",
+      "type": "I"
+    },
+    {
+      "nodeID": "16_164935033632325209",
+      "text": "AudienceMember 20220310QT02: This is children that are suffering and not having food",
+      "type": "L"
+    },
+    {
+      "nodeID": "17_164935033632325209",
+      "text": "Analysing",
+      "type": "YA"
+    },
+    {
+      "nodeID": "18_164935033632325209",
+      "text": "Anon: AudienceMember 20220310QT02: This is children that are suffering and not having food",
+      "type": "L"
+    },
+    {
+      "nodeID": "19_164935033632325209",
+      "text": "Asserting",
+      "type": "YA"
+    },
+    {
+      "nodeID": "20_164935033632325209",
+      "text": "Default Transition",
+      "type": "TA"
+    },
+    {
+      "nodeID": "27_164935033632325209",
+      "text": "more and more professional people, nurses, doctors, professional people are using food banks",
+      "type": "I"
+    },
+    {
+      "nodeID": "28_164935033632325209",
+      "text": "AudienceMember 20220310QT02: More and more professional people, nurses, doctors, professional people are using food banks",
+      "type": "L"
+    },
+    {
+      "nodeID": "29_164935033632325209",
+      "text": "Analysing",
+      "type": "YA"
+    },
+    {
+      "nodeID": "30_164935033632325209",
+      "text": "Anon: AudienceMember 20220310QT02: More and more professional people, nurses, doctors, professional people are using food banks",
+      "type": "L"
+    },
+    {
+      "nodeID": "31_164935033632325209",
+      "text": "Asserting",
+      "type": "YA"
+    },
+    {
+      "nodeID": "32_164935033632325209",
+      "text": "Default Transition",
+      "type": "TA"
+    },
+    {
+      "nodeID": "33_164935033632325209",
+      "text": "they can't afford to put food on the table",
+      "type": "I"
+    },
+    {
+      "nodeID": "34_164935033632325209",
+      "text": "AudienceMember 20220310QT02: they can't afford to put food on the table",
+      "type": "L"
+    },
+    {
+      "nodeID": "35_164935033632325209",
+      "text": "Analysing",
+      "type": "YA"
+    },
+    {
+      "nodeID": "36_164935033632325209",
+      "text": "Anon: AudienceMember 20220310QT02: they can't afford to put food on the table",
+      "type": "L"
+    },
+    {
+      "nodeID": "37_164935033632325209",
+      "text": "Asserting",
+      "type": "YA"
+    },
+    {
+      "nodeID": "38_164935033632325209",
+      "text": "Default Transition",
+      "type": "TA"
+    },
+    {
+      "nodeID": "39_164935033632325209",
+      "text": "Default Inference",
+      "type": "RA"
+    },
+    {
+      "nodeID": "40_164935033632325209",
+      "text": "Arguing",
+      "type": "YA"
+    },
+    {
+      "nodeID": "41_164935033632325209",
+      "text": "Default Rephrase",
+      "type": "MA"
+    },
+    {
+      "nodeID": "42_164935033632325209",
+      "text": "Restating",
+      "type": "YA"
+    },
+    {
+      "nodeID": "49_164935033632325209",
+      "text": "we have families that are choosing when they go to food banks and they're offered food",
+      "type": "I"
+    },
+    {
+      "nodeID": "50_164935033632325209",
+      "text": "AudienceMember 20220310QT02: We have families that are choosing when they go to food banks and they're offered food",
+      "type": "L"
+    },
+    {
+      "nodeID": "51_164935033632325209",
+      "text": "Analysing",
+      "type": "YA"
+    },
+    {
+      "nodeID": "52_164935033632325209",
+      "text": "Anon: AudienceMember 20220310QT02: We have families that are choosing when they go to food banks and they're offered food",
+      "type": "L"
+    },
+    {
+      "nodeID": "53_164935033632325209",
+      "text": "Asserting",
+      "type": "YA"
+    },
+    {
+      "nodeID": "54_164935033632325209",
+      "text": "Default Transition",
+      "type": "TA"
+    },
+    {
+      "nodeID": "55_164935033632325209",
+      "text": "families can't afford to cook the food that they may be getting offered",
+      "type": "I"
+    },
+    {
+      "nodeID": "56_164935033632325209",
+      "text": "AudienceMember 20220310QT02: they can't afford to cook the food that they may be getting offered",
+      "type": "L"
+    },
+    {
+      "nodeID": "57_164935033632325209",
+      "text": "Analysing",
+      "type": "YA"
+    },
+    {
+      "nodeID": "58_164935033632325209",
+      "text": "Anon: AudienceMember 20220310QT02: they can't afford to cook the food that they may be getting offered",
+      "type": "L"
+    },
+    {
+      "nodeID": "59_164935033632325209",
+      "text": "Asserting",
+      "type": "YA"
+    },
+    {
+      "nodeID": "60_164935033632325209",
+      "text": "Default Transition",
+      "type": "TA"
+    },
+    {
+      "nodeID": "61_164935033632325209",
+      "text": "Default Inference",
+      "type": "RA"
+    },
+    {
+      "nodeID": "62_164935033632325209",
+      "text": "Arguing",
+      "type": "YA"
+    },
+    {
+      "nodeID": "63_164935033632325209",
+      "text": "the situation is just not acceptable",
+      "type": "I"
+    },
+    {
+      "nodeID": "64_164935033632325209",
+      "text": "AudienceMember 20220310QT02: it's just not acceptable",
+      "type": "L"
+    },
+    {
+      "nodeID": "65_164935033632325209",
+      "text": "Analysing",
+      "type": "YA"
+    },
+    {
+      "nodeID": "66_164935033632325209",
+      "text": "Anon: AudienceMember 20220310QT02: it's just not acceptable",
+      "type": "L"
+    },
+    {
+      "nodeID": "67_164935033632325209",
+      "text": "Asserting",
+      "type": "YA"
+    },
+    {
+      "nodeID": "68_164935033632325209",
+      "text": "Default Transition",
+      "type": "TA"
+    },
+    {
+      "nodeID": "69_164935033632325209",
+      "text": "Default Inference",
+      "type": "RA"
+    },
+    {
+      "nodeID": "70_164935033632325209",
+      "text": "Arguing",
+      "type": "YA"
+    },
+    {
+      "nodeID": "71_164935033632325209",
+      "text": "it's time for change",
+      "type": "I"
+    },
+    {
+      "nodeID": "72_164935033632325209",
+      "text": "AudienceMember 20220310QT02: it's time for change",
+      "type": "L"
+    },
+    {
+      "nodeID": "73_164935033632325209",
+      "text": "Analysing",
+      "type": "YA"
+    },
+    {
+      "nodeID": "74_164935033632325209",
+      "text": "Anon: AudienceMember 20220310QT02: it's time for change",
+      "type": "L"
+    },
+    {
+      "nodeID": "75_164935033632325209",
+      "text": "Asserting",
+      "type": "YA"
+    },
+    {
+      "nodeID": "76_164935033632325209",
+      "text": "Default Transition",
+      "type": "TA"
+    },
+    {
+      "nodeID": "77_164935033632325209",
+      "text": "Default Inference",
+      "type": "RA"
+    },
+    {
+      "nodeID": "78_164935033632325209",
+      "text": "Arguing",
+      "type": "YA"
+    },
+    {
+      "nodeID": "79_164935033632325209",
+      "text": "people need help now",
+      "type": "I"
+    },
+    {
+      "nodeID": "80_164935033632325209",
+      "text": "AudienceMember 20220310QT02: People need help now",
+      "type": "L"
+    },
+    {
+      "nodeID": "81_164935033632325209",
+      "text": "Analysing",
+      "type": "YA"
+    },
+    {
+      "nodeID": "82_164935033632325209",
+      "text": "Anon: AudienceMember 20220310QT02: People need help now",
+      "type": "L"
+    },
+    {
+      "nodeID": "83_164935033632325209",
+      "text": "Asserting",
+      "type": "YA"
+    },
+    {
+      "nodeID": "84_164935033632325209",
+      "text": "Default Transition",
+      "type": "TA"
+    },
+    {
+      "nodeID": "85_164935033632325209",
+      "text": "Default Inference",
+      "type": "RA"
+    },
+    {
+      "nodeID": "86_164935033632325209",
+      "text": "Arguing",
+      "type": "YA"
+    },
+    {
+      "nodeID": "87_164935033632325209",
+      "text": "people don't need help in the future, they need it now, right now",
+      "type": "I"
+    },
+    {
+      "nodeID": "88_164935033632325209",
+      "text": "AudienceMember 20220310QT02: Not in the future, they need it now, right now",
+      "type": "L"
+    },
+    {
+      "nodeID": "89_164935033632325209",
+      "text": "Analysing",
+      "type": "YA"
+    },
+    {
+      "nodeID": "90_164935033632325209",
+      "text": "Anon: AudienceMember 20220310QT02: Not in the future, they need it now, right now",
+      "type": "L"
+    },
+    {
+      "nodeID": "91_164935033632325209",
+      "text": "Asserting",
+      "type": "YA"
+    },
+    {
+      "nodeID": "92_164935033632325209",
+      "text": "Default Transition",
+      "type": "TA"
+    },
+    {
+      "nodeID": "93_164935033632325209",
+      "text": "Default Rephrase",
+      "type": "MA"
+    },
+    {
+      "nodeID": "94_164935033632325209",
+      "text": "Restating",
+      "type": "YA"
+    },
+    {
+      "nodeID": "102_164935033632325209",
+      "text": "with the price rises that we're seeing and the volatility of fossil fuels across the globe, whatever domestic energy in terms of expansion of gas in the North Sea or fracking, it's going to be a drop in the ocean whatever we manage to contribute domestically",
+      "type": "I"
+    },
+    {
+      "nodeID": "103_164935033632325209",
+      "text": "AudienceMember 20220310QT03: with the price rises that we're seeing and the volatility of fossil fuels across the globe, whatever domestic energy in terms of expansion of gas in the North Sea or fracking, it's going to be a drop in the ocean whatever we manage to contribute domestically",
+      "type": "L"
+    },
+    {
+      "nodeID": "104_164935033632325209",
+      "text": "Analysing",
+      "type": "YA"
+    },
+    {
+      "nodeID": "105_164935033632325209",
+      "text": "Anon: AudienceMember 20220310QT03: with the price rises that we're seeing and the volatility of fossil fuels across the globe, whatever domestic energy in terms of expansion of gas in the North Sea or fracking, it's going to be a drop in the ocean whatever we manage to contribute domestically",
+      "type": "L"
+    },
+    {
+      "nodeID": "106_164935033632325209",
+      "text": "Asserting",
+      "type": "YA"
+    },
+    {
+      "nodeID": "107_164935033632325209",
+      "text": "Default Transition",
+      "type": "TA"
+    },
+    {
+      "nodeID": "108_164935033632325209",
+      "text": "we cannot compete with what the big fossil fuel providers are doing for global markets",
+      "type": "I"
+    },
+    {
+      "nodeID": "109_164935033632325209",
+      "text": "AudienceMember 20220310QT03: we cannot compete with what the big fossil fuel providers are doing for global markets",
+      "type": "L"
+    },
+    {
+      "nodeID": "110_164935033632325209",
+      "text": "Analysing",
+      "type": "YA"
+    },
+    {
+      "nodeID": "111_164935033632325209",
+      "text": "Anon: AudienceMember 20220310QT03: we cannot compete with what the big fossil fuel providers are doing for global markets",
+      "type": "L"
+    },
+    {
+      "nodeID": "112_164935033632325209",
+      "text": "Asserting",
+      "type": "YA"
+    },
+    {
+      "nodeID": "113_164935033632325209",
+      "text": "Default Transition",
+      "type": "TA"
+    },
+    {
+      "nodeID": "114_164935033632325209",
+      "text": "Default Inference",
+      "type": "RA"
+    },
+    {
+      "nodeID": "115_164935033632325209",
+      "text": "Arguing",
+      "type": "YA"
+    },
+    {
+      "nodeID": "116_164935033632325209",
+      "text": "in conjunction with net zero targets, and the herculean efforts of sustainability consultants like AudienceMember 20220331QT03 to aid companies to decarbonise their organisations, and to lower global atmospheric carbon emissions, we are still entertaining domestic fossil fuel extraction because xxx",
+      "type": "I"
+    },
+    {
+      "nodeID": "117_164935033632325209",
+      "text": "AudienceMember 20220310QT03: in conjunction with net zero targets, and the herculean efforts of sustainability consultants like me to aid companies to decarbonise their organisations, and to lower global atmospheric carbon emissions, why on earth are we still entertaining domestic fossil fuel extraction",
+      "type": "L"
+    },
+    {
+      "nodeID": "118_164935033632325209",
+      "text": "Analysing",
+      "type": "YA"
+    },
+    {
+      "nodeID": "119_164935033632325209",
+      "text": "Anon: AudienceMember 20220310QT03: in conjunction with net zero targets, and the herculean efforts of sustainability consultants like me to aid companies to decarbonise their organisations, and to lower global atmospheric carbon emissions, why on earth are we still entertaining domestic fossil fuel extraction",
+      "type": "L"
+    },
+    {
+      "nodeID": "120_164935033632325209",
+      "text": "Pure Questioning",
+      "type": "YA"
+    },
+    {
+      "nodeID": "121_164935033632325209",
+      "text": "Default Transition",
+      "type": "TA"
+    }
+  ],
+  "edges": [
+    {
+      "edgeID": 1,
+      "fromID": "4_164935033632325209",
+      "toID": "3_164935033632325209"
+    },
+    {
+      "edgeID": 2,
+      "fromID": "5_164935033632325209",
+      "toID": "4_164935033632325209"
+    },
+    {
+      "edgeID": 3,
+      "fromID": "3_164935033632325209",
+      "toID": "6_164935033632325209"
+    },
+    {
+      "edgeID": 4,
+      "fromID": "6_164935033632325209",
+      "toID": "2_164935033632325209"
+    },
+    {
+      "edgeID": 5,
+      "fromID": "9_164935033632325209",
+      "toID": "8_164935033632325209"
+    },
+    {
+      "edgeID": 6,
+      "fromID": "10_164935033632325209",
+      "toID": "9_164935033632325209"
+    },
+    {
+      "edgeID": 7,
+      "fromID": "8_164935033632325209",
+      "toID": "11_164935033632325209"
+    },
+    {
+      "edgeID": 8,
+      "fromID": "11_164935033632325209",
+      "toID": "7_164935033632325209"
+    },
+    {
+      "edgeID": 9,
+      "fromID": "3_164935033632325209",
+      "toID": "12_164935033632325209"
+    },
+    {
+      "edgeID": 10,
+      "fromID": "12_164935033632325209",
+      "toID": "8_164935033632325209"
+    },
+    {
+      "edgeID": 11,
+      "fromID": "7_164935033632325209",
+      "toID": "13_164935033632325209"
+    },
+    {
+      "edgeID": 12,
+      "fromID": "13_164935033632325209",
+      "toID": "2_164935033632325209"
+    },
+    {
+      "edgeID": 13,
+      "fromID": "12_164935033632325209",
+      "toID": "14_164935033632325209"
+    },
+    {
+      "edgeID": 14,
+      "fromID": "14_164935033632325209",
+      "toID": "13_164935033632325209"
+    },
+    {
+      "edgeID": 15,
+      "fromID": "17_164935033632325209",
+      "toID": "16_164935033632325209"
+    },
+    {
+      "edgeID": 16,
+      "fromID": "18_164935033632325209",
+      "toID": "17_164935033632325209"
+    },
+    {
+      "edgeID": 17,
+      "fromID": "16_164935033632325209",
+      "toID": "19_164935033632325209"
+    },
+    {
+      "edgeID": 18,
+      "fromID": "19_164935033632325209",
+      "toID": "15_164935033632325209"
+    },
+    {
+      "edgeID": 19,
+      "fromID": "8_164935033632325209",
+      "toID": "20_164935033632325209"
+    },
+    {
+      "edgeID": 20,
+      "fromID": "20_164935033632325209",
+      "toID": "16_164935033632325209"
+    },
+    {
+      "edgeID": 21,
+      "fromID": "29_164935033632325209",
+      "toID": "28_164935033632325209"
+    },
+    {
+      "edgeID": 22,
+      "fromID": "30_164935033632325209",
+      "toID": "29_164935033632325209"
+    },
+    {
+      "edgeID": 23,
+      "fromID": "28_164935033632325209",
+      "toID": "31_164935033632325209"
+    },
+    {
+      "edgeID": 24,
+      "fromID": "31_164935033632325209",
+      "toID": "27_164935033632325209"
+    },
+    {
+      "edgeID": 25,
+      "fromID": "16_164935033632325209",
+      "toID": "32_164935033632325209"
+    },
+    {
+      "edgeID": 26,
+      "fromID": "32_164935033632325209",
+      "toID": "28_164935033632325209"
+    },
+    {
+      "edgeID": 27,
+      "fromID": "35_164935033632325209",
+      "toID": "34_164935033632325209"
+    },
+    {
+      "edgeID": 28,
+      "fromID": "36_164935033632325209",
+      "toID": "35_164935033632325209"
+    },
+    {
+      "edgeID": 29,
+      "fromID": "34_164935033632325209",
+      "toID": "37_164935033632325209"
+    },
+    {
+      "edgeID": 30,
+      "fromID": "37_164935033632325209",
+      "toID": "33_164935033632325209"
+    },
+    {
+      "edgeID": 31,
+      "fromID": "28_164935033632325209",
+      "toID": "38_164935033632325209"
+    },
+    {
+      "edgeID": 32,
+      "fromID": "38_164935033632325209",
+      "toID": "34_164935033632325209"
+    },
+    {
+      "edgeID": 33,
+      "fromID": "33_164935033632325209",
+      "toID": "39_164935033632325209"
+    },
+    {
+      "edgeID": 34,
+      "fromID": "39_164935033632325209",
+      "toID": "27_164935033632325209"
+    },
+    {
+      "edgeID": 35,
+      "fromID": "38_164935033632325209",
+      "toID": "40_164935033632325209"
+    },
+    {
+      "edgeID": 36,
+      "fromID": "40_164935033632325209",
+      "toID": "39_164935033632325209"
+    },
+    {
+      "edgeID": 37,
+      "fromID": "27_164935033632325209",
+      "toID": "41_164935033632325209"
+    },
+    {
+      "edgeID": 38,
+      "fromID": "41_164935033632325209",
+      "toID": "15_164935033632325209"
+    },
+    {
+      "edgeID": 39,
+      "fromID": "32_164935033632325209",
+      "toID": "42_164935033632325209"
+    },
+    {
+      "edgeID": 40,
+      "fromID": "42_164935033632325209",
+      "toID": "41_164935033632325209"
+    },
+    {
+      "edgeID": 41,
+      "fromID": "51_164935033632325209",
+      "toID": "50_164935033632325209"
+    },
+    {
+      "edgeID": 42,
+      "fromID": "52_164935033632325209",
+      "toID": "51_164935033632325209"
+    },
+    {
+      "edgeID": 43,
+      "fromID": "50_164935033632325209",
+      "toID": "53_164935033632325209"
+    },
+    {
+      "edgeID": 44,
+      "fromID": "53_164935033632325209",
+      "toID": "49_164935033632325209"
+    },
+    {
+      "edgeID": 45,
+      "fromID": "34_164935033632325209",
+      "toID": "54_164935033632325209"
+    },
+    {
+      "edgeID": 46,
+      "fromID": "54_164935033632325209",
+      "toID": "50_164935033632325209"
+    },
+    {
+      "edgeID": 47,
+      "fromID": "57_164935033632325209",
+      "toID": "56_164935033632325209"
+    },
+    {
+      "edgeID": 48,
+      "fromID": "58_164935033632325209",
+      "toID": "57_164935033632325209"
+    },
+    {
+      "edgeID": 49,
+      "fromID": "56_164935033632325209",
+      "toID": "59_164935033632325209"
+    },
+    {
+      "edgeID": 50,
+      "fromID": "59_164935033632325209",
+      "toID": "55_164935033632325209"
+    },
+    {
+      "edgeID": 51,
+      "fromID": "50_164935033632325209",
+      "toID": "60_164935033632325209"
+    },
+    {
+      "edgeID": 52,
+      "fromID": "60_164935033632325209",
+      "toID": "56_164935033632325209"
+    },
+    {
+      "edgeID": 53,
+      "fromID": "55_164935033632325209",
+      "toID": "61_164935033632325209"
+    },
+    {
+      "edgeID": 54,
+      "fromID": "61_164935033632325209",
+      "toID": "49_164935033632325209"
+    },
+    {
+      "edgeID": 55,
+      "fromID": "60_164935033632325209",
+      "toID": "62_164935033632325209"
+    },
+    {
+      "edgeID": 56,
+      "fromID": "62_164935033632325209",
+      "toID": "61_164935033632325209"
+    },
+    {
+      "edgeID": 57,
+      "fromID": "65_164935033632325209",
+      "toID": "64_164935033632325209"
+    },
+    {
+      "edgeID": 58,
+      "fromID": "66_164935033632325209",
+      "toID": "65_164935033632325209"
+    },
+    {
+      "edgeID": 59,
+      "fromID": "64_164935033632325209",
+      "toID": "67_164935033632325209"
+    },
+    {
+      "edgeID": 60,
+      "fromID": "67_164935033632325209",
+      "toID": "63_164935033632325209"
+    },
+    {
+      "edgeID": 61,
+      "fromID": "56_164935033632325209",
+      "toID": "68_164935033632325209"
+    },
+    {
+      "edgeID": 62,
+      "fromID": "68_164935033632325209",
+      "toID": "64_164935033632325209"
+    },
+    {
+      "edgeID": 63,
+      "fromID": "55_164935033632325209",
+      "toID": "69_164935033632325209"
+    },
+    {
+      "edgeID": 64,
+      "fromID": "69_164935033632325209",
+      "toID": "63_164935033632325209"
+    },
+    {
+      "edgeID": 65,
+      "fromID": "68_164935033632325209",
+      "toID": "70_164935033632325209"
+    },
+    {
+      "edgeID": 66,
+      "fromID": "70_164935033632325209",
+      "toID": "69_164935033632325209"
+    },
+    {
+      "edgeID": 67,
+      "fromID": "73_164935033632325209",
+      "toID": "72_164935033632325209"
+    },
+    {
+      "edgeID": 68,
+      "fromID": "74_164935033632325209",
+      "toID": "73_164935033632325209"
+    },
+    {
+      "edgeID": 69,
+      "fromID": "72_164935033632325209",
+      "toID": "75_164935033632325209"
+    },
+    {
+      "edgeID": 70,
+      "fromID": "75_164935033632325209",
+      "toID": "71_164935033632325209"
+    },
+    {
+      "edgeID": 71,
+      "fromID": "64_164935033632325209",
+      "toID": "76_164935033632325209"
+    },
+    {
+      "edgeID": 72,
+      "fromID": "76_164935033632325209",
+      "toID": "72_164935033632325209"
+    },
+    {
+      "edgeID": 73,
+      "fromID": "63_164935033632325209",
+      "toID": "77_164935033632325209"
+    },
+    {
+      "edgeID": 74,
+      "fromID": "77_164935033632325209",
+      "toID": "71_164935033632325209"
+    },
+    {
+      "edgeID": 75,
+      "fromID": "76_164935033632325209",
+      "toID": "78_164935033632325209"
+    },
+    {
+      "edgeID": 76,
+      "fromID": "78_164935033632325209",
+      "toID": "77_164935033632325209"
+    },
+    {
+      "edgeID": 77,
+      "fromID": "81_164935033632325209",
+      "toID": "80_164935033632325209"
+    },
+    {
+      "edgeID": 78,
+      "fromID": "82_164935033632325209",
+      "toID": "81_164935033632325209"
+    },
+    {
+      "edgeID": 79,
+      "fromID": "80_164935033632325209",
+      "toID": "83_164935033632325209"
+    },
+    {
+      "edgeID": 80,
+      "fromID": "83_164935033632325209",
+      "toID": "79_164935033632325209"
+    },
+    {
+      "edgeID": 81,
+      "fromID": "72_164935033632325209",
+      "toID": "84_164935033632325209"
+    },
+    {
+      "edgeID": 82,
+      "fromID": "84_164935033632325209",
+      "toID": "80_164935033632325209"
+    },
+    {
+      "edgeID": 83,
+      "fromID": "79_164935033632325209",
+      "toID": "85_164935033632325209"
+    },
+    {
+      "edgeID": 84,
+      "fromID": "85_164935033632325209",
+      "toID": "71_164935033632325209"
+    },
+    {
+      "edgeID": 85,
+      "fromID": "84_164935033632325209",
+      "toID": "86_164935033632325209"
+    },
+    {
+      "edgeID": 86,
+      "fromID": "86_164935033632325209",
+      "toID": "85_164935033632325209"
+    },
+    {
+      "edgeID": 87,
+      "fromID": "89_164935033632325209",
+      "toID": "88_164935033632325209"
+    },
+    {
+      "edgeID": 88,
+      "fromID": "90_164935033632325209",
+      "toID": "89_164935033632325209"
+    },
+    {
+      "edgeID": 89,
+      "fromID": "88_164935033632325209",
+      "toID": "91_164935033632325209"
+    },
+    {
+      "edgeID": 90,
+      "fromID": "91_164935033632325209",
+      "toID": "87_164935033632325209"
+    },
+    {
+      "edgeID": 91,
+      "fromID": "80_164935033632325209",
+      "toID": "92_164935033632325209"
+    },
+    {
+      "edgeID": 92,
+      "fromID": "92_164935033632325209",
+      "toID": "88_164935033632325209"
+    },
+    {
+      "edgeID": 93,
+      "fromID": "87_164935033632325209",
+      "toID": "93_164935033632325209"
+    },
+    {
+      "edgeID": 94,
+      "fromID": "93_164935033632325209",
+      "toID": "79_164935033632325209"
+    },
+    {
+      "edgeID": 95,
+      "fromID": "92_164935033632325209",
+      "toID": "94_164935033632325209"
+    },
+    {
+      "edgeID": 96,
+      "fromID": "94_164935033632325209",
+      "toID": "93_164935033632325209"
+    },
+    {
+      "edgeID": 97,
+      "fromID": "104_164935033632325209",
+      "toID": "103_164935033632325209"
+    },
+    {
+      "edgeID": 98,
+      "fromID": "105_164935033632325209",
+      "toID": "104_164935033632325209"
+    },
+    {
+      "edgeID": 99,
+      "fromID": "103_164935033632325209",
+      "toID": "106_164935033632325209"
+    },
+    {
+      "edgeID": 100,
+      "fromID": "106_164935033632325209",
+      "toID": "102_164935033632325209"
+    },
+    {
+      "edgeID": 101,
+      "fromID": "88_164935033632325209",
+      "toID": "107_164935033632325209"
+    },
+    {
+      "edgeID": 102,
+      "fromID": "107_164935033632325209",
+      "toID": "103_164935033632325209"
+    },
+    {
+      "edgeID": 103,
+      "fromID": "110_164935033632325209",
+      "toID": "109_164935033632325209"
+    },
+    {
+      "edgeID": 104,
+      "fromID": "111_164935033632325209",
+      "toID": "110_164935033632325209"
+    },
+    {
+      "edgeID": 105,
+      "fromID": "109_164935033632325209",
+      "toID": "112_164935033632325209"
+    },
+    {
+      "edgeID": 106,
+      "fromID": "112_164935033632325209",
+      "toID": "108_164935033632325209"
+    },
+    {
+      "edgeID": 107,
+      "fromID": "103_164935033632325209",
+      "toID": "113_164935033632325209"
+    },
+    {
+      "edgeID": 108,
+      "fromID": "113_164935033632325209",
+      "toID": "109_164935033632325209"
+    },
+    {
+      "edgeID": 109,
+      "fromID": "108_164935033632325209",
+      "toID": "114_164935033632325209"
+    },
+    {
+      "edgeID": 110,
+      "fromID": "114_164935033632325209",
+      "toID": "102_164935033632325209"
+    },
+    {
+      "edgeID": 111,
+      "fromID": "113_164935033632325209",
+      "toID": "115_164935033632325209"
+    },
+    {
+      "edgeID": 112,
+      "fromID": "115_164935033632325209",
+      "toID": "114_164935033632325209"
+    },
+    {
+      "edgeID": 113,
+      "fromID": "118_164935033632325209",
+      "toID": "117_164935033632325209"
+    },
+    {
+      "edgeID": 114,
+      "fromID": "119_164935033632325209",
+      "toID": "118_164935033632325209"
+    },
+    {
+      "edgeID": 115,
+      "fromID": "117_164935033632325209",
+      "toID": "120_164935033632325209"
+    },
+    {
+      "edgeID": 116,
+      "fromID": "120_164935033632325209",
+      "toID": "116_164935033632325209"
+    },
+    {
+      "edgeID": 117,
+      "fromID": "109_164935033632325209",
+      "toID": "121_164935033632325209"
+    },
+    {
+      "edgeID": 118,
+      "fromID": "121_164935033632325209",
+      "toID": "117_164935033632325209"
+    }
+  ],
+  "locutions": [
+    {
+      "nodeID": "3_164935033632325209",
+      "personID": 219,
+      "start": "2022-03-31 22:39:05",
+      "end": null
+    },
+    {
+      "nodeID": "8_164935033632325209",
+      "personID": 219,
+      "start": "2022-03-31 22:39:09",
+      "end": null
+    },
+    {
+      "nodeID": "16_164935033632325209",
+      "personID": 219,
+      "start": "2022-03-31 22:39:14",
+      "end": null
+    },
+    {
+      "nodeID": "28_164935033632325209",
+      "personID": 219,
+      "start": "2022-03-31 22:39:19",
+      "end": null
+    },
+    {
+      "nodeID": "34_164935033632325209",
+      "personID": 219,
+      "start": "2022-03-31 22:39:26",
+      "end": null
+    },
+    {
+      "nodeID": "50_164935033632325209",
+      "personID": 219,
+      "start": "2022-03-31 22:39:31",
+      "end": null
+    },
+    {
+      "nodeID": "56_164935033632325209",
+      "personID": 219,
+      "start": "2022-03-31 22:39:37",
+      "end": null
+    },
+    {
+      "nodeID": "64_164935033632325209",
+      "personID": 219,
+      "start": "2022-03-31 22:39:40",
+      "end": null
+    },
+    {
+      "nodeID": "72_164935033632325209",
+      "personID": 219,
+      "start": "2022-03-31 22:39:42",
+      "end": null
+    },
+    {
+      "nodeID": "80_164935033632325209",
+      "personID": 219,
+      "start": "2022-03-31 22:39:44",
+      "end": null
+    },
+    {
+      "nodeID": "88_164935033632325209",
+      "personID": 219,
+      "start": "2022-03-31 22:39:47",
+      "end": null
+    },
+    {
+      "nodeID": "103_164935033632325209",
+      "personID": 220,
+      "start": "2022-03-31 22:39:51",
+      "end": null
+    },
+    {
+      "nodeID": "109_164935033632325209",
+      "personID": 220,
+      "start": "2022-03-31 22:39:30",
+      "end": null
+    },
+    {
+      "nodeID": "117_164935033632325209",
+      "personID": 220,
+      "start": "2022-03-31 22:39:09",
+      "end": null
+    }
+  ]
+}

@@ -1,0 +1,3113 @@
+{
+  "nodes": [
+    {
+      "nodeID": "2_163907291481283043",
+      "text": "xxx wants to know if there was a Christmas party or not",
+      "type": "I"
+    },
+    {
+      "nodeID": "3_163907291481283043",
+      "text": "Fiona Bruce: Who wants to know if there was a Christmas party or not",
+      "type": "L"
+    },
+    {
+      "nodeID": "4_163907291481283043",
+      "text": "Analysing",
+      "type": "YA"
+    },
+    {
+      "nodeID": "5_163907291481283043",
+      "text": "Nicole: Fiona Bruce: Who wants to know if there was a Christmas party or not",
+      "type": "L"
+    },
+    {
+      "nodeID": "7_163907291481283043",
+      "text": "Pure Questioning",
+      "type": "YA"
+    },
+    {
+      "nodeID": "14_163907291481283043",
+      "text": "all these people here want to know if there was a Christmas party",
+      "type": "I"
+    },
+    {
+      "nodeID": "15_163907291481283043",
+      "text": "Fiona Bruce: All these people here",
+      "type": "L"
+    },
+    {
+      "nodeID": "16_163907291481283043",
+      "text": "Analysing",
+      "type": "YA"
+    },
+    {
+      "nodeID": "17_163907291481283043",
+      "text": "Nicole: Fiona Bruce: All these people here",
+      "type": "L"
+    },
+    {
+      "nodeID": "18_163907291481283043",
+      "text": "Asserting",
+      "type": "YA"
+    },
+    {
+      "nodeID": "19_163907291481283043",
+      "text": "there was a Christmas party or there wasn't",
+      "type": "I"
+    },
+    {
+      "nodeID": "20_163907291481283043",
+      "text": "Fiona Bruce: Was there a Christmas party or wasn't there",
+      "type": "L"
+    },
+    {
+      "nodeID": "21_163907291481283043",
+      "text": "Analysing",
+      "type": "YA"
+    },
+    {
+      "nodeID": "22_163907291481283043",
+      "text": "Nicole: Fiona Bruce: Was there a Christmas party or wasn't there",
+      "type": "L"
+    },
+    {
+      "nodeID": "23_163907291481283043",
+      "text": "Pure Questioning",
+      "type": "YA"
+    },
+    {
+      "nodeID": "24_163907291481283043",
+      "text": "Default Transition",
+      "type": "TA"
+    },
+    {
+      "nodeID": "25_163907291481283043",
+      "text": "Default Rephrase",
+      "type": "MA"
+    },
+    {
+      "nodeID": "26_163907291481283043",
+      "text": "Restating",
+      "type": "YA"
+    },
+    {
+      "nodeID": "27_163907291481283043",
+      "text": "Default Transition",
+      "type": "TA"
+    },
+    {
+      "nodeID": "28_163907291481283043",
+      "text": "Default Rephrase",
+      "type": "MA"
+    },
+    {
+      "nodeID": "29_163907291481283043",
+      "text": "Default Illocuting",
+      "type": "YA"
+    },
+    {
+      "nodeID": "30_163907291481283043",
+      "text": "Maggie Throup is not aware of the Christmas party",
+      "type": "I"
+    },
+    {
+      "nodeID": "31_163907291481283043",
+      "text": "Maggie Throup: I am not aware of the Christmas party",
+      "type": "L"
+    },
+    {
+      "nodeID": "32_163907291481283043",
+      "text": "Analysing",
+      "type": "YA"
+    },
+    {
+      "nodeID": "33_163907291481283043",
+      "text": "Nicole: Maggie Throup: I am not aware of the Christmas party",
+      "type": "L"
+    },
+    {
+      "nodeID": "34_163907291481283043",
+      "text": "Asserting",
+      "type": "YA"
+    },
+    {
+      "nodeID": "35_163907291481283043",
+      "text": "Default Transition",
+      "type": "TA"
+    },
+    {
+      "nodeID": "36_163907291481283043",
+      "text": "Default Rephrase",
+      "type": "MA"
+    },
+    {
+      "nodeID": "37_163907291481283043",
+      "text": "Default Illocuting",
+      "type": "YA"
+    },
+    {
+      "nodeID": "38_163907291481283043",
+      "text": "the answer is a yes or no",
+      "type": "I"
+    },
+    {
+      "nodeID": "39_163907291481283043",
+      "text": "Thangam Debonnaire: It is a yes or no",
+      "type": "L"
+    },
+    {
+      "nodeID": "40_163907291481283043",
+      "text": "Analysing",
+      "type": "YA"
+    },
+    {
+      "nodeID": "41_163907291481283043",
+      "text": "Nicole: Thangam Debonnaire: It is a yes or no",
+      "type": "L"
+    },
+    {
+      "nodeID": "42_163907291481283043",
+      "text": "Asserting",
+      "type": "YA"
+    },
+    {
+      "nodeID": "43_163907291481283043",
+      "text": "Default Transition",
+      "type": "TA"
+    },
+    {
+      "nodeID": "44_163907291481283043",
+      "text": "Default Conflict",
+      "type": "CA"
+    },
+    {
+      "nodeID": "45_163907291481283043",
+      "text": "Disagreeing",
+      "type": "YA"
+    },
+    {
+      "nodeID": "47_163907291481283043",
+      "text": "Maggie Throup has been reassured that all guidance was carefully followed",
+      "type": "I"
+    },
+    {
+      "nodeID": "48_163907291481283043",
+      "text": "Maggie Throup: I have been reassured that all guidance was carefully followed",
+      "type": "L"
+    },
+    {
+      "nodeID": "49_163907291481283043",
+      "text": "Analysing",
+      "type": "YA"
+    },
+    {
+      "nodeID": "50_163907291481283043",
+      "text": "Nicole: Maggie Throup: I have been reassured that all guidance was carefully followed",
+      "type": "L"
+    },
+    {
+      "nodeID": "51_163907291481283043",
+      "text": "Asserting",
+      "type": "YA"
+    },
+    {
+      "nodeID": "52_163907291481283043",
+      "text": "Default Transition",
+      "type": "TA"
+    },
+    {
+      "nodeID": "53_163907291481283043",
+      "text": "that all guidance was carefully followed does or doesn't answer your question",
+      "type": "I"
+    },
+    {
+      "nodeID": "54_163907291481283043",
+      "text": "Fiona Bruce: Does that answer your question",
+      "type": "L"
+    },
+    {
+      "nodeID": "55_163907291481283043",
+      "text": "Analysing",
+      "type": "YA"
+    },
+    {
+      "nodeID": "56_163907291481283043",
+      "text": "Nicole: Fiona Bruce: Does that answer your question",
+      "type": "L"
+    },
+    {
+      "nodeID": "57_163907291481283043",
+      "text": "Pure Questioning",
+      "type": "YA"
+    },
+    {
+      "nodeID": "58_163907291481283043",
+      "text": "Default Transition",
+      "type": "TA"
+    },
+    {
+      "nodeID": "68_163907291481283043",
+      "text": "Maggie Throup wants another go at answering the question",
+      "type": "I"
+    },
+    {
+      "nodeID": "69_163907291481283043",
+      "text": "Fiona Bruce: Do you want another go, Maggie",
+      "type": "L"
+    },
+    {
+      "nodeID": "70_163907291481283043",
+      "text": "Analysing",
+      "type": "YA"
+    },
+    {
+      "nodeID": "71_163907291481283043",
+      "text": "Nicole: Fiona Bruce: Do you want another go, Maggie",
+      "type": "L"
+    },
+    {
+      "nodeID": "72_163907291481283043",
+      "text": "Assertive Questioning",
+      "type": "YA"
+    },
+    {
+      "nodeID": "76_163907291481283043",
+      "text": "Maggie Throup's answer is not going to change",
+      "type": "I"
+    },
+    {
+      "nodeID": "77_163907291481283043",
+      "text": "Maggie Throup: My answer is not going to change",
+      "type": "L"
+    },
+    {
+      "nodeID": "78_163907291481283043",
+      "text": "Analysing",
+      "type": "YA"
+    },
+    {
+      "nodeID": "79_163907291481283043",
+      "text": "Nicole: Maggie Throup: My answer is not going to change",
+      "type": "L"
+    },
+    {
+      "nodeID": "80_163907291481283043",
+      "text": "Asserting",
+      "type": "YA"
+    },
+    {
+      "nodeID": "81_163907291481283043",
+      "text": "Default Transition",
+      "type": "TA"
+    },
+    {
+      "nodeID": "82_163907291481283043",
+      "text": "Default Conflict",
+      "type": "CA"
+    },
+    {
+      "nodeID": "83_163907291481283043",
+      "text": "Disagreeing",
+      "type": "YA"
+    },
+    {
+      "nodeID": "84_163907291481283043",
+      "text": "the guidance was followed",
+      "type": "I"
+    },
+    {
+      "nodeID": "85_163907291481283043",
+      "text": "Maggie Throup: The guidance was followed",
+      "type": "L"
+    },
+    {
+      "nodeID": "86_163907291481283043",
+      "text": "Analysing",
+      "type": "YA"
+    },
+    {
+      "nodeID": "87_163907291481283043",
+      "text": "Nicole: Maggie Throup: The guidance was followed",
+      "type": "L"
+    },
+    {
+      "nodeID": "88_163907291481283043",
+      "text": "Asserting",
+      "type": "YA"
+    },
+    {
+      "nodeID": "89_163907291481283043",
+      "text": "Default Transition",
+      "type": "TA"
+    },
+    {
+      "nodeID": "90_163907291481283043",
+      "text": "Default Inference",
+      "type": "RA"
+    },
+    {
+      "nodeID": "91_163907291481283043",
+      "text": "Arguing",
+      "type": "YA"
+    },
+    {
+      "nodeID": "92_163907291481283043",
+      "text": "that the guidance was followed means there wasn't a party",
+      "type": "I"
+    },
+    {
+      "nodeID": "93_163907291481283043",
+      "text": "Fiona Bruce: That means there wasn't a party",
+      "type": "L"
+    },
+    {
+      "nodeID": "94_163907291481283043",
+      "text": "Analysing",
+      "type": "YA"
+    },
+    {
+      "nodeID": "95_163907291481283043",
+      "text": "Nicole: Fiona Bruce: That means there wasn't a party",
+      "type": "L"
+    },
+    {
+      "nodeID": "96_163907291481283043",
+      "text": "Asserting",
+      "type": "YA"
+    },
+    {
+      "nodeID": "97_163907291481283043",
+      "text": "Default Transition",
+      "type": "TA"
+    },
+    {
+      "nodeID": "98_163907291481283043",
+      "text": "the guidance was there were no Christmas parties",
+      "type": "I"
+    },
+    {
+      "nodeID": "99_163907291481283043",
+      "text": "Fiona Bruce: the guidance was there were no Christmas parties",
+      "type": "L"
+    },
+    {
+      "nodeID": "100_163907291481283043",
+      "text": "Analysing",
+      "type": "YA"
+    },
+    {
+      "nodeID": "101_163907291481283043",
+      "text": "Nicole: Fiona Bruce: the guidance was there were no Christmas parties",
+      "type": "L"
+    },
+    {
+      "nodeID": "102_163907291481283043",
+      "text": "Asserting",
+      "type": "YA"
+    },
+    {
+      "nodeID": "103_163907291481283043",
+      "text": "Default Transition",
+      "type": "TA"
+    },
+    {
+      "nodeID": "104_163907291481283043",
+      "text": "Default Inference",
+      "type": "RA"
+    },
+    {
+      "nodeID": "105_163907291481283043",
+      "text": "Arguing",
+      "type": "YA"
+    },
+    {
+      "nodeID": "106_163907291481283043",
+      "text": "Default Rephrase",
+      "type": "MA"
+    },
+    {
+      "nodeID": "107_163907291481283043",
+      "text": "Restating",
+      "type": "YA"
+    },
+    {
+      "nodeID": "108_163907291481283043",
+      "text": "whatever the event was",
+      "type": "I"
+    },
+    {
+      "nodeID": "109_163907291481283043",
+      "text": "Maggie Throup: Whatever the event was",
+      "type": "L"
+    },
+    {
+      "nodeID": "110_163907291481283043",
+      "text": "Analysing",
+      "type": "YA"
+    },
+    {
+      "nodeID": "111_163907291481283043",
+      "text": "Nicole: Maggie Throup: Whatever the event was",
+      "type": "L"
+    },
+    {
+      "nodeID": "112_163907291481283043",
+      "text": "Asserting",
+      "type": "YA"
+    },
+    {
+      "nodeID": "113_163907291481283043",
+      "text": "Default Transition",
+      "type": "TA"
+    },
+    {
+      "nodeID": "114_163907291481283043",
+      "text": "Default Conflict",
+      "type": "CA"
+    },
+    {
+      "nodeID": "115_163907291481283043",
+      "text": "Disagreeing",
+      "type": "YA"
+    },
+    {
+      "nodeID": "117_163907291481283043",
+      "text": "there was an event",
+      "type": "I"
+    },
+    {
+      "nodeID": "118_163907291481283043",
+      "text": "Fiona Bruce: There was an event",
+      "type": "L"
+    },
+    {
+      "nodeID": "119_163907291481283043",
+      "text": "Analysing",
+      "type": "YA"
+    },
+    {
+      "nodeID": "120_163907291481283043",
+      "text": "Nicole: Fiona Bruce: There was an event",
+      "type": "L"
+    },
+    {
+      "nodeID": "121_163907291481283043",
+      "text": "Assertive Questioning",
+      "type": "YA"
+    },
+    {
+      "nodeID": "122_163907291481283043",
+      "text": "Default Transition",
+      "type": "TA"
+    },
+    {
+      "nodeID": "123_163907291481283043",
+      "text": "Default Rephrase",
+      "type": "MA"
+    },
+    {
+      "nodeID": "124_163907291481283043",
+      "text": "Restating",
+      "type": "YA"
+    },
+    {
+      "nodeID": "125_163907291481283043",
+      "text": "this has been a rumour and hearsay",
+      "type": "I"
+    },
+    {
+      "nodeID": "126_163907291481283043",
+      "text": "Maggie Throup: this has been a rumour and hearsay",
+      "type": "L"
+    },
+    {
+      "nodeID": "127_163907291481283043",
+      "text": "Analysing",
+      "type": "YA"
+    },
+    {
+      "nodeID": "128_163907291481283043",
+      "text": "Nicole: Maggie Throup: this has been a rumour and hearsay",
+      "type": "L"
+    },
+    {
+      "nodeID": "129_163907291481283043",
+      "text": "Asserting",
+      "type": "YA"
+    },
+    {
+      "nodeID": "130_163907291481283043",
+      "text": "Default Transition",
+      "type": "TA"
+    },
+    {
+      "nodeID": "131_163907291481283043",
+      "text": "Default Conflict",
+      "type": "CA"
+    },
+    {
+      "nodeID": "132_163907291481283043",
+      "text": "Disagreeing",
+      "type": "YA"
+    },
+    {
+      "nodeID": "133_163907291481283043",
+      "text": "let Maggie Throup be very clear, that all guidance was followed at No. 10",
+      "type": "I"
+    },
+    {
+      "nodeID": "134_163907291481283043",
+      "text": "Maggie Throup: Let me be very clear, that all guidance was followed at No. 10",
+      "type": "L"
+    },
+    {
+      "nodeID": "135_163907291481283043",
+      "text": "Analysing",
+      "type": "YA"
+    },
+    {
+      "nodeID": "136_163907291481283043",
+      "text": "Nicole: Maggie Throup: Let me be very clear, that all guidance was followed at No. 10",
+      "type": "L"
+    },
+    {
+      "nodeID": "137_163907291481283043",
+      "text": "Asserting",
+      "type": "YA"
+    },
+    {
+      "nodeID": "138_163907291481283043",
+      "text": "Default Transition",
+      "type": "TA"
+    },
+    {
+      "nodeID": "139_163907291481283043",
+      "text": "Default Rephrase",
+      "type": "MA"
+    },
+    {
+      "nodeID": "140_163907291481283043",
+      "text": "Restating",
+      "type": "YA"
+    },
+    {
+      "nodeID": "141_163907291481283043",
+      "text": "all guidance was followed whether it is business meetings or whatever",
+      "type": "I"
+    },
+    {
+      "nodeID": "142_163907291481283043",
+      "text": "Maggie Throup: whether it is business meetings or whatever",
+      "type": "L"
+    },
+    {
+      "nodeID": "143_163907291481283043",
+      "text": "Analysing",
+      "type": "YA"
+    },
+    {
+      "nodeID": "144_163907291481283043",
+      "text": "Nicole: Maggie Throup: whether it is business meetings or whatever",
+      "type": "L"
+    },
+    {
+      "nodeID": "145_163907291481283043",
+      "text": "Asserting",
+      "type": "YA"
+    },
+    {
+      "nodeID": "146_163907291481283043",
+      "text": "Default Transition",
+      "type": "TA"
+    },
+    {
+      "nodeID": "147_163907291481283043",
+      "text": "Default Rephrase",
+      "type": "MA"
+    },
+    {
+      "nodeID": "148_163907291481283043",
+      "text": "Restating",
+      "type": "YA"
+    },
+    {
+      "nodeID": "149_163907291481283043",
+      "text": "Maggie Throup wasn't invited, just like the deputy leader of the Labour Party isn't invited to the Labour Party party next week",
+      "type": "I"
+    },
+    {
+      "nodeID": "150_163907291481283043",
+      "text": "Maggie Throup: I wasn't invited, just like the deputy leader of the Labour Party isn't invited to the Labour Party party next week",
+      "type": "L"
+    },
+    {
+      "nodeID": "151_163907291481283043",
+      "text": "Analysing",
+      "type": "YA"
+    },
+    {
+      "nodeID": "152_163907291481283043",
+      "text": "Nicole: Maggie Throup: I wasn't invited, just like the deputy leader of the Labour Party isn't invited to the Labour Party party next week",
+      "type": "L"
+    },
+    {
+      "nodeID": "153_163907291481283043",
+      "text": "Asserting",
+      "type": "YA"
+    },
+    {
+      "nodeID": "154_163907291481283043",
+      "text": "Default Transition",
+      "type": "TA"
+    },
+    {
+      "nodeID": "155_163907291481283043",
+      "text": "Default Rephrase",
+      "type": "MA"
+    },
+    {
+      "nodeID": "156_163907291481283043",
+      "text": "Restating",
+      "type": "YA"
+    },
+    {
+      "nodeID": "157_163907291481283043",
+      "text": "we're cancelling the Labour Party party",
+      "type": "I"
+    },
+    {
+      "nodeID": "158_163907291481283043",
+      "text": "Thangam Debonnaire: We're cancelling it",
+      "type": "L"
+    },
+    {
+      "nodeID": "159_163907291481283043",
+      "text": "Analysing",
+      "type": "YA"
+    },
+    {
+      "nodeID": "160_163907291481283043",
+      "text": "Nicole: Thangam Debonnaire: We're cancelling it",
+      "type": "L"
+    },
+    {
+      "nodeID": "161_163907291481283043",
+      "text": "Asserting",
+      "type": "YA"
+    },
+    {
+      "nodeID": "162_163907291481283043",
+      "text": "Default Transition",
+      "type": "TA"
+    },
+    {
+      "nodeID": "163_163907291481283043",
+      "text": "Default Conflict",
+      "type": "CA"
+    },
+    {
+      "nodeID": "164_163907291481283043",
+      "text": "Disagreeing",
+      "type": "YA"
+    },
+    {
+      "nodeID": "165_163907291481283043",
+      "text": "that the deputy leader of the Labour Party isn't invited to the Labour Party party next week is just ridiculous",
+      "type": "I"
+    },
+    {
+      "nodeID": "166_163907291481283043",
+      "text": "Thangam Debonnaire: That's just ridiculous",
+      "type": "L"
+    },
+    {
+      "nodeID": "167_163907291481283043",
+      "text": "Analysing",
+      "type": "YA"
+    },
+    {
+      "nodeID": "168_163907291481283043",
+      "text": "Nicole: Thangam Debonnaire: That's just ridiculous",
+      "type": "L"
+    },
+    {
+      "nodeID": "169_163907291481283043",
+      "text": "Asserting",
+      "type": "YA"
+    },
+    {
+      "nodeID": "170_163907291481283043",
+      "text": "Default Transition",
+      "type": "TA"
+    },
+    {
+      "nodeID": "171_163907291481283043",
+      "text": "Default Inference",
+      "type": "RA"
+    },
+    {
+      "nodeID": "172_163907291481283043",
+      "text": "Arguing",
+      "type": "YA"
+    },
+    {
+      "nodeID": "173_163907291481283043",
+      "text": "Maggie Throup has confirmed there was an event",
+      "type": "I"
+    },
+    {
+      "nodeID": "174_163907291481283043",
+      "text": "Fiona Bruce: You have confirmed there was an event",
+      "type": "L"
+    },
+    {
+      "nodeID": "175_163907291481283043",
+      "text": "Analysing",
+      "type": "YA"
+    },
+    {
+      "nodeID": "176_163907291481283043",
+      "text": "Nicole: Fiona Bruce: You have confirmed there was an event",
+      "type": "L"
+    },
+    {
+      "nodeID": "177_163907291481283043",
+      "text": "Asserting",
+      "type": "YA"
+    },
+    {
+      "nodeID": "178_163907291481283043",
+      "text": "Default Transition",
+      "type": "TA"
+    },
+    {
+      "nodeID": "179_163907291481283043",
+      "text": "Default Rephrase",
+      "type": "MA"
+    },
+    {
+      "nodeID": "180_163907291481283043",
+      "text": "Restating",
+      "type": "YA"
+    },
+    {
+      "nodeID": "181_163907291481283043",
+      "text": "AudienceMember 20211209QT03 just wondered why has it taken so long, nearly a year, for this story to break",
+      "type": "I"
+    },
+    {
+      "nodeID": "182_163907291481283043",
+      "text": "AudienceMember 20210912QT03: I just wondered why has it taken so long, nearly a year, for this story to break",
+      "type": "L"
+    },
+    {
+      "nodeID": "183_163907291481283043",
+      "text": "Analysing",
+      "type": "YA"
+    },
+    {
+      "nodeID": "184_163907291481283043",
+      "text": "Nicole: AudienceMember 20210912QT03: I just wondered why has it taken so long, nearly a year, for this story to break",
+      "type": "L"
+    },
+    {
+      "nodeID": "185_163907291481283043",
+      "text": "Asserting",
+      "type": "YA"
+    },
+    {
+      "nodeID": "186_163907291481283043",
+      "text": "Default Transition",
+      "type": "TA"
+    },
+    {
+      "nodeID": "187_163907291481283043",
+      "text": "surely the media knew beforehand",
+      "type": "I"
+    },
+    {
+      "nodeID": "188_163907291481283043",
+      "text": "AudienceMember 20210912QT03: Surely the media knew beforehand",
+      "type": "L"
+    },
+    {
+      "nodeID": "189_163907291481283043",
+      "text": "Analysing",
+      "type": "YA"
+    },
+    {
+      "nodeID": "190_163907291481283043",
+      "text": "Nicole: AudienceMember 20210912QT03: Surely the media knew beforehand",
+      "type": "L"
+    },
+    {
+      "nodeID": "191_163907291481283043",
+      "text": "Assertive Questioning",
+      "type": "YA"
+    },
+    {
+      "nodeID": "192_163907291481283043",
+      "text": "Default Transition",
+      "type": "TA"
+    },
+    {
+      "nodeID": "194_163907291481283043",
+      "text": "shouldn't the media have brought it out",
+      "type": "I"
+    },
+    {
+      "nodeID": "195_163907291481283043",
+      "text": "AudienceMember 20210912QT03: Shouldn't they have brought it out",
+      "type": "L"
+    },
+    {
+      "nodeID": "196_163907291481283043",
+      "text": "Analysing",
+      "type": "YA"
+    },
+    {
+      "nodeID": "197_163907291481283043",
+      "text": "Nicole: AudienceMember 20210912QT03: Shouldn't they have brought it out",
+      "type": "L"
+    },
+    {
+      "nodeID": "198_163907291481283043",
+      "text": "Assertive Questioning",
+      "type": "YA"
+    },
+    {
+      "nodeID": "199_163907291481283043",
+      "text": "Default Transition",
+      "type": "TA"
+    },
+    {
+      "nodeID": "200_163907291481283043",
+      "text": "Default Inference",
+      "type": "RA"
+    },
+    {
+      "nodeID": "201_163907291481283043",
+      "text": "Arguing",
+      "type": "YA"
+    },
+    {
+      "nodeID": "202_163907291481283043",
+      "text": "it's just convenient political timing",
+      "type": "I"
+    },
+    {
+      "nodeID": "203_163907291481283043",
+      "text": "AudienceMember 20210912QT03: Just convenient political timing",
+      "type": "L"
+    },
+    {
+      "nodeID": "204_163907291481283043",
+      "text": "Analysing",
+      "type": "YA"
+    },
+    {
+      "nodeID": "205_163907291481283043",
+      "text": "Nicole: AudienceMember 20210912QT03: Just convenient political timing",
+      "type": "L"
+    },
+    {
+      "nodeID": "206_163907291481283043",
+      "text": "Asserting",
+      "type": "YA"
+    },
+    {
+      "nodeID": "207_163907291481283043",
+      "text": "Default Transition",
+      "type": "TA"
+    },
+    {
+      "nodeID": "208_163907291481283043",
+      "text": "that's assuming the media knew",
+      "type": "I"
+    },
+    {
+      "nodeID": "209_163907291481283043",
+      "text": "Fiona Bruce: That's assuming the media knew",
+      "type": "L"
+    },
+    {
+      "nodeID": "210_163907291481283043",
+      "text": "Analysing",
+      "type": "YA"
+    },
+    {
+      "nodeID": "211_163907291481283043",
+      "text": "Nicole: Fiona Bruce: That's assuming the media knew",
+      "type": "L"
+    },
+    {
+      "nodeID": "212_163907291481283043",
+      "text": "Asserting",
+      "type": "YA"
+    },
+    {
+      "nodeID": "213_163907291481283043",
+      "text": "Default Transition",
+      "type": "TA"
+    },
+    {
+      "nodeID": "214_163907291481283043",
+      "text": "Default Conflict",
+      "type": "CA"
+    },
+    {
+      "nodeID": "215_163907291481283043",
+      "text": "Disagreeing",
+      "type": "YA"
+    },
+    {
+      "nodeID": "216_163907291481283043",
+      "text": "Fiona Bruce certainly didn't know about it",
+      "type": "I"
+    },
+    {
+      "nodeID": "217_163907291481283043",
+      "text": "Fiona Bruce: I certainly didn't know about it",
+      "type": "L"
+    },
+    {
+      "nodeID": "218_163907291481283043",
+      "text": "Analysing",
+      "type": "YA"
+    },
+    {
+      "nodeID": "219_163907291481283043",
+      "text": "Nicole: Fiona Bruce: I certainly didn't know about it",
+      "type": "L"
+    },
+    {
+      "nodeID": "220_163907291481283043",
+      "text": "Asserting",
+      "type": "YA"
+    },
+    {
+      "nodeID": "221_163907291481283043",
+      "text": "Default Transition",
+      "type": "TA"
+    },
+    {
+      "nodeID": "222_163907291481283043",
+      "text": "Default Inference",
+      "type": "RA"
+    },
+    {
+      "nodeID": "223_163907291481283043",
+      "text": "Arguing",
+      "type": "YA"
+    },
+    {
+      "nodeID": "224_163907291481283043",
+      "text": "xxx is how Maggie Throup can say it is a rumour",
+      "type": "I"
+    },
+    {
+      "nodeID": "225_163907291481283043",
+      "text": "AudienceMember 20210912QT04: How can you say it is a rumour",
+      "type": "L"
+    },
+    {
+      "nodeID": "226_163907291481283043",
+      "text": "Analysing",
+      "type": "YA"
+    },
+    {
+      "nodeID": "227_163907291481283043",
+      "text": "Nicole: AudienceMember 20210912QT04: How can you say it is a rumour",
+      "type": "L"
+    },
+    {
+      "nodeID": "228_163907291481283043",
+      "text": "Pure Questioning",
+      "type": "YA"
+    },
+    {
+      "nodeID": "230_163907291481283043",
+      "text": "xxx would be making this up",
+      "type": "I"
+    },
+    {
+      "nodeID": "231_163907291481283043",
+      "text": "AudienceMember 20210912QT04: Who would be making this up",
+      "type": "L"
+    },
+    {
+      "nodeID": "232_163907291481283043",
+      "text": "Analysing",
+      "type": "YA"
+    },
+    {
+      "nodeID": "233_163907291481283043",
+      "text": "Nicole: AudienceMember 20210912QT04: Who would be making this up",
+      "type": "L"
+    },
+    {
+      "nodeID": "234_163907291481283043",
+      "text": "Pure Questioning",
+      "type": "YA"
+    },
+    {
+      "nodeID": "235_163907291481283043",
+      "text": "Default Transition",
+      "type": "TA"
+    },
+    {
+      "nodeID": "236_163907291481283043",
+      "text": "Default Rephrase",
+      "type": "MA"
+    },
+    {
+      "nodeID": "237_163907291481283043",
+      "text": "Restating",
+      "type": "YA"
+    },
+    {
+      "nodeID": "238_163907291481283043",
+      "text": "Default Rephrase",
+      "type": "MA"
+    },
+    {
+      "nodeID": "239_163907291481283043",
+      "text": "Default Transition",
+      "type": "TA"
+    },
+    {
+      "nodeID": "240_163907291481283043",
+      "text": "Restating",
+      "type": "YA"
+    },
+    {
+      "nodeID": "241_163907291481283043",
+      "text": "when Maggie Throup says it is a rumour, she means guidance was broken",
+      "type": "I"
+    },
+    {
+      "nodeID": "242_163907291481283043",
+      "text": "Maggie Throup: When I say it is a rumour, guidance was broken",
+      "type": "L"
+    },
+    {
+      "nodeID": "243_163907291481283043",
+      "text": "Analysing",
+      "type": "YA"
+    },
+    {
+      "nodeID": "244_163907291481283043",
+      "text": "Nicole: Maggie Throup: When I say it is a rumour, guidance was broken",
+      "type": "L"
+    },
+    {
+      "nodeID": "245_163907291481283043",
+      "text": "Asserting",
+      "type": "YA"
+    },
+    {
+      "nodeID": "246_163907291481283043",
+      "text": "Default Transition",
+      "type": "TA"
+    },
+    {
+      "nodeID": "247_163907291481283043",
+      "text": "Default Rephrase",
+      "type": "MA"
+    },
+    {
+      "nodeID": "248_163907291481283043",
+      "text": "Default Illocuting",
+      "type": "YA"
+    },
+    {
+      "nodeID": "249_163907291481283043",
+      "text": "the guidance was followed",
+      "type": "I"
+    },
+    {
+      "nodeID": "250_163907291481283043",
+      "text": "Maggie Throup: The guidance was followed",
+      "type": "L"
+    },
+    {
+      "nodeID": "251_163907291481283043",
+      "text": "Analysing",
+      "type": "YA"
+    },
+    {
+      "nodeID": "252_163907291481283043",
+      "text": "Nicole: Maggie Throup: The guidance was followed",
+      "type": "L"
+    },
+    {
+      "nodeID": "253_163907291481283043",
+      "text": "Asserting",
+      "type": "YA"
+    },
+    {
+      "nodeID": "254_163907291481283043",
+      "text": "Default Transition",
+      "type": "TA"
+    },
+    {
+      "nodeID": "255_163907291481283043",
+      "text": "Default Inference",
+      "type": "RA"
+    },
+    {
+      "nodeID": "256_163907291481283043",
+      "text": "Arguing",
+      "type": "YA"
+    },
+    {
+      "nodeID": "257_163907291481283043",
+      "text": "there can't have been a party if the guidance was followed",
+      "type": "I"
+    },
+    {
+      "nodeID": "258_163907291481283043",
+      "text": "Theo Paphitis: There can't have been a party if the guidance was followed",
+      "type": "L"
+    },
+    {
+      "nodeID": "259_163907291481283043",
+      "text": "Analysing",
+      "type": "YA"
+    },
+    {
+      "nodeID": "260_163907291481283043",
+      "text": "Nicole: Theo Paphitis: There can't have been a party if the guidance was followed",
+      "type": "L"
+    },
+    {
+      "nodeID": "261_163907291481283043",
+      "text": "Asserting",
+      "type": "YA"
+    },
+    {
+      "nodeID": "262_163907291481283043",
+      "text": "Default Transition",
+      "type": "TA"
+    },
+    {
+      "nodeID": "263_163907291481283043",
+      "text": "Default Conflict",
+      "type": "CA"
+    },
+    {
+      "nodeID": "264_163907291481283043",
+      "text": "Disagreeing",
+      "type": "YA"
+    },
+    {
+      "nodeID": "265_163907291481283043",
+      "text": "AudienceMember 20211209QT05 is afraid the prime minister has Maggie Throup in a little bubble",
+      "type": "I"
+    },
+    {
+      "nodeID": "266_163907291481283043",
+      "text": "AudienceMember 20210912QT05: I'm afraid your prime Minister has you in a little bubble",
+      "type": "L"
+    },
+    {
+      "nodeID": "267_163907291481283043",
+      "text": "Analysing",
+      "type": "YA"
+    },
+    {
+      "nodeID": "268_163907291481283043",
+      "text": "Nicole: AudienceMember 20210912QT05: I'm afraid your prime Minister has you in a little bubble",
+      "type": "L"
+    },
+    {
+      "nodeID": "269_163907291481283043",
+      "text": "Asserting",
+      "type": "YA"
+    },
+    {
+      "nodeID": "270_163907291481283043",
+      "text": "Default Transition",
+      "type": "TA"
+    },
+    {
+      "nodeID": "271_163907291481283043",
+      "text": "Maggie Throup has to say what she thinks the prime minister wants her to say",
+      "type": "I"
+    },
+    {
+      "nodeID": "272_163907291481283043",
+      "text": "AudienceMember 20210912QT05: you have to say what you think he wants you to say",
+      "type": "L"
+    },
+    {
+      "nodeID": "273_163907291481283043",
+      "text": "Analysing",
+      "type": "YA"
+    },
+    {
+      "nodeID": "274_163907291481283043",
+      "text": "Nicole: AudienceMember 20210912QT05: you have to say what you think he wants you to say",
+      "type": "L"
+    },
+    {
+      "nodeID": "275_163907291481283043",
+      "text": "Asserting",
+      "type": "YA"
+    },
+    {
+      "nodeID": "276_163907291481283043",
+      "text": "Default Transition",
+      "type": "TA"
+    },
+    {
+      "nodeID": "277_163907291481283043",
+      "text": "Default Inference",
+      "type": "RA"
+    },
+    {
+      "nodeID": "278_163907291481283043",
+      "text": "Arguing",
+      "type": "YA"
+    },
+    {
+      "nodeID": "279_163907291481283043",
+      "text": "Maggie Throup has to say what she thinks the prime minister wants her to say is not the case",
+      "type": "I"
+    },
+    {
+      "nodeID": "280_163907291481283043",
+      "text": "Maggie Throup: That's not the case",
+      "type": "L"
+    },
+    {
+      "nodeID": "281_163907291481283043",
+      "text": "Analysing",
+      "type": "YA"
+    },
+    {
+      "nodeID": "282_163907291481283043",
+      "text": "Nicole: Maggie Throup: That's not the case",
+      "type": "L"
+    },
+    {
+      "nodeID": "283_163907291481283043",
+      "text": "Asserting",
+      "type": "YA"
+    },
+    {
+      "nodeID": "284_163907291481283043",
+      "text": "Default Transition",
+      "type": "TA"
+    },
+    {
+      "nodeID": "285_163907291481283043",
+      "text": "Default Conflict",
+      "type": "CA"
+    },
+    {
+      "nodeID": "286_163907291481283043",
+      "text": "Disagreeing",
+      "type": "YA"
+    },
+    {
+      "nodeID": "287_163907291481283043",
+      "text": "Default Transition",
+      "type": "TA"
+    }
+  ],
+  "edges": [
+    {
+      "edgeID": 1,
+      "fromID": "4_163907291481283043",
+      "toID": "3_163907291481283043"
+    },
+    {
+      "edgeID": 2,
+      "fromID": "5_163907291481283043",
+      "toID": "4_163907291481283043"
+    },
+    {
+      "edgeID": 3,
+      "fromID": "3_163907291481283043",
+      "toID": "7_163907291481283043"
+    },
+    {
+      "edgeID": 4,
+      "fromID": "7_163907291481283043",
+      "toID": "2_163907291481283043"
+    },
+    {
+      "edgeID": 5,
+      "fromID": "16_163907291481283043",
+      "toID": "15_163907291481283043"
+    },
+    {
+      "edgeID": 6,
+      "fromID": "17_163907291481283043",
+      "toID": "16_163907291481283043"
+    },
+    {
+      "edgeID": 7,
+      "fromID": "15_163907291481283043",
+      "toID": "18_163907291481283043"
+    },
+    {
+      "edgeID": 8,
+      "fromID": "18_163907291481283043",
+      "toID": "14_163907291481283043"
+    },
+    {
+      "edgeID": 9,
+      "fromID": "21_163907291481283043",
+      "toID": "20_163907291481283043"
+    },
+    {
+      "edgeID": 10,
+      "fromID": "22_163907291481283043",
+      "toID": "21_163907291481283043"
+    },
+    {
+      "edgeID": 11,
+      "fromID": "20_163907291481283043",
+      "toID": "23_163907291481283043"
+    },
+    {
+      "edgeID": 12,
+      "fromID": "23_163907291481283043",
+      "toID": "19_163907291481283043"
+    },
+    {
+      "edgeID": 13,
+      "fromID": "3_163907291481283043",
+      "toID": "24_163907291481283043"
+    },
+    {
+      "edgeID": 14,
+      "fromID": "24_163907291481283043",
+      "toID": "20_163907291481283043"
+    },
+    {
+      "edgeID": 15,
+      "fromID": "19_163907291481283043",
+      "toID": "25_163907291481283043"
+    },
+    {
+      "edgeID": 16,
+      "fromID": "25_163907291481283043",
+      "toID": "2_163907291481283043"
+    },
+    {
+      "edgeID": 17,
+      "fromID": "24_163907291481283043",
+      "toID": "26_163907291481283043"
+    },
+    {
+      "edgeID": 18,
+      "fromID": "26_163907291481283043",
+      "toID": "25_163907291481283043"
+    },
+    {
+      "edgeID": 19,
+      "fromID": "3_163907291481283043",
+      "toID": "27_163907291481283043"
+    },
+    {
+      "edgeID": 20,
+      "fromID": "27_163907291481283043",
+      "toID": "15_163907291481283043"
+    },
+    {
+      "edgeID": 21,
+      "fromID": "14_163907291481283043",
+      "toID": "28_163907291481283043"
+    },
+    {
+      "edgeID": 22,
+      "fromID": "28_163907291481283043",
+      "toID": "2_163907291481283043"
+    },
+    {
+      "edgeID": 23,
+      "fromID": "27_163907291481283043",
+      "toID": "29_163907291481283043"
+    },
+    {
+      "edgeID": 24,
+      "fromID": "29_163907291481283043",
+      "toID": "28_163907291481283043"
+    },
+    {
+      "edgeID": 25,
+      "fromID": "32_163907291481283043",
+      "toID": "31_163907291481283043"
+    },
+    {
+      "edgeID": 26,
+      "fromID": "33_163907291481283043",
+      "toID": "32_163907291481283043"
+    },
+    {
+      "edgeID": 27,
+      "fromID": "31_163907291481283043",
+      "toID": "34_163907291481283043"
+    },
+    {
+      "edgeID": 28,
+      "fromID": "34_163907291481283043",
+      "toID": "30_163907291481283043"
+    },
+    {
+      "edgeID": 29,
+      "fromID": "20_163907291481283043",
+      "toID": "35_163907291481283043"
+    },
+    {
+      "edgeID": 30,
+      "fromID": "35_163907291481283043",
+      "toID": "31_163907291481283043"
+    },
+    {
+      "edgeID": 31,
+      "fromID": "30_163907291481283043",
+      "toID": "36_163907291481283043"
+    },
+    {
+      "edgeID": 32,
+      "fromID": "36_163907291481283043",
+      "toID": "19_163907291481283043"
+    },
+    {
+      "edgeID": 33,
+      "fromID": "35_163907291481283043",
+      "toID": "37_163907291481283043"
+    },
+    {
+      "edgeID": 34,
+      "fromID": "37_163907291481283043",
+      "toID": "36_163907291481283043"
+    },
+    {
+      "edgeID": 35,
+      "fromID": "40_163907291481283043",
+      "toID": "39_163907291481283043"
+    },
+    {
+      "edgeID": 36,
+      "fromID": "41_163907291481283043",
+      "toID": "40_163907291481283043"
+    },
+    {
+      "edgeID": 37,
+      "fromID": "39_163907291481283043",
+      "toID": "42_163907291481283043"
+    },
+    {
+      "edgeID": 38,
+      "fromID": "42_163907291481283043",
+      "toID": "38_163907291481283043"
+    },
+    {
+      "edgeID": 39,
+      "fromID": "31_163907291481283043",
+      "toID": "43_163907291481283043"
+    },
+    {
+      "edgeID": 40,
+      "fromID": "43_163907291481283043",
+      "toID": "39_163907291481283043"
+    },
+    {
+      "edgeID": 41,
+      "fromID": "38_163907291481283043",
+      "toID": "44_163907291481283043"
+    },
+    {
+      "edgeID": 42,
+      "fromID": "44_163907291481283043",
+      "toID": "30_163907291481283043"
+    },
+    {
+      "edgeID": 43,
+      "fromID": "43_163907291481283043",
+      "toID": "45_163907291481283043"
+    },
+    {
+      "edgeID": 44,
+      "fromID": "45_163907291481283043",
+      "toID": "44_163907291481283043"
+    },
+    {
+      "edgeID": 45,
+      "fromID": "49_163907291481283043",
+      "toID": "48_163907291481283043"
+    },
+    {
+      "edgeID": 46,
+      "fromID": "50_163907291481283043",
+      "toID": "49_163907291481283043"
+    },
+    {
+      "edgeID": 47,
+      "fromID": "48_163907291481283043",
+      "toID": "51_163907291481283043"
+    },
+    {
+      "edgeID": 48,
+      "fromID": "51_163907291481283043",
+      "toID": "47_163907291481283043"
+    },
+    {
+      "edgeID": 49,
+      "fromID": "39_163907291481283043",
+      "toID": "52_163907291481283043"
+    },
+    {
+      "edgeID": 50,
+      "fromID": "52_163907291481283043",
+      "toID": "48_163907291481283043"
+    },
+    {
+      "edgeID": 51,
+      "fromID": "55_163907291481283043",
+      "toID": "54_163907291481283043"
+    },
+    {
+      "edgeID": 52,
+      "fromID": "56_163907291481283043",
+      "toID": "55_163907291481283043"
+    },
+    {
+      "edgeID": 53,
+      "fromID": "54_163907291481283043",
+      "toID": "57_163907291481283043"
+    },
+    {
+      "edgeID": 54,
+      "fromID": "57_163907291481283043",
+      "toID": "53_163907291481283043"
+    },
+    {
+      "edgeID": 55,
+      "fromID": "48_163907291481283043",
+      "toID": "58_163907291481283043"
+    },
+    {
+      "edgeID": 56,
+      "fromID": "58_163907291481283043",
+      "toID": "54_163907291481283043"
+    },
+    {
+      "edgeID": 57,
+      "fromID": "70_163907291481283043",
+      "toID": "69_163907291481283043"
+    },
+    {
+      "edgeID": 58,
+      "fromID": "71_163907291481283043",
+      "toID": "70_163907291481283043"
+    },
+    {
+      "edgeID": 59,
+      "fromID": "69_163907291481283043",
+      "toID": "72_163907291481283043"
+    },
+    {
+      "edgeID": 60,
+      "fromID": "72_163907291481283043",
+      "toID": "68_163907291481283043"
+    },
+    {
+      "edgeID": 61,
+      "fromID": "78_163907291481283043",
+      "toID": "77_163907291481283043"
+    },
+    {
+      "edgeID": 62,
+      "fromID": "79_163907291481283043",
+      "toID": "78_163907291481283043"
+    },
+    {
+      "edgeID": 63,
+      "fromID": "77_163907291481283043",
+      "toID": "80_163907291481283043"
+    },
+    {
+      "edgeID": 64,
+      "fromID": "80_163907291481283043",
+      "toID": "76_163907291481283043"
+    },
+    {
+      "edgeID": 65,
+      "fromID": "69_163907291481283043",
+      "toID": "81_163907291481283043"
+    },
+    {
+      "edgeID": 66,
+      "fromID": "81_163907291481283043",
+      "toID": "77_163907291481283043"
+    },
+    {
+      "edgeID": 67,
+      "fromID": "76_163907291481283043",
+      "toID": "82_163907291481283043"
+    },
+    {
+      "edgeID": 68,
+      "fromID": "82_163907291481283043",
+      "toID": "68_163907291481283043"
+    },
+    {
+      "edgeID": 69,
+      "fromID": "81_163907291481283043",
+      "toID": "83_163907291481283043"
+    },
+    {
+      "edgeID": 70,
+      "fromID": "83_163907291481283043",
+      "toID": "82_163907291481283043"
+    },
+    {
+      "edgeID": 71,
+      "fromID": "86_163907291481283043",
+      "toID": "85_163907291481283043"
+    },
+    {
+      "edgeID": 72,
+      "fromID": "87_163907291481283043",
+      "toID": "86_163907291481283043"
+    },
+    {
+      "edgeID": 73,
+      "fromID": "85_163907291481283043",
+      "toID": "88_163907291481283043"
+    },
+    {
+      "edgeID": 74,
+      "fromID": "88_163907291481283043",
+      "toID": "84_163907291481283043"
+    },
+    {
+      "edgeID": 75,
+      "fromID": "77_163907291481283043",
+      "toID": "89_163907291481283043"
+    },
+    {
+      "edgeID": 76,
+      "fromID": "89_163907291481283043",
+      "toID": "85_163907291481283043"
+    },
+    {
+      "edgeID": 77,
+      "fromID": "84_163907291481283043",
+      "toID": "90_163907291481283043"
+    },
+    {
+      "edgeID": 78,
+      "fromID": "90_163907291481283043",
+      "toID": "76_163907291481283043"
+    },
+    {
+      "edgeID": 79,
+      "fromID": "89_163907291481283043",
+      "toID": "91_163907291481283043"
+    },
+    {
+      "edgeID": 80,
+      "fromID": "91_163907291481283043",
+      "toID": "90_163907291481283043"
+    },
+    {
+      "edgeID": 81,
+      "fromID": "94_163907291481283043",
+      "toID": "93_163907291481283043"
+    },
+    {
+      "edgeID": 82,
+      "fromID": "95_163907291481283043",
+      "toID": "94_163907291481283043"
+    },
+    {
+      "edgeID": 83,
+      "fromID": "93_163907291481283043",
+      "toID": "96_163907291481283043"
+    },
+    {
+      "edgeID": 84,
+      "fromID": "96_163907291481283043",
+      "toID": "92_163907291481283043"
+    },
+    {
+      "edgeID": 85,
+      "fromID": "85_163907291481283043",
+      "toID": "97_163907291481283043"
+    },
+    {
+      "edgeID": 86,
+      "fromID": "97_163907291481283043",
+      "toID": "93_163907291481283043"
+    },
+    {
+      "edgeID": 87,
+      "fromID": "100_163907291481283043",
+      "toID": "99_163907291481283043"
+    },
+    {
+      "edgeID": 88,
+      "fromID": "101_163907291481283043",
+      "toID": "100_163907291481283043"
+    },
+    {
+      "edgeID": 89,
+      "fromID": "99_163907291481283043",
+      "toID": "102_163907291481283043"
+    },
+    {
+      "edgeID": 90,
+      "fromID": "102_163907291481283043",
+      "toID": "98_163907291481283043"
+    },
+    {
+      "edgeID": 91,
+      "fromID": "93_163907291481283043",
+      "toID": "103_163907291481283043"
+    },
+    {
+      "edgeID": 92,
+      "fromID": "103_163907291481283043",
+      "toID": "99_163907291481283043"
+    },
+    {
+      "edgeID": 93,
+      "fromID": "98_163907291481283043",
+      "toID": "104_163907291481283043"
+    },
+    {
+      "edgeID": 94,
+      "fromID": "104_163907291481283043",
+      "toID": "92_163907291481283043"
+    },
+    {
+      "edgeID": 95,
+      "fromID": "103_163907291481283043",
+      "toID": "105_163907291481283043"
+    },
+    {
+      "edgeID": 96,
+      "fromID": "105_163907291481283043",
+      "toID": "104_163907291481283043"
+    },
+    {
+      "edgeID": 97,
+      "fromID": "92_163907291481283043",
+      "toID": "106_163907291481283043"
+    },
+    {
+      "edgeID": 98,
+      "fromID": "106_163907291481283043",
+      "toID": "84_163907291481283043"
+    },
+    {
+      "edgeID": 99,
+      "fromID": "97_163907291481283043",
+      "toID": "107_163907291481283043"
+    },
+    {
+      "edgeID": 100,
+      "fromID": "107_163907291481283043",
+      "toID": "106_163907291481283043"
+    },
+    {
+      "edgeID": 101,
+      "fromID": "110_163907291481283043",
+      "toID": "109_163907291481283043"
+    },
+    {
+      "edgeID": 102,
+      "fromID": "111_163907291481283043",
+      "toID": "110_163907291481283043"
+    },
+    {
+      "edgeID": 103,
+      "fromID": "109_163907291481283043",
+      "toID": "112_163907291481283043"
+    },
+    {
+      "edgeID": 104,
+      "fromID": "112_163907291481283043",
+      "toID": "108_163907291481283043"
+    },
+    {
+      "edgeID": 105,
+      "fromID": "93_163907291481283043",
+      "toID": "113_163907291481283043"
+    },
+    {
+      "edgeID": 106,
+      "fromID": "113_163907291481283043",
+      "toID": "109_163907291481283043"
+    },
+    {
+      "edgeID": 107,
+      "fromID": "108_163907291481283043",
+      "toID": "114_163907291481283043"
+    },
+    {
+      "edgeID": 108,
+      "fromID": "114_163907291481283043",
+      "toID": "92_163907291481283043"
+    },
+    {
+      "edgeID": 109,
+      "fromID": "113_163907291481283043",
+      "toID": "115_163907291481283043"
+    },
+    {
+      "edgeID": 110,
+      "fromID": "115_163907291481283043",
+      "toID": "114_163907291481283043"
+    },
+    {
+      "edgeID": 111,
+      "fromID": "119_163907291481283043",
+      "toID": "118_163907291481283043"
+    },
+    {
+      "edgeID": 112,
+      "fromID": "120_163907291481283043",
+      "toID": "119_163907291481283043"
+    },
+    {
+      "edgeID": 113,
+      "fromID": "118_163907291481283043",
+      "toID": "121_163907291481283043"
+    },
+    {
+      "edgeID": 114,
+      "fromID": "121_163907291481283043",
+      "toID": "117_163907291481283043"
+    },
+    {
+      "edgeID": 115,
+      "fromID": "109_163907291481283043",
+      "toID": "122_163907291481283043"
+    },
+    {
+      "edgeID": 116,
+      "fromID": "122_163907291481283043",
+      "toID": "118_163907291481283043"
+    },
+    {
+      "edgeID": 117,
+      "fromID": "117_163907291481283043",
+      "toID": "123_163907291481283043"
+    },
+    {
+      "edgeID": 118,
+      "fromID": "123_163907291481283043",
+      "toID": "108_163907291481283043"
+    },
+    {
+      "edgeID": 119,
+      "fromID": "122_163907291481283043",
+      "toID": "124_163907291481283043"
+    },
+    {
+      "edgeID": 120,
+      "fromID": "124_163907291481283043",
+      "toID": "123_163907291481283043"
+    },
+    {
+      "edgeID": 121,
+      "fromID": "127_163907291481283043",
+      "toID": "126_163907291481283043"
+    },
+    {
+      "edgeID": 122,
+      "fromID": "128_163907291481283043",
+      "toID": "127_163907291481283043"
+    },
+    {
+      "edgeID": 123,
+      "fromID": "126_163907291481283043",
+      "toID": "129_163907291481283043"
+    },
+    {
+      "edgeID": 124,
+      "fromID": "129_163907291481283043",
+      "toID": "125_163907291481283043"
+    },
+    {
+      "edgeID": 125,
+      "fromID": "118_163907291481283043",
+      "toID": "130_163907291481283043"
+    },
+    {
+      "edgeID": 126,
+      "fromID": "130_163907291481283043",
+      "toID": "126_163907291481283043"
+    },
+    {
+      "edgeID": 127,
+      "fromID": "125_163907291481283043",
+      "toID": "131_163907291481283043"
+    },
+    {
+      "edgeID": 128,
+      "fromID": "131_163907291481283043",
+      "toID": "117_163907291481283043"
+    },
+    {
+      "edgeID": 129,
+      "fromID": "130_163907291481283043",
+      "toID": "132_163907291481283043"
+    },
+    {
+      "edgeID": 130,
+      "fromID": "132_163907291481283043",
+      "toID": "131_163907291481283043"
+    },
+    {
+      "edgeID": 131,
+      "fromID": "135_163907291481283043",
+      "toID": "134_163907291481283043"
+    },
+    {
+      "edgeID": 132,
+      "fromID": "136_163907291481283043",
+      "toID": "135_163907291481283043"
+    },
+    {
+      "edgeID": 133,
+      "fromID": "134_163907291481283043",
+      "toID": "137_163907291481283043"
+    },
+    {
+      "edgeID": 134,
+      "fromID": "137_163907291481283043",
+      "toID": "133_163907291481283043"
+    },
+    {
+      "edgeID": 135,
+      "fromID": "85_163907291481283043",
+      "toID": "138_163907291481283043"
+    },
+    {
+      "edgeID": 136,
+      "fromID": "138_163907291481283043",
+      "toID": "134_163907291481283043"
+    },
+    {
+      "edgeID": 137,
+      "fromID": "133_163907291481283043",
+      "toID": "139_163907291481283043"
+    },
+    {
+      "edgeID": 138,
+      "fromID": "139_163907291481283043",
+      "toID": "84_163907291481283043"
+    },
+    {
+      "edgeID": 139,
+      "fromID": "138_163907291481283043",
+      "toID": "140_163907291481283043"
+    },
+    {
+      "edgeID": 140,
+      "fromID": "140_163907291481283043",
+      "toID": "139_163907291481283043"
+    },
+    {
+      "edgeID": 141,
+      "fromID": "143_163907291481283043",
+      "toID": "142_163907291481283043"
+    },
+    {
+      "edgeID": 142,
+      "fromID": "144_163907291481283043",
+      "toID": "143_163907291481283043"
+    },
+    {
+      "edgeID": 143,
+      "fromID": "142_163907291481283043",
+      "toID": "145_163907291481283043"
+    },
+    {
+      "edgeID": 144,
+      "fromID": "145_163907291481283043",
+      "toID": "141_163907291481283043"
+    },
+    {
+      "edgeID": 145,
+      "fromID": "134_163907291481283043",
+      "toID": "146_163907291481283043"
+    },
+    {
+      "edgeID": 146,
+      "fromID": "146_163907291481283043",
+      "toID": "142_163907291481283043"
+    },
+    {
+      "edgeID": 147,
+      "fromID": "141_163907291481283043",
+      "toID": "147_163907291481283043"
+    },
+    {
+      "edgeID": 148,
+      "fromID": "147_163907291481283043",
+      "toID": "133_163907291481283043"
+    },
+    {
+      "edgeID": 149,
+      "fromID": "146_163907291481283043",
+      "toID": "148_163907291481283043"
+    },
+    {
+      "edgeID": 150,
+      "fromID": "148_163907291481283043",
+      "toID": "147_163907291481283043"
+    },
+    {
+      "edgeID": 151,
+      "fromID": "151_163907291481283043",
+      "toID": "150_163907291481283043"
+    },
+    {
+      "edgeID": 152,
+      "fromID": "152_163907291481283043",
+      "toID": "151_163907291481283043"
+    },
+    {
+      "edgeID": 153,
+      "fromID": "150_163907291481283043",
+      "toID": "153_163907291481283043"
+    },
+    {
+      "edgeID": 154,
+      "fromID": "153_163907291481283043",
+      "toID": "149_163907291481283043"
+    },
+    {
+      "edgeID": 155,
+      "fromID": "31_163907291481283043",
+      "toID": "154_163907291481283043"
+    },
+    {
+      "edgeID": 156,
+      "fromID": "154_163907291481283043",
+      "toID": "150_163907291481283043"
+    },
+    {
+      "edgeID": 157,
+      "fromID": "149_163907291481283043",
+      "toID": "155_163907291481283043"
+    },
+    {
+      "edgeID": 158,
+      "fromID": "155_163907291481283043",
+      "toID": "30_163907291481283043"
+    },
+    {
+      "edgeID": 159,
+      "fromID": "154_163907291481283043",
+      "toID": "156_163907291481283043"
+    },
+    {
+      "edgeID": 160,
+      "fromID": "156_163907291481283043",
+      "toID": "155_163907291481283043"
+    },
+    {
+      "edgeID": 161,
+      "fromID": "159_163907291481283043",
+      "toID": "158_163907291481283043"
+    },
+    {
+      "edgeID": 162,
+      "fromID": "160_163907291481283043",
+      "toID": "159_163907291481283043"
+    },
+    {
+      "edgeID": 163,
+      "fromID": "158_163907291481283043",
+      "toID": "161_163907291481283043"
+    },
+    {
+      "edgeID": 164,
+      "fromID": "161_163907291481283043",
+      "toID": "157_163907291481283043"
+    },
+    {
+      "edgeID": 165,
+      "fromID": "150_163907291481283043",
+      "toID": "162_163907291481283043"
+    },
+    {
+      "edgeID": 166,
+      "fromID": "162_163907291481283043",
+      "toID": "158_163907291481283043"
+    },
+    {
+      "edgeID": 167,
+      "fromID": "157_163907291481283043",
+      "toID": "163_163907291481283043"
+    },
+    {
+      "edgeID": 168,
+      "fromID": "163_163907291481283043",
+      "toID": "149_163907291481283043"
+    },
+    {
+      "edgeID": 169,
+      "fromID": "162_163907291481283043",
+      "toID": "164_163907291481283043"
+    },
+    {
+      "edgeID": 170,
+      "fromID": "164_163907291481283043",
+      "toID": "163_163907291481283043"
+    },
+    {
+      "edgeID": 171,
+      "fromID": "167_163907291481283043",
+      "toID": "166_163907291481283043"
+    },
+    {
+      "edgeID": 172,
+      "fromID": "168_163907291481283043",
+      "toID": "167_163907291481283043"
+    },
+    {
+      "edgeID": 173,
+      "fromID": "166_163907291481283043",
+      "toID": "169_163907291481283043"
+    },
+    {
+      "edgeID": 174,
+      "fromID": "169_163907291481283043",
+      "toID": "165_163907291481283043"
+    },
+    {
+      "edgeID": 175,
+      "fromID": "158_163907291481283043",
+      "toID": "170_163907291481283043"
+    },
+    {
+      "edgeID": 176,
+      "fromID": "170_163907291481283043",
+      "toID": "166_163907291481283043"
+    },
+    {
+      "edgeID": 177,
+      "fromID": "157_163907291481283043",
+      "toID": "171_163907291481283043"
+    },
+    {
+      "edgeID": 178,
+      "fromID": "171_163907291481283043",
+      "toID": "165_163907291481283043"
+    },
+    {
+      "edgeID": 179,
+      "fromID": "170_163907291481283043",
+      "toID": "172_163907291481283043"
+    },
+    {
+      "edgeID": 180,
+      "fromID": "172_163907291481283043",
+      "toID": "171_163907291481283043"
+    },
+    {
+      "edgeID": 181,
+      "fromID": "175_163907291481283043",
+      "toID": "174_163907291481283043"
+    },
+    {
+      "edgeID": 182,
+      "fromID": "176_163907291481283043",
+      "toID": "175_163907291481283043"
+    },
+    {
+      "edgeID": 183,
+      "fromID": "174_163907291481283043",
+      "toID": "177_163907291481283043"
+    },
+    {
+      "edgeID": 184,
+      "fromID": "177_163907291481283043",
+      "toID": "173_163907291481283043"
+    },
+    {
+      "edgeID": 185,
+      "fromID": "142_163907291481283043",
+      "toID": "178_163907291481283043"
+    },
+    {
+      "edgeID": 186,
+      "fromID": "178_163907291481283043",
+      "toID": "174_163907291481283043"
+    },
+    {
+      "edgeID": 187,
+      "fromID": "173_163907291481283043",
+      "toID": "179_163907291481283043"
+    },
+    {
+      "edgeID": 188,
+      "fromID": "179_163907291481283043",
+      "toID": "141_163907291481283043"
+    },
+    {
+      "edgeID": 189,
+      "fromID": "178_163907291481283043",
+      "toID": "180_163907291481283043"
+    },
+    {
+      "edgeID": 190,
+      "fromID": "180_163907291481283043",
+      "toID": "179_163907291481283043"
+    },
+    {
+      "edgeID": 191,
+      "fromID": "183_163907291481283043",
+      "toID": "182_163907291481283043"
+    },
+    {
+      "edgeID": 192,
+      "fromID": "184_163907291481283043",
+      "toID": "183_163907291481283043"
+    },
+    {
+      "edgeID": 193,
+      "fromID": "182_163907291481283043",
+      "toID": "185_163907291481283043"
+    },
+    {
+      "edgeID": 194,
+      "fromID": "185_163907291481283043",
+      "toID": "181_163907291481283043"
+    },
+    {
+      "edgeID": 195,
+      "fromID": "174_163907291481283043",
+      "toID": "186_163907291481283043"
+    },
+    {
+      "edgeID": 196,
+      "fromID": "186_163907291481283043",
+      "toID": "182_163907291481283043"
+    },
+    {
+      "edgeID": 197,
+      "fromID": "189_163907291481283043",
+      "toID": "188_163907291481283043"
+    },
+    {
+      "edgeID": 198,
+      "fromID": "190_163907291481283043",
+      "toID": "189_163907291481283043"
+    },
+    {
+      "edgeID": 199,
+      "fromID": "188_163907291481283043",
+      "toID": "191_163907291481283043"
+    },
+    {
+      "edgeID": 200,
+      "fromID": "191_163907291481283043",
+      "toID": "187_163907291481283043"
+    },
+    {
+      "edgeID": 201,
+      "fromID": "182_163907291481283043",
+      "toID": "192_163907291481283043"
+    },
+    {
+      "edgeID": 202,
+      "fromID": "192_163907291481283043",
+      "toID": "188_163907291481283043"
+    },
+    {
+      "edgeID": 203,
+      "fromID": "196_163907291481283043",
+      "toID": "195_163907291481283043"
+    },
+    {
+      "edgeID": 204,
+      "fromID": "197_163907291481283043",
+      "toID": "196_163907291481283043"
+    },
+    {
+      "edgeID": 205,
+      "fromID": "195_163907291481283043",
+      "toID": "198_163907291481283043"
+    },
+    {
+      "edgeID": 206,
+      "fromID": "198_163907291481283043",
+      "toID": "194_163907291481283043"
+    },
+    {
+      "edgeID": 207,
+      "fromID": "188_163907291481283043",
+      "toID": "199_163907291481283043"
+    },
+    {
+      "edgeID": 208,
+      "fromID": "199_163907291481283043",
+      "toID": "195_163907291481283043"
+    },
+    {
+      "edgeID": 209,
+      "fromID": "187_163907291481283043",
+      "toID": "200_163907291481283043"
+    },
+    {
+      "edgeID": 210,
+      "fromID": "200_163907291481283043",
+      "toID": "194_163907291481283043"
+    },
+    {
+      "edgeID": 211,
+      "fromID": "199_163907291481283043",
+      "toID": "201_163907291481283043"
+    },
+    {
+      "edgeID": 212,
+      "fromID": "201_163907291481283043",
+      "toID": "200_163907291481283043"
+    },
+    {
+      "edgeID": 213,
+      "fromID": "204_163907291481283043",
+      "toID": "203_163907291481283043"
+    },
+    {
+      "edgeID": 214,
+      "fromID": "205_163907291481283043",
+      "toID": "204_163907291481283043"
+    },
+    {
+      "edgeID": 215,
+      "fromID": "203_163907291481283043",
+      "toID": "206_163907291481283043"
+    },
+    {
+      "edgeID": 216,
+      "fromID": "206_163907291481283043",
+      "toID": "202_163907291481283043"
+    },
+    {
+      "edgeID": 217,
+      "fromID": "195_163907291481283043",
+      "toID": "207_163907291481283043"
+    },
+    {
+      "edgeID": 218,
+      "fromID": "207_163907291481283043",
+      "toID": "203_163907291481283043"
+    },
+    {
+      "edgeID": 219,
+      "fromID": "210_163907291481283043",
+      "toID": "209_163907291481283043"
+    },
+    {
+      "edgeID": 220,
+      "fromID": "211_163907291481283043",
+      "toID": "210_163907291481283043"
+    },
+    {
+      "edgeID": 221,
+      "fromID": "209_163907291481283043",
+      "toID": "212_163907291481283043"
+    },
+    {
+      "edgeID": 222,
+      "fromID": "212_163907291481283043",
+      "toID": "208_163907291481283043"
+    },
+    {
+      "edgeID": 223,
+      "fromID": "195_163907291481283043",
+      "toID": "213_163907291481283043"
+    },
+    {
+      "edgeID": 224,
+      "fromID": "213_163907291481283043",
+      "toID": "209_163907291481283043"
+    },
+    {
+      "edgeID": 225,
+      "fromID": "208_163907291481283043",
+      "toID": "214_163907291481283043"
+    },
+    {
+      "edgeID": 226,
+      "fromID": "214_163907291481283043",
+      "toID": "194_163907291481283043"
+    },
+    {
+      "edgeID": 227,
+      "fromID": "213_163907291481283043",
+      "toID": "215_163907291481283043"
+    },
+    {
+      "edgeID": 228,
+      "fromID": "215_163907291481283043",
+      "toID": "214_163907291481283043"
+    },
+    {
+      "edgeID": 229,
+      "fromID": "218_163907291481283043",
+      "toID": "217_163907291481283043"
+    },
+    {
+      "edgeID": 230,
+      "fromID": "219_163907291481283043",
+      "toID": "218_163907291481283043"
+    },
+    {
+      "edgeID": 231,
+      "fromID": "217_163907291481283043",
+      "toID": "220_163907291481283043"
+    },
+    {
+      "edgeID": 232,
+      "fromID": "220_163907291481283043",
+      "toID": "216_163907291481283043"
+    },
+    {
+      "edgeID": 233,
+      "fromID": "209_163907291481283043",
+      "toID": "221_163907291481283043"
+    },
+    {
+      "edgeID": 234,
+      "fromID": "221_163907291481283043",
+      "toID": "217_163907291481283043"
+    },
+    {
+      "edgeID": 235,
+      "fromID": "216_163907291481283043",
+      "toID": "222_163907291481283043"
+    },
+    {
+      "edgeID": 236,
+      "fromID": "222_163907291481283043",
+      "toID": "208_163907291481283043"
+    },
+    {
+      "edgeID": 237,
+      "fromID": "221_163907291481283043",
+      "toID": "223_163907291481283043"
+    },
+    {
+      "edgeID": 238,
+      "fromID": "223_163907291481283043",
+      "toID": "222_163907291481283043"
+    },
+    {
+      "edgeID": 239,
+      "fromID": "226_163907291481283043",
+      "toID": "225_163907291481283043"
+    },
+    {
+      "edgeID": 240,
+      "fromID": "227_163907291481283043",
+      "toID": "226_163907291481283043"
+    },
+    {
+      "edgeID": 241,
+      "fromID": "225_163907291481283043",
+      "toID": "228_163907291481283043"
+    },
+    {
+      "edgeID": 242,
+      "fromID": "228_163907291481283043",
+      "toID": "224_163907291481283043"
+    },
+    {
+      "edgeID": 243,
+      "fromID": "232_163907291481283043",
+      "toID": "231_163907291481283043"
+    },
+    {
+      "edgeID": 244,
+      "fromID": "233_163907291481283043",
+      "toID": "232_163907291481283043"
+    },
+    {
+      "edgeID": 245,
+      "fromID": "231_163907291481283043",
+      "toID": "234_163907291481283043"
+    },
+    {
+      "edgeID": 246,
+      "fromID": "234_163907291481283043",
+      "toID": "230_163907291481283043"
+    },
+    {
+      "edgeID": 247,
+      "fromID": "225_163907291481283043",
+      "toID": "235_163907291481283043"
+    },
+    {
+      "edgeID": 248,
+      "fromID": "235_163907291481283043",
+      "toID": "231_163907291481283043"
+    },
+    {
+      "edgeID": 249,
+      "fromID": "230_163907291481283043",
+      "toID": "236_163907291481283043"
+    },
+    {
+      "edgeID": 250,
+      "fromID": "236_163907291481283043",
+      "toID": "224_163907291481283043"
+    },
+    {
+      "edgeID": 251,
+      "fromID": "235_163907291481283043",
+      "toID": "237_163907291481283043"
+    },
+    {
+      "edgeID": 252,
+      "fromID": "237_163907291481283043",
+      "toID": "236_163907291481283043"
+    },
+    {
+      "edgeID": 253,
+      "fromID": "224_163907291481283043",
+      "toID": "238_163907291481283043"
+    },
+    {
+      "edgeID": 254,
+      "fromID": "238_163907291481283043",
+      "toID": "125_163907291481283043"
+    },
+    {
+      "edgeID": 255,
+      "fromID": "126_163907291481283043",
+      "toID": "239_163907291481283043"
+    },
+    {
+      "edgeID": 256,
+      "fromID": "239_163907291481283043",
+      "toID": "225_163907291481283043"
+    },
+    {
+      "edgeID": 257,
+      "fromID": "239_163907291481283043",
+      "toID": "240_163907291481283043"
+    },
+    {
+      "edgeID": 258,
+      "fromID": "240_163907291481283043",
+      "toID": "238_163907291481283043"
+    },
+    {
+      "edgeID": 259,
+      "fromID": "243_163907291481283043",
+      "toID": "242_163907291481283043"
+    },
+    {
+      "edgeID": 260,
+      "fromID": "244_163907291481283043",
+      "toID": "243_163907291481283043"
+    },
+    {
+      "edgeID": 261,
+      "fromID": "242_163907291481283043",
+      "toID": "245_163907291481283043"
+    },
+    {
+      "edgeID": 262,
+      "fromID": "245_163907291481283043",
+      "toID": "241_163907291481283043"
+    },
+    {
+      "edgeID": 263,
+      "fromID": "225_163907291481283043",
+      "toID": "246_163907291481283043"
+    },
+    {
+      "edgeID": 264,
+      "fromID": "246_163907291481283043",
+      "toID": "242_163907291481283043"
+    },
+    {
+      "edgeID": 265,
+      "fromID": "241_163907291481283043",
+      "toID": "247_163907291481283043"
+    },
+    {
+      "edgeID": 266,
+      "fromID": "247_163907291481283043",
+      "toID": "224_163907291481283043"
+    },
+    {
+      "edgeID": 267,
+      "fromID": "246_163907291481283043",
+      "toID": "248_163907291481283043"
+    },
+    {
+      "edgeID": 268,
+      "fromID": "248_163907291481283043",
+      "toID": "247_163907291481283043"
+    },
+    {
+      "edgeID": 269,
+      "fromID": "251_163907291481283043",
+      "toID": "250_163907291481283043"
+    },
+    {
+      "edgeID": 270,
+      "fromID": "252_163907291481283043",
+      "toID": "251_163907291481283043"
+    },
+    {
+      "edgeID": 271,
+      "fromID": "250_163907291481283043",
+      "toID": "253_163907291481283043"
+    },
+    {
+      "edgeID": 272,
+      "fromID": "253_163907291481283043",
+      "toID": "249_163907291481283043"
+    },
+    {
+      "edgeID": 273,
+      "fromID": "242_163907291481283043",
+      "toID": "254_163907291481283043"
+    },
+    {
+      "edgeID": 274,
+      "fromID": "254_163907291481283043",
+      "toID": "250_163907291481283043"
+    },
+    {
+      "edgeID": 275,
+      "fromID": "249_163907291481283043",
+      "toID": "255_163907291481283043"
+    },
+    {
+      "edgeID": 276,
+      "fromID": "255_163907291481283043",
+      "toID": "241_163907291481283043"
+    },
+    {
+      "edgeID": 277,
+      "fromID": "254_163907291481283043",
+      "toID": "256_163907291481283043"
+    },
+    {
+      "edgeID": 278,
+      "fromID": "256_163907291481283043",
+      "toID": "255_163907291481283043"
+    },
+    {
+      "edgeID": 279,
+      "fromID": "259_163907291481283043",
+      "toID": "258_163907291481283043"
+    },
+    {
+      "edgeID": 280,
+      "fromID": "260_163907291481283043",
+      "toID": "259_163907291481283043"
+    },
+    {
+      "edgeID": 281,
+      "fromID": "258_163907291481283043",
+      "toID": "261_163907291481283043"
+    },
+    {
+      "edgeID": 282,
+      "fromID": "261_163907291481283043",
+      "toID": "257_163907291481283043"
+    },
+    {
+      "edgeID": 283,
+      "fromID": "250_163907291481283043",
+      "toID": "262_163907291481283043"
+    },
+    {
+      "edgeID": 284,
+      "fromID": "262_163907291481283043",
+      "toID": "258_163907291481283043"
+    },
+    {
+      "edgeID": 285,
+      "fromID": "257_163907291481283043",
+      "toID": "263_163907291481283043"
+    },
+    {
+      "edgeID": 286,
+      "fromID": "263_163907291481283043",
+      "toID": "249_163907291481283043"
+    },
+    {
+      "edgeID": 287,
+      "fromID": "262_163907291481283043",
+      "toID": "264_163907291481283043"
+    },
+    {
+      "edgeID": 288,
+      "fromID": "264_163907291481283043",
+      "toID": "263_163907291481283043"
+    },
+    {
+      "edgeID": 289,
+      "fromID": "267_163907291481283043",
+      "toID": "266_163907291481283043"
+    },
+    {
+      "edgeID": 290,
+      "fromID": "268_163907291481283043",
+      "toID": "267_163907291481283043"
+    },
+    {
+      "edgeID": 291,
+      "fromID": "266_163907291481283043",
+      "toID": "269_163907291481283043"
+    },
+    {
+      "edgeID": 292,
+      "fromID": "269_163907291481283043",
+      "toID": "265_163907291481283043"
+    },
+    {
+      "edgeID": 293,
+      "fromID": "258_163907291481283043",
+      "toID": "270_163907291481283043"
+    },
+    {
+      "edgeID": 294,
+      "fromID": "270_163907291481283043",
+      "toID": "266_163907291481283043"
+    },
+    {
+      "edgeID": 295,
+      "fromID": "273_163907291481283043",
+      "toID": "272_163907291481283043"
+    },
+    {
+      "edgeID": 296,
+      "fromID": "274_163907291481283043",
+      "toID": "273_163907291481283043"
+    },
+    {
+      "edgeID": 297,
+      "fromID": "272_163907291481283043",
+      "toID": "275_163907291481283043"
+    },
+    {
+      "edgeID": 298,
+      "fromID": "275_163907291481283043",
+      "toID": "271_163907291481283043"
+    },
+    {
+      "edgeID": 299,
+      "fromID": "266_163907291481283043",
+      "toID": "276_163907291481283043"
+    },
+    {
+      "edgeID": 300,
+      "fromID": "276_163907291481283043",
+      "toID": "272_163907291481283043"
+    },
+    {
+      "edgeID": 301,
+      "fromID": "265_163907291481283043",
+      "toID": "277_163907291481283043"
+    },
+    {
+      "edgeID": 302,
+      "fromID": "277_163907291481283043",
+      "toID": "271_163907291481283043"
+    },
+    {
+      "edgeID": 303,
+      "fromID": "276_163907291481283043",
+      "toID": "278_163907291481283043"
+    },
+    {
+      "edgeID": 304,
+      "fromID": "278_163907291481283043",
+      "toID": "277_163907291481283043"
+    },
+    {
+      "edgeID": 305,
+      "fromID": "281_163907291481283043",
+      "toID": "280_163907291481283043"
+    },
+    {
+      "edgeID": 306,
+      "fromID": "282_163907291481283043",
+      "toID": "281_163907291481283043"
+    },
+    {
+      "edgeID": 307,
+      "fromID": "280_163907291481283043",
+      "toID": "283_163907291481283043"
+    },
+    {
+      "edgeID": 308,
+      "fromID": "283_163907291481283043",
+      "toID": "279_163907291481283043"
+    },
+    {
+      "edgeID": 309,
+      "fromID": "272_163907291481283043",
+      "toID": "284_163907291481283043"
+    },
+    {
+      "edgeID": 310,
+      "fromID": "284_163907291481283043",
+      "toID": "280_163907291481283043"
+    },
+    {
+      "edgeID": 311,
+      "fromID": "279_163907291481283043",
+      "toID": "285_163907291481283043"
+    },
+    {
+      "edgeID": 312,
+      "fromID": "285_163907291481283043",
+      "toID": "271_163907291481283043"
+    },
+    {
+      "edgeID": 313,
+      "fromID": "284_163907291481283043",
+      "toID": "286_163907291481283043"
+    },
+    {
+      "edgeID": 314,
+      "fromID": "286_163907291481283043",
+      "toID": "285_163907291481283043"
+    },
+    {
+      "edgeID": 315,
+      "fromID": "54_163907291481283043",
+      "toID": "287_163907291481283043"
+    },
+    {
+      "edgeID": 316,
+      "fromID": "287_163907291481283043",
+      "toID": "69_163907291481283043"
+    }
+  ],
+  "locutions": [
+    {
+      "nodeID": "3_163907291481283043",
+      "personID": 15,
+      "start": "2020-06-04 21:55:28",
+      "end": null
+    },
+    {
+      "nodeID": "15_163907291481283043",
+      "personID": 15,
+      "start": "2020-06-04 21:55:33",
+      "end": null
+    },
+    {
+      "nodeID": "20_163907291481283043",
+      "personID": 15,
+      "start": "2020-06-04 21:55:36",
+      "end": null
+    },
+    {
+      "nodeID": "31_163907291481283043",
+      "personID": 16,
+      "start": "2020-06-04 21:55:38",
+      "end": null
+    },
+    {
+      "nodeID": "39_163907291481283043",
+      "personID": 18,
+      "start": "2020-06-04 21:55:48",
+      "end": null
+    },
+    {
+      "nodeID": "48_163907291481283043",
+      "personID": 16,
+      "start": "2020-06-04 21:55:52",
+      "end": null
+    },
+    {
+      "nodeID": "54_163907291481283043",
+      "personID": 15,
+      "start": "2020-06-04 21:55:58",
+      "end": null
+    },
+    {
+      "nodeID": "69_163907291481283043",
+      "personID": 15,
+      "start": "2020-06-04 21:56:02",
+      "end": null
+    },
+    {
+      "nodeID": "77_163907291481283043",
+      "personID": 16,
+      "start": "2020-06-04 21:56:04",
+      "end": null
+    },
+    {
+      "nodeID": "85_163907291481283043",
+      "personID": 16,
+      "start": "2020-06-04 21:56:06",
+      "end": null
+    },
+    {
+      "nodeID": "93_163907291481283043",
+      "personID": 15,
+      "start": "2020-06-04 21:56:08",
+      "end": null
+    },
+    {
+      "nodeID": "99_163907291481283043",
+      "personID": 15,
+      "start": "2020-06-04 21:56:11",
+      "end": null
+    },
+    {
+      "nodeID": "109_163907291481283043",
+      "personID": 16,
+      "start": "2020-06-04 21:56:14",
+      "end": null
+    },
+    {
+      "nodeID": "118_163907291481283043",
+      "personID": 15,
+      "start": "2020-06-04 21:56:16",
+      "end": null
+    },
+    {
+      "nodeID": "126_163907291481283043",
+      "personID": 16,
+      "start": "2020-06-04 21:56:20",
+      "end": null
+    },
+    {
+      "nodeID": "134_163907291481283043",
+      "personID": 16,
+      "start": "2020-06-04 21:56:24",
+      "end": null
+    },
+    {
+      "nodeID": "142_163907291481283043",
+      "personID": 16,
+      "start": "2020-06-04 21:56:32",
+      "end": null
+    },
+    {
+      "nodeID": "150_163907291481283043",
+      "personID": 16,
+      "start": "2020-06-04 21:56:42",
+      "end": null
+    },
+    {
+      "nodeID": "158_163907291481283043",
+      "personID": 18,
+      "start": "2020-06-04 21:56:46",
+      "end": null
+    },
+    {
+      "nodeID": "166_163907291481283043",
+      "personID": 18,
+      "start": "2020-06-04 21:56:47",
+      "end": null
+    },
+    {
+      "nodeID": "174_163907291481283043",
+      "personID": 15,
+      "start": "2020-06-04 21:56:48",
+      "end": null
+    },
+    {
+      "nodeID": "182_163907291481283043",
+      "personID": 24,
+      "start": "2020-06-04 21:56:54",
+      "end": null
+    },
+    {
+      "nodeID": "188_163907291481283043",
+      "personID": 24,
+      "start": "2020-06-04 21:56:59",
+      "end": null
+    },
+    {
+      "nodeID": "195_163907291481283043",
+      "personID": 24,
+      "start": "2020-06-04 21:57:02",
+      "end": null
+    },
+    {
+      "nodeID": "203_163907291481283043",
+      "personID": 24,
+      "start": "2020-06-04 21:57:04",
+      "end": null
+    },
+    {
+      "nodeID": "209_163907291481283043",
+      "personID": 15,
+      "start": "2020-06-04 21:57:06",
+      "end": null
+    },
+    {
+      "nodeID": "217_163907291481283043",
+      "personID": 15,
+      "start": "2020-06-04 21:57:07",
+      "end": null
+    },
+    {
+      "nodeID": "225_163907291481283043",
+      "personID": 25,
+      "start": "2020-06-04 21:57:10",
+      "end": null
+    },
+    {
+      "nodeID": "231_163907291481283043",
+      "personID": 25,
+      "start": "2020-06-04 21:57:14",
+      "end": null
+    },
+    {
+      "nodeID": "242_163907291481283043",
+      "personID": 16,
+      "start": "2020-06-04 21:57:18",
+      "end": null
+    },
+    {
+      "nodeID": "250_163907291481283043",
+      "personID": 16,
+      "start": "2020-06-04 21:57:22",
+      "end": null
+    },
+    {
+      "nodeID": "258_163907291481283043",
+      "personID": 19,
+      "start": "2020-06-04 21:57:24",
+      "end": null
+    },
+    {
+      "nodeID": "266_163907291481283043",
+      "personID": 26,
+      "start": "2020-06-04 21:57:28",
+      "end": null
+    },
+    {
+      "nodeID": "272_163907291481283043",
+      "personID": 26,
+      "start": "2020-06-04 21:57:33",
+      "end": null
+    },
+    {
+      "nodeID": "280_163907291481283043",
+      "personID": 16,
+      "start": "2020-06-04 21:57:36",
+      "end": null
+    }
+  ]
+}

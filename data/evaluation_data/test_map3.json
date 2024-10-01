@@ -1,0 +1,1086 @@
+{
+  "nodes": [
+    {
+      "nodeID": "2_164572818278813617",
+      "text": "we were not making comparisons",
+      "type": "I"
+    },
+    {
+      "nodeID": "3_164572818278813617",
+      "text": "George Eustice: We were not making comparisons",
+      "type": "L"
+    },
+    {
+      "nodeID": "4_164572818278813617",
+      "text": "Analysing",
+      "type": "YA"
+    },
+    {
+      "nodeID": "5_164572818278813617",
+      "text": "Jordan: George Eustice: We were not making comparisons",
+      "type": "L"
+    },
+    {
+      "nodeID": "6_164572818278813617",
+      "text": "Asserting",
+      "type": "YA"
+    },
+    {
+      "nodeID": "7_164572818278813617",
+      "text": "we have always tracked the death rates reported in all countries",
+      "type": "I"
+    },
+    {
+      "nodeID": "8_164572818278813617",
+      "text": "George Eustice: We have always tracked the death rates reported in all countries",
+      "type": "L"
+    },
+    {
+      "nodeID": "9_164572818278813617",
+      "text": "Analysing",
+      "type": "YA"
+    },
+    {
+      "nodeID": "10_164572818278813617",
+      "text": "Jordan: George Eustice: We have always tracked the death rates reported in all countries",
+      "type": "L"
+    },
+    {
+      "nodeID": "11_164572818278813617",
+      "text": "Asserting",
+      "type": "YA"
+    },
+    {
+      "nodeID": "12_164572818278813617",
+      "text": "Default Transition",
+      "type": "TA"
+    },
+    {
+      "nodeID": "13_164572818278813617",
+      "text": "Default Inference",
+      "type": "RA"
+    },
+    {
+      "nodeID": "14_164572818278813617",
+      "text": "Arguing",
+      "type": "YA"
+    },
+    {
+      "nodeID": "15_164572818278813617",
+      "text": "we followed the advice of the chief medical officer and Chief Scientific Adviser all along",
+      "type": "I"
+    },
+    {
+      "nodeID": "16_164572818278813617",
+      "text": "George Eustice: We followed the advice of the chief medical officer and Chief Scientific Adviser all along",
+      "type": "L"
+    },
+    {
+      "nodeID": "17_164572818278813617",
+      "text": "Analysing",
+      "type": "YA"
+    },
+    {
+      "nodeID": "18_164572818278813617",
+      "text": "Jordan: George Eustice: We followed the advice of the chief medical officer and Chief Scientific Adviser all along",
+      "type": "L"
+    },
+    {
+      "nodeID": "19_164572818278813617",
+      "text": "Asserting",
+      "type": "YA"
+    },
+    {
+      "nodeID": "21_164572818278813617",
+      "text": "George Eustice: I think was correct",
+      "type": "L"
+    },
+    {
+      "nodeID": "22_164572818278813617",
+      "text": "Analysing",
+      "type": "YA"
+    },
+    {
+      "nodeID": "23_164572818278813617",
+      "text": "Jordan: George Eustice: I think was correct",
+      "type": "L"
+    },
+    {
+      "nodeID": "25_164572818278813617",
+      "text": "Default Transition",
+      "type": "TA"
+    },
+    {
+      "nodeID": "27_164572818278813617",
+      "text": "Agreeing",
+      "type": "YA"
+    },
+    {
+      "nodeID": "28_164572818278813617",
+      "text": "Default Transition",
+      "type": "TA"
+    },
+    {
+      "nodeID": "29_164572818278813617",
+      "text": "we were roughly 2 to 3 weeks behind countries like Italy and France",
+      "type": "I"
+    },
+    {
+      "nodeID": "30_164572818278813617",
+      "text": "George Eustice: we were roughly 2 to 3 weeks behind countries like Italy and France",
+      "type": "L"
+    },
+    {
+      "nodeID": "31_164572818278813617",
+      "text": "Analysing",
+      "type": "YA"
+    },
+    {
+      "nodeID": "32_164572818278813617",
+      "text": "Jordan: George Eustice: we were roughly 2 to 3 weeks behind countries like Italy and France",
+      "type": "L"
+    },
+    {
+      "nodeID": "33_164572818278813617",
+      "text": "Asserting",
+      "type": "YA"
+    },
+    {
+      "nodeID": "34_164572818278813617",
+      "text": "Default Transition",
+      "type": "TA"
+    },
+    {
+      "nodeID": "35_164572818278813617",
+      "text": "we were on a different level",
+      "type": "I"
+    },
+    {
+      "nodeID": "36_164572818278813617",
+      "text": "George Eustice: We were on a different level",
+      "type": "L"
+    },
+    {
+      "nodeID": "37_164572818278813617",
+      "text": "Analysing",
+      "type": "YA"
+    },
+    {
+      "nodeID": "38_164572818278813617",
+      "text": "Jordan: George Eustice: We were on a different level",
+      "type": "L"
+    },
+    {
+      "nodeID": "39_164572818278813617",
+      "text": "Asserting",
+      "type": "YA"
+    },
+    {
+      "nodeID": "40_164572818278813617",
+      "text": "Default Transition",
+      "type": "TA"
+    },
+    {
+      "nodeID": "41_164572818278813617",
+      "text": "Default Inference",
+      "type": "RA"
+    },
+    {
+      "nodeID": "42_164572818278813617",
+      "text": "Arguing",
+      "type": "YA"
+    },
+    {
+      "nodeID": "48_164572818278813617",
+      "text": "it was not appropriate to lockdown at the point Italy and France did",
+      "type": "I"
+    },
+    {
+      "nodeID": "49_164572818278813617",
+      "text": "George Eustice:  That's why it was not appropriate to lockdown at the point they did",
+      "type": "L"
+    },
+    {
+      "nodeID": "50_164572818278813617",
+      "text": "Analysing",
+      "type": "YA"
+    },
+    {
+      "nodeID": "51_164572818278813617",
+      "text": "Jordan: George Eustice:  That's why it was not appropriate to lockdown at the point they did",
+      "type": "L"
+    },
+    {
+      "nodeID": "52_164572818278813617",
+      "text": "Asserting",
+      "type": "YA"
+    },
+    {
+      "nodeID": "55_164572818278813617",
+      "text": "Default Conflict",
+      "type": "CA"
+    },
+    {
+      "nodeID": "56_164572818278813617",
+      "text": "Default Transition",
+      "type": "TA"
+    },
+    {
+      "nodeID": "57_164572818278813617",
+      "text": "Disagreeing",
+      "type": "YA"
+    },
+    {
+      "nodeID": "58_164572818278813617",
+      "text": "it is not true that we were not prepared",
+      "type": "I"
+    },
+    {
+      "nodeID": "59_164572818278813617",
+      "text": "George Eustice: It is not true that we were not prepared",
+      "type": "L"
+    },
+    {
+      "nodeID": "60_164572818278813617",
+      "text": "Analysing",
+      "type": "YA"
+    },
+    {
+      "nodeID": "61_164572818278813617",
+      "text": "Jordan: George Eustice: It is not true that we were not prepared",
+      "type": "L"
+    },
+    {
+      "nodeID": "62_164572818278813617",
+      "text": "Asserting",
+      "type": "YA"
+    },
+    {
+      "nodeID": "63_164572818278813617",
+      "text": "there were all sorts of planning meetings that were taking place on this right from January onwards",
+      "type": "I"
+    },
+    {
+      "nodeID": "64_164572818278813617",
+      "text": "George Eustice: There were all sorts of planning meetings that were taking place on this right from January onwards",
+      "type": "L"
+    },
+    {
+      "nodeID": "65_164572818278813617",
+      "text": "Analysing",
+      "type": "YA"
+    },
+    {
+      "nodeID": "66_164572818278813617",
+      "text": "Jordan: George Eustice: There were all sorts of planning meetings that were taking place on this right from January onwards",
+      "type": "L"
+    },
+    {
+      "nodeID": "67_164572818278813617",
+      "text": "Asserting",
+      "type": "YA"
+    },
+    {
+      "nodeID": "68_164572818278813617",
+      "text": "Default Transition",
+      "type": "TA"
+    },
+    {
+      "nodeID": "70_164572818278813617",
+      "text": "Default Inference",
+      "type": "RA"
+    },
+    {
+      "nodeID": "71_164572818278813617",
+      "text": "Default Transition",
+      "type": "TA"
+    },
+    {
+      "nodeID": "72_164572818278813617",
+      "text": "Arguing",
+      "type": "YA"
+    },
+    {
+      "nodeID": "73_164572818278813617",
+      "text": "lockdown preparation meetings were occupying all of Matt Hancock's time",
+      "type": "I"
+    },
+    {
+      "nodeID": "74_164572818278813617",
+      "text": "George Eustice: It was occupying all of Matt Hancock's time",
+      "type": "L"
+    },
+    {
+      "nodeID": "75_164572818278813617",
+      "text": "Analysing",
+      "type": "YA"
+    },
+    {
+      "nodeID": "76_164572818278813617",
+      "text": "Jordan: George Eustice: It was occupying all of Matt Hancock's time",
+      "type": "L"
+    },
+    {
+      "nodeID": "77_164572818278813617",
+      "text": "Asserting",
+      "type": "YA"
+    },
+    {
+      "nodeID": "78_164572818278813617",
+      "text": "Default Inference",
+      "type": "RA"
+    },
+    {
+      "nodeID": "79_164572818278813617",
+      "text": "Default Transition",
+      "type": "TA"
+    },
+    {
+      "nodeID": "80_164572818278813617",
+      "text": "Arguing",
+      "type": "YA"
+    },
+    {
+      "nodeID": "81_164572818278813617",
+      "text": "lots and lots of planning and preparation went into responding to a lockdown",
+      "type": "I"
+    },
+    {
+      "nodeID": "82_164572818278813617",
+      "text": "George Eustice: So lots and lots of planning and preparation went into responding to this",
+      "type": "L"
+    },
+    {
+      "nodeID": "83_164572818278813617",
+      "text": "Analysing",
+      "type": "YA"
+    },
+    {
+      "nodeID": "84_164572818278813617",
+      "text": "Jordan: George Eustice: So lots and lots of planning and preparation went into responding to this",
+      "type": "L"
+    },
+    {
+      "nodeID": "85_164572818278813617",
+      "text": "Asserting",
+      "type": "YA"
+    },
+    {
+      "nodeID": "86_164572818278813617",
+      "text": "Default Transition",
+      "type": "TA"
+    },
+    {
+      "nodeID": "87_164572818278813617",
+      "text": "Default Inference",
+      "type": "RA"
+    },
+    {
+      "nodeID": "88_164572818278813617",
+      "text": "Arguing",
+      "type": "YA"
+    },
+    {
+      "nodeID": "89_164572818278813617",
+      "text": "the scientific advice was not that we should have locked down earlier than we did",
+      "type": "I"
+    },
+    {
+      "nodeID": "90_164572818278813617",
+      "text": "George Eustice: it was the case that the scientific advice was not that we should have locked down earlier than we did",
+      "type": "L"
+    },
+    {
+      "nodeID": "91_164572818278813617",
+      "text": "Analysing",
+      "type": "YA"
+    },
+    {
+      "nodeID": "92_164572818278813617",
+      "text": "Jordan: George Eustice: it was the case that the scientific advice was not that we should have locked down earlier than we did",
+      "type": "L"
+    },
+    {
+      "nodeID": "93_164572818278813617",
+      "text": "Asserting",
+      "type": "YA"
+    },
+    {
+      "nodeID": "94_164572818278813617",
+      "text": "Default Conflict",
+      "type": "CA"
+    },
+    {
+      "nodeID": "95_164572818278813617",
+      "text": "Default Transition",
+      "type": "TA"
+    },
+    {
+      "nodeID": "96_164572818278813617",
+      "text": "Disagreeing",
+      "type": "YA"
+    },
+    {
+      "nodeID": "104_164572818278813617",
+      "text": "as soon as the advice was we should lockdown, that's exactly what we did",
+      "type": "I"
+    },
+    {
+      "nodeID": "105_164572818278813617",
+      "text": "George Eustice: As soon as the advice was we should lockdown, that's exactly what we did",
+      "type": "L"
+    },
+    {
+      "nodeID": "106_164572818278813617",
+      "text": "Analysing",
+      "type": "YA"
+    },
+    {
+      "nodeID": "107_164572818278813617",
+      "text": "Jordan: George Eustice: As soon as the advice was we should lockdown, that's exactly what we did",
+      "type": "L"
+    },
+    {
+      "nodeID": "108_164572818278813617",
+      "text": "Asserting",
+      "type": "YA"
+    },
+    {
+      "nodeID": "109_164572818278813617",
+      "text": "Default Transition",
+      "type": "TA"
+    },
+    {
+      "nodeID": "110_164572818278813617",
+      "text": "Default Inference",
+      "type": "RA"
+    },
+    {
+      "nodeID": "111_164572818278813617",
+      "text": "Arguing",
+      "type": "YA"
+    }
+  ],
+  "edges": [
+    {
+      "edgeID": 1,
+      "fromID": "4_164572818278813617",
+      "toID": "3_164572818278813617"
+    },
+    {
+      "edgeID": 2,
+      "fromID": "5_164572818278813617",
+      "toID": "4_164572818278813617"
+    },
+    {
+      "edgeID": 3,
+      "fromID": "3_164572818278813617",
+      "toID": "6_164572818278813617"
+    },
+    {
+      "edgeID": 4,
+      "fromID": "6_164572818278813617",
+      "toID": "2_164572818278813617"
+    },
+    {
+      "edgeID": 5,
+      "fromID": "9_164572818278813617",
+      "toID": "8_164572818278813617"
+    },
+    {
+      "edgeID": 6,
+      "fromID": "10_164572818278813617",
+      "toID": "9_164572818278813617"
+    },
+    {
+      "edgeID": 7,
+      "fromID": "8_164572818278813617",
+      "toID": "11_164572818278813617"
+    },
+    {
+      "edgeID": 8,
+      "fromID": "11_164572818278813617",
+      "toID": "7_164572818278813617"
+    },
+    {
+      "edgeID": 9,
+      "fromID": "3_164572818278813617",
+      "toID": "12_164572818278813617"
+    },
+    {
+      "edgeID": 10,
+      "fromID": "12_164572818278813617",
+      "toID": "8_164572818278813617"
+    },
+    {
+      "edgeID": 11,
+      "fromID": "7_164572818278813617",
+      "toID": "13_164572818278813617"
+    },
+    {
+      "edgeID": 12,
+      "fromID": "13_164572818278813617",
+      "toID": "2_164572818278813617"
+    },
+    {
+      "edgeID": 13,
+      "fromID": "12_164572818278813617",
+      "toID": "14_164572818278813617"
+    },
+    {
+      "edgeID": 14,
+      "fromID": "14_164572818278813617",
+      "toID": "13_164572818278813617"
+    },
+    {
+      "edgeID": 15,
+      "fromID": "17_164572818278813617",
+      "toID": "16_164572818278813617"
+    },
+    {
+      "edgeID": 16,
+      "fromID": "18_164572818278813617",
+      "toID": "17_164572818278813617"
+    },
+    {
+      "edgeID": 17,
+      "fromID": "16_164572818278813617",
+      "toID": "19_164572818278813617"
+    },
+    {
+      "edgeID": 18,
+      "fromID": "19_164572818278813617",
+      "toID": "15_164572818278813617"
+    },
+    {
+      "edgeID": 19,
+      "fromID": "22_164572818278813617",
+      "toID": "21_164572818278813617"
+    },
+    {
+      "edgeID": 20,
+      "fromID": "23_164572818278813617",
+      "toID": "22_164572818278813617"
+    },
+    {
+      "edgeID": 21,
+      "fromID": "16_164572818278813617",
+      "toID": "25_164572818278813617"
+    },
+    {
+      "edgeID": 22,
+      "fromID": "25_164572818278813617",
+      "toID": "21_164572818278813617"
+    },
+    {
+      "edgeID": 23,
+      "fromID": "25_164572818278813617",
+      "toID": "27_164572818278813617"
+    },
+    {
+      "edgeID": 24,
+      "fromID": "27_164572818278813617",
+      "toID": "15_164572818278813617"
+    },
+    {
+      "edgeID": 25,
+      "fromID": "8_164572818278813617",
+      "toID": "28_164572818278813617"
+    },
+    {
+      "edgeID": 26,
+      "fromID": "28_164572818278813617",
+      "toID": "16_164572818278813617"
+    },
+    {
+      "edgeID": 27,
+      "fromID": "31_164572818278813617",
+      "toID": "30_164572818278813617"
+    },
+    {
+      "edgeID": 28,
+      "fromID": "32_164572818278813617",
+      "toID": "31_164572818278813617"
+    },
+    {
+      "edgeID": 29,
+      "fromID": "30_164572818278813617",
+      "toID": "33_164572818278813617"
+    },
+    {
+      "edgeID": 30,
+      "fromID": "33_164572818278813617",
+      "toID": "29_164572818278813617"
+    },
+    {
+      "edgeID": 31,
+      "fromID": "21_164572818278813617",
+      "toID": "34_164572818278813617"
+    },
+    {
+      "edgeID": 32,
+      "fromID": "34_164572818278813617",
+      "toID": "30_164572818278813617"
+    },
+    {
+      "edgeID": 33,
+      "fromID": "37_164572818278813617",
+      "toID": "36_164572818278813617"
+    },
+    {
+      "edgeID": 34,
+      "fromID": "38_164572818278813617",
+      "toID": "37_164572818278813617"
+    },
+    {
+      "edgeID": 35,
+      "fromID": "36_164572818278813617",
+      "toID": "39_164572818278813617"
+    },
+    {
+      "edgeID": 36,
+      "fromID": "39_164572818278813617",
+      "toID": "35_164572818278813617"
+    },
+    {
+      "edgeID": 37,
+      "fromID": "30_164572818278813617",
+      "toID": "40_164572818278813617"
+    },
+    {
+      "edgeID": 38,
+      "fromID": "40_164572818278813617",
+      "toID": "36_164572818278813617"
+    },
+    {
+      "edgeID": 39,
+      "fromID": "29_164572818278813617",
+      "toID": "41_164572818278813617"
+    },
+    {
+      "edgeID": 40,
+      "fromID": "41_164572818278813617",
+      "toID": "35_164572818278813617"
+    },
+    {
+      "edgeID": 41,
+      "fromID": "40_164572818278813617",
+      "toID": "42_164572818278813617"
+    },
+    {
+      "edgeID": 42,
+      "fromID": "42_164572818278813617",
+      "toID": "41_164572818278813617"
+    },
+    {
+      "edgeID": 43,
+      "fromID": "50_164572818278813617",
+      "toID": "49_164572818278813617"
+    },
+    {
+      "edgeID": 44,
+      "fromID": "51_164572818278813617",
+      "toID": "50_164572818278813617"
+    },
+    {
+      "edgeID": 45,
+      "fromID": "49_164572818278813617",
+      "toID": "52_164572818278813617"
+    },
+    {
+      "edgeID": 46,
+      "fromID": "52_164572818278813617",
+      "toID": "48_164572818278813617"
+    },
+    {
+      "edgeID": 47,
+      "fromID": "48_164572818278813617",
+      "toID": "55_164572818278813617"
+    },
+    {
+      "edgeID": 48,
+      "fromID": "55_164572818278813617",
+      "toID": "29_164572818278813617"
+    },
+    {
+      "edgeID": 49,
+      "fromID": "30_164572818278813617",
+      "toID": "56_164572818278813617"
+    },
+    {
+      "edgeID": 50,
+      "fromID": "56_164572818278813617",
+      "toID": "49_164572818278813617"
+    },
+    {
+      "edgeID": 51,
+      "fromID": "56_164572818278813617",
+      "toID": "57_164572818278813617"
+    },
+    {
+      "edgeID": 52,
+      "fromID": "57_164572818278813617",
+      "toID": "55_164572818278813617"
+    },
+    {
+      "edgeID": 53,
+      "fromID": "60_164572818278813617",
+      "toID": "59_164572818278813617"
+    },
+    {
+      "edgeID": 54,
+      "fromID": "61_164572818278813617",
+      "toID": "60_164572818278813617"
+    },
+    {
+      "edgeID": 55,
+      "fromID": "59_164572818278813617",
+      "toID": "62_164572818278813617"
+    },
+    {
+      "edgeID": 56,
+      "fromID": "62_164572818278813617",
+      "toID": "58_164572818278813617"
+    },
+    {
+      "edgeID": 57,
+      "fromID": "65_164572818278813617",
+      "toID": "64_164572818278813617"
+    },
+    {
+      "edgeID": 58,
+      "fromID": "66_164572818278813617",
+      "toID": "65_164572818278813617"
+    },
+    {
+      "edgeID": 59,
+      "fromID": "64_164572818278813617",
+      "toID": "67_164572818278813617"
+    },
+    {
+      "edgeID": 60,
+      "fromID": "67_164572818278813617",
+      "toID": "63_164572818278813617"
+    },
+    {
+      "edgeID": 61,
+      "fromID": "49_164572818278813617",
+      "toID": "68_164572818278813617"
+    },
+    {
+      "edgeID": 62,
+      "fromID": "68_164572818278813617",
+      "toID": "59_164572818278813617"
+    },
+    {
+      "edgeID": 63,
+      "fromID": "63_164572818278813617",
+      "toID": "70_164572818278813617"
+    },
+    {
+      "edgeID": 64,
+      "fromID": "70_164572818278813617",
+      "toID": "58_164572818278813617"
+    },
+    {
+      "edgeID": 65,
+      "fromID": "64_164572818278813617",
+      "toID": "71_164572818278813617"
+    },
+    {
+      "edgeID": 66,
+      "fromID": "71_164572818278813617",
+      "toID": "59_164572818278813617"
+    },
+    {
+      "edgeID": 67,
+      "fromID": "71_164572818278813617",
+      "toID": "72_164572818278813617"
+    },
+    {
+      "edgeID": 68,
+      "fromID": "72_164572818278813617",
+      "toID": "70_164572818278813617"
+    },
+    {
+      "edgeID": 69,
+      "fromID": "75_164572818278813617",
+      "toID": "74_164572818278813617"
+    },
+    {
+      "edgeID": 70,
+      "fromID": "76_164572818278813617",
+      "toID": "75_164572818278813617"
+    },
+    {
+      "edgeID": 71,
+      "fromID": "74_164572818278813617",
+      "toID": "77_164572818278813617"
+    },
+    {
+      "edgeID": 72,
+      "fromID": "77_164572818278813617",
+      "toID": "73_164572818278813617"
+    },
+    {
+      "edgeID": 73,
+      "fromID": "63_164572818278813617",
+      "toID": "78_164572818278813617"
+    },
+    {
+      "edgeID": 74,
+      "fromID": "78_164572818278813617",
+      "toID": "73_164572818278813617"
+    },
+    {
+      "edgeID": 75,
+      "fromID": "64_164572818278813617",
+      "toID": "79_164572818278813617"
+    },
+    {
+      "edgeID": 76,
+      "fromID": "79_164572818278813617",
+      "toID": "74_164572818278813617"
+    },
+    {
+      "edgeID": 77,
+      "fromID": "79_164572818278813617",
+      "toID": "80_164572818278813617"
+    },
+    {
+      "edgeID": 78,
+      "fromID": "80_164572818278813617",
+      "toID": "78_164572818278813617"
+    },
+    {
+      "edgeID": 79,
+      "fromID": "83_164572818278813617",
+      "toID": "82_164572818278813617"
+    },
+    {
+      "edgeID": 80,
+      "fromID": "84_164572818278813617",
+      "toID": "83_164572818278813617"
+    },
+    {
+      "edgeID": 81,
+      "fromID": "82_164572818278813617",
+      "toID": "85_164572818278813617"
+    },
+    {
+      "edgeID": 82,
+      "fromID": "85_164572818278813617",
+      "toID": "81_164572818278813617"
+    },
+    {
+      "edgeID": 83,
+      "fromID": "74_164572818278813617",
+      "toID": "86_164572818278813617"
+    },
+    {
+      "edgeID": 84,
+      "fromID": "86_164572818278813617",
+      "toID": "82_164572818278813617"
+    },
+    {
+      "edgeID": 85,
+      "fromID": "73_164572818278813617",
+      "toID": "87_164572818278813617"
+    },
+    {
+      "edgeID": 86,
+      "fromID": "87_164572818278813617",
+      "toID": "81_164572818278813617"
+    },
+    {
+      "edgeID": 87,
+      "fromID": "86_164572818278813617",
+      "toID": "88_164572818278813617"
+    },
+    {
+      "edgeID": 88,
+      "fromID": "88_164572818278813617",
+      "toID": "87_164572818278813617"
+    },
+    {
+      "edgeID": 89,
+      "fromID": "91_164572818278813617",
+      "toID": "90_164572818278813617"
+    },
+    {
+      "edgeID": 90,
+      "fromID": "92_164572818278813617",
+      "toID": "91_164572818278813617"
+    },
+    {
+      "edgeID": 91,
+      "fromID": "90_164572818278813617",
+      "toID": "93_164572818278813617"
+    },
+    {
+      "edgeID": 92,
+      "fromID": "93_164572818278813617",
+      "toID": "89_164572818278813617"
+    },
+    {
+      "edgeID": 93,
+      "fromID": "89_164572818278813617",
+      "toID": "94_164572818278813617"
+    },
+    {
+      "edgeID": 94,
+      "fromID": "94_164572818278813617",
+      "toID": "81_164572818278813617"
+    },
+    {
+      "edgeID": 95,
+      "fromID": "82_164572818278813617",
+      "toID": "95_164572818278813617"
+    },
+    {
+      "edgeID": 96,
+      "fromID": "95_164572818278813617",
+      "toID": "90_164572818278813617"
+    },
+    {
+      "edgeID": 97,
+      "fromID": "95_164572818278813617",
+      "toID": "96_164572818278813617"
+    },
+    {
+      "edgeID": 98,
+      "fromID": "96_164572818278813617",
+      "toID": "94_164572818278813617"
+    },
+    {
+      "edgeID": 99,
+      "fromID": "106_164572818278813617",
+      "toID": "105_164572818278813617"
+    },
+    {
+      "edgeID": 100,
+      "fromID": "107_164572818278813617",
+      "toID": "106_164572818278813617"
+    },
+    {
+      "edgeID": 101,
+      "fromID": "105_164572818278813617",
+      "toID": "108_164572818278813617"
+    },
+    {
+      "edgeID": 102,
+      "fromID": "108_164572818278813617",
+      "toID": "104_164572818278813617"
+    },
+    {
+      "edgeID": 103,
+      "fromID": "90_164572818278813617",
+      "toID": "109_164572818278813617"
+    },
+    {
+      "edgeID": 104,
+      "fromID": "109_164572818278813617",
+      "toID": "105_164572818278813617"
+    },
+    {
+      "edgeID": 105,
+      "fromID": "104_164572818278813617",
+      "toID": "110_164572818278813617"
+    },
+    {
+      "edgeID": 106,
+      "fromID": "110_164572818278813617",
+      "toID": "89_164572818278813617"
+    },
+    {
+      "edgeID": 107,
+      "fromID": "109_164572818278813617",
+      "toID": "111_164572818278813617"
+    },
+    {
+      "edgeID": 108,
+      "fromID": "111_164572818278813617",
+      "toID": "110_164572818278813617"
+    }
+  ],
+  "locutions": [
+    {
+      "nodeID": "3_164572818278813617",
+      "personID": 345,
+      "start": "2022-02-03 22:45:28",
+      "end": null
+    },
+    {
+      "nodeID": "8_164572818278813617",
+      "personID": 345,
+      "start": "2022-02-03 22:45:31",
+      "end": null
+    },
+    {
+      "nodeID": "16_164572818278813617",
+      "personID": 345,
+      "start": "2022-02-03 22:45:36",
+      "end": null
+    },
+    {
+      "nodeID": "21_164572818278813617",
+      "personID": 345,
+      "start": "2022-02-03 22:45:46",
+      "end": null
+    },
+    {
+      "nodeID": "30_164572818278813617",
+      "personID": 345,
+      "start": "2022-02-03 22:45:48",
+      "end": null
+    },
+    {
+      "nodeID": "36_164572818278813617",
+      "personID": 345,
+      "start": "2022-02-03 22:45:55",
+      "end": null
+    },
+    {
+      "nodeID": "49_164572818278813617",
+      "personID": 345,
+      "start": "2022-02-03 22:45:58",
+      "end": null
+    },
+    {
+      "nodeID": "59_164572818278813617",
+      "personID": 345,
+      "start": "2022-02-03 22:46:05",
+      "end": null
+    },
+    {
+      "nodeID": "64_164572818278813617",
+      "personID": 345,
+      "start": "2022-02-03 22:46:09",
+      "end": null
+    },
+    {
+      "nodeID": "74_164572818278813617",
+      "personID": 345,
+      "start": "2022-02-03 22:46:19",
+      "end": null
+    },
+    {
+      "nodeID": "82_164572818278813617",
+      "personID": 345,
+      "start": "2022-02-03 22:46:24",
+      "end": null
+    },
+    {
+      "nodeID": "90_164572818278813617",
+      "personID": 345,
+      "start": "2022-02-03 22:46:32",
+      "end": null
+    },
+    {
+      "nodeID": "105_164572818278813617",
+      "personID": 345,
+      "start": "2022-02-03 22:46:42",
+      "end": null
+    }
+  ]
+}
