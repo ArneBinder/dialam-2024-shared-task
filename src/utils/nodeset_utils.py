@@ -25,7 +25,7 @@ import tqdm
 
 FuncResult = TypeVar("FuncResult")
 # add "scheme" and "schemeID"? both seem to be optional. add "timestamp"?
-Node = TypedDict("Node", {"nodeID": str, "type": str, "text": str})
+Node = TypedDict("Node", {"nodeID": str, "type": str, "text": str, "timestamp": str}, total=False)
 # add "formEdgeID"? it is mostly (always?) None
 Edge = TypedDict("Edge", {"fromID": str, "toID": str, "edgeID": str})
 # add "start", "end", and "source"? "end" and "source" are mostly (always?) None

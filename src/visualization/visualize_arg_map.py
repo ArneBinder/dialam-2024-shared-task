@@ -24,8 +24,6 @@ import pyrootutils
 pyrootutils.setup_root(search_from=__file__, indicator=[".project-root"], pythonpath=True)
 
 import argparse
-import datetime
-import json
 import logging
 import os
 from collections import defaultdict
@@ -33,7 +31,12 @@ from typing import Dict, List, Optional, Set, Tuple
 
 from graphviz import Digraph
 
-from src.utils.nodeset_utils import sort_nodes_by_hierarchy
+from src.utils.nodeset_utils import (
+    Node,
+    get_node_id_from_filename,
+    read_nodeset,
+    sort_nodes_by_hierarchy,
+)
 
 logger = logging.getLogger(__name__)
 
@@ -51,7 +54,7 @@ def chunk_text(text: str, tokens_per_chunk: int = 10) -> str:
     return node_text_split
 
 
-def assemble_node_text(node: dict) -> str:
+def assemble_node_text(node: Node) -> str:
     text = node["text"]
     if node["type"] in ["L", "I"]:
         text = chunk_text(text)
@@ -64,7 +67,7 @@ def assemble_node_text(node: dict) -> str:
     return node_text
 
 
-def add_node(node: dict, graph) -> None:
+def add_node(node: Node, graph) -> None:
     if node["type"] in ["L", "I"]:
         shape = "box"
     else:
@@ -88,9 +91,7 @@ def create_visualization(
     # if no nodeset id is provided, visualize all nodesets in the directory
     if nodeset is None:
         nodeset_ids = [
-            f.split("nodeset")[1].split(".json")[0]
-            for f in os.listdir(nodeset_dir)
-            if f.endswith(".json")
+            get_node_id_from_filename(f) for f in os.listdir(nodeset_dir) if f.endswith(".json")
         ]
         for nodeset in nodeset_ids:
             try:
@@ -102,9 +103,7 @@ def create_visualization(
         return
 
     # Read the JSON data
-    filename = os.path.join(nodeset_dir, f"nodeset{nodeset}.json")
-    with open(filename) as f:
-        data = json.load(f)
+    data = read_nodeset(nodeset_dir, nodeset)
 
     # edge related helper data structures
     src2targets = defaultdict(list)
