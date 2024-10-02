@@ -148,7 +148,7 @@ pipe = AutoPipeline.from_pretrained("DFKI-SLT/dfki-mlst-deberta-v3")
 pipe.taskmodule.collect_statistics = False
 
 # load nodeset in the format of the shared task test data
-path = "/home/arbi01/Downloads/test-data(8)/test/test_map1.json"
+path = "data/evaluation_data/test_map1.json"
 with open(path, "r") as f:
     nodeset: Nodeset = json.load(f)
 nodeset_id="test_map1"
