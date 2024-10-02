@@ -99,6 +99,7 @@ import json
 # this import is necessary to load the pipeline
 from pie_modules.taskmodules import RETextClassificationWithIndicesTaskModule
 from pytorch_ie import AutoPipeline
+from pytorch_ie.annotations import NaryRelation, LabeledSpan
 
 from dataset_builders.pie.dialam2024.dialam2024 import PREFIX_SEPARATOR, merge_relations, unmerge_relations, \
     REVERSE_SUFFIX, NONE_LABEL, convert_to_document
@@ -136,15 +137,19 @@ doc: TextDocumentWithLabeledEntitiesAndNaryRelations = merge_relations(
     sep=PREFIX_SEPARATOR,
 )
 
-# inference (works also with multiple documents at once)
+# inference (works also with multiple documents)
 doc: TextDocumentWithLabeledEntitiesAndNaryRelations = pipe(doc)
 
 doc: SimplifiedDialAM2024Document = unmerge_relations(document=doc, sep=PREFIX_SEPARATOR)
 
 # helper structure to get the node IDs from the relation arguments, if needed
 l_node2id = dict(zip(doc.l_nodes, doc.metadata["l_node_ids"]))
-s_node_example = doc.s_nodes.predictions[0]
-# print(l_node2id[s_node_example.arguments[0]], s_node_example.roles[0])
+# example how to get the ID and role of the first argument of the first predicted S-node
+s_node_example: NaryRelation = doc.s_nodes.predictions[0]
+s_arg0: LabeledSpan = s_node_example.arguments[0]
+s_arg0_role: str = s_node_example.roles[0]
+# print the original node ID and argument role
+print(l_node2id[LabeledSpan], s_arg0_role)
 # 22_163907070207948843 source
 
 # print all predictions
