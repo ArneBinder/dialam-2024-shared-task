@@ -100,40 +100,77 @@ import json
 from pie_modules.taskmodules import RETextClassificationWithIndicesTaskModule
 from pytorch_ie import AutoPipeline
 
-from dataset_builders.pie.dialam2024.dialam2024 import PieDialAM2024, listofdicts_to_dictoflists
-from src.document.types import SimplifiedDialAM2024Document
+from dataset_builders.pie.dialam2024.dialam2024 import PREFIX_SEPARATOR, merge_relations, unmerge_relations, \
+    REVERSE_SUFFIX, NONE_LABEL, convert_to_document
+from src.document.types import SimplifiedDialAM2024Document, TextDocumentWithLabeledEntitiesAndNaryRelations
+from src.utils.nodeset_utils import Nodeset
+from src.utils.prepare_data import prepare_nodeset
 
-
-data_builder = PieDialAM2024(name="merged_relations")
-
+# load the model from the Huggingface hub
+# to execute on a GPU, pass device="0" (and batch_size=...) to .from_pretrained
 pipe = AutoPipeline.from_pretrained("DFKI-SLT/dfki-mlst-deberta-v3")
 # disable because it can cause errors when no model inputs are created
 pipe.taskmodule.collect_statistics = False
 
-# load test data
+# load nodeset in the format of the shared task test data
 path = "/home/arbi01/Downloads/test-data(8)/test/test_map1.json"
 with open(path, "r") as f:
-    nodeset = json.load(f)
-# bring the nodeset to the format expected by the builder
-nodeset = {k: listofdicts_to_dictoflists(v) for k, v in nodeset.items()}
-nodeset["id"] = "test_map1"
-# convert to src.document.types.SimplifiedDialAM2024Document
-doc: SimplifiedDialAM2024Document = data_builder._generate_document(nodeset)
-# inference (works also with multiple documents)
-doc = pipe(doc)
-# print predictions
-print("predictions:")
-for rel in doc.nary_relations.predictions:
-    print(rel.resolve())
+    nodeset: Nodeset = json.load(f)
+nodeset_id="test_map1"
+cleaned_nodeset: Nodeset = prepare_nodeset(
+    nodeset=nodeset,
+    nodeset_id=nodeset_id,
+    s_node_text=NONE_LABEL,
+    ya_node_text=NONE_LABEL,
+    s_node_type="RA",
+    reversed_text_suffix=REVERSE_SUFFIX,
+    l2i_similarity_measure="lcsstr",
+    add_gold_data=False,
+)
 
-# predictions:
-# ('ya_i2l_nodes:Asserting', (('ya_i2l_nodes:source', ('L', 'AudienceMember 20210912QT02: My parents both had COVID')),))
-# ('ya_i2l_nodes:Asserting', (('ya_i2l_nodes:source', ('L', 'AudienceMember 20210912QT02: We followed the guidance')),))
-# ('ya_i2l_nodes:Asserting', (('ya_i2l_nodes:source', ('L', 'AudienceMember 20210912QT02: did what we were told')),))
+doc: SimplifiedDialAM2024Document = convert_to_document(nodeset=cleaned_nodeset, nodeset_id=nodeset_id)
+doc: TextDocumentWithLabeledEntitiesAndNaryRelations = merge_relations(
+    document=doc,
+    labeled_span_layer="l_nodes",
+    nary_relation_layers=["ya_i2l_nodes", "ya_s2ta_nodes", "s_nodes"],
+    sep=PREFIX_SEPARATOR,
+)
+
+# inference (works also with multiple documents)
+doc: TextDocumentWithLabeledEntitiesAndNaryRelations = pipe(doc)
+
+doc: SimplifiedDialAM2024Document = unmerge_relations(document=doc, sep=PREFIX_SEPARATOR)
+# print predictions
+print("Predictions:")
+print("S-Nodes:")
+for rel in doc.s_nodes.predictions:
+    if rel.label != "NONE":
+        print(rel.resolve())
+print("YA-S2TA-Nodes:")
+for rel in doc.ya_i2l_nodes.predictions:
+    if rel.label != "NONE":
+        print(rel.resolve())
+print("YA-I2L-Nodes:")
+for rel in doc.ya_s2ta_nodes.predictions:
+    if rel.label != "NONE":
+        print(rel.resolve())
+
+print("done")
+
+# Predictions:
+# S-Nodes:
+# ('Default Rephrase', (('source', ('L', 'AudienceMember 20210912QT02: did what we were told')), ('target', ('L', 'AudienceMember 20210912QT02: We followed the guidance'))))
+# ('Default Inference-rev', (('source', ('L', 'AudienceMember 20210912QT02: It makes me sick')), ('target', ('L', "AudienceMember 20210912QT02: Then you hear they're having Christmas parties while we are suffering"))))
 # ...
-# ('ya_s2ta_nodes:NONE', (('ya_s2ta_nodes:source', ('L', 'AudienceMember 20210912QT02: My parents both had COVID')), ('ya_s2ta_nodes:target', ('L', 'AudienceMember 20210912QT02: We followed the guidance'))))
-# ('ya_s2ta_nodes:Restating', (('ya_s2ta_nodes:source', ('L', 'AudienceMember 20210912QT02: We followed the guidance')), ('ya_s2ta_nodes:target', ('L', 'AudienceMember 20210912QT02: did what we were told'))))
+# YA-S2TA-Nodes:
+# ('Asserting', (('source', ('L', 'AudienceMember 20210912QT02: My parents both had COVID')),))
+# ('Asserting', (('source', ('L', 'AudienceMember 20210912QT02: We followed the guidance')),))
 # ...
+# YA-I2L-Nodes:
+# ('Restating', (('source', ('L', 'AudienceMember 20210912QT02: We followed the guidance')), ('target', ('L', 'AudienceMember 20210912QT02: did what we were told'))))
+# ('Arguing', (('source', ('L', "AudienceMember 20210912QT02: Then you hear they're having Christmas parties while we are suffering")), ('target', ('L', 'AudienceMember 20210912QT02: It makes me sick'))))
+# ...
+# done
 ```
 
 ## 🚀 Quickstart
