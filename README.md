@@ -89,7 +89,7 @@ and data augmentation. Our source code is publicly available.
 
    ```bash
    python src/evaluation/eval_official.py \
-   --gold_dir=GOLD/DATA/DIR \
+   --gold_dir=data/evaluation_data \
    --predictions_dir=PREDICTION/DATA/DIR \
    --mode=arguments
    ```
@@ -98,7 +98,7 @@ and data augmentation. Our source code is publicly available.
 
    ```bash
    python src/evaluation/eval_official.py \
-   --gold_dir=GOLD/DATA/DIR \
+   --gold_dir=data/evaluation_data \
    --predictions_dir=PREDICTION/DATA/DIR \
    --mode=illocutions
    ```
