@@ -187,7 +187,7 @@ def get_node_matching(
     l_node_ids = get_node_ids_by_type(nodeset, ["L"])
     other_l_node_ids = get_node_ids_by_type(other, ["L"])
     # sanity check
-    if not set(l_node_ids) == set(other_l_node_ids):
+    if len(set(l_node_ids) - set(other_l_node_ids)):
         raise ValueError(
             f"nodeset={nodeset_id}: L-nodes do not match: {l_node_ids} vs. {other_l_node_ids}"
         )
@@ -195,8 +195,8 @@ def get_node_matching(
     ta_node_ids = get_node_ids_by_type(nodeset, ["TA"])
     other_ta_node_ids = get_node_ids_by_type(other, ["TA"])
     # sanity check
-    if not set(ta_node_ids) == set(other_ta_node_ids):
-        raise ValueError(
+    if len(set(ta_node_ids) - set(other_ta_node_ids)) > 0:
+        logger.warning(
             f"nodeset={nodeset_id}: TA-nodes do not match: {ta_node_ids} vs. {other_ta_node_ids}"
         )
     result.extend((node_id, node_id) for node_id in ta_node_ids)
@@ -591,10 +591,12 @@ def prepare_nodeset(
         Prepared nodeset.
     """
 
-    nodeset_clean = cleanup_nodeset(nodeset=nodeset, nodeset_id=nodeset_id, verbose=verbose)
-    nodeset_without_relations = remove_s_and_ya_nodes_with_edges(nodeset_clean, nodeset_id)
+    nodeset_without_relations = remove_s_and_ya_nodes_with_edges(nodeset, nodeset_id)
+    nodeset_without_relations_clean = cleanup_nodeset(
+        nodeset=nodeset_without_relations, nodeset_id=nodeset_id, verbose=verbose
+    )
     nodeset_with_dummy_relations = add_s_and_ya_nodes_with_edges(
-        nodeset=nodeset_without_relations,
+        nodeset=nodeset_without_relations_clean,
         nodeset_id=nodeset_id,
         s_node_text=s_node_text,
         ya_node_text=ya_node_text,
@@ -605,6 +607,7 @@ def prepare_nodeset(
 
     if add_gold_data:
         # normalize the direction of the RA-relation nodes in the cleaned (gold) data
+        nodeset_clean = cleanup_nodeset(nodeset=nodeset, nodeset_id=nodeset_id, verbose=verbose)
         nodeset_normalized_relations = normalize_ra_relation_direction(
             nodeset_clean, nodeset_id, reversed_text_suffix
         )
