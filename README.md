@@ -152,6 +152,10 @@ path = "/home/arbi01/Downloads/test-data(8)/test/test_map1.json"
 with open(path, "r") as f:
     nodeset: Nodeset = json.load(f)
 nodeset_id="test_map1"
+
+# Cleanup the nodeset (remove isolated L-nodes, loops, etc.) and
+# add candidate relation nodes with Label "NONE" for all three relation types,
+# i.e. S-Nodes, YA-S2TA-Nodes, YA-I2L-Nodes.
 cleaned_nodeset: Nodeset = prepare_nodeset(
     nodeset=nodeset,
     nodeset_id=nodeset_id,
@@ -159,11 +163,13 @@ cleaned_nodeset: Nodeset = prepare_nodeset(
     ya_node_text=NONE_LABEL,
     s_node_type="RA",
     reversed_text_suffix=REVERSE_SUFFIX,
-    l2i_similarity_measure="lcsstr",
-    add_gold_data=False,
+    l2i_similarity_measure="lcsstr",  # use longest common substring
+    integrate_gold_data=False,
 )
 
+# convert the nodeset to a PyTorch-IE document
 doc: SimplifiedDialAM2024Document = convert_to_document(nodeset=cleaned_nodeset, nodeset_id=nodeset_id)
+# merge all relation layers into one, the labels are prefixed with the relation type (S, YA-S2TA, or YA-I2L)
 doc: TextDocumentWithLabeledEntitiesAndNaryRelations = merge_relations(
     document=doc,
     labeled_span_layer="l_nodes",
@@ -171,7 +177,7 @@ doc: TextDocumentWithLabeledEntitiesAndNaryRelations = merge_relations(
     sep=PREFIX_SEPARATOR,
 )
 
-# inference (works also with multiple documents)
+# inference (works also with multiple documents at once)
 doc: TextDocumentWithLabeledEntitiesAndNaryRelations = pipe(doc)
 
 doc: SimplifiedDialAM2024Document = unmerge_relations(document=doc, sep=PREFIX_SEPARATOR)
@@ -191,7 +197,10 @@ print("Predictions:")
 print("S-Nodes:")
 for rel in doc.s_nodes.predictions:
     if rel.label != "NONE":
-        print(rel.resolve())
+       # Note: If the s-node label ends with REVERSE_SUFFIX ("-rev"), the argument roles should be swapped
+       #    in a post-processing step to get the correct order of the arguments in the relation,
+       #    i.e. (target, target, source) instead of (source, source, target).
+       print(rel.resolve())
 print("YA-S2TA-Nodes:")
 for rel in doc.ya_i2l_nodes.predictions:
     if rel.label != "NONE":
