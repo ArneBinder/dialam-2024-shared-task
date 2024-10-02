@@ -33,7 +33,9 @@ and data augmentation. Our source code is publicly available.
 ## ✨ How to Reproduce the Results from Our Paper
 
 1. Set up the environment as described in the [Environment Setup](#environment-setup) section.
+
 2. Train models with the configuration from the paper (this will execute 3 runs with different seeds):
+
    ```bash
    python src/train.py \
    experiment=dialam2024_merged_relations \
@@ -46,9 +48,11 @@ and data augmentation. Our source code is publicly available.
    +hydra.callbacks.save_job_return.integrate_multirun_result=true \
    --multirun
    ```
+
 3. Run the inference on the test set (the `model_save_dir`s from the training step will be used as the
    `model_name_or_path`, see the content of the `job_return_value.json` in your `logs/training` folder
    for the exact paths):
+
    ```bash
    python src/predict.py \
    dataset=dialam2024_prepared \
@@ -58,7 +62,9 @@ and data augmentation. Our source code is publicly available.
    +pipeline.batch_size=8 \
    --multirun
    ```
+
    or run the inference with the model checkpoint from the paper ([from Huggingface hub](https://huggingface.co/DFKI-SLT/dfki-mlst-deberta-v3)):
+
    ```bash
    python src/predict.py \
    dataset=dialam2024_prepared \
@@ -67,28 +73,56 @@ and data augmentation. Our source code is publicly available.
    +pipeline.device=0 \
    +pipeline.batch_size=8
    ```
-4. Evaluate the results:
+
+4. Evaluate the results with the annotated shared task test data that are stored in `data/evaluation_data`.
    First, convert the serialized JSON documents into the JSON format required for the DialAM Shared
    Task with each nodeset in a separate JSON file (note that `INPUT/DATA/DIR` is the path to one of the
    directories where the predicted outputs from the previous step are stored):
+
    ```bash
    python src/utils/convert_documents2nodesets.py \
    --input_dir=INPUT/DATA/DIR \
    --output_dir=PREDICTION/DATA/DIR
    ```
+
    Second, evaluate using the official script for argumentative relations:
+
    ```bash
    python src/evaluation/eval_official.py \
    --gold_dir=GOLD/DATA/DIR \
    --predictions_dir=PREDICTION/DATA/DIR \
    --mode=arguments
    ```
+
    ... and for illocutionary relations:
+
    ```bash
    python src/evaluation/eval_official.py \
    --gold_dir=GOLD/DATA/DIR \
    --predictions_dir=PREDICTION/DATA/DIR \
    --mode=illocutions
+   ```
+
+   Depending on the hardware that is used to do the predictions the results may slightly vary, for H100 we achieved the following scores for argumentative relations:
+
+   ```
+   general.p: 0.61956118154322
+   general.r: 0.5328788951094529
+   general.f1: 0.5533113738298515
+   focused.p: 0.43876262626262624
+   focused.r: 0.2481962481962482
+   focused.f1: 0.3039512181223411
+   ```
+
+   ... and for illocutionary relations:
+
+   ```
+   general.p: 0.8108195336938596
+   general.r: 0.7925352836170968
+   general.f1: 0.7878014615826178
+   focused.p: 0.691260002623639
+   focused.r: 0.6623577402989167
+   focused.f1: 0.6610087288770674
    ```
 
 ## 🔮 Inference with the Trained Model on New Data
