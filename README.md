@@ -21,7 +21,7 @@ paper [DFKI-MLST at DialAM-2024 Shared Task: System Description (Binder et al., 
 ACL 2024 in Bangkok, Thailand. The task was part of the workshop and focused on the identification
 of argumentative relations in dialogues. See the [official website](https://dialam.arg.tech/) for more information.
 
-### 📃 Abstract
+## 📃 Abstract
 
 We present the dfki-mlst submission for the DialAM shared task on identification of argumentative and illocutionary
 relations in dialogue. Our model achieves the best results in the global setting: 48.25 F1 at the focused level when
@@ -30,7 +30,7 @@ argument maps. We describe our implementation of the data pre-processing pipelin
 classification, evaluating 11 different base models and performing experiments with, e.g., node text combination
 and data augmentation. Our source code is publicly available.
 
-### ✨ How to Reproduce the Results from Our Paper
+## ✨ How to Reproduce the Results from Our Paper
 
 1. Set up the environment as described in the [Environment Setup](#environment-setup) section.
 2. Train models with the configuration from the paper (this will execute 3 runs with different seeds):
@@ -91,7 +91,7 @@ and data augmentation. Our source code is publicly available.
    --mode=illocutions
    ```
 
-### 🔮 Inference with the Trained Model on New Data
+## 🔮 Inference with the Trained Model on New Data
 
 ```python
 import json
