@@ -136,7 +136,7 @@ doc: TextDocumentWithLabeledEntitiesAndNaryRelations = merge_relations(
     sep=PREFIX_SEPARATOR,
 )
 
-# inference (works also with multiple documents)
+# inference (works also with multiple documents at once)
 doc: TextDocumentWithLabeledEntitiesAndNaryRelations = pipe(doc)
 
 doc: SimplifiedDialAM2024Document = unmerge_relations(document=doc, sep=PREFIX_SEPARATOR)
