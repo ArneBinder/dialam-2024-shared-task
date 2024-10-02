@@ -476,20 +476,23 @@ class PieDialAM2024(GeneratorBasedBuilder):
     }
     DEFAULT_CONFIG_NAME = "default"
 
-    def _generate_document(self, example, **kwargs):
+    def _generate_document_kwargs(self, dataset):
+        # the gold data for the test set is broken, so we only add the gold labels
+        # for the training and validation sets
+        return {"integrate_gold_data": dataset.split != "test"}
+
+    def _generate_document(self, example, integrate_gold_data: bool, **kwargs):
         nodeset_id = example["id"]
         # because of the tabular format that backs HuggingFace datasets, the sequential data fields, like
         # nodes / edges / locutions, are stored as dict of lists, where each key is a field name and the value
-        # is a list of values for that field; however, the nodeset2document conversion function expects the
+        # is a list of values for that field; however, the prepare_nodeset conversion function expects the
         # data to be stored as list of dicts, where each dict is a record; therefore, before converting the
         # nodeset to a document, we need to convert the nodes / edges / locutions back to lists of dicts
-        nodeset = {
+        nodeset: Nodeset = {
             "nodes": dictoflists_to_listofdicts(example["nodes"]),
             "edges": dictoflists_to_listofdicts(example["edges"]),
             "locutions": dictoflists_to_listofdicts(example["locutions"]),
         }
-        # this is a bit hacky, but we can use the nodeset_id to determine if the example is a test example
-        is_test_example = nodeset_id.startswith("test_map")
         cleaned_nodeset = prepare_nodeset(
             nodeset=nodeset,
             nodeset_id=nodeset_id,
@@ -498,7 +501,7 @@ class PieDialAM2024(GeneratorBasedBuilder):
             s_node_type="RA",
             reversed_text_suffix=REVERSE_SUFFIX,
             l2i_similarity_measure="lcsstr",
-            add_gold_data=not is_test_example,
+            integrate_gold_data=integrate_gold_data,
         )
         doc = convert_to_document(nodeset=cleaned_nodeset, nodeset_id=nodeset_id)
         if self.config.name == "merged_relations":

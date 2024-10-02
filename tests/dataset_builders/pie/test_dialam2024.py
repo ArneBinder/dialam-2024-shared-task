@@ -368,7 +368,7 @@ def assert_document(document, config_name, split_name):
 @pytest.fixture(scope="module")
 def converted_document(builder, hf_example, split_name):
     # test nodeset cleanup and conversion to document
-    document = builder._generate_document(hf_example)
+    document = builder._generate_document(hf_example, integrate_gold_data=split_name != "test")
     return document
 
 

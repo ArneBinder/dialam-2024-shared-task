@@ -558,7 +558,7 @@ def prepare_nodeset(
     s_node_type: str = "S",
     l2i_similarity_measure: str = "lcsstr",
     reversed_text_suffix: str = "-rev",
-    add_gold_data: bool = False,
+    integrate_gold_data: bool = False,
     re_revert_ra_relations: bool = False,
     re_remove_none_relations: bool = False,
     verbose: bool = True,
@@ -580,7 +580,7 @@ def prepare_nodeset(
         s_node_type: Type for the dummy S-node.
         l2i_similarity_measure: Similarity measure to use for matching L- and I-nodes.
         reversed_text_suffix: Suffix to append to the type of the reversed relation node.
-        add_gold_data: Whether to add gold data to the dummy relation nodes.
+        integrate_gold_data: Whether to set the labels of the dummy relation nodes with gold data.
         re_revert_ra_relations: Whether to revert the normalized RA-relation nodes back to the original state.
         re_remove_none_relations: Whether to re-remove the new S and YA relations.
         nodeset_id: A Nodeset ID for better error messages.
@@ -605,7 +605,7 @@ def prepare_nodeset(
         verbose=verbose,
     )
 
-    if add_gold_data:
+    if integrate_gold_data:
         # normalize the direction of the RA-relation nodes in the cleaned (gold) data
         nodeset_clean = cleanup_nodeset(nodeset=nodeset, nodeset_id=nodeset_id, verbose=verbose)
         nodeset_normalized_relations = normalize_ra_relation_direction(
