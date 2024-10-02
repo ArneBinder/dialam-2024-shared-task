@@ -140,7 +140,14 @@ doc: TextDocumentWithLabeledEntitiesAndNaryRelations = merge_relations(
 doc: TextDocumentWithLabeledEntitiesAndNaryRelations = pipe(doc)
 
 doc: SimplifiedDialAM2024Document = unmerge_relations(document=doc, sep=PREFIX_SEPARATOR)
-# print predictions
+
+# helper structure to get the node IDs from the relation arguments, if needed
+l_node2id = dict(zip(doc.l_nodes, doc.metadata["l_node_ids"]))
+s_node_example = doc.s_nodes.predictions[0]
+# print(l_node2id[s_node_example.arguments[0]], s_node_example.roles[0])
+# 22_163907070207948843 source
+
+# print all predictions
 print("Predictions:")
 print("S-Nodes:")
 for rel in doc.s_nodes.predictions:
