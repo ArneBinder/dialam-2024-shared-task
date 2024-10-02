@@ -1,0 +1,1680 @@
+{
+  "nodes": [
+    {
+      "nodeID": "15_163907070207948843",
+      "text": "My parents both had COVID",
+      "type": "I"
+    },
+    {
+      "nodeID": "16_163907070207948843",
+      "text": "AudienceMember 20210912QT02: My parents both had COVID",
+      "type": "L"
+    },
+    {
+      "nodeID": "17_163907070207948843",
+      "text": "Analysing",
+      "type": "YA"
+    },
+    {
+      "nodeID": "18_163907070207948843",
+      "text": "Steffi: AudienceMember 20210912QT02: My parents both had COVID",
+      "type": "L"
+    },
+    {
+      "nodeID": "19_163907070207948843",
+      "text": "Asserting",
+      "type": "YA"
+    },
+    {
+      "nodeID": "21_163907070207948843",
+      "text": "we followed the guidance",
+      "type": "I"
+    },
+    {
+      "nodeID": "22_163907070207948843",
+      "text": "AudienceMember 20210912QT02: We followed the guidance",
+      "type": "L"
+    },
+    {
+      "nodeID": "23_163907070207948843",
+      "text": "Analysing",
+      "type": "YA"
+    },
+    {
+      "nodeID": "24_163907070207948843",
+      "text": "Steffi: AudienceMember 20210912QT02: We followed the guidance",
+      "type": "L"
+    },
+    {
+      "nodeID": "25_163907070207948843",
+      "text": "Asserting",
+      "type": "YA"
+    },
+    {
+      "nodeID": "26_163907070207948843",
+      "text": "we did what we were told",
+      "type": "I"
+    },
+    {
+      "nodeID": "27_163907070207948843",
+      "text": "AudienceMember 20210912QT02: did what we were told",
+      "type": "L"
+    },
+    {
+      "nodeID": "28_163907070207948843",
+      "text": "Analysing",
+      "type": "YA"
+    },
+    {
+      "nodeID": "29_163907070207948843",
+      "text": "Steffi: AudienceMember 20210912QT02: did what we were told",
+      "type": "L"
+    },
+    {
+      "nodeID": "30_163907070207948843",
+      "text": "Asserting",
+      "type": "YA"
+    },
+    {
+      "nodeID": "31_163907070207948843",
+      "text": "Default Transition",
+      "type": "TA"
+    },
+    {
+      "nodeID": "32_163907070207948843",
+      "text": "Default Transition",
+      "type": "TA"
+    },
+    {
+      "nodeID": "33_163907070207948843",
+      "text": "Default Conflict",
+      "type": "CA"
+    },
+    {
+      "nodeID": "34_163907070207948843",
+      "text": "Default Rephrase",
+      "type": "MA"
+    },
+    {
+      "nodeID": "35_163907070207948843",
+      "text": "Disagreeing",
+      "type": "YA"
+    },
+    {
+      "nodeID": "36_163907070207948843",
+      "text": "Restating",
+      "type": "YA"
+    },
+    {
+      "nodeID": "37_163907070207948843",
+      "text": "AudienceMember 20211209QT02 is stuck here in Milwall, mum and dad are at home in south London",
+      "type": "I"
+    },
+    {
+      "nodeID": "38_163907070207948843",
+      "text": "AudienceMember 20210912QT02: I'm stuck here, mum and dad are at home in south London",
+      "type": "L"
+    },
+    {
+      "nodeID": "39_163907070207948843",
+      "text": "Analysing",
+      "type": "YA"
+    },
+    {
+      "nodeID": "40_163907070207948843",
+      "text": "Steffi: AudienceMember 20210912QT02: I'm stuck here, mum and dad are at home in south London",
+      "type": "L"
+    },
+    {
+      "nodeID": "41_163907070207948843",
+      "text": "Asserting",
+      "type": "YA"
+    },
+    {
+      "nodeID": "42_163907070207948843",
+      "text": "Default Transition",
+      "type": "TA"
+    },
+    {
+      "nodeID": "43_163907070207948843",
+      "text": "then you hear they're having Christmas parties while we are suffering",
+      "type": "I"
+    },
+    {
+      "nodeID": "44_163907070207948843",
+      "text": "AudienceMember 20210912QT02: Then you hear they're having Christmas parties while we are suffering",
+      "type": "L"
+    },
+    {
+      "nodeID": "45_163907070207948843",
+      "text": "Analysing",
+      "type": "YA"
+    },
+    {
+      "nodeID": "46_163907070207948843",
+      "text": "Steffi: AudienceMember 20210912QT02: Then you hear they're having Christmas parties while we are suffering",
+      "type": "L"
+    },
+    {
+      "nodeID": "47_163907070207948843",
+      "text": "Asserting",
+      "type": "YA"
+    },
+    {
+      "nodeID": "48_163907070207948843",
+      "text": "Default Transition",
+      "type": "TA"
+    },
+    {
+      "nodeID": "49_163907070207948843",
+      "text": "hearing they're having Christmas parties while we are suffering makes AudienceMember 20211209QT02 sick",
+      "type": "I"
+    },
+    {
+      "nodeID": "50_163907070207948843",
+      "text": "AudienceMember 20210912QT02: It makes me sick",
+      "type": "L"
+    },
+    {
+      "nodeID": "51_163907070207948843",
+      "text": "Analysing",
+      "type": "YA"
+    },
+    {
+      "nodeID": "52_163907070207948843",
+      "text": "Steffi: AudienceMember 20210912QT02: It makes me sick",
+      "type": "L"
+    },
+    {
+      "nodeID": "53_163907070207948843",
+      "text": "Asserting",
+      "type": "YA"
+    },
+    {
+      "nodeID": "54_163907070207948843",
+      "text": "Default Transition",
+      "type": "TA"
+    },
+    {
+      "nodeID": "55_163907070207948843",
+      "text": "Default Inference",
+      "type": "RA"
+    },
+    {
+      "nodeID": "56_163907070207948843",
+      "text": "Arguing",
+      "type": "YA"
+    },
+    {
+      "nodeID": "57_163907070207948843",
+      "text": "hearing they're having Christmas parties while we are suffering makes AudienceMember 20211209QT02 really sick",
+      "type": "I"
+    },
+    {
+      "nodeID": "58_163907070207948843",
+      "text": "AudienceMember 20210912QT02: It really does",
+      "type": "L"
+    },
+    {
+      "nodeID": "59_163907070207948843",
+      "text": "Analysing",
+      "type": "YA"
+    },
+    {
+      "nodeID": "60_163907070207948843",
+      "text": "Steffi: AudienceMember 20210912QT02: It really does",
+      "type": "L"
+    },
+    {
+      "nodeID": "61_163907070207948843",
+      "text": "Asserting",
+      "type": "YA"
+    },
+    {
+      "nodeID": "62_163907070207948843",
+      "text": "hearing they're having Christmas parties while we are suffering makes AudienceMember 20211209QT02 really upset",
+      "type": "I"
+    },
+    {
+      "nodeID": "63_163907070207948843",
+      "text": "AudienceMember 20210912QT02: It makes me really upset",
+      "type": "L"
+    },
+    {
+      "nodeID": "64_163907070207948843",
+      "text": "Analysing",
+      "type": "YA"
+    },
+    {
+      "nodeID": "65_163907070207948843",
+      "text": "Steffi: AudienceMember 20210912QT02: It makes me really upset",
+      "type": "L"
+    },
+    {
+      "nodeID": "66_163907070207948843",
+      "text": "Asserting",
+      "type": "YA"
+    },
+    {
+      "nodeID": "67_163907070207948843",
+      "text": "Default Transition",
+      "type": "TA"
+    },
+    {
+      "nodeID": "69_163907070207948843",
+      "text": "Default Rephrase",
+      "type": "MA"
+    },
+    {
+      "nodeID": "70_163907070207948843",
+      "text": "Default Rephrase",
+      "type": "MA"
+    },
+    {
+      "nodeID": "71_163907070207948843",
+      "text": "Default Transition",
+      "type": "TA"
+    },
+    {
+      "nodeID": "72_163907070207948843",
+      "text": "Restating",
+      "type": "YA"
+    },
+    {
+      "nodeID": "74_163907070207948843",
+      "text": "Restating",
+      "type": "YA"
+    },
+    {
+      "nodeID": "75_163907070207948843",
+      "text": "Maggie Throup respects that people put up with a lot",
+      "type": "I"
+    },
+    {
+      "nodeID": "76_163907070207948843",
+      "text": "Maggie Throup:  I respect that people put up with a lot",
+      "type": "L"
+    },
+    {
+      "nodeID": "77_163907070207948843",
+      "text": "Analysing",
+      "type": "YA"
+    },
+    {
+      "nodeID": "78_163907070207948843",
+      "text": "Steffi: Maggie Throup:  I respect that people put up with a lot",
+      "type": "L"
+    },
+    {
+      "nodeID": "79_163907070207948843",
+      "text": "Asserting",
+      "type": "YA"
+    },
+    {
+      "nodeID": "80_163907070207948843",
+      "text": "Default Transition",
+      "type": "TA"
+    },
+    {
+      "nodeID": "81_163907070207948843",
+      "text": "does the Prime Minister in particular respect that people put up with a lot",
+      "type": "I"
+    },
+    {
+      "nodeID": "82_163907070207948843",
+      "text": "Fiona Bruce: What about the Prime Minister in particular",
+      "type": "L"
+    },
+    {
+      "nodeID": "83_163907070207948843",
+      "text": "Analysing",
+      "type": "YA"
+    },
+    {
+      "nodeID": "84_163907070207948843",
+      "text": "Steffi: Fiona Bruce: What about the Prime Minister in particular",
+      "type": "L"
+    },
+    {
+      "nodeID": "85_163907070207948843",
+      "text": "Assertive Questioning",
+      "type": "YA"
+    },
+    {
+      "nodeID": "86_163907070207948843",
+      "text": "Default Transition",
+      "type": "TA"
+    },
+    {
+      "nodeID": "88_163907070207948843",
+      "text": "all guidance was followed during the Christmas party",
+      "type": "I"
+    },
+    {
+      "nodeID": "89_163907070207948843",
+      "text": "Maggie Throup: The PM said that all guidance was followed",
+      "type": "L"
+    },
+    {
+      "nodeID": "90_163907070207948843",
+      "text": "Analysing",
+      "type": "YA"
+    },
+    {
+      "nodeID": "91_163907070207948843",
+      "text": "Steffi: Maggie Throup: The PM said that all guidance was followed",
+      "type": "L"
+    },
+    {
+      "nodeID": "93_163907070207948843",
+      "text": "Default Transition",
+      "type": "TA"
+    },
+    {
+      "nodeID": "94_163907070207948843",
+      "text": "Boris Johnson: all guidance was followed during the Christmas party",
+      "type": "L"
+    },
+    {
+      "nodeID": "95_163907070207948843",
+      "text": "Analysing",
+      "type": "YA"
+    },
+    {
+      "nodeID": "96_163907070207948843",
+      "text": "Steffi: Boris Johnson: The PM said that all guidance was followed",
+      "type": "L"
+    },
+    {
+      "nodeID": "97_163907070207948843",
+      "text": "Asserting",
+      "type": "YA"
+    },
+    {
+      "nodeID": "98_163907070207948843",
+      "text": "Asserting",
+      "type": "YA"
+    },
+    {
+      "nodeID": "99_163907070207948843",
+      "text": "whether or not the guidance was followed during Boris Johnson's Christmas party wasn't the question that was asked",
+      "type": "I"
+    },
+    {
+      "nodeID": "100_163907070207948843",
+      "text": "Fiona Bruce: That wasn't the question that was asked",
+      "type": "L"
+    },
+    {
+      "nodeID": "101_163907070207948843",
+      "text": "Analysing",
+      "type": "YA"
+    },
+    {
+      "nodeID": "102_163907070207948843",
+      "text": "Steffi: Fiona Bruce: That wasn't the question that was asked",
+      "type": "L"
+    },
+    {
+      "nodeID": "103_163907070207948843",
+      "text": "Asserting",
+      "type": "YA"
+    },
+    {
+      "nodeID": "104_163907070207948843",
+      "text": "Default Transition",
+      "type": "TA"
+    },
+    {
+      "nodeID": "105_163907070207948843",
+      "text": "everyone is laughing",
+      "type": "I"
+    },
+    {
+      "nodeID": "106_163907070207948843",
+      "text": "Fiona Bruce: everyone is laughing",
+      "type": "L"
+    },
+    {
+      "nodeID": "107_163907070207948843",
+      "text": "Analysing",
+      "type": "YA"
+    },
+    {
+      "nodeID": "108_163907070207948843",
+      "text": "Steffi: Fiona Bruce: everyone is laughing",
+      "type": "L"
+    },
+    {
+      "nodeID": "109_163907070207948843",
+      "text": "Asserting",
+      "type": "YA"
+    },
+    {
+      "nodeID": "110_163907070207948843",
+      "text": "Default Transition",
+      "type": "TA"
+    },
+    {
+      "nodeID": "111_163907070207948843",
+      "text": "Default Inference",
+      "type": "RA"
+    },
+    {
+      "nodeID": "112_163907070207948843",
+      "text": "Arguing",
+      "type": "YA"
+    },
+    {
+      "nodeID": "113_163907070207948843",
+      "text": "Maggie Throup might as well put it straight",
+      "type": "I"
+    },
+    {
+      "nodeID": "114_163907070207948843",
+      "text": "Fiona Bruce: You might as well put it straight",
+      "type": "L"
+    },
+    {
+      "nodeID": "115_163907070207948843",
+      "text": "Analysing",
+      "type": "YA"
+    },
+    {
+      "nodeID": "116_163907070207948843",
+      "text": "Steffi: Fiona Bruce: You might as well put it straight",
+      "type": "L"
+    },
+    {
+      "nodeID": "117_163907070207948843",
+      "text": "Asserting",
+      "type": "YA"
+    },
+    {
+      "nodeID": "119_163907070207948843",
+      "text": "there as or was not a Christmas party at Boris Johnson's house",
+      "type": "I"
+    },
+    {
+      "nodeID": "120_163907070207948843",
+      "text": "Fiona Bruce: Was there a Christmas party or wasn't there",
+      "type": "L"
+    },
+    {
+      "nodeID": "121_163907070207948843",
+      "text": "Analysing",
+      "type": "YA"
+    },
+    {
+      "nodeID": "122_163907070207948843",
+      "text": "Steffi: Fiona Bruce: Was there a Christmas party or wasn't there",
+      "type": "L"
+    },
+    {
+      "nodeID": "123_163907070207948843",
+      "text": "Pure Questioning",
+      "type": "YA"
+    },
+    {
+      "nodeID": "124_163907070207948843",
+      "text": "Default Transition",
+      "type": "TA"
+    },
+    {
+      "nodeID": "125_163907070207948843",
+      "text": "Default Inference",
+      "type": "RA"
+    },
+    {
+      "nodeID": "126_163907070207948843",
+      "text": "Default Transition",
+      "type": "TA"
+    },
+    {
+      "nodeID": "127_163907070207948843",
+      "text": "Arguing",
+      "type": "YA"
+    },
+    {
+      "nodeID": "128_163907070207948843",
+      "text": "Maggie Throup wasn't at the Christmas party",
+      "type": "I"
+    },
+    {
+      "nodeID": "129_163907070207948843",
+      "text": "Maggie Throup: I wasn't there",
+      "type": "L"
+    },
+    {
+      "nodeID": "130_163907070207948843",
+      "text": "Analysing",
+      "type": "YA"
+    },
+    {
+      "nodeID": "131_163907070207948843",
+      "text": "Steffi: Maggie Throup: I wasn't there",
+      "type": "L"
+    },
+    {
+      "nodeID": "132_163907070207948843",
+      "text": "Asserting",
+      "type": "YA"
+    },
+    {
+      "nodeID": "133_163907070207948843",
+      "text": "Default Transition",
+      "type": "TA"
+    },
+    {
+      "nodeID": "135_163907070207948843",
+      "text": "Fiona Bruce: No",
+      "type": "L"
+    },
+    {
+      "nodeID": "136_163907070207948843",
+      "text": "Analysing",
+      "type": "YA"
+    },
+    {
+      "nodeID": "137_163907070207948843",
+      "text": "Steffi: Fiona Bruce: No",
+      "type": "L"
+    },
+    {
+      "nodeID": "139_163907070207948843",
+      "text": "Default Transition",
+      "type": "TA"
+    },
+    {
+      "nodeID": "141_163907070207948843",
+      "text": "Agreeing",
+      "type": "YA"
+    },
+    {
+      "nodeID": "142_163907070207948843",
+      "text": "Fione Bruce is sure Magge Throup was briefed before she came on",
+      "type": "I"
+    },
+    {
+      "nodeID": "143_163907070207948843",
+      "text": "Fiona Bruce: I'm sure you were briefed before you came on",
+      "type": "L"
+    },
+    {
+      "nodeID": "144_163907070207948843",
+      "text": "Analysing",
+      "type": "YA"
+    },
+    {
+      "nodeID": "145_163907070207948843",
+      "text": "Steffi: Fiona Bruce: I'm sure you were briefed before you came on",
+      "type": "L"
+    },
+    {
+      "nodeID": "146_163907070207948843",
+      "text": "Asserting",
+      "type": "YA"
+    },
+    {
+      "nodeID": "147_163907070207948843",
+      "text": "Default Transition",
+      "type": "TA"
+    },
+    {
+      "nodeID": "148_163907070207948843",
+      "text": "Maggie Throup wasn't invited to what was happening at No. 10",
+      "type": "I"
+    },
+    {
+      "nodeID": "149_163907070207948843",
+      "text": "Maggie Throup: I wasn't invited to what was happening at No. 10",
+      "type": "L"
+    },
+    {
+      "nodeID": "150_163907070207948843",
+      "text": "Analysing",
+      "type": "YA"
+    },
+    {
+      "nodeID": "151_163907070207948843",
+      "text": "Steffi: Maggie Throup: I wasn't invited to what was happening at No. 10",
+      "type": "L"
+    },
+    {
+      "nodeID": "152_163907070207948843",
+      "text": "Asserting",
+      "type": "YA"
+    },
+    {
+      "nodeID": "153_163907070207948843",
+      "text": "Default Transition",
+      "type": "TA"
+    },
+    {
+      "nodeID": "156_163907070207948843",
+      "text": "AudienceMember 20210912QT02: my parents are from south London",
+      "type": "L"
+    },
+    {
+      "nodeID": "157_163907070207948843",
+      "text": "Analysing",
+      "type": "YA"
+    },
+    {
+      "nodeID": "158_163907070207948843",
+      "text": "Steffi: AudienceMember 20210912QT02: this time last year my parents are from south London",
+      "type": "L"
+    },
+    {
+      "nodeID": "160_163907070207948843",
+      "text": "my parents are from south London",
+      "type": "L"
+    },
+    {
+      "nodeID": "161_163907070207948843",
+      "text": "Analysing",
+      "type": "YA"
+    },
+    {
+      "nodeID": "162_163907070207948843",
+      "text": "Steffi: AudienceMember 20210912QT02: this time last year my parents are from south London",
+      "type": "L"
+    },
+    {
+      "nodeID": "164_163907070207948843",
+      "text": "Asserting",
+      "type": "YA"
+    },
+    {
+      "nodeID": "165_163907070207948843",
+      "text": "this time last year we couldn't go see them",
+      "type": "I"
+    },
+    {
+      "nodeID": "166_163907070207948843",
+      "text": "AudienceMember 20210912QT02: This time last year my parents are from south London, so we couldn't go see them",
+      "type": "L"
+    },
+    {
+      "nodeID": "167_163907070207948843",
+      "text": "Analysing",
+      "type": "YA"
+    },
+    {
+      "nodeID": "168_163907070207948843",
+      "text": "Steffi: AudienceMember 20210912QT02: This time last year my parents are from south London, so we couldn't go see them",
+      "type": "L"
+    },
+    {
+      "nodeID": "169_163907070207948843",
+      "text": "Asserting",
+      "type": "YA"
+    },
+    {
+      "nodeID": "170_163907070207948843",
+      "text": "Default Transition",
+      "type": "TA"
+    },
+    {
+      "nodeID": "171_163907070207948843",
+      "text": "Default Transition",
+      "type": "TA"
+    },
+    {
+      "nodeID": "175_163907070207948843",
+      "text": "Default Inference",
+      "type": "RA"
+    },
+    {
+      "nodeID": "176_163907070207948843",
+      "text": "Arguing",
+      "type": "YA"
+    }
+  ],
+  "edges": [
+    {
+      "edgeID": 1,
+      "fromID": "17_163907070207948843",
+      "toID": "16_163907070207948843"
+    },
+    {
+      "edgeID": 2,
+      "fromID": "18_163907070207948843",
+      "toID": "17_163907070207948843"
+    },
+    {
+      "edgeID": 3,
+      "fromID": "16_163907070207948843",
+      "toID": "19_163907070207948843"
+    },
+    {
+      "edgeID": 4,
+      "fromID": "19_163907070207948843",
+      "toID": "15_163907070207948843"
+    },
+    {
+      "edgeID": 5,
+      "fromID": "23_163907070207948843",
+      "toID": "22_163907070207948843"
+    },
+    {
+      "edgeID": 6,
+      "fromID": "24_163907070207948843",
+      "toID": "23_163907070207948843"
+    },
+    {
+      "edgeID": 7,
+      "fromID": "22_163907070207948843",
+      "toID": "25_163907070207948843"
+    },
+    {
+      "edgeID": 8,
+      "fromID": "25_163907070207948843",
+      "toID": "21_163907070207948843"
+    },
+    {
+      "edgeID": 9,
+      "fromID": "28_163907070207948843",
+      "toID": "27_163907070207948843"
+    },
+    {
+      "edgeID": 10,
+      "fromID": "29_163907070207948843",
+      "toID": "28_163907070207948843"
+    },
+    {
+      "edgeID": 11,
+      "fromID": "27_163907070207948843",
+      "toID": "30_163907070207948843"
+    },
+    {
+      "edgeID": 12,
+      "fromID": "30_163907070207948843",
+      "toID": "26_163907070207948843"
+    },
+    {
+      "edgeID": 13,
+      "fromID": "16_163907070207948843",
+      "toID": "31_163907070207948843"
+    },
+    {
+      "edgeID": 14,
+      "fromID": "31_163907070207948843",
+      "toID": "22_163907070207948843"
+    },
+    {
+      "edgeID": 15,
+      "fromID": "22_163907070207948843",
+      "toID": "32_163907070207948843"
+    },
+    {
+      "edgeID": 16,
+      "fromID": "32_163907070207948843",
+      "toID": "27_163907070207948843"
+    },
+    {
+      "edgeID": 17,
+      "fromID": "21_163907070207948843",
+      "toID": "33_163907070207948843"
+    },
+    {
+      "edgeID": 18,
+      "fromID": "33_163907070207948843",
+      "toID": "15_163907070207948843"
+    },
+    {
+      "edgeID": 19,
+      "fromID": "26_163907070207948843",
+      "toID": "34_163907070207948843"
+    },
+    {
+      "edgeID": 20,
+      "fromID": "34_163907070207948843",
+      "toID": "21_163907070207948843"
+    },
+    {
+      "edgeID": 21,
+      "fromID": "31_163907070207948843",
+      "toID": "35_163907070207948843"
+    },
+    {
+      "edgeID": 22,
+      "fromID": "35_163907070207948843",
+      "toID": "33_163907070207948843"
+    },
+    {
+      "edgeID": 23,
+      "fromID": "32_163907070207948843",
+      "toID": "36_163907070207948843"
+    },
+    {
+      "edgeID": 24,
+      "fromID": "36_163907070207948843",
+      "toID": "34_163907070207948843"
+    },
+    {
+      "edgeID": 25,
+      "fromID": "39_163907070207948843",
+      "toID": "38_163907070207948843"
+    },
+    {
+      "edgeID": 26,
+      "fromID": "40_163907070207948843",
+      "toID": "39_163907070207948843"
+    },
+    {
+      "edgeID": 27,
+      "fromID": "38_163907070207948843",
+      "toID": "41_163907070207948843"
+    },
+    {
+      "edgeID": 28,
+      "fromID": "41_163907070207948843",
+      "toID": "37_163907070207948843"
+    },
+    {
+      "edgeID": 29,
+      "fromID": "27_163907070207948843",
+      "toID": "42_163907070207948843"
+    },
+    {
+      "edgeID": 30,
+      "fromID": "42_163907070207948843",
+      "toID": "38_163907070207948843"
+    },
+    {
+      "edgeID": 31,
+      "fromID": "45_163907070207948843",
+      "toID": "44_163907070207948843"
+    },
+    {
+      "edgeID": 32,
+      "fromID": "46_163907070207948843",
+      "toID": "45_163907070207948843"
+    },
+    {
+      "edgeID": 33,
+      "fromID": "44_163907070207948843",
+      "toID": "47_163907070207948843"
+    },
+    {
+      "edgeID": 34,
+      "fromID": "47_163907070207948843",
+      "toID": "43_163907070207948843"
+    },
+    {
+      "edgeID": 35,
+      "fromID": "38_163907070207948843",
+      "toID": "48_163907070207948843"
+    },
+    {
+      "edgeID": 36,
+      "fromID": "48_163907070207948843",
+      "toID": "44_163907070207948843"
+    },
+    {
+      "edgeID": 37,
+      "fromID": "51_163907070207948843",
+      "toID": "50_163907070207948843"
+    },
+    {
+      "edgeID": 38,
+      "fromID": "52_163907070207948843",
+      "toID": "51_163907070207948843"
+    },
+    {
+      "edgeID": 39,
+      "fromID": "50_163907070207948843",
+      "toID": "53_163907070207948843"
+    },
+    {
+      "edgeID": 40,
+      "fromID": "53_163907070207948843",
+      "toID": "49_163907070207948843"
+    },
+    {
+      "edgeID": 41,
+      "fromID": "44_163907070207948843",
+      "toID": "54_163907070207948843"
+    },
+    {
+      "edgeID": 42,
+      "fromID": "54_163907070207948843",
+      "toID": "50_163907070207948843"
+    },
+    {
+      "edgeID": 43,
+      "fromID": "43_163907070207948843",
+      "toID": "55_163907070207948843"
+    },
+    {
+      "edgeID": 44,
+      "fromID": "55_163907070207948843",
+      "toID": "49_163907070207948843"
+    },
+    {
+      "edgeID": 45,
+      "fromID": "54_163907070207948843",
+      "toID": "56_163907070207948843"
+    },
+    {
+      "edgeID": 46,
+      "fromID": "56_163907070207948843",
+      "toID": "55_163907070207948843"
+    },
+    {
+      "edgeID": 47,
+      "fromID": "59_163907070207948843",
+      "toID": "58_163907070207948843"
+    },
+    {
+      "edgeID": 48,
+      "fromID": "60_163907070207948843",
+      "toID": "59_163907070207948843"
+    },
+    {
+      "edgeID": 49,
+      "fromID": "58_163907070207948843",
+      "toID": "61_163907070207948843"
+    },
+    {
+      "edgeID": 50,
+      "fromID": "61_163907070207948843",
+      "toID": "57_163907070207948843"
+    },
+    {
+      "edgeID": 51,
+      "fromID": "64_163907070207948843",
+      "toID": "63_163907070207948843"
+    },
+    {
+      "edgeID": 52,
+      "fromID": "65_163907070207948843",
+      "toID": "64_163907070207948843"
+    },
+    {
+      "edgeID": 53,
+      "fromID": "63_163907070207948843",
+      "toID": "66_163907070207948843"
+    },
+    {
+      "edgeID": 54,
+      "fromID": "66_163907070207948843",
+      "toID": "62_163907070207948843"
+    },
+    {
+      "edgeID": 55,
+      "fromID": "50_163907070207948843",
+      "toID": "67_163907070207948843"
+    },
+    {
+      "edgeID": 56,
+      "fromID": "67_163907070207948843",
+      "toID": "58_163907070207948843"
+    },
+    {
+      "edgeID": 57,
+      "fromID": "57_163907070207948843",
+      "toID": "69_163907070207948843"
+    },
+    {
+      "edgeID": 58,
+      "fromID": "69_163907070207948843",
+      "toID": "49_163907070207948843"
+    },
+    {
+      "edgeID": 59,
+      "fromID": "62_163907070207948843",
+      "toID": "70_163907070207948843"
+    },
+    {
+      "edgeID": 60,
+      "fromID": "70_163907070207948843",
+      "toID": "49_163907070207948843"
+    },
+    {
+      "edgeID": 61,
+      "fromID": "50_163907070207948843",
+      "toID": "71_163907070207948843"
+    },
+    {
+      "edgeID": 62,
+      "fromID": "71_163907070207948843",
+      "toID": "63_163907070207948843"
+    },
+    {
+      "edgeID": 63,
+      "fromID": "71_163907070207948843",
+      "toID": "72_163907070207948843"
+    },
+    {
+      "edgeID": 64,
+      "fromID": "72_163907070207948843",
+      "toID": "70_163907070207948843"
+    },
+    {
+      "edgeID": 65,
+      "fromID": "67_163907070207948843",
+      "toID": "74_163907070207948843"
+    },
+    {
+      "edgeID": 66,
+      "fromID": "74_163907070207948843",
+      "toID": "69_163907070207948843"
+    },
+    {
+      "edgeID": 67,
+      "fromID": "77_163907070207948843",
+      "toID": "76_163907070207948843"
+    },
+    {
+      "edgeID": 68,
+      "fromID": "78_163907070207948843",
+      "toID": "77_163907070207948843"
+    },
+    {
+      "edgeID": 69,
+      "fromID": "76_163907070207948843",
+      "toID": "79_163907070207948843"
+    },
+    {
+      "edgeID": 70,
+      "fromID": "79_163907070207948843",
+      "toID": "75_163907070207948843"
+    },
+    {
+      "edgeID": 71,
+      "fromID": "63_163907070207948843",
+      "toID": "80_163907070207948843"
+    },
+    {
+      "edgeID": 72,
+      "fromID": "80_163907070207948843",
+      "toID": "76_163907070207948843"
+    },
+    {
+      "edgeID": 73,
+      "fromID": "83_163907070207948843",
+      "toID": "82_163907070207948843"
+    },
+    {
+      "edgeID": 74,
+      "fromID": "84_163907070207948843",
+      "toID": "83_163907070207948843"
+    },
+    {
+      "edgeID": 75,
+      "fromID": "82_163907070207948843",
+      "toID": "85_163907070207948843"
+    },
+    {
+      "edgeID": 76,
+      "fromID": "85_163907070207948843",
+      "toID": "81_163907070207948843"
+    },
+    {
+      "edgeID": 77,
+      "fromID": "76_163907070207948843",
+      "toID": "86_163907070207948843"
+    },
+    {
+      "edgeID": 78,
+      "fromID": "86_163907070207948843",
+      "toID": "82_163907070207948843"
+    },
+    {
+      "edgeID": 79,
+      "fromID": "90_163907070207948843",
+      "toID": "89_163907070207948843"
+    },
+    {
+      "edgeID": 80,
+      "fromID": "91_163907070207948843",
+      "toID": "90_163907070207948843"
+    },
+    {
+      "edgeID": 81,
+      "fromID": "82_163907070207948843",
+      "toID": "93_163907070207948843"
+    },
+    {
+      "edgeID": 82,
+      "fromID": "93_163907070207948843",
+      "toID": "89_163907070207948843"
+    },
+    {
+      "edgeID": 83,
+      "fromID": "95_163907070207948843",
+      "toID": "94_163907070207948843"
+    },
+    {
+      "edgeID": 84,
+      "fromID": "96_163907070207948843",
+      "toID": "95_163907070207948843"
+    },
+    {
+      "edgeID": 85,
+      "fromID": "94_163907070207948843",
+      "toID": "97_163907070207948843"
+    },
+    {
+      "edgeID": 86,
+      "fromID": "97_163907070207948843",
+      "toID": "88_163907070207948843"
+    },
+    {
+      "edgeID": 87,
+      "fromID": "89_163907070207948843",
+      "toID": "98_163907070207948843"
+    },
+    {
+      "edgeID": 88,
+      "fromID": "98_163907070207948843",
+      "toID": "94_163907070207948843"
+    },
+    {
+      "edgeID": 89,
+      "fromID": "101_163907070207948843",
+      "toID": "100_163907070207948843"
+    },
+    {
+      "edgeID": 90,
+      "fromID": "102_163907070207948843",
+      "toID": "101_163907070207948843"
+    },
+    {
+      "edgeID": 91,
+      "fromID": "100_163907070207948843",
+      "toID": "103_163907070207948843"
+    },
+    {
+      "edgeID": 92,
+      "fromID": "103_163907070207948843",
+      "toID": "99_163907070207948843"
+    },
+    {
+      "edgeID": 93,
+      "fromID": "89_163907070207948843",
+      "toID": "104_163907070207948843"
+    },
+    {
+      "edgeID": 94,
+      "fromID": "104_163907070207948843",
+      "toID": "100_163907070207948843"
+    },
+    {
+      "edgeID": 95,
+      "fromID": "107_163907070207948843",
+      "toID": "106_163907070207948843"
+    },
+    {
+      "edgeID": 96,
+      "fromID": "108_163907070207948843",
+      "toID": "107_163907070207948843"
+    },
+    {
+      "edgeID": 97,
+      "fromID": "106_163907070207948843",
+      "toID": "109_163907070207948843"
+    },
+    {
+      "edgeID": 98,
+      "fromID": "109_163907070207948843",
+      "toID": "105_163907070207948843"
+    },
+    {
+      "edgeID": 99,
+      "fromID": "100_163907070207948843",
+      "toID": "110_163907070207948843"
+    },
+    {
+      "edgeID": 100,
+      "fromID": "110_163907070207948843",
+      "toID": "106_163907070207948843"
+    },
+    {
+      "edgeID": 101,
+      "fromID": "99_163907070207948843",
+      "toID": "111_163907070207948843"
+    },
+    {
+      "edgeID": 102,
+      "fromID": "111_163907070207948843",
+      "toID": "105_163907070207948843"
+    },
+    {
+      "edgeID": 103,
+      "fromID": "110_163907070207948843",
+      "toID": "112_163907070207948843"
+    },
+    {
+      "edgeID": 104,
+      "fromID": "112_163907070207948843",
+      "toID": "111_163907070207948843"
+    },
+    {
+      "edgeID": 105,
+      "fromID": "115_163907070207948843",
+      "toID": "114_163907070207948843"
+    },
+    {
+      "edgeID": 106,
+      "fromID": "116_163907070207948843",
+      "toID": "115_163907070207948843"
+    },
+    {
+      "edgeID": 107,
+      "fromID": "114_163907070207948843",
+      "toID": "117_163907070207948843"
+    },
+    {
+      "edgeID": 108,
+      "fromID": "117_163907070207948843",
+      "toID": "113_163907070207948843"
+    },
+    {
+      "edgeID": 109,
+      "fromID": "121_163907070207948843",
+      "toID": "120_163907070207948843"
+    },
+    {
+      "edgeID": 110,
+      "fromID": "122_163907070207948843",
+      "toID": "121_163907070207948843"
+    },
+    {
+      "edgeID": 111,
+      "fromID": "120_163907070207948843",
+      "toID": "123_163907070207948843"
+    },
+    {
+      "edgeID": 112,
+      "fromID": "123_163907070207948843",
+      "toID": "119_163907070207948843"
+    },
+    {
+      "edgeID": 113,
+      "fromID": "114_163907070207948843",
+      "toID": "124_163907070207948843"
+    },
+    {
+      "edgeID": 114,
+      "fromID": "124_163907070207948843",
+      "toID": "120_163907070207948843"
+    },
+    {
+      "edgeID": 115,
+      "fromID": "99_163907070207948843",
+      "toID": "125_163907070207948843"
+    },
+    {
+      "edgeID": 116,
+      "fromID": "125_163907070207948843",
+      "toID": "113_163907070207948843"
+    },
+    {
+      "edgeID": 117,
+      "fromID": "100_163907070207948843",
+      "toID": "126_163907070207948843"
+    },
+    {
+      "edgeID": 118,
+      "fromID": "126_163907070207948843",
+      "toID": "114_163907070207948843"
+    },
+    {
+      "edgeID": 119,
+      "fromID": "126_163907070207948843",
+      "toID": "127_163907070207948843"
+    },
+    {
+      "edgeID": 120,
+      "fromID": "127_163907070207948843",
+      "toID": "125_163907070207948843"
+    },
+    {
+      "edgeID": 121,
+      "fromID": "130_163907070207948843",
+      "toID": "129_163907070207948843"
+    },
+    {
+      "edgeID": 122,
+      "fromID": "131_163907070207948843",
+      "toID": "130_163907070207948843"
+    },
+    {
+      "edgeID": 123,
+      "fromID": "129_163907070207948843",
+      "toID": "132_163907070207948843"
+    },
+    {
+      "edgeID": 124,
+      "fromID": "132_163907070207948843",
+      "toID": "128_163907070207948843"
+    },
+    {
+      "edgeID": 125,
+      "fromID": "120_163907070207948843",
+      "toID": "133_163907070207948843"
+    },
+    {
+      "edgeID": 126,
+      "fromID": "133_163907070207948843",
+      "toID": "129_163907070207948843"
+    },
+    {
+      "edgeID": 127,
+      "fromID": "136_163907070207948843",
+      "toID": "135_163907070207948843"
+    },
+    {
+      "edgeID": 128,
+      "fromID": "137_163907070207948843",
+      "toID": "136_163907070207948843"
+    },
+    {
+      "edgeID": 129,
+      "fromID": "129_163907070207948843",
+      "toID": "139_163907070207948843"
+    },
+    {
+      "edgeID": 130,
+      "fromID": "139_163907070207948843",
+      "toID": "135_163907070207948843"
+    },
+    {
+      "edgeID": 131,
+      "fromID": "139_163907070207948843",
+      "toID": "141_163907070207948843"
+    },
+    {
+      "edgeID": 132,
+      "fromID": "141_163907070207948843",
+      "toID": "128_163907070207948843"
+    },
+    {
+      "edgeID": 133,
+      "fromID": "144_163907070207948843",
+      "toID": "143_163907070207948843"
+    },
+    {
+      "edgeID": 134,
+      "fromID": "145_163907070207948843",
+      "toID": "144_163907070207948843"
+    },
+    {
+      "edgeID": 135,
+      "fromID": "143_163907070207948843",
+      "toID": "146_163907070207948843"
+    },
+    {
+      "edgeID": 136,
+      "fromID": "146_163907070207948843",
+      "toID": "142_163907070207948843"
+    },
+    {
+      "edgeID": 137,
+      "fromID": "135_163907070207948843",
+      "toID": "147_163907070207948843"
+    },
+    {
+      "edgeID": 138,
+      "fromID": "147_163907070207948843",
+      "toID": "143_163907070207948843"
+    },
+    {
+      "edgeID": 139,
+      "fromID": "150_163907070207948843",
+      "toID": "149_163907070207948843"
+    },
+    {
+      "edgeID": 140,
+      "fromID": "151_163907070207948843",
+      "toID": "150_163907070207948843"
+    },
+    {
+      "edgeID": 141,
+      "fromID": "149_163907070207948843",
+      "toID": "152_163907070207948843"
+    },
+    {
+      "edgeID": 142,
+      "fromID": "152_163907070207948843",
+      "toID": "148_163907070207948843"
+    },
+    {
+      "edgeID": 143,
+      "fromID": "143_163907070207948843",
+      "toID": "153_163907070207948843"
+    },
+    {
+      "edgeID": 144,
+      "fromID": "153_163907070207948843",
+      "toID": "149_163907070207948843"
+    },
+    {
+      "edgeID": 145,
+      "fromID": "157_163907070207948843",
+      "toID": "156_163907070207948843"
+    },
+    {
+      "edgeID": 146,
+      "fromID": "158_163907070207948843",
+      "toID": "157_163907070207948843"
+    },
+    {
+      "edgeID": 147,
+      "fromID": "161_163907070207948843",
+      "toID": "160_163907070207948843"
+    },
+    {
+      "edgeID": 148,
+      "fromID": "162_163907070207948843",
+      "toID": "161_163907070207948843"
+    },
+    {
+      "edgeID": 149,
+      "fromID": "156_163907070207948843",
+      "toID": "164_163907070207948843"
+    },
+    {
+      "edgeID": 150,
+      "fromID": "164_163907070207948843",
+      "toID": "160_163907070207948843"
+    },
+    {
+      "edgeID": 151,
+      "fromID": "167_163907070207948843",
+      "toID": "166_163907070207948843"
+    },
+    {
+      "edgeID": 152,
+      "fromID": "168_163907070207948843",
+      "toID": "167_163907070207948843"
+    },
+    {
+      "edgeID": 153,
+      "fromID": "166_163907070207948843",
+      "toID": "169_163907070207948843"
+    },
+    {
+      "edgeID": 154,
+      "fromID": "169_163907070207948843",
+      "toID": "165_163907070207948843"
+    },
+    {
+      "edgeID": 155,
+      "fromID": "156_163907070207948843",
+      "toID": "170_163907070207948843"
+    },
+    {
+      "edgeID": 156,
+      "fromID": "170_163907070207948843",
+      "toID": "166_163907070207948843"
+    },
+    {
+      "edgeID": 157,
+      "fromID": "166_163907070207948843",
+      "toID": "171_163907070207948843"
+    },
+    {
+      "edgeID": 158,
+      "fromID": "171_163907070207948843",
+      "toID": "16_163907070207948843"
+    },
+    {
+      "edgeID": 159,
+      "fromID": "160_163907070207948843",
+      "toID": "175_163907070207948843"
+    },
+    {
+      "edgeID": 160,
+      "fromID": "175_163907070207948843",
+      "toID": "165_163907070207948843"
+    },
+    {
+      "edgeID": 161,
+      "fromID": "170_163907070207948843",
+      "toID": "176_163907070207948843"
+    },
+    {
+      "edgeID": 162,
+      "fromID": "176_163907070207948843",
+      "toID": "175_163907070207948843"
+    }
+  ],
+  "locutions": [
+    {
+      "nodeID": "16_163907070207948843",
+      "personID": 23,
+      "start": "2020-06-04 21:54:26",
+      "end": null
+    },
+    {
+      "nodeID": "22_163907070207948843",
+      "personID": 23,
+      "start": "2020-06-04 21:54:29",
+      "end": null
+    },
+    {
+      "nodeID": "27_163907070207948843",
+      "personID": 23,
+      "start": "2020-06-04 21:54:31",
+      "end": null
+    },
+    {
+      "nodeID": "38_163907070207948843",
+      "personID": 23,
+      "start": "2020-06-04 21:54:34",
+      "end": null
+    },
+    {
+      "nodeID": "44_163907070207948843",
+      "personID": 23,
+      "start": "2020-06-04 21:54:40",
+      "end": null
+    },
+    {
+      "nodeID": "50_163907070207948843",
+      "personID": 23,
+      "start": "2020-06-04 21:54:43",
+      "end": null
+    },
+    {
+      "nodeID": "58_163907070207948843",
+      "personID": 23,
+      "start": "2020-06-04 21:54:44",
+      "end": null
+    },
+    {
+      "nodeID": "63_163907070207948843",
+      "personID": 23,
+      "start": "2020-06-04 21:54:46",
+      "end": null
+    },
+    {
+      "nodeID": "76_163907070207948843",
+      "personID": 16,
+      "start": "2020-06-04 21:54:50",
+      "end": null
+    },
+    {
+      "nodeID": "82_163907070207948843",
+      "personID": 15,
+      "start": "2020-06-04 21:54:58",
+      "end": null
+    },
+    {
+      "nodeID": "89_163907070207948843",
+      "personID": 16,
+      "start": "2020-06-04 21:55:00",
+      "end": null
+    },
+    {
+      "nodeID": "94_163907070207948843",
+      "personID": 82,
+      "start": null,
+      "end": null
+    },
+    {
+      "nodeID": "100_163907070207948843",
+      "personID": 15,
+      "start": "2020-06-04 21:55:04",
+      "end": null
+    },
+    {
+      "nodeID": "106_163907070207948843",
+      "personID": 15,
+      "start": "2020-06-04 21:55:08",
+      "end": null
+    },
+    {
+      "nodeID": "114_163907070207948843",
+      "personID": 15,
+      "start": "2020-06-04 21:55:10",
+      "end": null
+    },
+    {
+      "nodeID": "120_163907070207948843",
+      "personID": 15,
+      "start": "2020-06-04 21:55:16",
+      "end": null
+    },
+    {
+      "nodeID": "129_163907070207948843",
+      "personID": 16,
+      "start": "2020-06-04 21:55:18",
+      "end": null
+    },
+    {
+      "nodeID": "135_163907070207948843",
+      "personID": 15,
+      "start": "2020-06-04 21:55:18",
+      "end": null
+    },
+    {
+      "nodeID": "143_163907070207948843",
+      "personID": 15,
+      "start": "2020-06-04 21:55:19",
+      "end": null
+    },
+    {
+      "nodeID": "149_163907070207948843",
+      "personID": 16,
+      "start": "2020-06-04 21:55:24",
+      "end": null
+    },
+    {
+      "nodeID": "156_163907070207948843",
+      "personID": 23,
+      "start": null,
+      "end": null
+    },
+    {
+      "nodeID": "166_163907070207948843",
+      "personID": 23,
+      "start": "2020-06-04 21:54:20",
+      "end": null
+    }
+  ]
+}

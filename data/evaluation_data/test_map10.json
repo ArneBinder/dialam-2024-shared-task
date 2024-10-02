@@ -1,0 +1,909 @@
+{
+  "nodes": [
+    {
+      "nodeID": "2_168141153402989746",
+      "text": "right here in Wales, Labour has left us with the longest hospital waiting lists in the whole of the United Kingdom",
+      "type": "I"
+    },
+    {
+      "nodeID": "3_168141153402989746",
+      "text": "David Davies: right here in Wales, you\u2019ve left us with the longest hospital waiting lists in the whole of the United Kingdom",
+      "type": "L"
+    },
+    {
+      "nodeID": "4_168141153402989746",
+      "text": "Analysing",
+      "type": "YA"
+    },
+    {
+      "nodeID": "5_168141153402989746",
+      "text": "Tuuli: David Davies: right here in Wales, you\u2019ve left us with the longest hospital waiting lists in the whole of the United Kingdom",
+      "type": "L"
+    },
+    {
+      "nodeID": "6_168141153402989746",
+      "text": "Asserting",
+      "type": "YA"
+    },
+    {
+      "nodeID": "7_168141153402989746",
+      "text": "Labour has left us in Wales with the worst educational outcomes in the United Kingdom",
+      "type": "I"
+    },
+    {
+      "nodeID": "8_168141153402989746",
+      "text": "David Davies: the worst educational outcomes in the United Kingdom",
+      "type": "L"
+    },
+    {
+      "nodeID": "9_168141153402989746",
+      "text": "Analysing",
+      "type": "YA"
+    },
+    {
+      "nodeID": "10_168141153402989746",
+      "text": "Tuuli: David Davies: the worst educational outcomes in the United Kingdom",
+      "type": "L"
+    },
+    {
+      "nodeID": "11_168141153402989746",
+      "text": "Asserting",
+      "type": "YA"
+    },
+    {
+      "nodeID": "12_168141153402989746",
+      "text": "Labour has left us in Wales with an economy minister who\u2019s admitted that he doesn\u2019t know how to run the economy",
+      "type": "I"
+    },
+    {
+      "nodeID": "13_168141153402989746",
+      "text": "David Davies: an economy minister who\u2019s admitted that he doesn\u2019t know how to run the economy",
+      "type": "L"
+    },
+    {
+      "nodeID": "14_168141153402989746",
+      "text": "Analysing",
+      "type": "YA"
+    },
+    {
+      "nodeID": "15_168141153402989746",
+      "text": "Tuuli: David Davies: an economy minister who\u2019s admitted that he doesn\u2019t know how to run the economy",
+      "type": "L"
+    },
+    {
+      "nodeID": "16_168141153402989746",
+      "text": "Asserting",
+      "type": "YA"
+    },
+    {
+      "nodeID": "17_168141153402989746",
+      "text": "Labour has left us in Wales with no roads being built",
+      "type": "I"
+    },
+    {
+      "nodeID": "18_168141153402989746",
+      "text": "David Davies: no roads being built",
+      "type": "L"
+    },
+    {
+      "nodeID": "19_168141153402989746",
+      "text": "Analysing",
+      "type": "YA"
+    },
+    {
+      "nodeID": "20_168141153402989746",
+      "text": "Tuuli: David Davies: no roads being built",
+      "type": "L"
+    },
+    {
+      "nodeID": "21_168141153402989746",
+      "text": "Asserting",
+      "type": "YA"
+    },
+    {
+      "nodeID": "22_168141153402989746",
+      "text": "Labour has left us in Wales with \u00a3100 million being spent on a whole load of extra Welsh Assembly members",
+      "type": "I"
+    },
+    {
+      "nodeID": "23_168141153402989746",
+      "text": "David Davies: \u00a3100 million being spent on a whole load of extra Welsh Assembly members",
+      "type": "L"
+    },
+    {
+      "nodeID": "24_168141153402989746",
+      "text": "Analysing",
+      "type": "YA"
+    },
+    {
+      "nodeID": "25_168141153402989746",
+      "text": "Tuuli: David Davies: \u00a3100 million being spent on a whole load of extra Welsh Assembly members",
+      "type": "L"
+    },
+    {
+      "nodeID": "26_168141153402989746",
+      "text": "Asserting",
+      "type": "YA"
+    },
+    {
+      "nodeID": "27_168141153402989746",
+      "text": "Labour is even trying to ban meal deals at \u00a33.50",
+      "type": "I"
+    },
+    {
+      "nodeID": "28_168141153402989746",
+      "text": "David Davies: you're even trying to ban meal deals at \u00a33.50",
+      "type": "L"
+    },
+    {
+      "nodeID": "29_168141153402989746",
+      "text": "Analysing",
+      "type": "YA"
+    },
+    {
+      "nodeID": "30_168141153402989746",
+      "text": "Tuuli: David Davies: you're even trying to ban meal deals at \u00a33.50",
+      "type": "L"
+    },
+    {
+      "nodeID": "31_168141153402989746",
+      "text": "Asserting",
+      "type": "YA"
+    },
+    {
+      "nodeID": "37_168141153402989746",
+      "text": "Labour is an absolute disgrace",
+      "type": "I"
+    },
+    {
+      "nodeID": "38_168141153402989746",
+      "text": "David Davies: You\u2019re an absolute disgrace",
+      "type": "L"
+    },
+    {
+      "nodeID": "39_168141153402989746",
+      "text": "Analysing",
+      "type": "YA"
+    },
+    {
+      "nodeID": "40_168141153402989746",
+      "text": "Tuuli: David Davies: You\u2019re an absolute disgrace",
+      "type": "L"
+    },
+    {
+      "nodeID": "41_168141153402989746",
+      "text": "Asserting",
+      "type": "YA"
+    },
+    {
+      "nodeID": "42_168141153402989746",
+      "text": "even meal deals being banned is what\u2019s in store for us in Wales",
+      "type": "I"
+    },
+    {
+      "nodeID": "43_168141153402989746",
+      "text": "David Davies: this is what\u2019s in store for us",
+      "type": "L"
+    },
+    {
+      "nodeID": "44_168141153402989746",
+      "text": "Analysing",
+      "type": "YA"
+    },
+    {
+      "nodeID": "45_168141153402989746",
+      "text": "Tuuli: David Davies: this is what\u2019s in store for us",
+      "type": "L"
+    },
+    {
+      "nodeID": "46_168141153402989746",
+      "text": "Asserting",
+      "type": "YA"
+    },
+    {
+      "nodeID": "47_168141153402989746",
+      "text": "Labour gets elected",
+      "type": "I"
+    },
+    {
+      "nodeID": "48_168141153402989746",
+      "text": "David Davies: Labour get elected",
+      "type": "L"
+    },
+    {
+      "nodeID": "49_168141153402989746",
+      "text": "Analysing",
+      "type": "YA"
+    },
+    {
+      "nodeID": "50_168141153402989746",
+      "text": "Tuuli: David Davies: Labour get elected",
+      "type": "L"
+    },
+    {
+      "nodeID": "51_168141153402989746",
+      "text": "Asserting",
+      "type": "YA"
+    },
+    {
+      "nodeID": "52_168141153402989746",
+      "text": "Default Inference",
+      "type": "RA"
+    },
+    {
+      "nodeID": "53_168141153402989746",
+      "text": "Default Transition",
+      "type": "TA"
+    },
+    {
+      "nodeID": "54_168141153402989746",
+      "text": "Arguing",
+      "type": "YA"
+    },
+    {
+      "nodeID": "82_168141153402989746",
+      "text": "nobody\u2019s going to be allowed to go out and get a meal deal",
+      "type": "I"
+    },
+    {
+      "nodeID": "83_168141153402989746",
+      "text": "David Davies: nobody\u2019s going to be allowed to go out and get a meal deal",
+      "type": "L"
+    },
+    {
+      "nodeID": "84_168141153402989746",
+      "text": "Analysing",
+      "type": "YA"
+    },
+    {
+      "nodeID": "85_168141153402989746",
+      "text": "Tuuli: David Davies: nobody\u2019s going to be allowed to go out and get a meal deal",
+      "type": "L"
+    },
+    {
+      "nodeID": "86_168141153402989746",
+      "text": "Asserting",
+      "type": "YA"
+    },
+    {
+      "nodeID": "87_168141153402989746",
+      "text": "only those amongst the extra Assembly members who\u2019ll be able to have a full slap-up English breakfast for \u00a33.50 in the Senate are going to be allowed to go out and get a meal deal",
+      "type": "I"
+    },
+    {
+      "nodeID": "88_168141153402989746",
+      "text": "David Davies: unless they\u2019re amongst the extra Assembly members who\u2019ll be able to have a full slap-up English breakfast for \u00a33.50 in the Senate",
+      "type": "L"
+    },
+    {
+      "nodeID": "89_168141153402989746",
+      "text": "Analysing",
+      "type": "YA"
+    },
+    {
+      "nodeID": "90_168141153402989746",
+      "text": "Tuuli: David Davies: unless they\u2019re amongst the extra Assembly members who\u2019ll be able to have a full slap-up English breakfast for \u00a33.50 in the Senate",
+      "type": "L"
+    },
+    {
+      "nodeID": "91_168141153402989746",
+      "text": "Asserting",
+      "type": "YA"
+    },
+    {
+      "nodeID": "92_168141153402989746",
+      "text": "Default Rephrase",
+      "type": "MA"
+    },
+    {
+      "nodeID": "93_168141153402989746",
+      "text": "Default Transition",
+      "type": "TA"
+    },
+    {
+      "nodeID": "94_168141153402989746",
+      "text": "Restating",
+      "type": "YA"
+    },
+    {
+      "nodeID": "95_168141153402989746",
+      "text": "Default Rephrase",
+      "type": "MA"
+    },
+    {
+      "nodeID": "96_168141153402989746",
+      "text": "Default Transition",
+      "type": "TA"
+    },
+    {
+      "nodeID": "97_168141153402989746",
+      "text": "Restating",
+      "type": "YA"
+    },
+    {
+      "nodeID": "98_168141153402989746",
+      "text": "Default Inference",
+      "type": "RA"
+    },
+    {
+      "nodeID": "104_168141153402989746",
+      "text": "Default Transition",
+      "type": "TA"
+    },
+    {
+      "nodeID": "105_168141153402989746",
+      "text": "Arguing",
+      "type": "YA"
+    },
+    {
+      "nodeID": "106_168141153402989746",
+      "text": "Default Transition",
+      "type": "TA"
+    },
+    {
+      "nodeID": "107_168141153402989746",
+      "text": "Default Transition",
+      "type": "TA"
+    },
+    {
+      "nodeID": "108_168141153402989746",
+      "text": "Default Transition",
+      "type": "TA"
+    },
+    {
+      "nodeID": "109_168141153402989746",
+      "text": "Default Transition",
+      "type": "TA"
+    },
+    {
+      "nodeID": "110_168141153402989746",
+      "text": "Default Transition",
+      "type": "TA"
+    },
+    {
+      "nodeID": "111_168141153402989746",
+      "text": "Default Transition",
+      "type": "TA"
+    },
+    {
+      "nodeID": "112_168141153402989746",
+      "text": "Default Rephrase",
+      "type": "MA"
+    },
+    {
+      "nodeID": "113_168141153402989746",
+      "text": "Default Transition",
+      "type": "TA"
+    },
+    {
+      "nodeID": "114_168141153402989746",
+      "text": "Restating",
+      "type": "YA"
+    }
+  ],
+  "edges": [
+    {
+      "edgeID": 1,
+      "fromID": "4_168141153402989746",
+      "toID": "3_168141153402989746"
+    },
+    {
+      "edgeID": 2,
+      "fromID": "5_168141153402989746",
+      "toID": "4_168141153402989746"
+    },
+    {
+      "edgeID": 3,
+      "fromID": "3_168141153402989746",
+      "toID": "6_168141153402989746"
+    },
+    {
+      "edgeID": 4,
+      "fromID": "6_168141153402989746",
+      "toID": "2_168141153402989746"
+    },
+    {
+      "edgeID": 5,
+      "fromID": "9_168141153402989746",
+      "toID": "8_168141153402989746"
+    },
+    {
+      "edgeID": 6,
+      "fromID": "10_168141153402989746",
+      "toID": "9_168141153402989746"
+    },
+    {
+      "edgeID": 7,
+      "fromID": "8_168141153402989746",
+      "toID": "11_168141153402989746"
+    },
+    {
+      "edgeID": 8,
+      "fromID": "11_168141153402989746",
+      "toID": "7_168141153402989746"
+    },
+    {
+      "edgeID": 9,
+      "fromID": "14_168141153402989746",
+      "toID": "13_168141153402989746"
+    },
+    {
+      "edgeID": 10,
+      "fromID": "15_168141153402989746",
+      "toID": "14_168141153402989746"
+    },
+    {
+      "edgeID": 11,
+      "fromID": "13_168141153402989746",
+      "toID": "16_168141153402989746"
+    },
+    {
+      "edgeID": 12,
+      "fromID": "16_168141153402989746",
+      "toID": "12_168141153402989746"
+    },
+    {
+      "edgeID": 13,
+      "fromID": "19_168141153402989746",
+      "toID": "18_168141153402989746"
+    },
+    {
+      "edgeID": 14,
+      "fromID": "20_168141153402989746",
+      "toID": "19_168141153402989746"
+    },
+    {
+      "edgeID": 15,
+      "fromID": "18_168141153402989746",
+      "toID": "21_168141153402989746"
+    },
+    {
+      "edgeID": 16,
+      "fromID": "21_168141153402989746",
+      "toID": "17_168141153402989746"
+    },
+    {
+      "edgeID": 17,
+      "fromID": "24_168141153402989746",
+      "toID": "23_168141153402989746"
+    },
+    {
+      "edgeID": 18,
+      "fromID": "25_168141153402989746",
+      "toID": "24_168141153402989746"
+    },
+    {
+      "edgeID": 19,
+      "fromID": "23_168141153402989746",
+      "toID": "26_168141153402989746"
+    },
+    {
+      "edgeID": 20,
+      "fromID": "26_168141153402989746",
+      "toID": "22_168141153402989746"
+    },
+    {
+      "edgeID": 21,
+      "fromID": "29_168141153402989746",
+      "toID": "28_168141153402989746"
+    },
+    {
+      "edgeID": 22,
+      "fromID": "30_168141153402989746",
+      "toID": "29_168141153402989746"
+    },
+    {
+      "edgeID": 23,
+      "fromID": "28_168141153402989746",
+      "toID": "31_168141153402989746"
+    },
+    {
+      "edgeID": 24,
+      "fromID": "31_168141153402989746",
+      "toID": "27_168141153402989746"
+    },
+    {
+      "edgeID": 25,
+      "fromID": "39_168141153402989746",
+      "toID": "38_168141153402989746"
+    },
+    {
+      "edgeID": 26,
+      "fromID": "40_168141153402989746",
+      "toID": "39_168141153402989746"
+    },
+    {
+      "edgeID": 27,
+      "fromID": "38_168141153402989746",
+      "toID": "41_168141153402989746"
+    },
+    {
+      "edgeID": 28,
+      "fromID": "41_168141153402989746",
+      "toID": "37_168141153402989746"
+    },
+    {
+      "edgeID": 29,
+      "fromID": "44_168141153402989746",
+      "toID": "43_168141153402989746"
+    },
+    {
+      "edgeID": 30,
+      "fromID": "45_168141153402989746",
+      "toID": "44_168141153402989746"
+    },
+    {
+      "edgeID": 31,
+      "fromID": "43_168141153402989746",
+      "toID": "46_168141153402989746"
+    },
+    {
+      "edgeID": 32,
+      "fromID": "46_168141153402989746",
+      "toID": "42_168141153402989746"
+    },
+    {
+      "edgeID": 33,
+      "fromID": "49_168141153402989746",
+      "toID": "48_168141153402989746"
+    },
+    {
+      "edgeID": 34,
+      "fromID": "50_168141153402989746",
+      "toID": "49_168141153402989746"
+    },
+    {
+      "edgeID": 35,
+      "fromID": "48_168141153402989746",
+      "toID": "51_168141153402989746"
+    },
+    {
+      "edgeID": 36,
+      "fromID": "51_168141153402989746",
+      "toID": "47_168141153402989746"
+    },
+    {
+      "edgeID": 37,
+      "fromID": "47_168141153402989746",
+      "toID": "52_168141153402989746"
+    },
+    {
+      "edgeID": 38,
+      "fromID": "52_168141153402989746",
+      "toID": "42_168141153402989746"
+    },
+    {
+      "edgeID": 39,
+      "fromID": "43_168141153402989746",
+      "toID": "53_168141153402989746"
+    },
+    {
+      "edgeID": 40,
+      "fromID": "53_168141153402989746",
+      "toID": "48_168141153402989746"
+    },
+    {
+      "edgeID": 41,
+      "fromID": "53_168141153402989746",
+      "toID": "54_168141153402989746"
+    },
+    {
+      "edgeID": 42,
+      "fromID": "54_168141153402989746",
+      "toID": "52_168141153402989746"
+    },
+    {
+      "edgeID": 43,
+      "fromID": "84_168141153402989746",
+      "toID": "83_168141153402989746"
+    },
+    {
+      "edgeID": 44,
+      "fromID": "85_168141153402989746",
+      "toID": "84_168141153402989746"
+    },
+    {
+      "edgeID": 45,
+      "fromID": "83_168141153402989746",
+      "toID": "86_168141153402989746"
+    },
+    {
+      "edgeID": 46,
+      "fromID": "86_168141153402989746",
+      "toID": "82_168141153402989746"
+    },
+    {
+      "edgeID": 47,
+      "fromID": "89_168141153402989746",
+      "toID": "88_168141153402989746"
+    },
+    {
+      "edgeID": 48,
+      "fromID": "90_168141153402989746",
+      "toID": "89_168141153402989746"
+    },
+    {
+      "edgeID": 49,
+      "fromID": "88_168141153402989746",
+      "toID": "91_168141153402989746"
+    },
+    {
+      "edgeID": 50,
+      "fromID": "91_168141153402989746",
+      "toID": "87_168141153402989746"
+    },
+    {
+      "edgeID": 51,
+      "fromID": "82_168141153402989746",
+      "toID": "92_168141153402989746"
+    },
+    {
+      "edgeID": 52,
+      "fromID": "92_168141153402989746",
+      "toID": "27_168141153402989746"
+    },
+    {
+      "edgeID": 53,
+      "fromID": "28_168141153402989746",
+      "toID": "93_168141153402989746"
+    },
+    {
+      "edgeID": 54,
+      "fromID": "93_168141153402989746",
+      "toID": "83_168141153402989746"
+    },
+    {
+      "edgeID": 55,
+      "fromID": "93_168141153402989746",
+      "toID": "94_168141153402989746"
+    },
+    {
+      "edgeID": 56,
+      "fromID": "94_168141153402989746",
+      "toID": "92_168141153402989746"
+    },
+    {
+      "edgeID": 57,
+      "fromID": "87_168141153402989746",
+      "toID": "95_168141153402989746"
+    },
+    {
+      "edgeID": 58,
+      "fromID": "95_168141153402989746",
+      "toID": "82_168141153402989746"
+    },
+    {
+      "edgeID": 59,
+      "fromID": "83_168141153402989746",
+      "toID": "96_168141153402989746"
+    },
+    {
+      "edgeID": 60,
+      "fromID": "96_168141153402989746",
+      "toID": "88_168141153402989746"
+    },
+    {
+      "edgeID": 61,
+      "fromID": "96_168141153402989746",
+      "toID": "97_168141153402989746"
+    },
+    {
+      "edgeID": 62,
+      "fromID": "97_168141153402989746",
+      "toID": "95_168141153402989746"
+    },
+    {
+      "edgeID": 63,
+      "fromID": "2_168141153402989746",
+      "toID": "98_168141153402989746"
+    },
+    {
+      "edgeID": 64,
+      "fromID": "98_168141153402989746",
+      "toID": "37_168141153402989746"
+    },
+    {
+      "edgeID": 65,
+      "fromID": "7_168141153402989746",
+      "toID": "98_168141153402989746"
+    },
+    {
+      "edgeID": 66,
+      "fromID": "12_168141153402989746",
+      "toID": "98_168141153402989746"
+    },
+    {
+      "edgeID": 67,
+      "fromID": "17_168141153402989746",
+      "toID": "98_168141153402989746"
+    },
+    {
+      "edgeID": 68,
+      "fromID": "22_168141153402989746",
+      "toID": "98_168141153402989746"
+    },
+    {
+      "edgeID": 69,
+      "fromID": "27_168141153402989746",
+      "toID": "98_168141153402989746"
+    },
+    {
+      "edgeID": 70,
+      "fromID": "3_168141153402989746",
+      "toID": "104_168141153402989746"
+    },
+    {
+      "edgeID": 71,
+      "fromID": "104_168141153402989746",
+      "toID": "38_168141153402989746"
+    },
+    {
+      "edgeID": 72,
+      "fromID": "104_168141153402989746",
+      "toID": "105_168141153402989746"
+    },
+    {
+      "edgeID": 73,
+      "fromID": "105_168141153402989746",
+      "toID": "98_168141153402989746"
+    },
+    {
+      "edgeID": 74,
+      "fromID": "3_168141153402989746",
+      "toID": "106_168141153402989746"
+    },
+    {
+      "edgeID": 75,
+      "fromID": "106_168141153402989746",
+      "toID": "38_168141153402989746"
+    },
+    {
+      "edgeID": 76,
+      "fromID": "8_168141153402989746",
+      "toID": "107_168141153402989746"
+    },
+    {
+      "edgeID": 77,
+      "fromID": "107_168141153402989746",
+      "toID": "38_168141153402989746"
+    },
+    {
+      "edgeID": 78,
+      "fromID": "13_168141153402989746",
+      "toID": "108_168141153402989746"
+    },
+    {
+      "edgeID": 79,
+      "fromID": "108_168141153402989746",
+      "toID": "38_168141153402989746"
+    },
+    {
+      "edgeID": 80,
+      "fromID": "18_168141153402989746",
+      "toID": "109_168141153402989746"
+    },
+    {
+      "edgeID": 81,
+      "fromID": "109_168141153402989746",
+      "toID": "38_168141153402989746"
+    },
+    {
+      "edgeID": 82,
+      "fromID": "23_168141153402989746",
+      "toID": "110_168141153402989746"
+    },
+    {
+      "edgeID": 83,
+      "fromID": "110_168141153402989746",
+      "toID": "38_168141153402989746"
+    },
+    {
+      "edgeID": 84,
+      "fromID": "28_168141153402989746",
+      "toID": "111_168141153402989746"
+    },
+    {
+      "edgeID": 85,
+      "fromID": "111_168141153402989746",
+      "toID": "38_168141153402989746"
+    },
+    {
+      "edgeID": 86,
+      "fromID": "42_168141153402989746",
+      "toID": "112_168141153402989746"
+    },
+    {
+      "edgeID": 87,
+      "fromID": "112_168141153402989746",
+      "toID": "87_168141153402989746"
+    },
+    {
+      "edgeID": 88,
+      "fromID": "88_168141153402989746",
+      "toID": "113_168141153402989746"
+    },
+    {
+      "edgeID": 89,
+      "fromID": "113_168141153402989746",
+      "toID": "43_168141153402989746"
+    },
+    {
+      "edgeID": 90,
+      "fromID": "113_168141153402989746",
+      "toID": "114_168141153402989746"
+    },
+    {
+      "edgeID": 91,
+      "fromID": "114_168141153402989746",
+      "toID": "112_168141153402989746"
+    }
+  ],
+  "locutions": [
+    {
+      "nodeID": "3_168141153402989746",
+      "personID": 81,
+      "start": "2023-02-23 23:36:39",
+      "end": null
+    },
+    {
+      "nodeID": "8_168141153402989746",
+      "personID": 81,
+      "start": "2023-02-23 23:36:50",
+      "end": null
+    },
+    {
+      "nodeID": "13_168141153402989746",
+      "personID": 81,
+      "start": "2023-02-23 23:36:56",
+      "end": null
+    },
+    {
+      "nodeID": "18_168141153402989746",
+      "personID": 81,
+      "start": "2023-02-23 23:37:04",
+      "end": null
+    },
+    {
+      "nodeID": "23_168141153402989746",
+      "personID": 81,
+      "start": "2023-02-23 23:37:06",
+      "end": null
+    },
+    {
+      "nodeID": "28_168141153402989746",
+      "personID": 81,
+      "start": "2023-02-23 23:37:14",
+      "end": null
+    },
+    {
+      "nodeID": "38_168141153402989746",
+      "personID": 81,
+      "start": "2023-02-23 23:37:38",
+      "end": null
+    },
+    {
+      "nodeID": "43_168141153402989746",
+      "personID": 81,
+      "start": "2023-02-23 23:37:41",
+      "end": null
+    },
+    {
+      "nodeID": "48_168141153402989746",
+      "personID": 81,
+      "start": "2023-02-23 23:37:44",
+      "end": null
+    },
+    {
+      "nodeID": "83_168141153402989746",
+      "personID": 81,
+      "start": "2023-02-23 23:37:19",
+      "end": null
+    },
+    {
+      "nodeID": "88_168141153402989746",
+      "personID": 81,
+      "start": "2023-02-23 23:37:25",
+      "end": null
+    }
+  ]
+}

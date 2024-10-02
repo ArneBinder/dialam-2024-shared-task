@@ -24,8 +24,6 @@ import pyrootutils
 pyrootutils.setup_root(search_from=__file__, indicator=[".project-root"], pythonpath=True)
 
 import argparse
-import datetime
-import json
 import logging
 import os
 from collections import defaultdict
@@ -33,7 +31,13 @@ from typing import Dict, List, Optional, Set, Tuple
 
 from graphviz import Digraph
 
-from src.utils.nodeset_utils import sort_nodes_by_hierarchy
+from src.utils.nodeset_utils import (
+    Node,
+    Nodeset,
+    get_node_id_from_filename,
+    read_nodeset,
+    sort_nodes_by_hierarchy,
+)
 
 logger = logging.getLogger(__name__)
 
@@ -51,7 +55,7 @@ def chunk_text(text: str, tokens_per_chunk: int = 10) -> str:
     return node_text_split
 
 
-def assemble_node_text(node: dict) -> str:
+def assemble_node_text(node: Node) -> str:
     text = node["text"]
     if node["type"] in ["L", "I"]:
         text = chunk_text(text)
@@ -64,7 +68,7 @@ def assemble_node_text(node: dict) -> str:
     return node_text
 
 
-def add_node(node: dict, graph) -> None:
+def add_node(node: Node, graph) -> None:
     if node["type"] in ["L", "I"]:
         shape = "box"
     else:
@@ -82,30 +86,7 @@ def filter_edges(
     )
 
 
-def create_visualization(
-    nodeset_dir: str, output_dir: str, nodeset: Optional[str] = None, view: bool = True
-):
-    # if no nodeset id is provided, visualize all nodesets in the directory
-    if nodeset is None:
-        nodeset_ids = [
-            f.split("nodeset")[1].split(".json")[0]
-            for f in os.listdir(nodeset_dir)
-            if f.endswith(".json")
-        ]
-        for nodeset in nodeset_ids:
-            try:
-                create_visualization(
-                    nodeset_dir=nodeset_dir, output_dir=output_dir, nodeset=nodeset, view=False
-                )
-            except Exception as e:
-                logger.error(f"nodeset={nodeset}: Failed to visualize: {e}")
-        return
-
-    # Read the JSON data
-    filename = os.path.join(nodeset_dir, f"nodeset{nodeset}.json")
-    with open(filename) as f:
-        data = json.load(f)
-
+def create_visualization_graph(data: Nodeset, nodeset_id: Optional[str] = None) -> Digraph:
     # edge related helper data structures
     src2targets = defaultdict(list)
     trg2sources = defaultdict(list)
@@ -135,7 +116,7 @@ def create_visualization(
             disconnected_node_ids.add(n["nodeID"])
 
     if len(duplicate_node_ids) > 0:
-        logger.warning(f"nodeset={nodeset}: Duplicate nodes: {duplicate_node_ids}")
+        logger.warning(f"nodeset={nodeset_id}: Duplicate nodes: {duplicate_node_ids}")
 
     # Create two clusters (subgraphs) for I related nodes and L related nodes
     g = Digraph("G", filename="cluster.gv", format="png")
@@ -155,7 +136,7 @@ def create_visualization(
 
         # sort L-nodes by hierarchy, i.e. that parents are always before children
         l_node_ids_sorted = sort_nodes_by_hierarchy(
-            node_ids=node_types2node_ids["L"], edges=data["edges"], nodeset_id=nodeset
+            node_ids=node_types2node_ids["L"], edges=data["edges"], nodeset_id=nodeset_id
         )
 
         # add L-nodes and all connected TA-nodes
@@ -228,11 +209,11 @@ def create_visualization(
 
         if len(i_node_ids_sorted) != len(i_node_ids_added):
             logger.warning(
-                f"nodeset={nodeset}: Missed I-nodes: {set(i_node_ids_sorted) - set(i_node_ids_added)}"
+                f"nodeset={nodeset_id}: Missed I-nodes: {set(i_node_ids_sorted) - set(i_node_ids_added)}"
             )
         elif i_node_ids_sorted != i_node_ids_added:
             logger.warning(
-                f"nodeset={nodeset}: I-nodes order mismatch: {i_node_ids_sorted} != {i_node_ids_added}"
+                f"nodeset={nodeset_id}: I-nodes order mismatch: {i_node_ids_sorted} != {i_node_ids_added}"
             )
 
         c.edge_attr["constraint"] = "false"
@@ -251,30 +232,54 @@ def create_visualization(
 
     # warn about missed nodes
     if len(disconnected_node_ids) > 0:
-        logger.warning(f"nodeset={nodeset}: Disconnected nodes: {disconnected_node_ids}")
+        logger.warning(f"nodeset={nodeset_id}: Disconnected nodes: {disconnected_node_ids}")
     missed_l_site_node_ids = (
         (set(node_types2node_ids["L"]) | set(node_types2node_ids["TA"]))
         - set(l_site_node_ids)
         - disconnected_node_ids
     )
     if len(missed_l_site_node_ids) > 0:
-        logger.warning(f"nodeset={nodeset}: Missed L-site nodes: {missed_l_site_node_ids}")
+        logger.warning(f"nodeset={nodeset_id}: Missed L-site nodes: {missed_l_site_node_ids}")
     missed_i_nodes_ids = (
         (set(node_types2node_ids["I"]) | set(node_types2node_ids["S"]))
         - set(i_site_node_ids)
         - disconnected_node_ids
     )
     if len(missed_i_nodes_ids) > 0:
-        logger.warning(f"nodeset={nodeset}: Missed I-site nodes: {missed_i_nodes_ids}")
+        logger.warning(f"nodeset={nodeset_id}: Missed I-site nodes: {missed_i_nodes_ids}")
     missed_ya_node_ids = set(node_types2node_ids["YA"]) - set(ya_node_ids) - disconnected_node_ids
     if len(missed_ya_node_ids) > 0:
-        logger.warning(f"nodeset={nodeset}: Missed YA nodes: {missed_ya_node_ids}")
+        logger.warning(f"nodeset={nodeset_id}: Missed YA nodes: {missed_ya_node_ids}")
 
     # warn about missed edges
     missed_edges = edges - l_site_edges - i_site_edges - ya_edges
     if len(missed_edges) > 0:
-        logger.warning(f"nodeset={nodeset}: Missed edges: {missed_edges}")
+        logger.warning(f"nodeset={nodeset_id}: Missed edges: {missed_edges}")
 
+    return g
+
+
+def create_visualization(
+    nodeset_dir: str, output_dir: str, nodeset: Optional[str] = None, view: bool = True
+):
+    # if no nodeset id is provided, visualize all nodesets in the directory
+    if nodeset is None:
+        nodeset_ids = [
+            get_node_id_from_filename(f) for f in os.listdir(nodeset_dir) if f.endswith(".json")
+        ]
+        for nodeset in nodeset_ids:
+            try:
+                create_visualization(
+                    nodeset_dir=nodeset_dir, output_dir=output_dir, nodeset=nodeset, view=False
+                )
+            except Exception as e:
+                logger.error(f"nodeset={nodeset}: Failed to visualize: {e}")
+        return
+
+    # Read the JSON data
+    data = read_nodeset(nodeset_dir, nodeset)
+
+    g = create_visualization_graph(data, nodeset_id=nodeset)
     # Render the final graph
     filename_visualized = os.path.join(output_dir, "nodeset" + str(nodeset) + ".gv")
     g.render(filename_visualized, view=view)

@@ -1,0 +1,1383 @@
+{
+  "nodes": [
+    {
+      "nodeID": "2_168020248600860252",
+      "text": "evidence that the courts and security services were aware of that Shamima Begum would pose a threat had the decision about taking her back in gone the wrong way",
+      "type": "I"
+    },
+    {
+      "nodeID": "3_168020248600860252",
+      "text": "Anita Boateng: that had that decision gone the wrong way",
+      "type": "L"
+    },
+    {
+      "nodeID": "4_168020248600860252",
+      "text": "Analysing",
+      "type": "YA"
+    },
+    {
+      "nodeID": "5_168020248600860252",
+      "text": "Anon: Anita Boateng: that had that decision gone the wrong way",
+      "type": "L"
+    },
+    {
+      "nodeID": "6_168020248600860252",
+      "text": "Asserting",
+      "type": "YA"
+    },
+    {
+      "nodeID": "7_168020248600860252",
+      "text": "there was some kind of threat in the UK",
+      "type": "I"
+    },
+    {
+      "nodeID": "8_168020248600860252",
+      "text": "Anita Boateng: there was some kind of threat in the UK",
+      "type": "L"
+    },
+    {
+      "nodeID": "9_168020248600860252",
+      "text": "Analysing",
+      "type": "YA"
+    },
+    {
+      "nodeID": "10_168020248600860252",
+      "text": "Anon: Anita Boateng: there was some kind of threat in the UK",
+      "type": "L"
+    },
+    {
+      "nodeID": "11_168020248600860252",
+      "text": "Asserting",
+      "type": "YA"
+    },
+    {
+      "nodeID": "12_168020248600860252",
+      "text": "Default Transition",
+      "type": "TA"
+    },
+    {
+      "nodeID": "13_168020248600860252",
+      "text": "the burden of the responsibility that he, Sajid Javid at the time, would\u2019ve felt would\u2019ve been enormous",
+      "type": "I"
+    },
+    {
+      "nodeID": "14_168020248600860252",
+      "text": "Anita Boateng: the burden of the responsibility that he, Sajid Javid at the time, would\u2019ve felt would\u2019ve been enormous",
+      "type": "L"
+    },
+    {
+      "nodeID": "15_168020248600860252",
+      "text": "Analysing",
+      "type": "YA"
+    },
+    {
+      "nodeID": "16_168020248600860252",
+      "text": "Anon: Anita Boateng: the burden of the responsibility that he, Sajid Javid at the time, would\u2019ve felt would\u2019ve been enormous",
+      "type": "L"
+    },
+    {
+      "nodeID": "17_168020248600860252",
+      "text": "Asserting",
+      "type": "YA"
+    },
+    {
+      "nodeID": "19_168020248600860252",
+      "text": "Default Transition",
+      "type": "TA"
+    },
+    {
+      "nodeID": "21_168020248600860252",
+      "text": "the national security and citizenships rights issues are very serious and finely balanced",
+      "type": "I"
+    },
+    {
+      "nodeID": "22_168020248600860252",
+      "text": "Anita Boateng: these are very serious and finely balanced issues",
+      "type": "L"
+    },
+    {
+      "nodeID": "23_168020248600860252",
+      "text": "Analysing",
+      "type": "YA"
+    },
+    {
+      "nodeID": "24_168020248600860252",
+      "text": "Anon: Anita Boateng: these are very serious and finely balanced issues",
+      "type": "L"
+    },
+    {
+      "nodeID": "25_168020248600860252",
+      "text": "Asserting",
+      "type": "YA"
+    },
+    {
+      "nodeID": "27_168020248600860252",
+      "text": "Default Inference",
+      "type": "RA"
+    },
+    {
+      "nodeID": "30_168020248600860252",
+      "text": "Default Transition",
+      "type": "TA"
+    },
+    {
+      "nodeID": "31_168020248600860252",
+      "text": "Arguing",
+      "type": "YA"
+    },
+    {
+      "nodeID": "33_168020248600860252",
+      "text": " being a citizen is not just a question of rights",
+      "type": "I"
+    },
+    {
+      "nodeID": "34_168020248600860252",
+      "text": "Anita Boateng:  being a citizen is not just a question of rights",
+      "type": "L"
+    },
+    {
+      "nodeID": "35_168020248600860252",
+      "text": "Analysing",
+      "type": "YA"
+    },
+    {
+      "nodeID": "36_168020248600860252",
+      "text": "Anon: Anita Boateng:  being a citizen is not just a question of rights",
+      "type": "L"
+    },
+    {
+      "nodeID": "37_168020248600860252",
+      "text": "Asserting",
+      "type": "YA"
+    },
+    {
+      "nodeID": "38_168020248600860252",
+      "text": "Default Transition",
+      "type": "TA"
+    },
+    {
+      "nodeID": "39_168020248600860252",
+      "text": "being a citizen is also a question of responsibility",
+      "type": "I"
+    },
+    {
+      "nodeID": "40_168020248600860252",
+      "text": "Anita Boateng: it is also a question of responsibility",
+      "type": "L"
+    },
+    {
+      "nodeID": "41_168020248600860252",
+      "text": "Analysing",
+      "type": "YA"
+    },
+    {
+      "nodeID": "42_168020248600860252",
+      "text": "Anon: Anita Boateng: it is also a question of responsibility",
+      "type": "L"
+    },
+    {
+      "nodeID": "43_168020248600860252",
+      "text": "Asserting",
+      "type": "YA"
+    },
+    {
+      "nodeID": "44_168020248600860252",
+      "text": "Default Transition",
+      "type": "TA"
+    },
+    {
+      "nodeID": "45_168020248600860252",
+      "text": "Default Rephrase",
+      "type": "MA"
+    },
+    {
+      "nodeID": "46_168020248600860252",
+      "text": "Restating",
+      "type": "YA"
+    },
+    {
+      "nodeID": "47_168020248600860252",
+      "text": " we have seen clear instances, Anita Boateng thinks, from Shamima\u2019s behaviour that we know of that indicates that Shamima Begum is not behaving in the way that one would hope a citizen would",
+      "type": "I"
+    },
+    {
+      "nodeID": "48_168020248600860252",
+      "text": "Anita Boateng:  we have seen clear instances, I think, from Shamima\u2019s behaviour that we know of that indicates that she is not behaving in the way that one would hope a citizen would",
+      "type": "L"
+    },
+    {
+      "nodeID": "49_168020248600860252",
+      "text": "Analysing",
+      "type": "YA"
+    },
+    {
+      "nodeID": "50_168020248600860252",
+      "text": "Anon: Anita Boateng:  we have seen clear instances, I think, from Shamima\u2019s behaviour that we know of that indicates that she is not behaving in the way that one would hope a citizen would",
+      "type": "L"
+    },
+    {
+      "nodeID": "51_168020248600860252",
+      "text": "Asserting",
+      "type": "YA"
+    },
+    {
+      "nodeID": "52_168020248600860252",
+      "text": "Default Transition",
+      "type": "TA"
+    },
+    {
+      "nodeID": "54_168020248600860252",
+      "text": "there are instances where it is the right thing to do to take citizenship away when people have dual citizenship or acquired British citizenship",
+      "type": "I"
+    },
+    {
+      "nodeID": "55_168020248600860252",
+      "text": "Anita Boateng: there are instances where it is the right thing to do to take citizenship away when people have dual citizenship or acquired British citizenship",
+      "type": "L"
+    },
+    {
+      "nodeID": "56_168020248600860252",
+      "text": "Analysing",
+      "type": "YA"
+    },
+    {
+      "nodeID": "57_168020248600860252",
+      "text": "Anon: Anita Boateng: there are instances where it is the right thing to do to take citizenship away when people have dual citizenship or acquired British citizenship",
+      "type": "L"
+    },
+    {
+      "nodeID": "58_168020248600860252",
+      "text": "Asserting",
+      "type": "YA"
+    },
+    {
+      "nodeID": "59_168020248600860252",
+      "text": "Default Transition",
+      "type": "TA"
+    },
+    {
+      "nodeID": "64_168020248600860252",
+      "text": "Default Inference",
+      "type": "RA"
+    },
+    {
+      "nodeID": "66_168020248600860252",
+      "text": "Default Transition",
+      "type": "TA"
+    },
+    {
+      "nodeID": "67_168020248600860252",
+      "text": "Arguing",
+      "type": "YA"
+    },
+    {
+      "nodeID": "68_168020248600860252",
+      "text": "the difficulty here is because she has this possible other citizenship, not as a result of her, but because her parents are of another origin",
+      "type": "I"
+    },
+    {
+      "nodeID": "69_168020248600860252",
+      "text": "Anita Boateng: the difficulty here, as Liz says, is because she has this possible other citizenship, not as a result of her, but because her parents are of another origin",
+      "type": "L"
+    },
+    {
+      "nodeID": "70_168020248600860252",
+      "text": "Analysing",
+      "type": "YA"
+    },
+    {
+      "nodeID": "71_168020248600860252",
+      "text": "Anon: Anita Boateng: the difficulty here, as Liz says, is because she has this possible other citizenship, not as a result of her, but because her parents are of another origin",
+      "type": "L"
+    },
+    {
+      "nodeID": "73_168020248600860252",
+      "text": "Default Transition",
+      "type": "TA"
+    },
+    {
+      "nodeID": "74_168020248600860252",
+      "text": "Liz Saville Roberts: the difficulty here is because Shamima Begum has this possible other citizenship, not as a result of her, but because her parents are of another origin",
+      "type": "L"
+    },
+    {
+      "nodeID": "75_168020248600860252",
+      "text": "Analysing",
+      "type": "YA"
+    },
+    {
+      "nodeID": "76_168020248600860252",
+      "text": "Anon: Liz Saville Roberts: the difficulty here, as Liz says, is because she has this possible other citizenship, not as a result of her, but because her parents are of another origin",
+      "type": "L"
+    },
+    {
+      "nodeID": "77_168020248600860252",
+      "text": "Asserting",
+      "type": "YA"
+    },
+    {
+      "nodeID": "78_168020248600860252",
+      "text": "Asserting",
+      "type": "YA"
+    },
+    {
+      "nodeID": "79_168020248600860252",
+      "text": "Default Inference",
+      "type": "RA"
+    },
+    {
+      "nodeID": "80_168020248600860252",
+      "text": "Default Transition",
+      "type": "TA"
+    },
+    {
+      "nodeID": "81_168020248600860252",
+      "text": "Arguing",
+      "type": "YA"
+    },
+    {
+      "nodeID": "82_168020248600860252",
+      "text": "Shamima Begum's parents are Bangladeshi",
+      "type": "I"
+    },
+    {
+      "nodeID": "83_168020248600860252",
+      "text": "Anita Boateng: they\u2019re Bangladeshi",
+      "type": "L"
+    },
+    {
+      "nodeID": "84_168020248600860252",
+      "text": "Analysing",
+      "type": "YA"
+    },
+    {
+      "nodeID": "85_168020248600860252",
+      "text": "Anon: Anita Boateng: they\u2019re Bangladeshi",
+      "type": "L"
+    },
+    {
+      "nodeID": "86_168020248600860252",
+      "text": "Asserting",
+      "type": "YA"
+    },
+    {
+      "nodeID": "87_168020248600860252",
+      "text": "Default Transition",
+      "type": "TA"
+    },
+    {
+      "nodeID": "88_168020248600860252",
+      "text": "Default Rephrase",
+      "type": "MA"
+    },
+    {
+      "nodeID": "89_168020248600860252",
+      "text": "Arguing",
+      "type": "YA"
+    },
+    {
+      "nodeID": "90_168020248600860252",
+      "text": "taking away the citizenship becomes a little more difficult",
+      "type": "I"
+    },
+    {
+      "nodeID": "91_168020248600860252",
+      "text": "Anita Boateng: that becomes a little more difficult",
+      "type": "L"
+    },
+    {
+      "nodeID": "92_168020248600860252",
+      "text": "Analysing",
+      "type": "YA"
+    },
+    {
+      "nodeID": "93_168020248600860252",
+      "text": "Anon: Anita Boateng: that becomes a little more difficult",
+      "type": "L"
+    },
+    {
+      "nodeID": "94_168020248600860252",
+      "text": "Asserting",
+      "type": "YA"
+    },
+    {
+      "nodeID": "95_168020248600860252",
+      "text": "Default Transition",
+      "type": "TA"
+    },
+    {
+      "nodeID": "96_168020248600860252",
+      "text": "Default Rephrase",
+      "type": "MA"
+    },
+    {
+      "nodeID": "97_168020248600860252",
+      "text": "Default Transition",
+      "type": "TA"
+    },
+    {
+      "nodeID": "98_168020248600860252",
+      "text": "Restating",
+      "type": "YA"
+    },
+    {
+      "nodeID": "99_168020248600860252",
+      "text": "decision about taking away the citizenship is a finely balanced thing",
+      "type": "I"
+    },
+    {
+      "nodeID": "100_168020248600860252",
+      "text": "Anita Boateng: It\u2019s a finely balanced thing",
+      "type": "L"
+    },
+    {
+      "nodeID": "101_168020248600860252",
+      "text": "Analysing",
+      "type": "YA"
+    },
+    {
+      "nodeID": "102_168020248600860252",
+      "text": "Anon: Anita Boateng: It\u2019s a finely balanced thing",
+      "type": "L"
+    },
+    {
+      "nodeID": "103_168020248600860252",
+      "text": "Asserting",
+      "type": "YA"
+    },
+    {
+      "nodeID": "104_168020248600860252",
+      "text": "Default Transition",
+      "type": "TA"
+    },
+    {
+      "nodeID": "107_168020248600860252",
+      "text": "Default Inference",
+      "type": "RA"
+    },
+    {
+      "nodeID": "108_168020248600860252",
+      "text": "Arguing",
+      "type": "YA"
+    },
+    {
+      "nodeID": "109_168020248600860252",
+      "text": "Default Rephrase",
+      "type": "MA"
+    },
+    {
+      "nodeID": "110_168020248600860252",
+      "text": "Default Transition",
+      "type": "TA"
+    },
+    {
+      "nodeID": "111_168020248600860252",
+      "text": "Restating",
+      "type": "YA"
+    },
+    {
+      "nodeID": "112_168020248600860252",
+      "text": "Anita Boateng has a lot of sympathy with people who feel concerned",
+      "type": "I"
+    },
+    {
+      "nodeID": "113_168020248600860252",
+      "text": "Anita Boateng: I have a lot of sympathy with people who feel concerned",
+      "type": "L"
+    },
+    {
+      "nodeID": "114_168020248600860252",
+      "text": "Analysing",
+      "type": "YA"
+    },
+    {
+      "nodeID": "115_168020248600860252",
+      "text": "Anon: Anita Boateng: I have a lot of sympathy with people who feel concerned",
+      "type": "L"
+    },
+    {
+      "nodeID": "116_168020248600860252",
+      "text": "Asserting",
+      "type": "YA"
+    },
+    {
+      "nodeID": "117_168020248600860252",
+      "text": "Default Transition",
+      "type": "TA"
+    },
+    {
+      "nodeID": "118_168020248600860252",
+      "text": "the reality is that we've got to have a system where citizens are equal",
+      "type": "I"
+    },
+    {
+      "nodeID": "119_168020248600860252",
+      "text": "Anita Boateng: the reality is that we've got to have a system where citizens are equal",
+      "type": "L"
+    },
+    {
+      "nodeID": "120_168020248600860252",
+      "text": "Analysing",
+      "type": "YA"
+    },
+    {
+      "nodeID": "121_168020248600860252",
+      "text": "Anon: Anita Boateng: the reality is that we've got to have a system where citizens are equal",
+      "type": "L"
+    },
+    {
+      "nodeID": "122_168020248600860252",
+      "text": "Asserting",
+      "type": "YA"
+    },
+    {
+      "nodeID": "123_168020248600860252",
+      "text": "Default Transition",
+      "type": "TA"
+    },
+    {
+      "nodeID": "124_168020248600860252",
+      "text": "part of that means that certain citizens, that don\u2019t have heritage somewhere else or a relation somewhere else, wouldn't have the taking away the citizenship be a consequence",
+      "type": "I"
+    },
+    {
+      "nodeID": "125_168020248600860252",
+      "text": "Anita Boateng: part of that means that certain citizens, that don\u2019t have heritage somewhere else or a relation somewhere else, wouldn't have this be a consequence",
+      "type": "L"
+    },
+    {
+      "nodeID": "126_168020248600860252",
+      "text": "Analysing",
+      "type": "YA"
+    },
+    {
+      "nodeID": "127_168020248600860252",
+      "text": "Anon: Anita Boateng: part of that means that certain citizens, that don\u2019t have heritage somewhere else or a relation somewhere else, wouldn't have this be a consequence",
+      "type": "L"
+    },
+    {
+      "nodeID": "128_168020248600860252",
+      "text": "Asserting",
+      "type": "YA"
+    },
+    {
+      "nodeID": "129_168020248600860252",
+      "text": "Default Transition",
+      "type": "TA"
+    },
+    {
+      "nodeID": "130_168020248600860252",
+      "text": "Default Inference",
+      "type": "RA"
+    },
+    {
+      "nodeID": "132_168020248600860252",
+      "text": "Default Transition",
+      "type": "TA"
+    },
+    {
+      "nodeID": "133_168020248600860252",
+      "text": "Arguing",
+      "type": "YA"
+    }
+  ],
+  "edges": [
+    {
+      "edgeID": 1,
+      "fromID": "4_168020248600860252",
+      "toID": "3_168020248600860252"
+    },
+    {
+      "edgeID": 2,
+      "fromID": "5_168020248600860252",
+      "toID": "4_168020248600860252"
+    },
+    {
+      "edgeID": 3,
+      "fromID": "3_168020248600860252",
+      "toID": "6_168020248600860252"
+    },
+    {
+      "edgeID": 4,
+      "fromID": "6_168020248600860252",
+      "toID": "2_168020248600860252"
+    },
+    {
+      "edgeID": 5,
+      "fromID": "9_168020248600860252",
+      "toID": "8_168020248600860252"
+    },
+    {
+      "edgeID": 6,
+      "fromID": "10_168020248600860252",
+      "toID": "9_168020248600860252"
+    },
+    {
+      "edgeID": 7,
+      "fromID": "8_168020248600860252",
+      "toID": "11_168020248600860252"
+    },
+    {
+      "edgeID": 8,
+      "fromID": "11_168020248600860252",
+      "toID": "7_168020248600860252"
+    },
+    {
+      "edgeID": 9,
+      "fromID": "3_168020248600860252",
+      "toID": "12_168020248600860252"
+    },
+    {
+      "edgeID": 10,
+      "fromID": "12_168020248600860252",
+      "toID": "8_168020248600860252"
+    },
+    {
+      "edgeID": 11,
+      "fromID": "15_168020248600860252",
+      "toID": "14_168020248600860252"
+    },
+    {
+      "edgeID": 12,
+      "fromID": "16_168020248600860252",
+      "toID": "15_168020248600860252"
+    },
+    {
+      "edgeID": 13,
+      "fromID": "14_168020248600860252",
+      "toID": "17_168020248600860252"
+    },
+    {
+      "edgeID": 14,
+      "fromID": "17_168020248600860252",
+      "toID": "13_168020248600860252"
+    },
+    {
+      "edgeID": 15,
+      "fromID": "8_168020248600860252",
+      "toID": "19_168020248600860252"
+    },
+    {
+      "edgeID": 16,
+      "fromID": "19_168020248600860252",
+      "toID": "14_168020248600860252"
+    },
+    {
+      "edgeID": 17,
+      "fromID": "23_168020248600860252",
+      "toID": "22_168020248600860252"
+    },
+    {
+      "edgeID": 18,
+      "fromID": "24_168020248600860252",
+      "toID": "23_168020248600860252"
+    },
+    {
+      "edgeID": 19,
+      "fromID": "22_168020248600860252",
+      "toID": "25_168020248600860252"
+    },
+    {
+      "edgeID": 20,
+      "fromID": "25_168020248600860252",
+      "toID": "21_168020248600860252"
+    },
+    {
+      "edgeID": 21,
+      "fromID": "7_168020248600860252",
+      "toID": "27_168020248600860252"
+    },
+    {
+      "edgeID": 22,
+      "fromID": "27_168020248600860252",
+      "toID": "21_168020248600860252"
+    },
+    {
+      "edgeID": 23,
+      "fromID": "13_168020248600860252",
+      "toID": "27_168020248600860252"
+    },
+    {
+      "edgeID": 24,
+      "fromID": "8_168020248600860252",
+      "toID": "30_168020248600860252"
+    },
+    {
+      "edgeID": 25,
+      "fromID": "30_168020248600860252",
+      "toID": "22_168020248600860252"
+    },
+    {
+      "edgeID": 26,
+      "fromID": "30_168020248600860252",
+      "toID": "31_168020248600860252"
+    },
+    {
+      "edgeID": 27,
+      "fromID": "31_168020248600860252",
+      "toID": "27_168020248600860252"
+    },
+    {
+      "edgeID": 28,
+      "fromID": "35_168020248600860252",
+      "toID": "34_168020248600860252"
+    },
+    {
+      "edgeID": 29,
+      "fromID": "36_168020248600860252",
+      "toID": "35_168020248600860252"
+    },
+    {
+      "edgeID": 30,
+      "fromID": "34_168020248600860252",
+      "toID": "37_168020248600860252"
+    },
+    {
+      "edgeID": 31,
+      "fromID": "37_168020248600860252",
+      "toID": "33_168020248600860252"
+    },
+    {
+      "edgeID": 32,
+      "fromID": "22_168020248600860252",
+      "toID": "38_168020248600860252"
+    },
+    {
+      "edgeID": 33,
+      "fromID": "38_168020248600860252",
+      "toID": "34_168020248600860252"
+    },
+    {
+      "edgeID": 34,
+      "fromID": "41_168020248600860252",
+      "toID": "40_168020248600860252"
+    },
+    {
+      "edgeID": 35,
+      "fromID": "42_168020248600860252",
+      "toID": "41_168020248600860252"
+    },
+    {
+      "edgeID": 36,
+      "fromID": "40_168020248600860252",
+      "toID": "43_168020248600860252"
+    },
+    {
+      "edgeID": 37,
+      "fromID": "43_168020248600860252",
+      "toID": "39_168020248600860252"
+    },
+    {
+      "edgeID": 38,
+      "fromID": "34_168020248600860252",
+      "toID": "44_168020248600860252"
+    },
+    {
+      "edgeID": 39,
+      "fromID": "44_168020248600860252",
+      "toID": "40_168020248600860252"
+    },
+    {
+      "edgeID": 40,
+      "fromID": "39_168020248600860252",
+      "toID": "45_168020248600860252"
+    },
+    {
+      "edgeID": 41,
+      "fromID": "45_168020248600860252",
+      "toID": "33_168020248600860252"
+    },
+    {
+      "edgeID": 42,
+      "fromID": "44_168020248600860252",
+      "toID": "46_168020248600860252"
+    },
+    {
+      "edgeID": 43,
+      "fromID": "46_168020248600860252",
+      "toID": "45_168020248600860252"
+    },
+    {
+      "edgeID": 44,
+      "fromID": "49_168020248600860252",
+      "toID": "48_168020248600860252"
+    },
+    {
+      "edgeID": 45,
+      "fromID": "50_168020248600860252",
+      "toID": "49_168020248600860252"
+    },
+    {
+      "edgeID": 46,
+      "fromID": "48_168020248600860252",
+      "toID": "51_168020248600860252"
+    },
+    {
+      "edgeID": 47,
+      "fromID": "51_168020248600860252",
+      "toID": "47_168020248600860252"
+    },
+    {
+      "edgeID": 48,
+      "fromID": "40_168020248600860252",
+      "toID": "52_168020248600860252"
+    },
+    {
+      "edgeID": 49,
+      "fromID": "52_168020248600860252",
+      "toID": "48_168020248600860252"
+    },
+    {
+      "edgeID": 50,
+      "fromID": "56_168020248600860252",
+      "toID": "55_168020248600860252"
+    },
+    {
+      "edgeID": 51,
+      "fromID": "57_168020248600860252",
+      "toID": "56_168020248600860252"
+    },
+    {
+      "edgeID": 52,
+      "fromID": "55_168020248600860252",
+      "toID": "58_168020248600860252"
+    },
+    {
+      "edgeID": 53,
+      "fromID": "58_168020248600860252",
+      "toID": "54_168020248600860252"
+    },
+    {
+      "edgeID": 54,
+      "fromID": "48_168020248600860252",
+      "toID": "59_168020248600860252"
+    },
+    {
+      "edgeID": 55,
+      "fromID": "59_168020248600860252",
+      "toID": "55_168020248600860252"
+    },
+    {
+      "edgeID": 56,
+      "fromID": "39_168020248600860252",
+      "toID": "64_168020248600860252"
+    },
+    {
+      "edgeID": 57,
+      "fromID": "64_168020248600860252",
+      "toID": "54_168020248600860252"
+    },
+    {
+      "edgeID": 58,
+      "fromID": "47_168020248600860252",
+      "toID": "64_168020248600860252"
+    },
+    {
+      "edgeID": 59,
+      "fromID": "40_168020248600860252",
+      "toID": "66_168020248600860252"
+    },
+    {
+      "edgeID": 60,
+      "fromID": "66_168020248600860252",
+      "toID": "55_168020248600860252"
+    },
+    {
+      "edgeID": 61,
+      "fromID": "66_168020248600860252",
+      "toID": "67_168020248600860252"
+    },
+    {
+      "edgeID": 62,
+      "fromID": "67_168020248600860252",
+      "toID": "64_168020248600860252"
+    },
+    {
+      "edgeID": 63,
+      "fromID": "70_168020248600860252",
+      "toID": "69_168020248600860252"
+    },
+    {
+      "edgeID": 64,
+      "fromID": "71_168020248600860252",
+      "toID": "70_168020248600860252"
+    },
+    {
+      "edgeID": 65,
+      "fromID": "55_168020248600860252",
+      "toID": "73_168020248600860252"
+    },
+    {
+      "edgeID": 66,
+      "fromID": "73_168020248600860252",
+      "toID": "69_168020248600860252"
+    },
+    {
+      "edgeID": 67,
+      "fromID": "75_168020248600860252",
+      "toID": "74_168020248600860252"
+    },
+    {
+      "edgeID": 68,
+      "fromID": "76_168020248600860252",
+      "toID": "75_168020248600860252"
+    },
+    {
+      "edgeID": 69,
+      "fromID": "74_168020248600860252",
+      "toID": "77_168020248600860252"
+    },
+    {
+      "edgeID": 70,
+      "fromID": "77_168020248600860252",
+      "toID": "68_168020248600860252"
+    },
+    {
+      "edgeID": 71,
+      "fromID": "69_168020248600860252",
+      "toID": "78_168020248600860252"
+    },
+    {
+      "edgeID": 72,
+      "fromID": "78_168020248600860252",
+      "toID": "74_168020248600860252"
+    },
+    {
+      "edgeID": 73,
+      "fromID": "68_168020248600860252",
+      "toID": "79_168020248600860252"
+    },
+    {
+      "edgeID": 74,
+      "fromID": "79_168020248600860252",
+      "toID": "21_168020248600860252"
+    },
+    {
+      "edgeID": 75,
+      "fromID": "22_168020248600860252",
+      "toID": "80_168020248600860252"
+    },
+    {
+      "edgeID": 76,
+      "fromID": "80_168020248600860252",
+      "toID": "69_168020248600860252"
+    },
+    {
+      "edgeID": 77,
+      "fromID": "80_168020248600860252",
+      "toID": "81_168020248600860252"
+    },
+    {
+      "edgeID": 78,
+      "fromID": "81_168020248600860252",
+      "toID": "79_168020248600860252"
+    },
+    {
+      "edgeID": 79,
+      "fromID": "84_168020248600860252",
+      "toID": "83_168020248600860252"
+    },
+    {
+      "edgeID": 80,
+      "fromID": "85_168020248600860252",
+      "toID": "84_168020248600860252"
+    },
+    {
+      "edgeID": 81,
+      "fromID": "83_168020248600860252",
+      "toID": "86_168020248600860252"
+    },
+    {
+      "edgeID": 82,
+      "fromID": "86_168020248600860252",
+      "toID": "82_168020248600860252"
+    },
+    {
+      "edgeID": 83,
+      "fromID": "69_168020248600860252",
+      "toID": "87_168020248600860252"
+    },
+    {
+      "edgeID": 84,
+      "fromID": "87_168020248600860252",
+      "toID": "83_168020248600860252"
+    },
+    {
+      "edgeID": 85,
+      "fromID": "82_168020248600860252",
+      "toID": "88_168020248600860252"
+    },
+    {
+      "edgeID": 86,
+      "fromID": "88_168020248600860252",
+      "toID": "68_168020248600860252"
+    },
+    {
+      "edgeID": 87,
+      "fromID": "87_168020248600860252",
+      "toID": "89_168020248600860252"
+    },
+    {
+      "edgeID": 88,
+      "fromID": "89_168020248600860252",
+      "toID": "88_168020248600860252"
+    },
+    {
+      "edgeID": 89,
+      "fromID": "92_168020248600860252",
+      "toID": "91_168020248600860252"
+    },
+    {
+      "edgeID": 90,
+      "fromID": "93_168020248600860252",
+      "toID": "92_168020248600860252"
+    },
+    {
+      "edgeID": 91,
+      "fromID": "91_168020248600860252",
+      "toID": "94_168020248600860252"
+    },
+    {
+      "edgeID": 92,
+      "fromID": "94_168020248600860252",
+      "toID": "90_168020248600860252"
+    },
+    {
+      "edgeID": 93,
+      "fromID": "83_168020248600860252",
+      "toID": "95_168020248600860252"
+    },
+    {
+      "edgeID": 94,
+      "fromID": "95_168020248600860252",
+      "toID": "91_168020248600860252"
+    },
+    {
+      "edgeID": 95,
+      "fromID": "90_168020248600860252",
+      "toID": "96_168020248600860252"
+    },
+    {
+      "edgeID": 96,
+      "fromID": "96_168020248600860252",
+      "toID": "68_168020248600860252"
+    },
+    {
+      "edgeID": 97,
+      "fromID": "69_168020248600860252",
+      "toID": "97_168020248600860252"
+    },
+    {
+      "edgeID": 98,
+      "fromID": "97_168020248600860252",
+      "toID": "91_168020248600860252"
+    },
+    {
+      "edgeID": 99,
+      "fromID": "97_168020248600860252",
+      "toID": "98_168020248600860252"
+    },
+    {
+      "edgeID": 100,
+      "fromID": "98_168020248600860252",
+      "toID": "96_168020248600860252"
+    },
+    {
+      "edgeID": 101,
+      "fromID": "101_168020248600860252",
+      "toID": "100_168020248600860252"
+    },
+    {
+      "edgeID": 102,
+      "fromID": "102_168020248600860252",
+      "toID": "101_168020248600860252"
+    },
+    {
+      "edgeID": 103,
+      "fromID": "100_168020248600860252",
+      "toID": "103_168020248600860252"
+    },
+    {
+      "edgeID": 104,
+      "fromID": "103_168020248600860252",
+      "toID": "99_168020248600860252"
+    },
+    {
+      "edgeID": 105,
+      "fromID": "91_168020248600860252",
+      "toID": "104_168020248600860252"
+    },
+    {
+      "edgeID": 106,
+      "fromID": "104_168020248600860252",
+      "toID": "100_168020248600860252"
+    },
+    {
+      "edgeID": 107,
+      "fromID": "99_168020248600860252",
+      "toID": "107_168020248600860252"
+    },
+    {
+      "edgeID": 108,
+      "fromID": "107_168020248600860252",
+      "toID": "90_168020248600860252"
+    },
+    {
+      "edgeID": 109,
+      "fromID": "104_168020248600860252",
+      "toID": "108_168020248600860252"
+    },
+    {
+      "edgeID": 110,
+      "fromID": "108_168020248600860252",
+      "toID": "107_168020248600860252"
+    },
+    {
+      "edgeID": 111,
+      "fromID": "99_168020248600860252",
+      "toID": "109_168020248600860252"
+    },
+    {
+      "edgeID": 112,
+      "fromID": "109_168020248600860252",
+      "toID": "21_168020248600860252"
+    },
+    {
+      "edgeID": 113,
+      "fromID": "22_168020248600860252",
+      "toID": "110_168020248600860252"
+    },
+    {
+      "edgeID": 114,
+      "fromID": "110_168020248600860252",
+      "toID": "100_168020248600860252"
+    },
+    {
+      "edgeID": 115,
+      "fromID": "110_168020248600860252",
+      "toID": "111_168020248600860252"
+    },
+    {
+      "edgeID": 116,
+      "fromID": "111_168020248600860252",
+      "toID": "109_168020248600860252"
+    },
+    {
+      "edgeID": 117,
+      "fromID": "114_168020248600860252",
+      "toID": "113_168020248600860252"
+    },
+    {
+      "edgeID": 118,
+      "fromID": "115_168020248600860252",
+      "toID": "114_168020248600860252"
+    },
+    {
+      "edgeID": 119,
+      "fromID": "113_168020248600860252",
+      "toID": "116_168020248600860252"
+    },
+    {
+      "edgeID": 120,
+      "fromID": "116_168020248600860252",
+      "toID": "112_168020248600860252"
+    },
+    {
+      "edgeID": 121,
+      "fromID": "100_168020248600860252",
+      "toID": "117_168020248600860252"
+    },
+    {
+      "edgeID": 122,
+      "fromID": "117_168020248600860252",
+      "toID": "113_168020248600860252"
+    },
+    {
+      "edgeID": 123,
+      "fromID": "120_168020248600860252",
+      "toID": "119_168020248600860252"
+    },
+    {
+      "edgeID": 124,
+      "fromID": "121_168020248600860252",
+      "toID": "120_168020248600860252"
+    },
+    {
+      "edgeID": 125,
+      "fromID": "119_168020248600860252",
+      "toID": "122_168020248600860252"
+    },
+    {
+      "edgeID": 126,
+      "fromID": "122_168020248600860252",
+      "toID": "118_168020248600860252"
+    },
+    {
+      "edgeID": 127,
+      "fromID": "113_168020248600860252",
+      "toID": "123_168020248600860252"
+    },
+    {
+      "edgeID": 128,
+      "fromID": "123_168020248600860252",
+      "toID": "119_168020248600860252"
+    },
+    {
+      "edgeID": 129,
+      "fromID": "126_168020248600860252",
+      "toID": "125_168020248600860252"
+    },
+    {
+      "edgeID": 130,
+      "fromID": "127_168020248600860252",
+      "toID": "126_168020248600860252"
+    },
+    {
+      "edgeID": 131,
+      "fromID": "125_168020248600860252",
+      "toID": "128_168020248600860252"
+    },
+    {
+      "edgeID": 132,
+      "fromID": "128_168020248600860252",
+      "toID": "124_168020248600860252"
+    },
+    {
+      "edgeID": 133,
+      "fromID": "119_168020248600860252",
+      "toID": "129_168020248600860252"
+    },
+    {
+      "edgeID": 134,
+      "fromID": "129_168020248600860252",
+      "toID": "125_168020248600860252"
+    },
+    {
+      "edgeID": 135,
+      "fromID": "124_168020248600860252",
+      "toID": "130_168020248600860252"
+    },
+    {
+      "edgeID": 136,
+      "fromID": "130_168020248600860252",
+      "toID": "112_168020248600860252"
+    },
+    {
+      "edgeID": 137,
+      "fromID": "118_168020248600860252",
+      "toID": "130_168020248600860252"
+    },
+    {
+      "edgeID": 138,
+      "fromID": "113_168020248600860252",
+      "toID": "132_168020248600860252"
+    },
+    {
+      "edgeID": 139,
+      "fromID": "132_168020248600860252",
+      "toID": "125_168020248600860252"
+    },
+    {
+      "edgeID": 140,
+      "fromID": "132_168020248600860252",
+      "toID": "133_168020248600860252"
+    },
+    {
+      "edgeID": 141,
+      "fromID": "133_168020248600860252",
+      "toID": "130_168020248600860252"
+    }
+  ],
+  "locutions": [
+    {
+      "nodeID": "3_168020248600860252",
+      "personID": 85,
+      "start": "2023-02-23 23:02:34",
+      "end": null
+    },
+    {
+      "nodeID": "8_168020248600860252",
+      "personID": 85,
+      "start": "2023-02-23 23:02:39",
+      "end": null
+    },
+    {
+      "nodeID": "14_168020248600860252",
+      "personID": 85,
+      "start": "2023-02-23 23:02:43",
+      "end": null
+    },
+    {
+      "nodeID": "22_168020248600860252",
+      "personID": 85,
+      "start": "2023-02-23 23:02:54",
+      "end": null
+    },
+    {
+      "nodeID": "34_168020248600860252",
+      "personID": 85,
+      "start": "2023-02-23 23:03:01",
+      "end": null
+    },
+    {
+      "nodeID": "40_168020248600860252",
+      "personID": 85,
+      "start": "2023-02-23 23:03:06",
+      "end": null
+    },
+    {
+      "nodeID": "48_168020248600860252",
+      "personID": 85,
+      "start": "2023-02-23 23:03:10",
+      "end": null
+    },
+    {
+      "nodeID": "55_168020248600860252",
+      "personID": 85,
+      "start": "2023-02-23 23:03:28",
+      "end": null
+    },
+    {
+      "nodeID": "69_168020248600860252",
+      "personID": 85,
+      "start": "2023-02-23 23:03:43",
+      "end": null
+    },
+    {
+      "nodeID": "83_168020248600860252",
+      "personID": 85,
+      "start": "2023-02-23 23:04:00",
+      "end": null
+    },
+    {
+      "nodeID": "91_168020248600860252",
+      "personID": 85,
+      "start": "2023-02-23 23:04:04",
+      "end": null
+    },
+    {
+      "nodeID": "100_168020248600860252",
+      "personID": 85,
+      "start": "2023-02-23 23:04:08",
+      "end": null
+    },
+    {
+      "nodeID": "113_168020248600860252",
+      "personID": 85,
+      "start": "2023-02-23 23:04:11",
+      "end": null
+    },
+    {
+      "nodeID": "119_168020248600860252",
+      "personID": 85,
+      "start": "2023-02-23 23:04:18",
+      "end": null
+    },
+    {
+      "nodeID": "125_168020248600860252",
+      "personID": 85,
+      "start": "2023-02-23 23:04:25",
+      "end": null
+    }
+  ]
+}

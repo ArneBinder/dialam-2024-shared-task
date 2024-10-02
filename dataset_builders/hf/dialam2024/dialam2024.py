@@ -33,10 +33,9 @@ logger = logging.getLogger(__name__)
 
 DATA_URL = "http://dialam.arg.tech/res/files/dataset.zip"
 SAMPLE_TEST_DATA_URL = "http://dialam.arg.tech/res/files/sample_test.zip"
-TEST_DATA_URL = "http://dialam.arg.tech/res/files/test-data.zip"
+TEST_DATA_DIR = "data/evaluation_data"
 SUBDIR = "dataset"
 SAMPLE_TEST_SUBDIR = "sample_test"
-TEST_SUBDIR = "test"
 NODESET_BLACKLIST = [
     "24255",
     "24807",
@@ -201,9 +200,7 @@ class DialAM2024(GeneratorBasedBuilder):
         """We handle string, list and dicts in datafiles."""
         if dl_manager.manual_dir is None:
             data_dir = os.path.join(dl_manager.download_and_extract(DATA_URL), SUBDIR)
-            test_data_dir = os.path.join(
-                dl_manager.download_and_extract(TEST_DATA_URL), TEST_SUBDIR
-            )
+            test_data_dir = TEST_DATA_DIR
             sample_test_data_dir = os.path.join(
                 dl_manager.download_and_extract(SAMPLE_TEST_DATA_URL), SAMPLE_TEST_SUBDIR
             )
