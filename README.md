@@ -127,6 +127,8 @@ and data augmentation. Our source code is publicly available.
 
 ## 🔮 Inference with the Trained Model on New Data
 
+Note: This requires to set up a Python environment as described in the [Environment Setup](#environment-setup) section.
+
 ```python
 import json
 
