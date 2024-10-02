@@ -149,7 +149,7 @@ s_node_example: NaryRelation = doc.s_nodes.predictions[0]
 s_arg0: LabeledSpan = s_node_example.arguments[0]
 s_arg0_role: str = s_node_example.roles[0]
 # print the original node ID and argument role
-print(l_node2id[LabeledSpan], s_arg0_role)
+print(l_node2id[s_arg0], s_arg0_role)
 # 22_163907070207948843 source
 
 # print all predictions
