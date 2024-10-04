@@ -55,7 +55,7 @@ and data augmentation. Our source code is publicly available.
    - We set logger to `none` because the default logger is [Weights & Biases](https://wandb.ai), which requires
      an account and API key. To use it, remove `logger=none` and provide your API key as `WANDB_API_KEY` in the
      `.env` file. For alternative logging options, see configs in `configs/logger/` which can be enabled by setting
-     `logger=LOGGER_CONFIG_NAME`.
+     `logger=LOGGER_CONFIG_NAME`, e.g. `logger=csv`.
    - To train on a CPU, remove the `trainer=gpu` parameter.
    - You can set `+trainer.fast_dev_run=true` to run a quick development test with only two steps.
 
