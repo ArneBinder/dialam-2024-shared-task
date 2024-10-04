@@ -44,10 +44,20 @@ and data augmentation. Our source code is publicly available.
    +model.classifier_dropout=0.1 \
    datamodule.batch_size=8 \
    trainer=gpu \
+   logger=none \
    seed=1,2,3 \
    +hydra.callbacks.save_job_return.integrate_multirun_result=true \
    --multirun
    ```
+
+   Notes:
+
+   - We set logger to `none` because the default logger is [Weights & Biases](https://wandb.ai), which requires
+     an account and API key. To use it, remove `logger=none` and provide your API key as `WANDB_API_KEY` in the
+     `.env` file. For alternative logging options, see configs in `configs/logger/` which can be enabled by setting
+     `logger=LOGGER_CONFIG_NAME`, e.g. `logger=csv`.
+   - To train on a CPU, remove the `trainer=gpu` parameter.
+   - You can set `+trainer.fast_dev_run=true` to run a quick development test with only two steps.
 
 3. Run the inference on the test set (the `model_save_dir`s from the training step will be used as the
    `model_name_or_path`, see the content of the `job_return_value.json` in your `logs/training` folder
@@ -127,6 +137,8 @@ and data augmentation. Our source code is publicly available.
 
 ## 🔮 Inference with the Trained Model on New Data
 
+Note: This requires to set up a Python environment as described in the [Environment Setup](#environment-setup) section.
+
 ```python
 import json
 
@@ -148,10 +160,14 @@ pipe = AutoPipeline.from_pretrained("DFKI-SLT/dfki-mlst-deberta-v3")
 pipe.taskmodule.collect_statistics = False
 
 # load nodeset in the format of the shared task test data
-path = "/home/arbi01/Downloads/test-data(8)/test/test_map1.json"
+path = "data/evaluation_data/test_map1.json"
 with open(path, "r") as f:
     nodeset: Nodeset = json.load(f)
 nodeset_id="test_map1"
+
+# Cleanup the nodeset (remove isolated L-nodes, loops, etc.) and
+# add candidate relation nodes with Label "NONE" for all three relation types,
+# i.e. S-Nodes, YA-S2TA-Nodes, YA-I2L-Nodes.
 cleaned_nodeset: Nodeset = prepare_nodeset(
     nodeset=nodeset,
     nodeset_id=nodeset_id,
@@ -159,11 +175,13 @@ cleaned_nodeset: Nodeset = prepare_nodeset(
     ya_node_text=NONE_LABEL,
     s_node_type="RA",
     reversed_text_suffix=REVERSE_SUFFIX,
-    l2i_similarity_measure="lcsstr",
-    add_gold_data=False,
+    l2i_similarity_measure="lcsstr",  # use longest common substring
+    integrate_gold_data=False,
 )
 
+# convert the nodeset to a PyTorch-IE document
 doc: SimplifiedDialAM2024Document = convert_to_document(nodeset=cleaned_nodeset, nodeset_id=nodeset_id)
+# merge all relation layers into one, the labels are prefixed with the relation type (S, YA-S2TA, or YA-I2L)
 doc: TextDocumentWithLabeledEntitiesAndNaryRelations = merge_relations(
     document=doc,
     labeled_span_layer="l_nodes",
@@ -171,7 +189,7 @@ doc: TextDocumentWithLabeledEntitiesAndNaryRelations = merge_relations(
     sep=PREFIX_SEPARATOR,
 )
 
-# inference (works also with multiple documents)
+# inference (works also with multiple documents at once)
 doc: TextDocumentWithLabeledEntitiesAndNaryRelations = pipe(doc)
 
 doc: SimplifiedDialAM2024Document = unmerge_relations(document=doc, sep=PREFIX_SEPARATOR)
@@ -191,7 +209,10 @@ print("Predictions:")
 print("S-Nodes:")
 for rel in doc.s_nodes.predictions:
     if rel.label != "NONE":
-        print(rel.resolve())
+       # Note: If the s-node label ends with REVERSE_SUFFIX ("-rev"), the argument roles should be swapped
+       #    in a post-processing step to get the correct order of the arguments in the relation,
+       #    i.e. (target, target, source) instead of (source, source, target).
+       print(rel.resolve())
 print("YA-S2TA-Nodes:")
 for rel in doc.ya_i2l_nodes.predictions:
     if rel.label != "NONE":
