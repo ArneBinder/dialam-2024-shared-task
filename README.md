@@ -44,10 +44,20 @@ and data augmentation. Our source code is publicly available.
    +model.classifier_dropout=0.1 \
    datamodule.batch_size=8 \
    trainer=gpu \
+   logger=none \
    seed=1,2,3 \
    +hydra.callbacks.save_job_return.integrate_multirun_result=true \
    --multirun
    ```
+
+   Notes:
+
+   - We set logger to `none` because the default logger is [Weights & Biases](https://wandb.ai), which requires
+     an account and API key. To use it, remove `logger=none` and provide your API key as `WANDB_API_KEY` in the
+     `.env` file. For alternative logging options, see configs in `configs/logger/` which can be enabled by setting
+     `logger=LOGGER_CONFIG_NAME`.
+   - To train on a CPU, remove the `trainer=gpu` parameter.
+   - You can set `+trainer.fast_dev_run=true` to run a quick development test with only two steps.
 
 3. Run the inference on the test set (the `model_save_dir`s from the training step will be used as the
    `model_name_or_path`, see the content of the `job_return_value.json` in your `logs/training` folder
